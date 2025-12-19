@@ -1,0 +1,70 @@
+/* Réinitialisation de base */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            /* Le body doit aussi prendre 100% de la fenêtre */
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* Important pour éviter les doubles barres de défilement */
+        }
+        
+        .container {
+            /* Définit le conteneur principal comme défilant horizontalement */
+            display: flex; /* Place les enfants côte à côte */
+            
+            /* Rend le défilement visible et fonctionnel */
+            overflow-x: scroll;
+            overflow-y: hidden;
+            
+            height: 100vh;
+            width: 100vw;
+            
+            /* L'élément CRUCIAL pour l'alignement */
+            scroll-snap-type: x mandatory; /* Force l'aimantation sur l'axe X */
+            
+            /* Optionnel: Masque la barre de défilement pour une apparence plus épurée */
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        /* Masque la barre de défilement pour WebKit (Chrome, Safari) */
+        .container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .section {
+            /* Chaque section prend 100% de la fenêtre */
+            flex: 0 0 100vw; /* Empêche la réduction (0 0) et définit la largeur à 100vw */
+            height: 100vh;
+            
+            /* Point d'aimantation pour chaque section */
+            scroll-snap-align: start;
+            
+            /* Pour centrer le contenu à l'intérieur de la section */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5em;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Styles spécifiques pour les couleurs d'arrière-plan */
+        .red { background-color: #EF4444; }
+        .blue { background-color: #3B82F6; }
+        .green { background-color: #10B981; }
+        .purple { background-color: #8B5CF6; }
+        .yellow { background-color: #FBBF24; }
+        .nav { background-color: #24fbc5;width: 45vw; position: fixed;clip-path: polygon(0 0, 100% 0, 86% 100%, 0% 100%);}
+
+        .navigation {
+            margin: 0;
+            padding: 0;
+            height: 5vh;
+            display: flex;
+            list-style-type: none;
+            gap: 8px;
+            margin : 8px 68px 8px 8px;
+            justify-content:space-around;
+            align-items: center;
+        }
