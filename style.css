@@ -1,7 +1,7 @@
 /* --- 1. FONTS --- */
 @font-face {
     font-family: "Punc";
-    src: url("punc-regular.woff2") format("woff2");
+    src: url("punc-bold.woff2") format("woff2");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -132,11 +132,99 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: var(--subtitle-size);
-    font-weight: 700;
-    text-transform: uppercase;
+/*     font-size: var(--subtitle-size);
+    font-weight: 700; */
+    /* text-transform: uppercase; */
 }
 
 /* Backgrounds de test - À remplacer par tes designs */
 .section.red { background-color: var(--main-bg-color); }
 .section.blue { background-color: #1a1a1a; }
+
+/* --- Fixed Container ---*/
+:root {
+    --desktop-width: 1440;
+    --desktop-height: 900;
+    --desktop-ratio: calc(var(--desktop-width) / var(--desktop-height));
+}
+
+.scene-wrapper {
+    /* Centre le container dans la page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #111; /* Fond perdu si l'écran est plus grand */
+}
+
+.desktop-container {
+    position: relative;
+    width: 100%;
+    max-width: calc(100vh * var(--desktop-ratio));
+    height: auto;
+    aspect-ratio: var(--desktop-width) / var(--desktop-height);
+    
+    background-color: var(--main-bg-color);
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+/* Éléments internes : toujours utiliser des % */
+.element-internal {
+    position: absolute;
+    width: 10%;  /* Sera relatif au container, pas à l'écran */
+    height: 10%;
+}
+
+@media (max-width: 1024px) {
+    .scene-wrapper {
+        display: block; /* On casse le centrage */
+        height: auto;
+    }
+    
+    .desktop-container {
+        max-width: none;
+        aspect-ratio: auto;
+        width: 100%;
+        height: auto;
+        overflow: visible; /* On laisse le contenu couler verticalement */
+    }
+}
+
+/*--- 1ere page---*/
+.section.home {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5cqw; /* Marge interne proportionnelle */
+    background-color: var(--main-bg-color);
+}
+
+.main-title {
+    font-size: var(--title-size); /* 7.18rem */
+    font-weight: 700;
+    line-height: 0.9;
+    /* text-transform: uppercase; */
+}
+
+.sub-title {
+    font-size: var(--subtitle-size);
+    font-weight: 400;
+    text-align: right;
+    line-height: 1;
+    color: var(--text-gray);
+    opacity: 0.5; /* Effet "background text" du design */
+}
+
+.description {
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4;
+
+    margin-top: 2cqw;
+    color: var(--primary-light);
+    max-width: 30cqw;
+}
