@@ -17,12 +17,11 @@
         </ul>
     </header>
     <div class="container">
-        <section class="section red">Accueil
-        </section>
-        <section class="section blue">À Propos</section>
-        <section class="section green">Compétences</section>
-        <section class="section purple">Projets</section>
-        <section class="section yellow">Contact</section>
+        <section class="section blue">home</section>
+        <section class="section green">works</section>
+        <section class="section purple">service</section>
+        <section class="section yellow">about</section>
+        <section class="section pink">contact</section>
     </div>
     <script>
 const container = document.querySelector('.container');
@@ -31,18 +30,23 @@ const navItems = document.querySelectorAll('.navigation li');
 
 let isScrolling = false;
 
-// --- FONCTION POUR METTRE À JOUR LA NAV ACTIVE ---
+// --- MISE À JOUR DE LA NAV ---
+// On extrait la logique pour qu'elle soit réutilisable
 const updateActiveNav = () => {
     const index = Math.round(container.scrollLeft / window.innerWidth);
-    
     navItems.forEach((item, i) => {
-        if (i === index) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
+        item.classList.toggle('active', i === index);
     });
 };
+
+// --- LE CŒUR DE LA DÉTECTION (Flèches, Pavé tactile, Scroll natif) ---
+// L'événement 'scroll' détecte TOUT, y compris les flèches du clavier.
+container.addEventListener('scroll', () => {
+    // Si on n'est pas en train d'animer via un clic menu, on met à jour
+    if (!isScrolling) {
+        updateActiveNav();
+    }
+}, { passive: true });
 
 // --- NAVIGATION AU CLIC ---
 navItems.forEach((item, index) => {
@@ -53,15 +57,15 @@ navItems.forEach((item, index) => {
             behavior: 'smooth'
         });
         
-        // On force la mise à jour visuelle immédiate
         navItems.forEach(nav => nav.classList.remove('active'));
         item.classList.add('active');
 
+        // On attend la fin de l'animation smooth pour rendre la main à l'event scroll
         setTimeout(() => isScrolling = false, 700);
     });
 });
 
-// --- GESTION DU SCROLL À LA MOLETTE ---
+// --- GESTION DE LA MOLETTE (Forcer le passage d'une section à l'autre) ---
 window.addEventListener('wheel', (e) => {
     const targetIsInsideContainer = e.target.closest('.container');
     if (!targetIsInsideContainer || isScrolling || Math.abs(e.deltaY) < 10) return;
@@ -70,27 +74,22 @@ window.addEventListener('wheel', (e) => {
     isScrolling = true;
 
     const currentSectionIndex = Math.round(container.scrollLeft / window.innerWidth);
-    let nextSectionIndex = currentSectionIndex;
-
-    if (e.deltaY > 0) {
-        nextSectionIndex = Math.min(sections.length - 1, currentSectionIndex + 1);
-    } else {
-        nextSectionIndex = Math.max(0, currentSectionIndex - 1);
-    }
+    const nextSectionIndex = e.deltaY > 0 
+        ? Math.min(sections.length - 1, currentSectionIndex + 1)
+        : Math.max(0, currentSectionIndex - 1);
     
     container.scrollTo({
         left: nextSectionIndex * window.innerWidth,
         behavior: 'smooth'
     });
 
-    // On met à jour la nav après le début du mouvement
     setTimeout(() => {
         updateActiveNav();
         isScrolling = false;
-    }, 400); 
+    }, 700); 
 }, { passive: false });
 
-// Initialisation au chargement
+// Initialisation
 updateActiveNav();
 
 // Optionnel : Mise à jour si l'utilisateur redimensionne la fenêtre

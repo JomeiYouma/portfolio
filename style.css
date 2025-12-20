@@ -132,7 +132,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: var(--title-size);
+    font-size: var(--subtitle-size);
     font-weight: 700;
     text-transform: uppercase;
 }
