@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "ORBIS",
+    "type": "DATA VISUALIZATION WEBSITE",
+    "description": "A deep dive into linguistic evolution. This interactive one-page site visualizes the decline of global languages and the cultural heritage they carry. Built with a focus on clean data architecture and meaningful UI to bring complex statistics to life.",
+    "tech": "JS - CSS - HTML - UI/UX",
+    "context": "Academic Project | Team of 3",
+    "image": "orbis.jpg"
+  },
+  {
+    "id": 2,
+    "title": "HORUS",
+    "type": "NARRATIVE BROWSER GAME",
+    "description": "An immersive journey into a low-tech futuristic underworld. Beyond the narrative, I engineered a custom secure authentication system and a branching story engine. Developed as a personal passion project, managing everything from world-building to full-stack deployment.",
+    "tech": "PHP - JAVASCRIPT - SQL - PHOTOSHOP",
+    "context": "Personal Project | Solo",
+    "image": "horus.jpg"
+  },
+  {
+    "id": 3,
+    "title": "ASTDX CALCULATOR",
+    "type": "COMPETITIVE GAMING TOOL",
+    "description": "A high-performance utility for the Roblox competitive scene. I reverse-engineered complex game mechanics to create a real-time damage simulator. Used by an international e-sports community to optimize strategies through dynamic data tables and precision JS logic.",
+    "tech": "JS - THREE.JS - GOOGLE SHEETS API",
+    "context": "Collaborative Project | International Team",
+    "image": "astdx.jpg"
+  },
+  {
+    "id": 4,
+    "title": "RESTAU RÉ",
+    "type": "UX/UI PROTOTYPE & PLATFORM",
+    "description": "Re-evaluating the culinary experience. This project involved a complete UX research phase (personas, user journeys) followed by a high-fidelity interactive prototype. It features a reliable rating system and a fully functional user account architecture.",
+    "tech": "UX RESEARCH - FIGMA - FIGJAM - GIT",
+    "context": "Academic Project | Solo",
+    "image": "restaure.jpg"
+  },
+  {
+    "id": 5,
+    "title": "MUSEORIUM",
+    "type": "EXPERIMENTAL MUSICAL EXHIBITION",
+    "description": "A digital gallery exploring the theme of Chaos through sound and motion. This project focuses on the intersection of artistic narration and front-end experimentation, using rhythmic tensions and contrasting visual landscapes to guide the user's emotions.",
+    "tech": "FRONT-END DEV - JS - WEB AUDIO",
+    "context": "Academic Project | Solo",
+    "image": "museorium.jpg"
+  },
+  {
+    "id": 6,
+    "title": "STREET DREAMS",
+    "type": "AUDIOVISUAL PRODUCTION",
+    "description": "A cinematic tribute to contemporary urban art. I co-directed and edited a fictional trailer inspired by Banksy’s universe. This project balanced creative storytelling with technical constraints, from on-location filming to post-production visual effects.",
+    "tech": "VIDEO PRODUCTION - EDITING - STORYBOARDING",
+    "context": "Academic Project | Team of 2",
+    "image": "streetdreams.jpg"
+  }
+]
