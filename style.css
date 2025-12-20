@@ -1,70 +1,142 @@
-/* Réinitialisation de base */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            /* Le body doit aussi prendre 100% de la fenêtre */
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden; /* Important pour éviter les doubles barres de défilement */
-        }
-        
-        .container {
-            /* Définit le conteneur principal comme défilant horizontalement */
-            display: flex; /* Place les enfants côte à côte */
-            
-            /* Rend le défilement visible et fonctionnel */
-            overflow-x: scroll;
-            overflow-y: hidden;
-            
-            height: 100vh;
-            width: 100vw;
-            
-            /* L'élément CRUCIAL pour l'alignement */
-            scroll-snap-type: x mandatory; /* Force l'aimantation sur l'axe X */
-            
-            /* Optionnel: Masque la barre de défilement pour une apparence plus épurée */
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-        }
-        /* Masque la barre de défilement pour WebKit (Chrome, Safari) */
-        .container::-webkit-scrollbar {
-            display: none;
-        }
+/* --- 1. FONTS --- */
+@font-face {
+    font-family: "Punc";
+    src: url("punc-regular.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
 
-        .section {
-            /* Chaque section prend 100% de la fenêtre */
-            flex: 0 0 100vw; /* Empêche la réduction (0 0) et définit la largeur à 100vw */
-            height: 100vh;
-            
-            /* Point d'aimantation pour chaque section */
-            scroll-snap-align: start;
-            
-            /* Pour centrer le contenu à l'intérieur de la section */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 5em;
-            color: white;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-        }
+@font-face {
+    font-family: "Punc";
+    src: url("punc-regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
-        /* Styles spécifiques pour les couleurs d'arrière-plan */
-        .red { background-color: #EF4444; }
-        .blue { background-color: #3B82F6; }
-        .green { background-color: #10B981; }
-        .purple { background-color: #8B5CF6; }
-        .yellow { background-color: #FBBF24; }
-        .nav { background-color: #24fbc5;width: 45vw; position: fixed;clip-path: polygon(0 0, 100% 0, 86% 100%, 0% 100%);}
+/* --- 2. VARIABLES --- */
+:root {
+    /* Colors */
+    --main-bg-color: #231F20;
+    --primary-dark: #090909;
+    --primary-light: #FFFFFF;
+    --accent-cyan: #24FBC5;
+    --text-gray: #646464;
 
-        .navigation {
-            margin: 0;
-            padding: 0;
-            height: 5vh;
-            display: flex;
-            list-style-type: none;
-            gap: 8px;
-            margin : 8px 68px 8px 8px;
-            justify-content:space-around;
-            align-items: center;
-        }
+    /* Fonts */
+    --font-main: "Punc", sans-serif;
+    
+    /* Sizes */
+    --title-size: 7.1875rem;
+    --nav-size: 1.5rem;
+    --big-text-size:2.25rem;
+    --subtitle-size: 2.8125rem;
+    --text-size: 1.25rem;
+}
+
+/* --- 3. RESET & BASE --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--main-bg-color);
+    color: var(--primary-light);
+    font-family: var(--font-main); /* FIX: Utilisation de font-family */
+    font-weight: 400;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Empêche le scroll vertical */
+}
+
+/* --- 4. NAVIGATION --- */
+.nav {
+    background-color: var(--primary-dark);
+    width: 65vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    clip-path: polygon(0 0, 100% 0, 86% 100%, 0% 100%);
+}
+
+.navigation {
+    height: 60px; /* Plus précis pour une barre de nav */
+    display: flex;
+    list-style-type: none;
+    padding: 0 7vw 0 2vw;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Style par défaut des éléments de navigation */
+.navigation li {
+    font-family: var(--font-main);
+    font-size: 1rem;
+    /* text-transform: uppercase; */
+    cursor: pointer;
+    color: var(--text-gray); /* Couleur grisée par défaut */
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+/* On prépare le pseudo-élément pour le ">" */
+.navigation li::before {
+    content: "> ";
+    margin-right: 8px;
+    opacity: 0; /* Caché par défaut */
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    color: var(--accent-cyan);
+}
+
+/* État Hover ET État Actif */
+.navigation li:hover,
+.navigation li.active {
+    color: var(--primary-light);
+}
+
+.navigation li:hover::before,
+.navigation li.active::before {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.navigation li:hover {
+    color: var(--accent-cyan);
+}
+
+/* --- 5. LAYOUT (Horizontal Scroll) --- */
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+}
+
+.container::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.section {
+    flex: 0 0 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--title-size);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Backgrounds de test - À remplacer par tes designs */
+.section.red { background-color: var(--main-bg-color); }
+.section.blue { background-color: #1a1a1a; }
