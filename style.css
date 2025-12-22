@@ -563,3 +563,133 @@ body {
     opacity: 0.05;
     z-index: 1;
 }
+/* --- PAGE 5 : CONTACT --- */
+.section.contact {
+    padding: 0 8cqw;
+    display: flex;
+    align-items: center;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8cqw;
+    width: 100%;
+    align-items: start;
+}
+
+/* Titre */
+.contact-title {
+    font-size: 3.5rem;
+    margin-bottom: 2.5rem;
+    color: var(--primary-light);
+}
+
+/* Grille de Cartes (Gauche) */
+.contact-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.contact-card:hover {
+    background: rgba(36, 251, 197, 0.03);
+    border-color: rgba(36, 251, 197, 0.2);
+    transform: translateX(10px);
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-label {
+    font-size: 0.65rem;
+    color: var(--text-gray);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.card-value {
+    font-size: 0.95rem;
+    color: var(--primary-light);
+}
+
+.contact-card:hover .card-value {
+    color: var(--accent-cyan);
+}
+
+.card-arrow {
+    color: var(--text-gray);
+    opacity: 0.5;
+}
+
+/* Bloc GitHub (Droite) */
+.github-status {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 2rem;
+}
+
+.github-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+/* Style des cartes de dépôts injectées */
+.repo-card {
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--accent-cyan);
+    transition: transform 0.3s ease;
+}
+
+.repo-card:hover {
+    transform: translateX(10px);
+}
+
+.repo-name {
+    color: var(--primary-light);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.repo-desc {
+    font-size: 0.8rem;
+    color: var(--text-gray);
+    margin: 5px 0;
+}
+
+.footer-note {
+    margin-top: 4rem;
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    opacity: 0.6;
+    letter-spacing: 2px;
+    z-index: 10; /* Force le passage au-dessus des autres éléments */
+}
+
