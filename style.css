@@ -76,7 +76,6 @@ body {
 .navigation li {
     font-family: var(--font-main);
     font-size: 1rem;
-    /* text-transform: uppercase; */
     cursor: pointer;
     color: var(--text-gray); /* Couleur grisée par défaut */
     transition: all 0.3s ease;
@@ -132,9 +131,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-/*     font-size: var(--subtitle-size);
-    font-weight: 700; */
-    /* text-transform: uppercase; */
 }
 
 /* Backgrounds de test - À remplacer par tes designs */
@@ -206,7 +202,6 @@ body {
     font-size: var(--title-size); /* 7.18rem */
     font-weight: 700;
     line-height: 0.9;
-    /* text-transform: uppercase; */
 }
 
 .sub-title {
@@ -619,7 +614,6 @@ body {
     font-size: 0.65rem;
     color: var(--text-gray);
     letter-spacing: 1.5px;
-    text-transform: uppercase;
 }
 
 .card-value {
