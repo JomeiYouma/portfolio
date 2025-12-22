@@ -494,3 +494,72 @@ body {
     color: var(--accent-cyan);
     transition: transform 0.3s ease;
 }
+
+/* --- PAGE 4 : ABOUT --- */
+.section.about {
+    padding: 0 10cqw;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3.25rem;
+    width: 100%;
+    z-index: 2;
+}
+
+/* Identité */
+.about-header .small-title {
+    font-size: 1.5rem;
+    color: var(--text-gray);
+    display: block;
+}
+
+.about-header .name-title {
+    font-size: 8rem;
+    line-height: 0.7;
+    margin: 0.5rem 0 1.5rem 0;
+    color: var(--primary-light);
+}
+
+.about-header .about-bio {
+    max-width: 600px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-gray);
+}
+
+/* Groupes de compétences */
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.skills-group h3 {
+    font-size: 2.25rem;
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+}
+
+.skills-group p {
+    font-size: 1.1rem;
+    color: var(--primary-light);
+    letter-spacing: 0.05em;
+}
+
+/* Étoile décorative en arrière-plan */
+.about-star {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20rem;
+    color: var(--primary-light);
+    opacity: 0.05;
+    z-index: 1;
+}
