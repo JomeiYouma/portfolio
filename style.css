@@ -1,6 +1,8 @@
 /* =========================================
-   1. FONTS & RESET
+   STYLE.CSS - FINAL (FLUID + ORIGINAL STYLE)
    ========================================= */
+
+/* --- 1. FONTS --- */
 @font-face {
     font-family: "Punc";
     src: url("punc-bold.woff2") format("woff2");
@@ -17,107 +19,113 @@
     font-display: swap;
 }
 
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* =========================================
-   2. VARIABLES (FLUID SYSTEM)
-   ========================================= */
+/* --- 2. VARIABLES & CLAMPS --- */
 :root {
-    /* Colors */
+    /* --- Colors (ORIGINAL) --- */
     --main-bg-color: #231F20;
     --primary-dark: #090909;
     --primary-light: #FFFFFF;
     --accent-cyan: #24FBC5;
     --text-gray: #646464;
 
-    /* Fonts */
+    /* --- Fonts --- */
     --font-main: "Punc", sans-serif;
-
-    /* --- CLAMP SYSTEM (La magie anti-glitch) --- */
-    /* Clamp(minimum, valeur idéale, maximum) */
     
-    /* Typographie fluide */
-    --title-size: clamp(3.5rem, 8vw, 9rem);
-    --subtitle-size: clamp(1.5rem, 4vw, 3rem);
-    --big-text-size: clamp(1.5rem, 3vw, 2.5rem);
+    /* --- Tailles Fluides (Clamp System) --- */
+    /* Format: clamp(minimum, valeur idéale, maximum) */
+    
+    /* Titres */
+    --title-size: clamp(3.5rem, 9vw, 7.1875rem); /* Max ajusté à ton original */
+    --subtitle-size: clamp(1.8rem, 4vw, 2.8125rem);
+    --huge-text: clamp(4rem, 12vw, 10rem);
+    
+    /* Textes courants */
+    --big-text-size: clamp(1.5rem, 2.5vw, 2.25rem);
     --text-size: clamp(1rem, 1.2vw, 1.25rem);
-    --nav-size: clamp(0.8rem, 1vw, 1.2rem);
-
-    /* Espacements fluides */
-    --section-padding: clamp(2rem, 5vw, 6rem);
-    --gap-fluid: clamp(1.5rem, 4vw, 5rem);
+    --nav-size: clamp(0.9rem, 1.2vw, 1.5rem);
+    
+    /* Espacements */
+    --section-padding: clamp(1.5rem, 5cqw, 6rem);
+    --gap-fluid: clamp(2rem, 5cqw, 6rem);
 }
 
-/* =========================================
-   3. BASE STYLES (DESKTOP DEFAULT)
-   ========================================= */
+/* --- 3. RESET & BASE --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: var(--main-bg-color);
     color: var(--primary-light);
     font-family: var(--font-main);
-    font-weight: 400;
+    font-weight: 400; /* ORIGINAL */
     height: 100vh;
     width: 100vw;
-    overflow: hidden; /* Scroll horizontal géré par .container */
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
-/* =========================================
-   4. NAVIGATION
-   ========================================= */
+/* --- 4. NAVIGATION --- */
 .nav {
     background-color: var(--primary-dark);
-    /* Largeur dynamique : 100% sur mobile, coupe sur desktop */
-    width: clamp(100%, 65vw, 1200px); 
+    width: clamp(100%, 65vw, 1200px);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
-    clip-path: polygon(0 0, 100% 0, 92% 100%, 0% 100%);
-    transition: width 0.3s ease, clip-path 0.3s ease;
+    clip-path: polygon(0 0, 100% 0, 86% 100%, 0% 100%);
+    transition: width 0.3s ease;
 }
 
 .navigation {
     height: 60px;
     display: flex;
-    padding: 0 4rem 0 2rem;
-    justify-content: space-between; /* Space-between gère mieux les espaces */
+    padding: 0 7vw 0 2vw;
+    justify-content: space-around;
     align-items: center;
-    gap: 1rem;
 }
 
 .navigation li {
-    font-size: var(--nav-size);
+    font-family: var(--font-main);
+    font-size: var(--nav-size); /* Ou 1rem selon ton choix, ici fluide */
     cursor: pointer;
-    color: var(--text-gray);
-    transition: color 0.3s ease;
+    color: var(--text-gray); /* ORIGINAL */
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    white-space: nowrap; /* Empêche le texte de casser */
+    white-space: nowrap;
 }
 
 .navigation li::before {
     content: "> ";
-    margin-right: 5px;
+    margin-right: 8px;
     opacity: 0;
     transform: translateX(-10px);
     transition: all 0.3s ease;
-    color: var(--accent-cyan);
+    color: var(--accent-cyan); /* ORIGINAL */
 }
 
-.navigation li:hover, .navigation li.active { color: var(--primary-light); }
-.navigation li:hover::before, .navigation li.active::before { opacity: 1; transform: translateX(0); }
+.navigation li:hover,
+.navigation li.active {
+    color: var(--primary-light); /* ORIGINAL */
+}
 
-/* =========================================
-   5. LAYOUT SYSTEM (SCROLL HORIZONTAL)
-   ========================================= */
+.navigation li:hover::before,
+.navigation li.active::before {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.navigation li:hover {
+    color: var(--accent-cyan); /* ORIGINAL */
+}
+
+/* --- 5. CONTAINER & SCROLL --- */
 .container {
     display: flex;
     width: 100vw;
@@ -125,30 +133,29 @@ ul { list-style: none; }
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    /* Masquer scrollbar */
-    scrollbar-width: none; 
-    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 .container::-webkit-scrollbar { display: none; }
 
 .section {
-    flex: 0 0 100vw; /* Force la section à faire toute la largeur */
+    flex: 0 0 100vw;
     height: 100vh;
     scroll-snap-align: start;
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 0 var(--section-padding);
     position: relative;
-    overflow: hidden; /* Protège contre les débordements visuels */
+    overflow: hidden;
 }
 
 /* =========================================
-   6. SECTIONS STYLES (FLUID DESKTOP)
+   SECTIONS (DESKTOP)
    ========================================= */
 
 /* --- PAGE 1: HOME --- */
 .section.home {
-    justify-content: space-between;
+    padding: 0 var(--section-padding);
+    background-color: var(--main-bg-color);
 }
 
 .hero-layout {
@@ -166,73 +173,93 @@ ul { list-style: none; }
 
 .main-title {
     font-size: var(--title-size);
+    font-weight: 700; /* ORIGINAL */
     line-height: 0.9;
-    margin-bottom: 1rem;
-    white-space: nowrap; /* Garde le titre sur une ligne en desktop */
+    color: var(--primary-light);
 }
 
 .sub-title {
     font-size: var(--subtitle-size);
-    color: var(--text-gray);
-    opacity: 0.5;
+    font-weight: 400; /* ORIGINAL */
     text-align: right;
+    line-height: 1;
+    color: var(--text-gray); /* ORIGINAL */
+    opacity: 0.5; /* ORIGINAL TRANSPARENCY */
 }
 
 .description {
-    font-size: var(--text-size);
-    line-height: 1.5;
+    font-family: var(--font-main);
+    font-weight: 400; /* ORIGINAL */
+    font-size: var(--text-size); /* ~1rem - 1.25rem */
+    line-height: 1.4;
     margin-top: 2rem;
+    color: var(--primary-light); /* ORIGINAL */
     max-width: 600px;
-    color: var(--primary-light);
 }
 
-/* --- PAGE 2: WORKS (3D View) --- */
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* --- PAGE 2: WORKS --- */
 .section.works {
+    display: flex;
+    padding: var(--section-padding);
     gap: var(--gap-fluid);
 }
 
 .project-info {
-    flex: 0.8;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .project-list-viewport {
-    flex: 1.2;
-    height: 80%;
+    flex: 1.5;
+    height: 100%;
     display: flex;
-    align-items: center;
-    perspective: 1000px;
+    align-items: center; 
+    perspective: 1200px;
     padding-left: 5vw;
 }
 
 .project-scroll-track {
     display: flex;
     flex-direction: column;
-    gap: clamp(20px, 4vh, 60px);
+    gap: 40px;
+    will-change: transform;
 }
 
 .project-box {
-    /* Taille fluide basée sur la hauteur de vue */
-    width: clamp(280px, 30vw, 500px);
-    height: clamp(160px, 20vh, 300px);
-    background-color: #111;
+    width: clamp(280px, 25vw, 400px);
+    height: clamp(160px, 15vw, 250px);
     background-size: cover;
     background-position: center;
     filter: grayscale(1) brightness(0.5);
-    opacity: 0.4;
+    opacity: 0.4; /* ORIGINAL TRANSPARENCY */
     transform: rotateY(-25deg) rotateX(10deg) skewY(-5deg);
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.6s ease;
+    cursor: pointer;
     border: 1px solid rgba(255,255,255,0.1);
 }
 
 .project-box.active {
     opacity: 1;
     filter: grayscale(0) brightness(1);
-    transform: rotateY(0deg) scale(1.1); /* Simplifié pour éviter les glitchs */
-    border-color: var(--accent-cyan);
+    transform: rotateY(0deg) rotateX(0deg) skewY(0deg) scale(1.2);
     z-index: 10;
+    border: 1px solid var(--accent-cyan);
+    box-shadow: 0 0 30px rgba(36, 251, 197, 0.3);
 }
 
 /* --- PAGE 3: SERVICE --- */
+.section.service {
+    padding: 0 var(--section-padding);
+}
+
 .service-layout {
     display: flex;
     width: 100%;
@@ -241,72 +268,172 @@ ul { list-style: none; }
     align-items: center;
 }
 
-.testimonials { flex: 1.5; display: flex; flex-direction: column; gap: 2rem; }
-.service-cta { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2rem; }
-.service-visual { flex: 1.5; position: relative; height: 100%; }
-
-.diagonal-title {
-    position: absolute;
-    /* Positionnement fluide */
-    bottom: clamp(10%, 20vh, 30%);
-    right: -10%;
-    transform: rotate(-45deg);
-    white-space: nowrap;
-}
-
-.diagonal-title .huge-text {
-    font-size: clamp(4rem, 10vw, 12rem);
-    line-height: 0.8;
-    color: var(--primary-light);
-}
-
-.work-with-me {
-    font-size: var(--text-size);
-    padding: 1em 2em;
-    border: 2px solid var(--primary-light);
-    background: var(--primary-light);
-    color: var(--primary-dark);
-    font-family: "Punc";
-    font-weight: 700;
-    transition: 0.3s;
-    cursor: pointer;
-}
-.work-with-me:hover {
-    background: transparent;
-    color: var(--accent-cyan);
-    border-color: var(--accent-cyan);
-}
-
-/* --- PAGE 4: ABOUT --- */
-.section.about {
-    position: relative;
-}
-
-.about-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(2rem, 5vh, 4rem);
-    z-index: 2;
-}
-
-.about-header .name-title {
-    font-size: clamp(4rem, 12vw, 10rem); /* Très gros clamp */
-    line-height: 0.8;
-    color: var(--primary-light);
-    margin: 0.5rem 0;
-}
-
-.about-content {
+.testimonials {
+    flex: 1.5;
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
+.intro-text {
+    color: var(--text-gray); /* ORIGINAL */
+    font-size: var(--big-text-size); /* ~1.5rem */
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* ORIGINAL COLOR */
+    padding-bottom: 1rem;
+}
+
+.testimonial-item .name {
+    font-family: "Punc";
+    font-size: var(--big-text-size); /* ~1.5rem */
+    color: var(--primary-light); /* ORIGINAL */
+}
+
+.testimonial-item blockquote {
+    font-size: 0.85rem;
+    color: var(--text-gray); /* ORIGINAL */
+    margin: 0.5rem 0;
+    line-height: 1.3;
+}
+
+.testimonial-item .role {
+    font-size: 0.75rem;
+    color: var(--accent-cyan); /* ORIGINAL */
+    font-weight: 700; /* ORIGINAL */
+}
+
+.service-cta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.work-with-me {
+    position: relative;
+    background: var(--primary-light);
+    color: var(--primary-dark); /* ORIGINAL */
+    border: 2px solid var(--primary-light);
+    padding: 1rem 2rem;
+    font-family: "Punc";
+    font-weight: 700; /* ORIGINAL */
+    font-size: 1.2rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 1;
+}
+
+.work-with-me:hover {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+}
+
+.work-with-me::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-dark);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: -1;
+}
+
+.work-with-me:hover::before { transform: translateY(-100%); }
+
+.download-links { display: flex; flex-direction: column; gap: 1rem; }
+
+.download-item {
+    text-decoration: none;
+    color: var(--primary-light); /* ORIGINAL */
+    font-size: 0.9rem;
+    position: relative;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.download-item:hover { color: var(--accent-cyan); padding-left: 10px; }
+
+.service-visual { flex: 1.5; position: relative; height: 100%; }
+
+.diagonal-title {
+    position: absolute;
+    bottom: clamp(10%, 20vh, 30%);
+    right: -10%;
+    transform: rotate(-45deg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.diagonal-title .small-text {
+    font-size: var(--big-text-size); /* ~2.25rem */
+    color: var(--text-gray); /* ORIGINAL */
+}
+
+.diagonal-title .huge-text {
+    font-size: var(--huge-text); /* ~4rem+ */
+    line-height: 0.8;
+    color: var(--primary-light); /* ORIGINAL */
+    white-space: nowrap;
+}
+
+/* --- PAGE 4: ABOUT --- */
+.section.about {
+    padding: 0 var(--section-padding);
+}
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5vh, 4rem);
+    width: 100%;
+    z-index: 2;
+}
+
+.about-header .small-title {
+    font-size: var(--big-text-size); /* ~1.5rem */
+    color: var(--text-gray); /* ORIGINAL */
+    display: block;
+}
+
+.about-header .name-title {
+    font-size: var(--huge-text); /* ~8rem */
+    line-height: 0.7;
+    margin: 0.5rem 0 1.5rem 0;
+    color: var(--primary-light); /* ORIGINAL */
+}
+
+.about-header .about-bio {
+    max-width: 600px;
+    font-size: var(--text-size); /* ~1rem */
+    line-height: 1.5;
+    color: var(--text-gray); /* ORIGINAL */
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
 .skills-group h3 {
-    font-size: var(--big-text-size);
-    color: var(--text-gray);
-    text-transform: uppercase;
+    font-size: var(--big-text-size); /* ~2.25rem */
+    color: var(--text-gray); /* ORIGINAL */
+    margin-bottom: 0.5rem;
+}
+
+.skills-group p {
+    font-size: 1.1rem;
+    color: var(--primary-light); /* ORIGINAL */
+    letter-spacing: 0.05em;
 }
 
 .about-star {
@@ -314,17 +441,15 @@ ul { list-style: none; }
     left: 5%;
     top: 50%;
     transform: translateY(-50%);
-    font-size: clamp(10rem, 30vw, 40rem);
-    color: var(--primary-light);
-    opacity: 0.03;
+    font-size: clamp(20rem, 40vw, 50rem);
+    color: var(--primary-light); /* ORIGINAL */
+    opacity: 0.05; /* ORIGINAL TRANSPARENCY */
     z-index: 1;
-    pointer-events: none;
 }
 
 /* --- PAGE 5: CONTACT --- */
 .section.contact {
-    display: flex;
-    align-items: center;
+    padding: 0 var(--section-padding);
 }
 
 .contact-container {
@@ -332,15 +457,15 @@ ul { list-style: none; }
     grid-template-columns: 1fr 1fr;
     gap: var(--gap-fluid);
     width: 100%;
+    align-items: start;
 }
 
 .contact-title {
-    font-size: var(--subtitle-size);
-    margin-bottom: 2rem;
-    color: var(--primary-light);
+    font-size: var(--subtitle-size); /* ~3.5rem */
+    margin-bottom: 2.5rem;
+    color: var(--primary-light); /* ORIGINAL */
 }
 
-/* Cartes Contact */
 .contact-grid {
     display: flex;
     flex-direction: column;
@@ -351,117 +476,170 @@ ul { list-style: none; }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem;
+    padding: 1.2rem 1.5rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: 0.3s ease;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .contact-card:hover {
-    background: rgba(36, 251, 197, 0.05);
-    border-color: var(--accent-cyan);
+    background: rgba(36, 251, 197, 0.03);
+    border-color: rgba(36, 251, 197, 0.2);
     transform: translateX(10px);
 }
 
-/* GitHub Status */
+.card-label {
+    font-size: 0.65rem;
+    color: var(--text-gray); /* ORIGINAL */
+    letter-spacing: 1.5px;
+}
+
+.card-value {
+    font-size: 0.95rem;
+    color: var(--primary-light); /* ORIGINAL */
+}
+
+.contact-card:hover .card-value { color: var(--accent-cyan); }
+
+.card-arrow {
+    color: var(--text-gray); /* ORIGINAL */
+    opacity: 0.5; /* ORIGINAL TRANSPARENCY */
+}
+
+/* GitHub */
 .github-status {
     background: rgba(255, 255, 255, 0.01);
     border: 1px solid rgba(255, 255, 255, 0.03);
     padding: 2rem;
 }
 
+.github-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-cyan);
+}
+
 .github-calendar-wrapper {
     margin-bottom: 2rem;
     width: 100%;
-    overflow: hidden;
+    overflow: hidden; 
+}
+
+.repo-card {
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--accent-cyan);
+    transition: transform 0.3s ease;
+}
+
+.repo-card:hover { transform: translateX(10px); }
+
+.repo-name {
+    color: var(--primary-light); /* ORIGINAL */
+    font-weight: bold; /* ORIGINAL */
+    font-size: 1.1rem;
+}
+
+.repo-desc {
+    font-size: 0.8rem;
+    color: var(--text-gray); /* ORIGINAL */
+    margin: 5px 0;
 }
 
 .footer-note {
-    font-size: 0.7rem;
-    color: var(--text-gray);
-    opacity: 0.6;
-    letter-spacing: 2px;
     margin-top: auto;
+    font-size: 0.7rem;
+    color: var(--text-gray); /* ORIGINAL */
+    opacity: 0.6; /* ORIGINAL TRANSPARENCY */
+    letter-spacing: 2px;
 }
 
-
 /* =========================================
-   7. MEDIA QUERIES (TRANSITIONS)
+   MEDIA QUERIES (TABLET & MOBILE)
    ========================================= */
 
-/* --- TABLET & SMALL DESKTOP (< 1024px) --- */
-/* C'est ici qu'on bascule du Scroll Horizontal au Vertical */
 @media screen and (max-width: 1024px) {
 
-    /* RESET GLOBAL LAYOUT */
+    /* 1. RESET LAYOUT (VERTICAL SCROLL) */
     body, html {
         overflow-x: hidden;
-        overflow-y: auto; /* Scroll vertical activé */
+        overflow-y: auto;
         height: auto;
     }
 
     .container {
         display: flex;
-        flex-direction: column; /* Empile les sections */
+        flex-direction: column;
         width: 100%;
         height: auto;
         overflow: visible;
     }
 
-    /* SECTION RESET */
+    /* 2. SECTION RESET */
     .section {
         width: 100%;
-        height: auto; /* Hauteur adaptative */
+        height: auto;
         min-height: 100vh;
-        flex: none; /* Désactive le flex-basis: 100vw */
-        padding: 6rem 2rem 4rem 2rem; /* Plus de padding-top pour la nav */
+        flex: none;
+        padding-top: 6rem;
+        padding-bottom: 4rem;
         border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
-    /* NAV FIXE */
+    /* 3. NAV FIXE */
     .nav {
         width: 100%;
-        clip-path: none; /* Barre pleine */
-        background: rgba(9, 9, 9, 0.95);
+        clip-path: none;
+        background: rgba(9, 9, 9, 0.98);
         backdrop-filter: blur(10px);
     }
-    .navigation { padding: 0 1rem; }
 
-    /* --- SECTION 1: HOME (Vertical Stack) --- */
+    /* --- HOME --- */
     .hero-layout {
         flex-direction: column;
         align-items: flex-start;
         gap: 3rem;
     }
     .hero-content { max-width: 100%; }
-    .main-title { white-space: normal; /* Autorise le retour à la ligne */ }
-
-    /* --- SECTION 2: WORKS (Grid au lieu de 3D) --- */
+    
+    /* --- WORKS (Grid) --- */
     .section.works {
         flex-direction: column;
     }
     .project-list-viewport {
         width: 100%;
-        padding: 0;
-        perspective: none; /* On enlève la 3D complexe */
         height: auto;
+        perspective: none;
+        padding: 0;
     }
     .project-scroll-track {
-        flex-direction: row; /* Scroll horizontal interne pour les projets */
+        flex-direction: row;
         overflow-x: auto;
-        width: 100%;
         padding-bottom: 2rem;
         gap: 1rem;
+        width: 100%;
     }
     .project-box {
-        flex: 0 0 85vw; /* Une carte prend presque tout l'écran */
-        transform: none !important; /* Reset des transformations 3D */
+        flex: 0 0 85vw;
+        height: 250px;
+        transform: none !important;
         opacity: 1;
         filter: grayscale(0);
-        height: 250px;
     }
 
-    /* --- SECTION 3: SERVICE --- */
+    /* --- SERVICE --- */
     .service-layout {
         flex-direction: column-reverse;
         height: auto;
@@ -471,52 +649,33 @@ ul { list-style: none; }
         transform: none;
         bottom: auto;
         right: auto;
-        margin-bottom: 2rem;
         width: 100%;
-        text-align: left;
+        margin-bottom: 2rem;
+        align-items: flex-start;
     }
-    .diagonal-title .huge-text {
-        font-size: 4rem; /* Fixe pour tablette */
+    
+    /* --- ABOUT --- */
+    .about-header .name-title {
+        word-break: break-word;
     }
 
-    /* --- SECTION 5: CONTACT --- */
+    /* --- CONTACT --- */
     .contact-container {
-        grid-template-columns: 1fr; /* Une seule colonne */
+        grid-template-columns: 1fr;
         gap: 4rem;
+    }
+    
+    .github-calendar-wrapper {
+        overflow-x: auto;
     }
 }
 
-/* --- MOBILE (< 768px) --- */
+/* MOBILE SPECIFIC (< 768px) */
 @media screen and (max-width: 768px) {
-    
-    :root {
-        /* Ajustement des clamps pour mobile */
-        --section-padding: 1.5rem;
-    }
-
     .nav { height: 50px; }
-    .navigation li { font-size: 0.8rem; }
-    /* Cache les textes longs du menu si besoin */
-    .navigation li span { display: none; } 
-    /* Ou utilise des icônes à la place */
-
-    .main-title {
-        font-size: 3.5rem; /* Force une taille lisible */
-    }
-
-    /* About : Nom sur plusieurs lignes si besoin */
-    .about-header .name-title {
-        word-break: break-all; 
-        font-size: 4rem;
-    }
-
-    /* Contact Cards plus compactes */
-    .contact-card {
-        padding: 1rem;
-    }
+    .navigation li { font-size: 0.85rem; }
     
-    /* GitHub Grid adaptation */
-    .github-calendar-wrapper {
-        overflow-x: scroll; /* Scroll pour le calendrier */
+    .main-title {
+        white-space: normal;
     }
 }
