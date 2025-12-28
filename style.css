@@ -687,3 +687,143 @@ body {
     z-index: 10; /* Force le passage au-dessus des autres éléments */
 }
 
+/* --- RESPONSIVE TABLETTE & MOBILE (< 1024px) --- */
+@media screen and (max-width: 1024px) {
+
+    /* 1. RESET DU SCROLL HORIZONTAL -> VERTICAL */
+    body, html {
+        overflow-x: hidden; /* Plus de scroll horizontal */
+        overflow-y: auto;   /* Scroll vertical activé */
+        height: auto;       /* La hauteur s'adapte au contenu */
+        width: 100%;
+    }
+
+    /* Le conteneur principal qui faisait le scroll horizontal */
+    .scroll-container {
+        display: flex;
+        flex-direction: column; /* On empile les sections */
+        width: 100%;
+        height: auto;
+        transform: none !important; /* Désactive le script de scroll JS */
+    }
+
+    /* 2. ADAPTATION DES SECTIONS GÉNÉRALES */
+    .section {
+        width: 100%;
+        height: auto;       /* Plus de hauteur fixe à 100vh */
+        min-height: 100vh;  /* Au moins la hauteur de l'écran */
+        padding: 4rem 2rem; /* Marges réduites */
+        border-right: none; /* Enlève les séparations verticales */
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* 3. NAVIGATION (Barre fixe en haut) */
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 0 1rem;
+        z-index: 1000;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    /* On cache les liens texte s'il y en a trop, ou on réduit la taille */
+    nav a {
+        font-size: 0.8rem;
+    }
+
+    /* 4. PAGE 1 : HOME */
+    .hero-content h1 {
+        font-size: 3.5rem; /* Réduction drastique du titre géant */
+        line-height: 1.1;
+    }
+    .hero-content p {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    /* 5. PAGE 3 : SERVICE (Diagonale) */
+    .service-layout {
+        flex-direction: column-reverse; /* Texte au-dessus, visuel en dessous */
+        gap: 3rem;
+    }
+    
+    .testimonials, .service-cta, .service-visual {
+        flex: auto;
+        width: 100%;
+    }
+
+    .diagonal-title {
+        position: relative;
+        transform: none; /* On enlève la rotation bizarre sur mobile */
+        left: auto;
+        bottom: auto;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+    }
+    
+    .diagonal-title .huge-text {
+        font-size: 4rem; /* Plus petit */
+    }
+
+    /* 6. PAGE 4 : ABOUT */
+    .about-header .name-title {
+        font-size: 4rem; /* Réduction du nom géant */
+    }
+    
+    .about-star {
+        font-size: 10rem;
+        top: 10%;
+        left: 80%; /* On déplace l'étoile pour pas gêner le texte */
+    }
+
+    /* 7. PAGE 5 : CONTACT (Le gros morceau) */
+    .section.contact {
+        display: block; /* Enlève le flex centré */
+        padding-top: 6rem; /* Espace pour la nav fixe */
+    }
+
+    .contact-container {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+    }
+
+    .contact-left, .github-status {
+        width: 100%; /* Pleine largeur */
+    }
+
+    .contact-title {
+        font-size: 2.5rem;
+    }
+
+    /* Ajustement du Grid GitHub pour mobile */
+    .github-grid div {
+        width: 10px; /* Carrés plus petits */
+        height: 10px;
+    }
+    
+    /* Calendrier GitHub (si tu l'as ajouté) */
+    .github-calendar-wrapper {
+        overflow-x: scroll; /* Permet de scroller le calendrier horizontalement */
+    }
+    
+    #github-graph svg.js-calendar-graph-svg {
+        width: 100% !important; /* Prend toute la largeur dispo */
+    }
+    
+    /* Le Footer Note revient dans le flux normal */
+    .footer-note {
+        position: relative;
+        margin-top: 3rem;
+        bottom: auto;
+        left: auto;
+        text-align: center;
+        width: 100%;
+    }
+}
