@@ -28,7 +28,7 @@
   },
   {
     "id": 4,
-    "title": "RESTAU RÉ",
+    "title": "RESTAU RE",
     "type": "UX/UI PROTOTYPE & PLATFORM",
     "description": "Re-evaluating the culinary experience. This project involved a complete UX research phase (personas, user journeys) followed by a high-fidelity interactive prototype. It features a reliable rating system and a fully functional user account architecture.",
     "tech": "UX RESEARCH - FIGMA - FIGJAM - GIT",
@@ -52,5 +52,22 @@
     "tech": "VIDEO PRODUCTION - EDITING - STORYBOARDING",
     "context": "Academic Project | Team of 2",
     "image": "street-dreams.png"
-  }
-]
+  },
+  {
+    "id": 7,
+    "title": "ASTX COMPARATOR",
+    "type": "DATABASE & ANALYTICS PLATFORM",
+    "description": "A comprehensive census and comparison tool designed for professional tower defense players. Unlike a simple wiki, this project focuses on backend architecture, utilizing a robust SQL database and PHP to organize complex unit statistics for high-level strategic analysis.",
+    "tech": "PHP - SQL - DATABASE ARCHITECTURE",
+    "context": "Academic Project | Backend Focus",
+    "image": "web-inventory.png"
+  },
+  {
+    "id": 8,
+    "title": "HENDAYE REBRAND",
+    "type": "BRAND IDENTITY & WEB DESIGN",
+    "description": "A strategic visual overhaul for the city of Hendaye. This project bridged the gap between institutional communication and modern web design. I developed a cohesive graphic charter, promotional print assets, and a high-fidelity web interface to revitalize the city's image.",
+    "tech": "FIGMA - PHOTOSHOP - ILLUSTRATOR",
+    "context": "Academic Project | Design Focus",
+    "image": "campain.png"
+  }]
