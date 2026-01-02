@@ -190,11 +190,36 @@ ul { list-style: none; }
 }
 
 .project-title {
+    font-family: "Orbitron", sans-serif;
     font-size: clamp(1rem, 30vw, 2.25rem);
     font-weight: 700; /* ORIGINAL */
     line-height: 0.9;
     color: var(--primary-light);
 }
+
+.project-sub-title{
+    text-align: left; color: var(--accent-cyan); font-size: 1rem; opacity: 0.5; font-family: "Orbitron", sans-serif;
+}
+
+.project-description {
+    opacity: 0.9;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-gray);
+    line-height: 1.4;
+}
+
+.project-details {
+    font-size: 0.9rem;
+    font-family: "Orbitron", sans-serif; 
+    color: var(--primary-light);
+    line-height: 1.5;
+}
+
+.project-info-title {
+    font-weight: 700;
+    color: var(--text-gray);
+}   
 
 .sub-title {
     font-size: var(--subtitle-size);
