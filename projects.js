@@ -1,24 +1,23 @@
 export async function loadProjects() {
-    const track = document.getElementById('project-track'); // J'ai adapté l'ID à ta classe CSS précédente
+    const track = document.getElementById('project-track'); 
     const infoContainer = document.querySelector('.project-info');
     const viewport = document.querySelector('.project-list-viewport');
-    const container = document.querySelector(".container"); // Pour la gestion des pages globales
+    const container = document.querySelector(".container"); 
 
     if (!track || !infoContainer || !viewport) return;
 
     try {
-        // 1. FETCH DES DONNÉES
         const response = await fetch('projects.json');
         const originalProjects = await response.json();
 
-        // 2. DÉTECTION MOBILE VS DESKTOP
+        // DÉTECTION MOBILE VS DESKTOP
         if (window.innerWidth <= 1024) {
             initMobile(originalProjects, track, infoContainer, viewport);
         } else {
             initDesktop(originalProjects, track, infoContainer, viewport, container);
         }
 
-        // Recharger la page si on redimensionne pour changer de mode proprement
+        // Recharger la page si on redimensionne
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
@@ -34,7 +33,7 @@ export async function loadProjects() {
 }
 
 /* =========================================
-   LOGIQUE MOBILE (SCROLL HORIZONTAL NATIF)
+   LOGIQUE MOBILE / TABLETTE (< 1024px)
    ========================================= */
 function initMobile(projects, track, infoContainer, viewport) {
     track.innerHTML = '';
@@ -48,18 +47,15 @@ function initMobile(projects, track, infoContainer, viewport) {
         track.appendChild(box);
     });
 
+    // 1. Détection Active (inchangé)
     const boxes = document.querySelectorAll('.project-box');
-
-    // Détection au scroll
     const checkActiveMobile = () => {
-        // Le centre de l'écran
         const centerPoint = window.innerWidth / 2;
         let bestCandidate = 0;
         let minDistance = Infinity;
 
         boxes.forEach((box, index) => {
             const rect = box.getBoundingClientRect();
-            // Le centre de la boîte
             const boxCenter = rect.left + rect.width / 2;
             const distance = Math.abs(centerPoint - boxCenter);
 
@@ -69,17 +65,14 @@ function initMobile(projects, track, infoContainer, viewport) {
             }
         });
 
-        // Mise à jour visuelle (Classe Active)
         boxes.forEach(b => b.classList.remove('active'));
         if (boxes[bestCandidate]) {
             boxes[bestCandidate].classList.add('active');
             
-            // Mise à jour du texte
-            // On vérifie si l'index a changé pour éviter de redessiner le texte pour rien
             if (infoContainer.dataset.currentIndex != bestCandidate) {
                 const p = projects[bestCandidate];
                 infoContainer.innerHTML = `
-                    <h2 class="main-title" style="font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1;">${p.title}</h2>
+                    <h2 class="project-title" style="font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1;">${p.title}</h2>
                     <h3 class="sub-title" style="text-align: left; font-size: 1rem; color: var(--accent-cyan);">${p.type}</h3>
                     <p class="description" style="margin-top: 1rem;">${p.description}</p>
                 `;
@@ -88,58 +81,80 @@ function initMobile(projects, track, infoContainer, viewport) {
         }
     };
 
-    // --- CORRECTION MAJEURE ICI ---
-    // On écoute le scroll sur 'track' car c'est lui qui a l'overflow-x maintenant
     track.addEventListener('scroll', checkActiveMobile, { passive: true });
-    
-    // Appel initial pour afficher le premier projet
     setTimeout(checkActiveMobile, 50);
+
+    // 2. LE FIX DU "SCROLL TRAP"
+    track.addEventListener('wheel', (e) => {
+        // On vérifie si on scrolle verticalement
+        if (e.deltaY !== 0) {
+            const isGoingDown = e.deltaY > 0;
+            const isGoingUp = e.deltaY < 0;
+            
+            // On calcule si on est au bout du scroll horizontal
+            // (Marge de 1px pour éviter les arrondis imprécis)
+            const atEnd = Math.ceil(track.scrollLeft + track.clientWidth) >= track.scrollWidth - 1;
+            const atStart = track.scrollLeft <= 1;
+
+            // CAS 1 : On veut descendre ET on est déjà tout à droite
+            if (isGoingDown && atEnd) {
+                return; // ON LAISSE PASSER (La page va scroller)
+            }
+            
+            // CAS 2 : On veut monter ET on est déjà tout à gauche
+            if (isGoingUp && atStart) {
+                return; // ON LAISSE PASSER (La page va scroller)
+            }
+
+            // SINON : On bloque la page et on scroll les projets
+            e.preventDefault();
+            track.scrollLeft += e.deltaY;
+        }
+    }, { passive: false });
 }
 /* =========================================
-   LOGIQUE DESKTOP (TON SCRIPT INFINI 3D)
+   LOGIQUE DESKTOP (INFINI 3D + SCROLL TRAP)
    ========================================= */
 function initDesktop(originalProjects, track, infoContainer, viewport, container) {
-    // --- CONFIGURATION ---
-    const boxH = 200; // Doit correspondre à ton CSS .project-box { height: 200px }
-    const gapH = 40;  // Doit correspondre à ton CSS .project-scroll-track { gap: 40px }
+    const boxH = 200; 
+    const gapH = 40;  
     const fullStep = boxH + gapH;
 
-    // --- CLONAGE POUR L'INFINI ---
+    // Clonage pour l'effet infini visuel
     const projects = [
         ...originalProjects.slice(-3),
         ...originalProjects,
         ...originalProjects.slice(0, 3)
     ];
 
+    // DEFINITION DES BORNES POUR LE SCROLL TRAP
+    // On commence réellement à l'index 3 (après les 3 clones du début)
+    const realStartIndex = 3;
+    // On finit à l'index correspondant au dernier vrai projet
+    const realEndIndex = 3 + originalProjects.length - 1;
+
     let currentIndex = 3; 
 
-    // Nettoyage
     track.innerHTML = '';
 
-    // Génération des box
     projects.forEach((proj, index) => {
         const box = document.createElement('div');
         box.className = 'project-box';
         box.style.backgroundImage = `url(${proj.image})`;
-        // Clic pour scroller vers le projet
         box.addEventListener('click', () => scrollToProject(index));
         track.appendChild(box);
     });
 
-    // --- FONCTION DE SCROLL PRINCIPALE ---
     const scrollToProject = (index, smooth = true) => {
         currentIndex = index;
         
-        // Index réel pour les données texte
         const realIndex = (index - 3 + originalProjects.length) % originalProjects.length;
         const p = originalProjects[realIndex];
 
-        // Mise à jour du texte (Adapté à ton HTML existant)
-        // On recrée le HTML intérieur pour correspondre à ton design
         infoContainer.style.opacity = 0;
         setTimeout(() => {
             infoContainer.innerHTML = `
-                <h2 class="main-title" style="margin-bottom: 0.5rem;">${p.title}</h2>
+                <h2 class="project-title" style="margin-bottom: 0.5rem;">${p.title}</h2>
                 <h3 class="sub-title" style="text-align: left; color: var(--accent-cyan); font-size: 1.5rem;">${p.type}</h3>
                 <div style="margin-top: 1rem; color: var(--text-gray);">
                     <p style="margin-bottom:0.5rem;">${p.description}</p>
@@ -150,7 +165,6 @@ function initDesktop(originalProjects, track, infoContainer, viewport, container
             infoContainer.style.transition = "opacity 0.3s";
         }, 200);
 
-        // Positionnement Vertical
         const viewportH = viewport.offsetHeight;
         const centerOffset = (viewportH / 2) - (boxH / 2);
         const offset = -(index * fullStep) + centerOffset;
@@ -163,17 +177,16 @@ function initDesktop(originalProjects, track, infoContainer, viewport, container
         
         track.style.transform = `translateY(${offset}px)`;
 
-        // Classe Active
         const boxes = document.querySelectorAll('.project-box');
         boxes.forEach((box, i) => box.classList.toggle('active', i === index));
 
-        // --- TÉLÉPORTATION (BOUCLE INFINIE) ---
         if (smooth) {
             const handleJump = () => {
                 track.removeEventListener('transitionend', handleJump);
                 let jumpNeeded = false;
                 let target = index;
 
+                // Logique de saut infini (seulement si on force via click/clavier hors bornes)
                 if (index >= projects.length - 3) {
                     target = 3; 
                     jumpNeeded = true;
@@ -184,7 +197,7 @@ function initDesktop(originalProjects, track, infoContainer, viewport, container
 
                 if (jumpNeeded) {
                     track.style.transition = "none";
-                    void track.offsetWidth; // Force Reflow
+                    void track.offsetWidth; 
                     scrollToProject(target, false);
                 }
             };
@@ -192,29 +205,43 @@ function initDesktop(originalProjects, track, infoContainer, viewport, container
         }
     };
 
-    // --- EVENTS DESKTOP ---
-    
-    // Init (Attendre un petit peu pour le DOM)
     setTimeout(() => scrollToProject(3, false), 50);
 
-    // Clavier (Flèches Haut/Bas)
+    // --- NOUVEAU : GESTION INTELLIGENTE DE LA MOLETTE ---
+    viewport.addEventListener('wheel', (e) => {
+        // e.preventDefault(); // Pas ici ! On laisse le nav.js gérer le preventDefault globalement, sauf si on capture l'event.
+        
+        const isGoingDown = e.deltaY > 0;
+        const isGoingUp = e.deltaY < 0;
+
+        if (isGoingDown) {
+            // Si on n'est PAS ENCORE au dernier projet réel
+            if (currentIndex < realEndIndex) {
+                e.preventDefault(); // On empêche le scroll page/section
+                e.stopPropagation(); // On empêche nav.js de voir l'event
+                scrollToProject(currentIndex + 1);
+            }
+            // Sinon (si on est au dernier), on ne fait RIEN.
+            // L'event va "bubbler" jusqu'à window, nav.js le verra et changera de section.
+        } 
+        else if (isGoingUp) {
+            // Si on n'est PAS ENCORE au premier projet réel
+            if (currentIndex > realStartIndex) {
+                e.preventDefault();
+                e.stopPropagation();
+                scrollToProject(currentIndex - 1);
+            }
+            // Sinon (si on est au premier), on laisse passer pour remonter à la section HOME.
+        }
+    }, { passive: false });
+
+    // Clavier (Flèches Haut/Bas) - Même logique de navigation interne
     window.addEventListener('keydown', (e) => {
-        // On vérifie qu'on est bien sur la page WORKS (index 1 horizontalement)
-        // Si tu as changé l'ordre des pages, change le "=== 1"
+        if (!container) return;
         const currentSection = Math.round(container.scrollLeft / window.innerWidth);
         if (currentSection !== 1) return; 
 
         if (e.key === "ArrowDown") scrollToProject(currentIndex + 1);
         if (e.key === "ArrowUp") scrollToProject(currentIndex - 1);
     });
-
-    // Support de la molette (Optionnel, pour remplacer le scroll par défaut)
-    viewport.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        if (e.deltaY > 0) {
-            scrollToProject(currentIndex + 1);
-        } else {
-            scrollToProject(currentIndex - 1);
-        }
-    }, { passive: false });
 }

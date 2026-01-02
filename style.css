@@ -189,6 +189,13 @@ ul { list-style: none; }
     color: var(--primary-light);
 }
 
+.project-title {
+    font-size: clamp(1rem, 30vw, 2.25rem);
+    font-weight: 700; /* ORIGINAL */
+    line-height: 0.9;
+    color: var(--primary-light);
+}
+
 .sub-title {
     font-size: var(--subtitle-size);
     font-weight: 400; /* ORIGINAL */
