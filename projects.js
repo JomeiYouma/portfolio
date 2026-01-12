@@ -48,6 +48,7 @@ function initMobile(projects, track, infoContainer, viewport) {
 
   // 1. Détection Active (inchangé)
   const boxes = document.querySelectorAll(".project-box");
+  
   const checkActiveMobile = () => {
     const centerPoint = window.innerWidth / 2;
     let bestCandidate = 0;
@@ -79,15 +80,13 @@ infoContainer.innerHTML = `
     <div class="project-details">
         <span class="project-info-title">Context:</span> ${p.context} <br>
         <span class="project-info-title">Skills:</span> ${p.tech}
+        ${p.link ? `<br><span class="project-info-title">Link:</span> <a href="${p.link}" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: underline;">${p.link}</a>` : ''}
     </div>
 `;
         infoContainer.dataset.currentIndex = bestCandidate;
       }
     }
   };
-
-  track.addEventListener("scroll", checkActiveMobile, { passive: true });
-  setTimeout(checkActiveMobile, 50);
 
   // 2. LE FIX DU "SCROLL TRAP"
   track.addEventListener(
@@ -122,6 +121,59 @@ infoContainer.innerHTML = `
     },
     { passive: false }
   );
+
+  // 3. AJOUT DES BOUTONS DE NAVIGATION MOBILE
+  const navContainer = document.createElement("div");
+  navContainer.className = "project-nav-buttons";
+  navContainer.innerHTML = `
+    <button class="project-nav-btn" id="prev-project" aria-label="Previous project">‹</button>
+    <button class="project-nav-btn" id="next-project" aria-label="Next project">›</button>
+  `;
+  
+  // Insert after project-info
+  infoContainer.parentElement.appendChild(navContainer);
+  
+  const prevBtn = document.getElementById("prev-project");
+  const nextBtn = document.getElementById("next-project");
+  
+  const scrollToIndex = (targetIndex) => {
+    const boxWidth = boxes[0].offsetWidth;
+    const gap = 20;
+    const scrollPos = targetIndex * (boxWidth + gap);
+    track.scrollTo({ left: scrollPos, behavior: "smooth" });
+  };
+  
+  prevBtn.addEventListener("click", () => {
+    const current = parseInt(infoContainer.dataset.currentIndex || 0);
+    if (current > 0) {
+      scrollToIndex(current - 1);
+    }
+  });
+  
+  nextBtn.addEventListener("click", () => {
+    const current = parseInt(infoContainer.dataset.currentIndex || 0);
+    if (current < projects.length - 1) {
+      scrollToIndex(current + 1);
+    }
+  });
+  
+  // Update buttons state
+  const updateButtons = () => {
+    const current = parseInt(infoContainer.dataset.currentIndex || 0);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === projects.length - 1;
+  };
+  
+  // Store reference to updateButtons so checkActiveMobile can use it
+  track.addEventListener("scroll", () => {
+    checkActiveMobile();
+    updateButtons();
+  }, { passive: true });
+  
+  setTimeout(() => {
+    checkActiveMobile();
+    updateButtons();
+  }, 50);
 }
 /* =========================================
    LOGIQUE DESKTOP (INFINI 3D + SCROLL TRAP)
@@ -180,6 +232,7 @@ function initDesktop(
     <div class="project-details">
         <span class="project-info-title">Context:</span> ${p.context} <br>
         <span class="project-info-title">Skills:</span> ${p.tech}
+        ${p.link ? `<br><span class="project-info-title">Link:</span> <a href="${p.link}" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: underline;">${p.link}</a>` : ''}
     </div>
 `;
       infoContainer.style.opacity = 1;
