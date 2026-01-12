@@ -1,0 +1,135 @@
+/* =========================================
+   AAA CONTRAST MODE
+   High contrast theme for WCAG AAA compliance
+   ========================================= */
+
+body.aaa-contrast {
+    --main-bg-color: #000000;
+    --primary-dark: #000000;
+    --primary-light: #FFFFFF;
+    --accent-cyan: #00FFFF;
+    --text-gray: #FFFFFF;
+}
+
+body.aaa-contrast .nav {
+    background-color: #000000;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+body.aaa-contrast .navigation li {
+    color: #FFFFFF;
+}
+
+body.aaa-contrast .navigation li::before {
+    color: #00FFFF;
+}
+
+body.aaa-contrast .navigation li:hover,
+body.aaa-contrast .navigation li.active {
+    color: #00FFFF;
+}
+
+body.aaa-contrast .golden-ratio-bg {
+    display: none; /* Hide decorative elements for maximum clarity */
+}
+
+body.aaa-contrast .sub-title {
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+body.aaa-contrast .description,
+body.aaa-contrast .intro-text,
+body.aaa-contrast .testimonial-item blockquote,
+body.aaa-contrast .about-bio,
+body.aaa-contrast .card-label,
+body.aaa-contrast .repo-desc {
+    color: #FFFFFF;
+}
+
+body.aaa-contrast .project-description,
+body.aaa-contrast .skills-group p {
+    color: #FFFFFF;
+}
+
+body.aaa-contrast .project-box {
+    border: 2px solid #FFFFFF;
+    filter: grayscale(100%) brightness(1.2) contrast(1.5);
+}
+
+body.aaa-contrast .project-box.active {
+    border: 3px solid #00FFFF;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+}
+
+body.aaa-contrast .work-with-me {
+    background: #FFFFFF;
+    color: #000000;
+    border: 2px solid #FFFFFF;
+}
+
+body.aaa-contrast .work-with-me:hover {
+    background: #00FFFF;
+    color: #000000;
+    border: 2px solid #00FFFF;
+}
+
+body.aaa-contrast .contact-card {
+    background: #000000;
+    border: 2px solid #FFFFFF;
+}
+
+body.aaa-contrast .contact-card:hover {
+    background: #000000;
+    border-color: #00FFFF;
+}
+
+body.aaa-contrast .github-status {
+    background: #000000;
+    border: 2px solid #FFFFFF;
+}
+
+body.aaa-contrast .social-link {
+    border: 2px solid #FFFFFF;
+}
+
+body.aaa-contrast .social-link::before {
+    border: 2px solid #FFFFFF;
+}
+
+body.aaa-contrast .social-link:hover::before {
+    border-color: #00FFFF;
+}
+
+body.aaa-contrast .social-link svg {
+    fill: #FFFFFF;
+}
+
+body.aaa-contrast .about-star {
+    color: #FFFFFF;
+    opacity: 0.1;
+}
+
+/* Ensure all text has sufficient contrast */
+body.aaa-contrast h1,
+body.aaa-contrast h2,
+body.aaa-contrast h3,
+body.aaa-contrast h4,
+body.aaa-contrast p,
+body.aaa-contrast span,
+body.aaa-contrast a,
+body.aaa-contrast li {
+    color: inherit;
+}
+
+/* Strengthen borders and outlines */
+body.aaa-contrast .project-info,
+body.aaa-contrast .testimonial-item,
+body.aaa-contrast .skills-group {
+    border-left: 2px solid #FFFFFF;
+    padding-left: 1rem;
+}
+
+body.aaa-contrast .intro-text {
+    border-bottom: 2px solid #FFFFFF;
+}
