@@ -1,0 +1,96 @@
+{
+  "en": {
+    "nav": {
+      "home": "home",
+      "works": "works",
+      "interpersonal": "interpersonal",
+      "about": "about",
+      "contact": "contact"
+    },
+    "home": {
+      "title": "YOuma",
+      "description": "Oppen to job opportunities woldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.",
+      "subtitle": "crEAtivE DeveloPer"
+    },
+    "works": {
+      "title": "WORKS",
+      "selectPrompt": "Select a project to see details..."
+    },
+    "service": {
+      "intro": "I enjoy working in collaborative environments where ideas grow through teamwork. Sharing knowledge, solving problems together, and building meaningful digital experiences as a team are what motivate me the most.",
+      "belief": "I believe that good communication and mutual support are key to creating polished, impactful projects.",
+      "cta": "wOrk with mE",
+      "cv": "/curriculum_vitae",
+      "cover": "/cover_letter"
+    },
+    "about": {
+      "subtitle": "me, myself and i :",
+      "name": "raphael",
+      "bio": "currently studying multimedia and web development, i build my journey through hands-on projects at university and on my own. i enjoy learning new technologies, experimenting, and turning ideas into concrete and functional experiences.",
+      "languages": "mastered languages :",
+      "languagesList": "html – css – js – php – lua – python – french",
+      "frameworks": "known frameworks :",
+      "frameworksList": "react js – laravel – backbone js – vue js – bootstrap – next js – tailwind css – three js",
+      "certifications": "certifications :",
+      "certificationsList": "opquast – accessibility aaa – eco futura web 2"
+    },
+    "contact": {
+      "title": "get in touch",
+      "email": "EmaIl",
+      "linkedin": "lInkedIn",
+      "github": "githUb",
+      "mood": "cUrrEnt_mOOd",
+      "moodValue": "listen to my playlists",
+      "githubActivity": "github_live_activity",
+      "loading": "connecting_to_server...",
+      "footer": "built with passion & code // 2025"
+    }
+  },
+  "fr": {
+    "nav": {
+      "home": "accueil",
+      "works": "projets",
+      "interpersonal": "relationnel",
+      "about": "a propos",
+      "contact": "contact"
+    },
+    "home": {
+      "title": "YOuma",
+      "description": "Ouvert aux opportunites professionnelles dans le monde entier. Passionne par la creation d'experiences numeriques soignees, intuitives et reflechies qui laissent une empreinte.",
+      "subtitle": "dEvEloPpeur crEAtif"
+    },
+    "works": {
+      "title": "PROJETS",
+      "selectPrompt": "Selectionnez un projet pour voir les details..."
+    },
+    "service": {
+      "intro": "J'aime travailler dans des environnements collaboratifs ou les idees grandissent grace au travail d'equipe. Partager les connaissances, resoudre des problemes ensemble et creer des experiences numeriques significatives en equipe !",
+      "belief": "Je crois que la bonne communication et le soutien mutuel sont essentiels pour creer des projets soignes et percutants.",
+      "cta": "travaillEr avEc moi",
+      "cv": "/curriculum_vitae",
+      "cover": "/lettre_motivation"
+    },
+    "about": {
+      "subtitle": "ma petite personne :",
+      "name": "raphael",
+      "bio": "actuellement en formation multimedia et developpement web, je construis mon parcours a travers des projets pratiques a l'universite et en autonomie. j'aime apprendre de nouvelles technologies, experimenter et transformer des idees en experiences concretes et fonctionnelles.",
+      "languages": "langages maitrises :",
+      "languagesList": "html – css – js – php – lua – python – francais",
+      "frameworks": "frameworks connus :",
+      "frameworksList": "react js – laravel – backbone js – vue js – bootstrap – next js – tailwind css – three js",
+      "certifications": "certifications :",
+      "certificationsList": "opquast – accessibilite aaa – eco futura web 2"
+    },
+    "contact": {
+      "title": "me contacter",
+      "email": "EmaiL",
+      "linkedin": "lInkedIn",
+      "github": "gith  Ub",
+      "mood": "hUmEur_acTuellE",
+      "moodValue": "ecoutez mes playlists",
+      "githubActivity": "activite_github_live",
+      "loading": "connexion_au_serveur...",
+      "footer": "cree avec passion & code // 2025"
+    }
+  }
+}
