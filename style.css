@@ -164,6 +164,43 @@ ul { list-style: none; }
    ========================================= */
 
 /* --- PAGE 1: HOME --- */
+/* --- STYLE DU SVG WINDOWS (Arrière-plan) --- */
+
+.home-visual {
+    position: relative; /* Indispensable pour que l'absolute fonctionne dedans */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* On s'assure que ça ne déborde pas */
+    overflow: hidden; 
+}
+
+.bg-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* On le centre parfaitement */
+    transform: translate(-50%, -50%);
+    
+    /* Taille : Très grand pour faire "fond d'écran" */
+    width: 120%; 
+    height: auto;
+    
+    /* Style filaire fin */
+    fill: transparent; /* Pas de remplissage noir */
+    stroke: var(--primary-light); /* Couleur des lignes (blanc) */
+    stroke-width: 10px; /* Finesse des lignes (ajuste si besoin : 5px, 20px...) */
+    
+    opacity: 0.1; /* Très discret en fond */
+    z-index: 0; /* Derrière le texte */
+    pointer-events: none; /* On ne peut pas cliquer dessus */
+}
+
+/* On s'assure que le titre passe DEVANT le logo */
+.home-visual .sub-title {
+    position: relative;
+    z-index: 1; 
+}
 .section.home {
     padding: 0 var(--section-padding);
     background-color: var(--main-bg-color);
