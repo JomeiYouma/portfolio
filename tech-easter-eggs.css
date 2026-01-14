@@ -1,0 +1,115 @@
+/* Technology Easter Eggs Styles */
+
+/* Interactive tech names */
+.tech-interactive {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    color: var(--accent-cyan);
+    font-weight: 500;
+}
+
+.tech-interactive:hover {
+    color: var(--primary-light);
+    text-shadow: 0 0 10px var(--accent-cyan);
+}
+
+/* CSS Chaos mode - Multiple devastating effects */
+.css-chaos {
+    animation: colorChaos 0.3s infinite, glitch 0.5s infinite;
+    filter: hue-rotate(0deg) contrast(1.5) saturate(2);
+}
+
+@keyframes colorChaos {
+    0% { filter: hue-rotate(0deg) contrast(1.5) saturate(2); }
+    25% { filter: hue-rotate(90deg) contrast(2) saturate(3); }
+    50% { filter: hue-rotate(180deg) contrast(1.2) saturate(1.5); }
+    75% { filter: hue-rotate(270deg) contrast(2.5) saturate(4); }
+    100% { filter: hue-rotate(360deg) contrast(1.5) saturate(2); }
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    10% { transform: translate(-2px, 2px); }
+    20% { transform: translate(2px, -2px); }
+    30% { transform: translate(-2px, -2px); }
+    40% { transform: translate(2px, 2px); }
+}
+
+@keyframes chaosRotate {
+    from { transform: rotate(-2deg) scale(0.98); }
+    to { transform: rotate(2deg) scale(1.02); }
+}
+
+/* HTML & PHP effect - Fade out */
+.fade-out {
+    animation: fadeToBlack 0.5s ease forwards;
+}
+
+@keyframes fadeToBlack {
+    to { 
+        filter: brightness(0);
+    }
+}
+
+/* Shake animation for JS */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* French highlight */
+.highlight-lang {
+    animation: pulse-highlight 1s infinite;
+    box-shadow: 0 0 20px var(--accent-cyan) !important;
+}
+
+@keyframes pulse-highlight {
+    0%, 100% { box-shadow: 0 0 20px var(--accent-cyan); }
+    50% { box-shadow: 0 0 40px var(--accent-cyan); }
+}
+
+/* Bootstrap grid */
+.bootstrap-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9997;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
+    padding: 0 2rem;
+}
+
+.grid-col {
+    border-right: 1px solid rgba(0, 123, 255, 0.3);
+    background: rgba(0, 123, 255, 0.05);
+}
+
+/* Laravel route */
+.laravel-route {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #ff2d20;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(255, 45, 32, 0.5);
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(200%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}

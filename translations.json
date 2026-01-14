@@ -30,7 +30,7 @@
       "languages": "Mastered Languages :",
       "languagesList": "HTML – CSS – JS – PHP – Lua – Python – French",
       "frameworks": "Known Frameworks :",
-      "frameworksList": "React JS – Laravel – Backbone JS – Vue JS – Bootstrap – Next JS – Tailwind CSS – Three JS",
+      "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
       "certifications": {
         "title": "Web Quality Training",
         "description": "Maîtrise Opquast certified — a recognized web quality benchmark covering 240+ best practices in accessibility, SEO, performance, privacy, and user experience. Trained to build sustainable, inclusive, and high-quality digital experiences."
@@ -94,9 +94,9 @@
       "name": "Raphaël",
       "bio": "Actuellement en formation multimédia et développement web, je construis mon parcours à travers des projets pratiques à l'université et en autonomie. J'aime apprendre de nouvelles technologies, expérimenter et transformer des idées en expériences concrètes et fonctionnelles.",
       "languages": "Langages Maîtrisés :",
-      "languagesList": "HTML – CSS – JS – PHP – Lua – Python – Français",
+      "languagesList": "HTML – CSS – JS – PHP – Lua – Python ",
       "frameworks": "Frameworks Connus :",
-      "frameworksList": "React JS – Laravel – Backbone JS – Vue JS – Bootstrap – Next JS – Tailwind CSS – Three JS",
+      "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
       "certifications": {
         "title": "Formation Qualité Web",
         "description": "Certifié Maîtrise Opquast — référentiel reconnu de qualité web couvrant plus de 240 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur. Formé à créer des expériences numériques durables, inclusives et de haute qualité."

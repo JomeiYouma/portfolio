@@ -61,6 +61,13 @@ function applyTranslations(lang) {
     }).catch(() => {
         // Projects module might not be loaded yet, that's ok
     });
+    
+    // Re-initialize tech easter eggs after translations are applied
+    setTimeout(() => {
+        if (typeof initTechEasterEggs !== 'undefined') {
+            initTechEasterEggs();
+        }
+    }, 100);
 }
 
 // Toggle between EN and FR

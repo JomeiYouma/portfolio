@@ -1026,6 +1026,7 @@ ul { list-style: none; }
     color: var(--primary-light); /* ORIGINAL */
     opacity: 0.05; /* ORIGINAL TRANSPARENCY */
     z-index: 1;
+    pointer-events: none; /* Don't block hover interactions */
 }
 
 /* --- PAGE 5: CONTACT --- */
