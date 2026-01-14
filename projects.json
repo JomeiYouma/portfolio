@@ -1,73 +1,154 @@
 [
   {
     "id": 1,
-    "title": "ORBIS",
-    "type": "DATA VISUALIZATION WEBSITE",
-    "description": "A deep dive into linguistic evolution. This interactive one-page site visualizes the decline of global languages and the cultural heritage they carry. Built with a focus on clean data architecture and meaningful UI to bring complex statistics to life.",
+    "title": {
+      "en": "ORBIS",
+      "fr": "ORBIS"
+    },
+    "type": {
+      "en": "DATA VISUALIZATION WEBSITE",
+      "fr": "SITE DE VISUALISATION DE DONNÉES"
+    },
+    "description": {
+      "en": "A deep dive into linguistic evolution. This interactive one-page site visualizes the decline of global languages and the cultural heritage they carry. Built with a focus on clean data architecture and meaningful UI to bring complex statistics to life.",
+      "fr": "Une exploration approfondie de l'évolution linguistique. Ce site interactif d'une page visualise le déclin des langues mondiales et le patrimoine culturel qu'elles portent. Conçu avec une architecture de données claire et une interface significative pour donner vie à des statistiques complexes."
+    },
     "tech": "JS - CSS - HTML - UI/UX",
     "context": "Academic Project | Team of 3",
-    "image": "orbis.png"
+    "image": "orbis.png",
+    "link": "https://github.com/example/orbis"
   },
   {
     "id": 2,
-    "title": "HORUS",
-    "type": "NARRATIVE BROWSER GAME",
-    "description": "An immersive journey into a low-tech futuristic underworld. Beyond the narrative, I engineered a custom secure authentication system and a branching story engine. Developed as a personal passion project, managing everything from world-building to full-stack deployment.",
+    "title": {
+      "en": "HORUS",
+      "fr": "HORUS"
+    },
+    "type": {
+      "en": "NARRATIVE BROWSER GAME",
+      "fr": "JEU NARRATIF EN LIGNE"
+    },
+    "description": {
+      "en": "An immersive journey into a low-tech futuristic underworld. Beyond the narrative, I engineered a custom secure authentication system and a branching story engine. Developed as a personal passion project, managing everything from world-building to full-stack deployment.",
+      "fr": "Un voyage immersif dans un monde souterrain futuriste low-tech. Au-delà du récit, j'ai conçu un système d'authentification sécurisé personnalisé et un moteur narratif à embranchements. Développé comme projet passion personnel, gérant tout de l'univers à déploiement full-stack."
+    },
     "tech": "PHP - JAVASCRIPT - SQL - PHOTOSHOP",
     "context": "Personal Project | Solo",
-    "image": "horus.png"
+    "image": "horus.png",
+    "link": "https://horus-game.example.com"
   },
   {
     "id": 3,
-    "title": "ASTDX CALCULATOR",
-    "type": "COMPETITIVE GAMING TOOL",
-    "description": "A high-performance utility for the Roblox competitive scene. I reverse-engineered complex game mechanics to create a real-time damage simulator. Used by an international e-sports community to optimize strategies through dynamic data tables and precision JS logic.",
+    "title": {
+      "en": "ASTDX CALCULATOR",
+      "fr": "CALCULATEUR ASTDX"
+    },
+    "type": {
+      "en": "COMPETITIVE GAMING TOOL",
+      "fr": "OUTIL DE JEU COMPÉTITIF"
+    },
+    "description": {
+      "en": "A high-performance utility for the Roblox competitive scene. I reverse-engineered complex game mechanics to create a real-time damage simulator. Used by an international e-sports community to optimize strategies through dynamic data tables and precision JS logic.",
+      "fr": "Un outil haute performance pour la scène compétitive Roblox. J'ai rétro-ingénié des mécaniques de jeu complexes pour créer un simulateur de dégâts en temps réel. Utilisé par une communauté e-sports internationale pour optimiser les stratégies via des tableaux dynamiques et une logique JS précise."
+    },
     "tech": "JS - THREE.JS - GOOGLE SHEETS API",
     "context": "Collaborative Project | International Team",
-    "image": "astdx2.png"
+    "image": "astdx2.png",
+    "link": "https://astdx-calculator.example.com"
   },
   {
     "id": 4,
-    "title": "RESTAU RE",
-    "type": "UX/UI PROTOTYPE & PLATFORM",
-    "description": "Re-evaluating the culinary experience. This project involved a complete UX research phase (personas, user journeys) followed by a high-fidelity interactive prototype. It features a reliable rating system and a fully functional user account architecture.",
+    "title": {
+      "en": "RESTAU RE",
+      "fr": "RESTAU RE"
+    },
+    "type": {
+      "en": "UX/UI PROTOTYPE & PLATFORM",
+      "fr": "PROTOTYPE UX/UI & PLATEFORME"
+    },
+    "description": {
+      "en": "Re-evaluating the culinary experience. This project involved a complete UX research phase (personas, user journeys) followed by a high-fidelity interactive prototype. It features a reliable rating system and a fully functional user account architecture.",
+      "fr": "Réévaluation de l'expérience culinaire. Ce projet a impliqué une phase complète de recherche UX (personas, parcours utilisateurs) suivie d'un prototype interactif haute-fidélité. Il présente un système de notation fiable et une architecture de comptes utilisateur entièrement fonctionnelle."
+    },
     "tech": "UX RESEARCH - FIGMA - FIGJAM - GIT",
     "context": "Academic Project | Solo",
-    "image": "restaure.png"
+    "image": "restaure.png",
+    "link": "https://figma.com/restau-re-prototype"
   },
   {
     "id": 5,
-    "title": "MUSEORIUM",
-    "type": "EXPERIMENTAL MUSICAL EXHIBITION",
-    "description": "A digital gallery exploring the theme of Chaos through sound and motion. This project focuses on the intersection of artistic narration and front-end experimentation, using rhythmic tensions and contrasting visual landscapes to guide the user's emotions.",
+    "title": {
+      "en": "MUSEORIUM",
+      "fr": "MUSEORIUM"
+    },
+    "type": {
+      "en": "EXPERIMENTAL MUSICAL EXHIBITION",
+      "fr": "EXPOSITION MUSICALE EXPÉRIMENTALE"
+    },
+    "description": {
+      "en": "A digital gallery exploring the theme of Chaos through sound and motion. This project focuses on the intersection of artistic narration and front-end experimentation, using rhythmic tensions and contrasting visual landscapes to guide the user's emotions.",
+      "fr": "Une galerie numérique explorant le thème du Chaos à travers le son et le mouvement. Ce projet se concentre sur l'intersection entre narration artistique et expérimentation front-end, utilisant des tensions rythmiques et des paysages visuels contrastés pour guider les émotions de l'utilisateur."
+    },
     "tech": "FRONT-END DEV - JS - WEB AUDIO",
     "context": "Academic Project | Solo",
-    "image": "museorium.png"
+    "image": "museorium.png",
+    "link": "https://museorium.example.com"
   },
   {
     "id": 6,
-    "title": "STREET DREAMS",
-    "type": "AUDIOVISUAL PRODUCTION",
-    "description": "A cinematic tribute to contemporary urban art. I co-directed and edited a fictional trailer inspired by Banksy’s universe. This project balanced creative storytelling with technical constraints, from on-location filming to post-production visual effects.",
+    "title": {
+      "en": "STREET DREAMS",
+      "fr": "STREET DREAMS"
+    },
+    "type": {
+      "en": "AUDIOVISUAL PRODUCTION",
+      "fr": "PRODUCTION AUDIOVISUELLE"
+    },
+    "description": {
+      "en": "A cinematic tribute to contemporary urban art. I co-directed and edited a fictional trailer inspired by Banksy's universe. This project balanced creative storytelling with technical constraints, from on-location filming to post-production visual effects.",
+      "fr": "Un hommage cinématographique à l'art urbain contemporain. J'ai co-réalisé et monté une bande-annonce fictive inspirée de l'univers de Banksy. Ce projet a équilibré narration créative et contraintes techniques, du tournage sur site aux effets visuels en post-production."
+    },
     "tech": "VIDEO PRODUCTION - EDITING - STORYBOARDING",
     "context": "Academic Project | Team of 2",
-    "image": "street-dreams.png"
+    "image": "street-dreams.png",
+    "link": "https://vimeo.com/street-dreams"
   },
   {
     "id": 7,
-    "title": "ASTX COMPARATOR",
-    "type": "DATABASE & ANALYTICS PLATFORM",
-    "description": "A comprehensive census and comparison tool designed for professional tower defense players. Unlike a simple wiki, this project focuses on backend architecture, utilizing a robust SQL database and PHP to organize complex unit statistics for high-level strategic analysis.",
+    "title": {
+      "en": "ASTX COMPARATOR",
+      "fr": "COMPARATEUR ASTX"
+    },
+    "type": {
+      "en": "DATABASE & ANALYTICS PLATFORM",
+      "fr": "PLATEFORME BASE DE DONNÉES & ANALYTIQUE"
+    },
+    "description": {
+      "en": "A comprehensive census and comparison tool designed for professional tower defense players. Unlike a simple wiki, this project focuses on backend architecture, utilizing a robust SQL database and PHP to organize complex unit statistics for high-level strategic analysis.",
+      "fr": "Un outil de recensement et de comparaison conçu pour les joueurs professionnels de tower defense. Contrairement à un simple wiki, ce projet se concentre sur l'architecture backend, utilisant une base de données SQL robuste et PHP pour organiser des statistiques d'unités complexes pour une analyse stratégique de haut niveau."
+    },
     "tech": "PHP - SQL - DATABASE ARCHITECTURE",
     "context": "Academic Project | Backend Focus",
-    "image": "web-inventory.png"
+    "image": "web-inventory.png",
+    "link": "https://github.com/example/astx-comparator"
   },
   {
     "id": 8,
-    "title": "HENDAYE REBRAND",
-    "type": "BRAND IDENTITY & WEB DESIGN",
-    "description": "A strategic visual overhaul for the city of Hendaye. This project bridged the gap between institutional communication and modern web design. I developed a cohesive graphic charter, promotional print assets, and a high-fidelity web interface to revitalize the city's image.",
+    "title": {
+      "en": "HENDAYE REBRAND",
+      "fr": "REFONTE HENDAYE"
+    },
+    "type": {
+      "en": "BRAND IDENTITY & WEB DESIGN",
+      "fr": "IDENTITÉ DE MARQUE & DESIGN WEB"
+    },
+    "description": {
+      "en": "A strategic visual overhaul for the city of Hendaye. This project bridged the gap between institutional communication and modern web design. I developed a cohesive graphic charter, promotional print assets, and a high-fidelity web interface to revitalize the city's image.",
+      "fr": "Une refonte visuelle stratégique pour la ville d'Hendaye. Ce projet a comblé le fossé entre communication institutionnelle et design web moderne. J'ai développé une charte graphique cohérente, des supports print promotionnels et une interface web haute-fidélité pour revitaliser l'image de la ville."
+    },
     "tech": "FIGMA - PHOTOSHOP - ILLUSTRATOR",
     "context": "Academic Project | Design Focus",
-    "image": "campain.png"
-  }]
+    "image": "campain.png",
+    "link": "https://behance.net/hendaye-rebrand"
+  }
+]

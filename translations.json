@@ -1,16 +1,16 @@
 {
   "en": {
     "nav": {
-      "home": "home",
-      "works": "works",
-      "interpersonal": "interpersonal",
-      "about": "about",
-      "contact": "contact"
+      "home": "Home",
+      "works": "Works",
+      "interpersonal": "Interpersonal",
+      "about": "About",
+      "contact": "Contact"
     },
     "home": {
       "title": "YOuma",
-      "description": "Oppen to job opportunities woldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.",
-      "subtitle": "crEAtivE DeveloPer"
+      "description": "Open to job opportunities worldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.",
+      "subtitle": "Creative Developer"
     },
     "works": {
       "title": "WORKS",
@@ -24,18 +24,37 @@
       "cover": "/cover_letter"
     },
     "about": {
-      "subtitle": "me, myself and i :",
-      "name": "raphael",
-      "bio": "currently studying multimedia and web development, i build my journey through hands-on projects at university and on my own. i enjoy learning new technologies, experimenting, and turning ideas into concrete and functional experiences.",
-      "languages": "mastered languages :",
-      "languagesList": "html – css – js – php – lua – python – french",
-      "frameworks": "known frameworks :",
-      "frameworksList": "react js – laravel – backbone js – vue js – bootstrap – next js – tailwind css – three js",
-      "certifications": "certifications :",
-      "certificationsList": "opquast – accessibility aaa"
+      "subtitle": "Me, Myself and I :",
+      "name": "Raphaël",
+      "bio": "Currently studying multimedia and web development, I build my journey through hands-on projects at university and on my own. I enjoy learning new technologies, experimenting, and turning ideas into concrete and functional experiences.",
+      "languages": "Mastered Languages :",
+      "languagesList": "HTML – CSS – JS – PHP – Lua – Python – French",
+      "frameworks": "Known Frameworks :",
+      "frameworksList": "React JS – Laravel – Backbone JS – Vue JS – Bootstrap – Next JS – Tailwind CSS – Three JS",
+      "certifications": {
+        "title": "Web Quality Training",
+        "description": "Maîtrise Opquast certified — a recognized web quality benchmark covering 240+ best practices in accessibility, SEO, performance, privacy, and user experience. Trained to build sustainable, inclusive, and high-quality digital experiences."
+      },
+      "testimonials": {
+        "navy": {
+          "name": "Navy X.",
+          "quote": "Raphael quickly became an essential part of the testing phase. His structured feedback, attention to detail, and ability to spot edge cases saved us valuable time.",
+          "role": "- tester manager"
+        },
+        "eric": {
+          "name": "Eric M. (translated)",
+          "quote": "Raphael demonstrated strong motivation and a real commitment to developing his professional skills. He approaches every challenge with creativity and persistence.",
+          "role": "- career advisor"
+        },
+        "caroline": {
+          "name": "Caroline P. (translated)",
+          "quote": "Working with Raphael was a real pleasure. He showed great curiosity and technical precision. His attention to detail made a noticeable impact on the quality of our final product.",
+          "role": "- internship supervisor"
+        }
+      }
     },
     "contact": {
-      "title": "get in touch",
+      "title": "Get in Touch",
       "email": "EmaIl",
       "linkedin": "lInkedIn",
       "github": "githUb",
@@ -48,49 +67,68 @@
   },
   "fr": {
     "nav": {
-      "home": "accueil",
-      "works": "projets",
-      "interpersonal": "relationnel",
-      "about": "a propos",
-      "contact": "contact"
+      "home": "Accueil",
+      "works": "Projets",
+      "interpersonal": "Relationnel",
+      "about": "À Propos",
+      "contact": "Contact"
     },
     "home": {
       "title": "YOuma",
-      "description": "Ouvert aux opportunites professionnelles dans le monde entier. Passionne par la creation d'experiences numeriques soignees, intuitives et reflechies qui laissent une empreinte.",
-      "subtitle": "dEvEloPpeur crEAtif"
+      "description": "Ouvert aux opportunités professionnelles dans le monde entier. Passionné par la création d'expériences numériques soignées, intuitives et réfléchies qui laissent une empreinte.",
+      "subtitle": "Développeur Créatif"
     },
     "works": {
       "title": "PROJETS",
-      "selectPrompt": "Selectionnez un projet pour voir les details..."
+      "selectPrompt": "Sélectionnez un projet pour voir les détails..."
     },
     "service": {
-      "intro": "J'aime travailler dans des environnements collaboratifs ou les idees grandissent grace au travail d'equipe. Partager les connaissances, resoudre des problemes ensemble et creer des experiences numeriques significatives en equipe !",
-      "belief": "Je crois que la bonne communication et le soutien mutuel sont essentiels pour creer des projets soignes et percutants.",
+      "intro": "J'aime travailler dans des environnements collaboratifs où les idées grandissent grâce au travail d'équipe. Partager les connaissances, résoudre des problèmes ensemble et créer des expériences numériques significatives en équipe, c'est ce qui me motive le plus.",
+      "belief": "Je crois que la bonne communication et le soutien mutuel sont essentiels pour créer des projets soignés et percutants.",
       "cta": "travaillEr avEc moi",
       "cv": "/curriculum_vitae",
       "cover": "/lettre_motivation"
     },
     "about": {
-      "subtitle": "ma petite personne :",
-      "name": "raphael",
-      "bio": "actuellement en formation multimedia et developpement web, je construis mon parcours a travers des projets pratiques a l'universite et en autonomie. j'aime apprendre de nouvelles technologies, experimenter et transformer des idees en experiences concretes et fonctionnelles.",
-      "languages": "langages maitrises :",
-      "languagesList": "html – css – js – php – lua – python – francais",
-      "frameworks": "frameworks connus :",
-      "frameworksList": "react js – laravel – backbone js – vue js – bootstrap – next js – tailwind css – three js",
-      "certifications": "certifications :",
-      "certificationsList": "opquast – accessibilite aaa"
+      "subtitle": "Me, Myself and I :",
+      "name": "Raphaël",
+      "bio": "Actuellement en formation multimédia et développement web, je construis mon parcours à travers des projets pratiques à l'université et en autonomie. J'aime apprendre de nouvelles technologies, expérimenter et transformer des idées en expériences concrètes et fonctionnelles.",
+      "languages": "Langages Maîtrisés :",
+      "languagesList": "HTML – CSS – JS – PHP – Lua – Python – Français",
+      "frameworks": "Frameworks Connus :",
+      "frameworksList": "React JS – Laravel – Backbone JS – Vue JS – Bootstrap – Next JS – Tailwind CSS – Three JS",
+      "certifications": {
+        "title": "Formation Qualité Web",
+        "description": "Certifié Maîtrise Opquast — référentiel reconnu de qualité web couvrant plus de 240 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur. Formé à créer des expériences numériques durables, inclusives et de haute qualité."
+      },
+      "testimonials": {
+        "navy": {
+          "name": "Navy X. (translated)",
+          "quote": "Raphaël est rapidement devenu un élément essentiel de la phase de test. Ses retours structurés, son attention aux détails et sa capacité à repérer les cas limites nous ont fait gagner un temps précieux.",
+          "role": "- responsable test"
+        },
+        "eric": {
+          "name": "Eric M.",
+          "quote": "Raphaël a démontré une forte motivation et un réel engagement dans le développement de ses compétences professionnelles. Il aborde chaque défi avec créativité et persévérance.",
+          "role": "- conseiller en insertion professionnelle"
+        },
+        "caroline": {
+          "name": "Caroline P.",
+          "quote": "Travailler avec Raphaël a été un réel plaisir. Il a fait preuve d'une grande curiosité et d'une précision technique remarquable. Son attention aux détails a eu un impact notable sur la qualité de notre produit final.",
+          "role": "- responsable de stage"
+        }
+      }
     },
     "contact": {
-      "title": "me contacter",
+      "title": "Me Contacter",
       "email": "EmaiL",
       "linkedin": "lInkedIn",
-      "github": "gith  Ub",
+      "github": "githUb",
       "mood": "hUmEur_acTuellE",
-      "moodValue": "ecoutez mes playlists",
-      "githubActivity": "activite_github_live",
+      "moodValue": "écoutez mes playlists",
+      "githubActivity": "activité_github_live",
       "loading": "connexion_au_serveur...",
-      "footer": "cree avec passion & code // 2025"
+      "footer": "créé avec passion & code // 2025"
     }
   }
 }

@@ -9,26 +9,30 @@
     <link rel="icon" href="favicon_portfolio.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet"> <!-- orbitron -->
+<link href="https://fonts.googleapis.com/css2?family=Monofett&display=swap" rel="stylesheet"> <!-- monofett -->
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
   </head>
   <body>
     <header class="nav">
       <ul class="navigation">
-        <li data-i18n="nav.home">home</li>
-        <li data-i18n="nav.works">works</li>
-        <li data-i18n="nav.interpersonal">interpersonal</li>
-        <li data-i18n="nav.about">about</li>
-        <li data-i18n="nav.contact">contact</li>
+        <li data-i18n="nav.home">Home</li>
+        <li data-i18n="nav.works">Works</li>
+        <li data-i18n="nav.interpersonal">Interpersonal</li>
+        <li data-i18n="nav.about">About</li>
+        <li data-i18n="nav.contact">Contact</li>
       </ul>
     </header>
     
     <!-- Accessibility Controls - Fixed Position -->
     <div class="accessibility-controls">
       <button class="contrast-toggle" aria-label="Toggle high contrast mode" aria-pressed="false">
-        <span class="icon-contrast">AAA</span>
+        <svg class="icon-contrast" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+        </svg>
       </button>
       <button class="lang-toggle" aria-label="Switch language">
-        <span>EN</span>
+        <span>FR</span>
       </button>
     </div>
     
@@ -45,23 +49,15 @@
         </div>
 
         <div class="home-visual">
-          <!-- Golden Ratio Geometric Background -->
-          <svg class="golden-ratio-bg" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-            <!-- Golden Ratio Spiral -->
-            <path d="M 500 500 Q 810 500 810 190 Q 810 190 500 190 Q 190 190 190 500 Q 190 810 500 810 Q 810 810 810 500" 
-                  fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-            <!-- Golden Circles -->
-            <circle cx="500" cy="500" r="310" fill="none" stroke="rgba(36, 251, 197, 0.03)" stroke-width="1"/>
-            <circle cx="500" cy="500" r="190" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
-            <circle cx="500" cy="500" r="118" fill="none" stroke="rgba(36, 251, 197, 0.05)" stroke-width="1"/>
-            <!-- Grid Lines -->
-            <line x1="500" y1="0" x2="500" y2="1000" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
-            <line x1="0" y1="500" x2="1000" y2="500" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
-            <line x1="309" y1="0" x2="309" y2="1000" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/>
-            <line x1="691" y1="0" x2="691" y2="1000" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/>
-            <line x1="0" y1="309" x2="1000" y2="309" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/>
-            <line x1="0" y1="691" x2="1000" y2="691" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/>
-          </svg>
+          <!-- Aesthetic Geometric Pattern -->
+          <div class="geometric-pattern">
+            <div class="pattern-square pattern-square-1"></div>
+            <div class="pattern-square pattern-square-2"></div>
+            <div class="pattern-square pattern-square-3"></div>
+            <div class="pattern-line pattern-line-1"></div>
+            <div class="pattern-line pattern-line-2"></div>
+            <div class="pattern-circle"></div>
+          </div>
           
           <h2 class="sub-title" data-i18n="home.subtitle">crEAtivE <br />DeveloPer</h2>
           
@@ -71,17 +67,24 @@
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
               </svg>
-              <span>in</span>
+              <span>IN</span>
             </a>
             <a href="https://github.com/JomeiYouma" target="_blank" rel="noopener" class="social-link" aria-label="GitHub Profile">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
-              <span>gh</span>
+              <span>GH</span>
             </a>
           </div>
         </div>
       </section>
+
+<!-- Desktop Project Navigation Arrows - Hidden by default -->
+<div class="desktop-project-nav" style="display: none;">
+  <button class="desktop-project-nav-btn" id="prev-project-desktop" aria-label="Previous project">‹</button>
+  <button class="desktop-project-nav-btn" id="next-project-desktop" aria-label="Next project">›</button>
+</div>
+
 <section class="section works" id="works">
   <div class="project-info">
     
@@ -117,20 +120,20 @@
   
 
             <div class="testimonial-item">
-                <h4 class="name">Navy X.</h4>
-                <blockquote>"Raphael quickly became an essential part of the testing phase. His structured feedback, attention to detail, and ability to spot edge cases saved us valuable time."</blockquote>
-                <span class="role">- tester manager</span>
+                <h4 class="name" data-i18n="about.testimonials.navy.name">Navy X.</h4>
+                <blockquote data-i18n="about.testimonials.navy.quote">"Raphael quickly became an essential part of the testing phase. His structured feedback, attention to detail, and ability to spot edge cases saved us valuable time."</blockquote>
+                <span class="role" data-i18n="about.testimonials.navy.role">- tester manager</span>
             </div>
 
             <div class="testimonial-item">
-                <h4 class="name">Eric M.</h4>
-                <blockquote>"Raphael demonstrated strong motivation and a real commitment to developing his professional skills. He approaches every challenge with creativity and persistence."</blockquote>
-                <span class="role">- career advisor</span>
+                <h4 class="name" data-i18n="about.testimonials.eric.name">Eric M. (translated)</h4>
+                <blockquote data-i18n="about.testimonials.eric.quote">"Raphael demonstrated strong motivation and a real commitment to developing his professional skills. He approaches every challenge with creativity and persistence."</blockquote>
+                <span class="role" data-i18n="about.testimonials.eric.role">- career advisor</span>
             </div>
             <div class="testimonial-item">
-                <h4 class="name">Caroline P.</h4>
-                <blockquote>“Working with Raphael was a real pleasure. he showed great curiosity and technical precision. his attention to detail made a noticeable impact on the quality of our final product.”</blockquote>
-                <span class="role">- stage supervisor</span>
+                <h4 class="name" data-i18n="about.testimonials.caroline.name">Caroline P. (translated)</h4>
+                <blockquote data-i18n="about.testimonials.caroline.quote">"Working with Raphael was a real pleasure. He showed great curiosity and technical precision. His attention to detail made a noticeable impact on the quality of our final product."</blockquote>
+                <span class="role" data-i18n="about.testimonials.caroline.role">- stage supervisor</span>
             </div> 
         </div>
 
@@ -158,8 +161,8 @@
       <section class="section about" id="about">
     <div class="about-container">
         <div class="about-header">
-            <span class="small-title" data-i18n="about.subtitle">me, myself and i :</span>
-            <h2 class="name-title">raphael</h2>
+            <span class="small-title" data-i18n="about.subtitle">Me, Myself and I :</span>
+            <h2 class="name-title" data-i18n="about.name">Raphaël</h2>
 <p class="about-bio" data-i18n="about.bio">
     currently studying multimedia and web development, i build my journey through 
     hands-on projects at university and on my own.  
@@ -180,8 +183,8 @@
             </div>
 
             <div class="skills-group">
-                <h3 data-i18n="about.certifications">certifications :</h3>
-                <p data-i18n="about.certificationsList">opquast – accessibility aaa</p>
+                <h3 data-i18n="about.certifications.title">Web Quality Training</h3>
+                <p data-i18n="about.certifications.description">Maîtrise Opquast certified — trained in creating accessible, performant, and sustainable web experiences.</p>
             </div>
         </div>
 
@@ -253,6 +256,7 @@
   import { initI18n, toggleLanguage } from './i18n.js';
   import { initContrastMode, toggleContrastMode } from './contrast.js';
   import './animations.js'; // Import animations auto-initialization
+  import './pattern-effect.js'; // Import pattern cursor effect
 
   document.addEventListener("DOMContentLoaded", () => {
       // Initialize core features

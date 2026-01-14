@@ -1,3 +1,60 @@
+import { getCurrentLanguage } from './i18n.js';
+
+// Store references for updating when language changes
+let cachedProjects = null;
+let cachedInfoContainer = null;
+let cachedCurrentIndex = 0;
+let isMobileMode = false;
+
+// Helper function to get translated project field
+function getTranslatedField(project, fieldName) {
+  const lang = getCurrentLanguage();
+  const field = project[fieldName];
+  
+  // If field is an object with translations, use current language
+  if (field && typeof field === 'object' && field[lang]) {
+    return field[lang];
+  }
+  
+  // Otherwise return as-is (for tech, context, image, etc.)
+  return field;
+}
+
+// Export function to update project display when language changes
+export function updateProjectDisplay() {
+  if (!cachedProjects || !cachedInfoContainer) return;
+  
+  const currentIndex = parseInt(cachedInfoContainer.dataset.currentIndex || cachedCurrentIndex);
+  // In desktop mode, cachedCurrentIndex already contains the real index (not cloned)
+  // In mobile mode, currentIndex is the actual array index
+  const p = isMobileMode ? cachedProjects[currentIndex] : cachedProjects[cachedCurrentIndex];
+  
+  if (p) {
+    renderProjectInfo(cachedInfoContainer, p);
+  }
+}
+
+// Helper to render project info with current language
+function renderProjectInfo(container, project) {
+  const title = getTranslatedField(project, 'title');
+  const type = getTranslatedField(project, 'type');
+  const description = getTranslatedField(project, 'description');
+  const link = project.link;
+  
+  container.innerHTML = `
+    <h2 class="project-title" style="margin-bottom: 0.5rem;">${title}</h2>
+    <h3 class="project-sub-title">${type}</h3>
+
+    <p class="project-description">${description}</p>
+
+    <div class="project-details">
+        <span class="project-info-title">Context:</span> ${project.context} <br>
+        <span class="project-info-title">Skills:</span> ${project.tech}
+        ${link && link.trim() !== '' ? `<br><span class="project-info-title">Link:</span> <a href="${link}" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: underline;">${link}</a>` : ''}
+    </div>
+  `;
+}
+
 export async function loadProjects() {
   const track = document.getElementById("project-track");
   const infoContainer = document.querySelector(".project-info");
@@ -9,11 +66,17 @@ export async function loadProjects() {
   try {
     const response = await fetch("projects.json");
     const originalProjects = await response.json();
+    
+    // Store for language updates
+    cachedProjects = originalProjects;
+    cachedInfoContainer = infoContainer;
 
     // DÉTECTION MOBILE VS DESKTOP
     if (window.innerWidth <= 1024) {
+      isMobileMode = true;
       initMobile(originalProjects, track, infoContainer, viewport);
     } else {
+      isMobileMode = false;
       initDesktop(originalProjects, track, infoContainer, viewport, container);
     }
 
@@ -39,10 +102,20 @@ function initMobile(projects, track, infoContainer, viewport) {
   track.style.transform = "none";
 
   // Génération simple
-  projects.forEach((proj) => {
+  projects.forEach((proj, index) => {
     const box = document.createElement("div");
     box.className = "project-box";
     box.style.backgroundImage = `url(${proj.image})`;
+    
+    // Add click handler to select project
+    box.addEventListener('click', () => {
+      // Scroll to center this box
+      const boxWidth = box.offsetWidth;
+      const gap = 20;
+      const scrollPos = index * (boxWidth + gap);
+      track.scrollTo({ left: scrollPos, behavior: "smooth" });
+    });
+    
     track.appendChild(box);
   });
 
@@ -71,24 +144,14 @@ function initMobile(projects, track, infoContainer, viewport) {
 
       if (infoContainer.dataset.currentIndex != bestCandidate) {
         const p = projects[bestCandidate];
-infoContainer.innerHTML = `
-    <h2 class="project-title" style="margin-bottom: 0.5rem;">${p.title}</h2>
-    <h3 class="project-sub-title">${p.type}</h3>
-
-    <p class="project-description">${p.description}</p>
-
-    <div class="project-details">
-        <span class="project-info-title">Context:</span> ${p.context} <br>
-        <span class="project-info-title">Skills:</span> ${p.tech}
-        ${p.link ? `<br><span class="project-info-title">Link:</span> <a href="${p.link}" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: underline;">${p.link}</a>` : ''}
-    </div>
-`;
+        renderProjectInfo(infoContainer, p);
         infoContainer.dataset.currentIndex = bestCandidate;
+        cachedCurrentIndex = bestCandidate;
       }
     }
   };
 
-  // 2. LE FIX DU "SCROLL TRAP"
+  // 2. LE FIX DU "SCROLL TRAP" - Improved for better mobile experience
   track.addEventListener(
     "wheel",
     (e) => {
@@ -98,7 +161,6 @@ infoContainer.innerHTML = `
         const isGoingUp = e.deltaY < 0;
 
         // On calcule si on est au bout du scroll horizontal
-        // (Marge de 1px pour éviter les arrondis imprécis)
         const atEnd =
           Math.ceil(track.scrollLeft + track.clientWidth) >=
           track.scrollWidth - 1;
@@ -214,7 +276,7 @@ function initDesktop(
     track.appendChild(box);
   });
 
-  const scrollToProject = (index, smooth = true) => {
+  let scrollToProject = (index, smooth = true) => {
     currentIndex = index;
 
     const realIndex =
@@ -223,18 +285,8 @@ function initDesktop(
 
     infoContainer.style.opacity = 0;
     setTimeout(() => {
-      infoContainer.innerHTML = `
-    <h2 class="project-title" style="margin-bottom: 0.5rem;">${p.title}</h2>
-    <h3 class="project-sub-title">${p.type}</h3>
-
-    <p class="project-description">${p.description}</p>
-
-    <div class="project-details">
-        <span class="project-info-title">Context:</span> ${p.context} <br>
-        <span class="project-info-title">Skills:</span> ${p.tech}
-        ${p.link ? `<br><span class="project-info-title">Link:</span> <a href="${p.link}" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: underline;">${p.link}</a>` : ''}
-    </div>
-`;
+      renderProjectInfo(infoContainer, p);
+      cachedCurrentIndex = realIndex;
       infoContainer.style.opacity = 1;
       infoContainer.style.transition = "opacity 0.3s";
     }, 200);
@@ -321,4 +373,37 @@ function initDesktop(
     if (e.key === "ArrowDown") scrollToProject(currentIndex + 1);
     if (e.key === "ArrowUp") scrollToProject(currentIndex - 1);
   });
+  
+  // Desktop Arrow Navigation Buttons
+  const prevBtnDesktop = document.getElementById("prev-project-desktop");
+  const nextBtnDesktop = document.getElementById("next-project-desktop");
+  
+  if (prevBtnDesktop && nextBtnDesktop) {
+    prevBtnDesktop.addEventListener("click", () => {
+      if (currentIndex > realStartIndex) {
+        scrollToProject(currentIndex - 1);
+      }
+    });
+    
+    nextBtnDesktop.addEventListener("click", () => {
+      if (currentIndex < realEndIndex) {
+        scrollToProject(currentIndex + 1);
+      }
+    });
+    
+    // Update button states based on current position
+    const updateDesktopButtons = () => {
+      prevBtnDesktop.disabled = currentIndex <= realStartIndex;
+      nextBtnDesktop.disabled = currentIndex >= realEndIndex;
+    };
+    
+    // Call update initially and after each scroll
+    const originalScrollFunc = scrollToProject;
+    scrollToProject = (index, smooth = true) => {
+      originalScrollFunc(index, smooth);
+      setTimeout(updateDesktopButtons, 100);
+    };
+    
+    updateDesktopButtons();
+  }
 }

@@ -17,6 +17,13 @@ export const updateActiveNav = () => {
         navItems.forEach((item, i) => {
             item.classList.toggle("active", i === index);
         });
+        
+        // Show/hide desktop project navigation arrows
+        const desktopNav = document.querySelector('.desktop-project-nav');
+        if (desktopNav) {
+            // Works section is index 1 (Home=0, Works=1, ...)
+            desktopNav.style.display = index === 1 ? 'flex' : 'none';
+        }
     } 
     // --- LOGIQUE MOBILE (Vertical) ---
     else {

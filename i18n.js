@@ -4,7 +4,7 @@
  */
 
 let translations = {};
-let currentLang = 'en';
+let currentLang = 'en'; // Default to English
 
 // Load translations from JSON
 async function loadTranslations() {
@@ -12,10 +12,9 @@ async function loadTranslations() {
         const response = await fetch('translations.json');
         translations = await response.json();
         
-        // Detect browser language or use stored preference
+        // Use stored preference, otherwise default to English
         const storedLang = localStorage.getItem('preferred-language');
-        const browserLang = navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en';
-        currentLang = storedLang || browserLang;
+        currentLang = storedLang || 'en';
         
         applyTranslations(currentLang);
     } catch (error) {
@@ -52,6 +51,16 @@ function applyTranslations(lang) {
     
     // Update toggle button state
     updateLangToggle();
+    
+    // Update project display if projects are loaded
+    // Dynamic import to avoid circular dependency
+    import('./projects.js').then(module => {
+        if (module.updateProjectDisplay) {
+            module.updateProjectDisplay();
+        }
+    }).catch(() => {
+        // Projects module might not be loaded yet, that's ok
+    });
 }
 
 // Toggle between EN and FR
@@ -64,7 +73,9 @@ export function toggleLanguage() {
 function updateLangToggle() {
     const toggle = document.querySelector('.lang-toggle');
     if (toggle) {
-        toggle.textContent = currentLang.toUpperCase();
+        // Show the language to switch TO, not current language
+        const nextLang = currentLang === 'en' ? 'FR' : 'ENG';
+        toggle.textContent = nextLang;
         toggle.setAttribute('aria-label', `Switch to ${currentLang === 'en' ? 'French' : 'English'}`);
     }
 }
