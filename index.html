@@ -6,6 +6,7 @@
     <title>Youma's Portfolio</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="tech-easter-eggs.css" />
+    <link rel="stylesheet" href="cover-letter-btn.css" />
     <link rel="stylesheet" href="aaa-contrast.css" />
     <link rel="icon" href="favicon_portfolio.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,8 +83,8 @@
 
 <!-- Desktop Project Navigation Arrows - Hidden by default -->
 <div class="desktop-project-nav" style="display: none;">
-  <button class="desktop-project-nav-btn" id="prev-project-desktop" aria-label="Previous project">‹</button>
-  <button class="desktop-project-nav-btn" id="next-project-desktop" aria-label="Next project">›</button>
+  <button class="desktop-project-nav-btn" id="prev-project-desktop" aria-label="Previous project">▲</button>
+  <button class="desktop-project-nav-btn" id="next-project-desktop" aria-label="Next project">▼</button>
 </div>
 
 <section class="section works" id="works">
@@ -141,12 +142,12 @@
         <div class="service-cta">
             <button class="work-with-me" data-i18n="service.cta">wOrk with mE</button>
             <div class="download-links">
-                <a href="cv.pdf" class="download-item">
+                <a href="cv_raphel_madore_2026.pdf" download class="download-item">
                     <span class="icon">⤓</span> /curriculum_vitae
                 </a>
-                <a href="letter.pdf" class="download-item">
+                <button class="download-item cover-letter-btn" id="cover-letter-btn">
                     <span class="icon">⤓</span> /cover_letter
-                </a>
+                </button>
             </div>
         </div>
 
@@ -201,7 +202,7 @@
             <div class="contact-grid">
                 <a href="mailto:raphael.madore.pro@mailo.com" class="contact-card">
                     <div class="card-content">
-                        <span class="card-label">EmaIl</span>
+                        <span class="card-label">Email</span>
                         <span class="card-value">raphael.madore.pro@mailo.com</span>
                     </div>
                     <span class="card-arrow">❯</span>
@@ -209,7 +210,7 @@
 
                 <a href="https://www.linkedin.com/in/raphaël-madoré/" target="_blank" class="contact-card">
                     <div class="card-content">
-                        <span class="card-label">lInkedIn</span>
+                        <span class="card-label">LinkedIn</span>
                         <span class="card-value">/in/raphaelmadore</span>
                     </div>
                     <span class="card-arrow">❯</span>
@@ -217,7 +218,7 @@
 
                 <a href="https://github.com/JomeiYouma" target="_blank" class="contact-card">
                     <div class="card-content">
-                        <span class="card-label">githUb</span>
+                        <span class="card-label">GitHub</span>
                         <span class="card-value">github.com/JomeiYouma</span>
                     </div>
                     <span class="card-arrow">❯</span>
@@ -225,7 +226,7 @@
 
                 <a href="https://open.spotify.com/playlist/36Y3M007cqXXTBsHUbCS4B?si=130f2c509eb14055" class="contact-card">
                     <div class="card-content">
-                        <span class="card-label">cUrrEnt_mOOd</span>
+                        <span class="card-label">Spotify</span>
                         <span class="card-value">listen to my playlists</span>
                     </div>
                     <span class="card-arrow">❯</span>
@@ -240,8 +241,30 @@
                 <h3 data-i18n="contact.githubActivity">github_live_activity</h3>
             </div>
             
-            <div id="github-repos" class="repos-list">
-                <p class="loading">connecting_to_server...</p>
+            <!-- GitHub Stats Title -->
+            <h4 class="github-section-title" data-i18n="contact.githubStats">GitHub Stats</h4>
+            
+            <!-- GitHub Contribution Graph with Toggle -->
+            <div class="github-cards">
+                <div class="github-graph-container">
+                    <div class="graph-controls">
+                        <button class="graph-scale-btn active" data-scale="monthly" data-i18n="contact.lastMonth" aria-label="Last month view">Last Month</button>
+                        <button class="graph-scale-btn" data-scale="quarterly" data-i18n="contact.last3Months" aria-label="Last 3 months view">Last 3 Months</button>
+                    </div>
+                    <img id="github-contribution-graph"
+                         src="https://github-readme-activity-graph.vercel.app/graph?username=JomeiYouma&theme=react-dark&bg_color=111111&color=24FBC5&line=24FBC5&point=dddddd&area=true&hide_border=true&custom_title=Last%20Month&days=30" 
+                         alt="GitHub Contribution Graph" 
+                         class="github-activity-graph"
+                         loading="lazy">
+                </div>
+            </div>
+            
+            <!-- Latest Activity (Repos) -->
+            <div class="github-latest-activity">
+                <h4 data-i18n="contact.latestActivity">Latest Activity</h4>
+                <div id="github-repos" class="repos-list">
+                    <p class="loading">connecting_to_server...</p>
+                </div>
             </div>
         </div>
 
@@ -259,6 +282,8 @@
   import './animations.js'; // Import animations auto-initialization
   import './pattern-effect.js'; // Import pattern cursor effect
   import './tech-easter-eggs.js'; // Import tech easter eggs
+  import './github-graph-toggle.js'; // Import GitHub graph toggle
+  import './cover-letter-btn.js'; // Import cover letter button
 
   document.addEventListener("DOMContentLoaded", () => {
       // Initialize core features

@@ -1102,6 +1102,78 @@ ul { list-style: none; }
     padding: 2rem;
 }
 
+/* GitHub Cards Container */
+.github-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+.github-graph-container {
+    position: relative;
+}
+
+.graph-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: flex-end;
+}
+
+.graph-scale-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--primary-light);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.graph-scale-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-cyan);
+}
+
+.graph-scale-btn.active {
+    background: var(--accent-cyan);
+    color: var(--primary-dark);
+    border-color: var(--accent-cyan);
+}
+
+.github-activity-graph,
+.github-stats-card {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    opacity: 0;
+    animation: fadeInGraph 0.5s ease 0.2s forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.github-activity-graph:hover,
+.github-stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(36, 251, 197, 0.2);
+}
+
+.github-latest-activity h4 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--accent-cyan);
+    margin: 1.5rem 0 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+@keyframes fadeInGraph {
+    to { opacity: 1; }
+}
+
+
 .github-header {
     display: flex;
     align-items: center;
@@ -1110,6 +1182,16 @@ ul { list-style: none; }
     border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Increased from 0.05 */
     padding-bottom: 1rem;
 }
+
+.github-section-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--accent-cyan);
+    margin: 0.5rem 0 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
 
 .status-dot {
     width: 8px;

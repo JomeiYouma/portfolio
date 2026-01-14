@@ -55,14 +55,21 @@
     },
     "contact": {
       "title": "Get in Touch",
-      "email": "EmaIl",
-      "linkedin": "lInkedIn",
-      "github": "githUb",
-      "mood": "cUrrEnt_mOOd",
-      "moodValue": "listen to my playlists",
+      "email": "Email",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "mood": "Spotify",
+      "moodValue": "listen_to_my_playlists",
       "githubActivity": "github_live_activity",
+      "githubStats": "GitHub Stats",
+      "lastMonth": "Last Month",
+      "last3Months": "Last 3 Months",
+      "latestActivity": "Latest Activity",
       "loading": "connecting_to_server...",
-      "footer": "built with passion & code // 2025"
+      "footer": "built with passion & code // 2026",
+      "comingSoon": "Coming Soon",
+      "coverLetterMessage": "The cover letter will be available soon!",
+      "ok": "OK"
     }
   },
   "fr": {
@@ -122,13 +129,20 @@
     "contact": {
       "title": "Me Contacter",
       "email": "EmaiL",
-      "linkedin": "lInkedIn",
-      "github": "githUb",
-      "mood": "hUmEur_acTuellE",
-      "moodValue": "écoutez mes playlists",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "mood": "Spotify",
+      "moodValue": "écoutez_mes_playlists",
       "githubActivity": "activité_github_live",
+      "githubStats": "Statistiques GitHub",
+      "lastMonth": "Dernier Mois",
+      "last3Months": "3 Derniers Mois",
+      "latestActivity": "Activité Récente",
       "loading": "connexion_au_serveur...",
-      "footer": "créé avec passion & code // 2025"
+      "footer": "créé avec passion & code // 2026",
+      "comingSoon": "Bientôt Disponible",
+      "coverLetterMessage": "La lettre de motivation sera bientôt disponible !",
+      "ok": "OK"
     }
   }
 }
