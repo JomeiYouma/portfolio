@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Youma's Portfolio</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="loader.css" />
     <link rel="stylesheet" href="tech-easter-eggs.css" />
     <link rel="stylesheet" href="cover-letter-btn.css" />
     <link rel="stylesheet" href="aaa-contrast.css" />
@@ -16,6 +17,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loader-content">
+        <div class="loader-logo">YOUMA</div>
+        <div class="loader-spinner">
+          <div class="spinner-circle"></div>
+          <div class="spinner-circle"></div>
+          <div class="spinner-circle"></div>
+        </div>
+        <div class="loader-text">Loading Portfolio...</div>
+      </div>
+    </div>
+
     <header class="nav">
       <ul class="navigation">
         <li data-i18n="nav.home">Home</li>
@@ -140,7 +154,7 @@
         </div>
 
         <div class="service-cta">
-            <button class="work-with-me" data-i18n="service.cta">wOrk with mE</button>
+            <a href="mailto:raphael.madore@edu.univ-fcomte.fr?subject=Let's work together!" class="work-with-me" data-i18n="service.cta">wOrk with mE</a>
             <div class="download-links">
                 <a href="cv_raphel_madore_2026.pdf" download class="download-item">
                     <span class="icon">⤓</span> /curriculum_vitae
@@ -224,7 +238,7 @@
                     <span class="card-arrow">❯</span>
                 </a>
 
-                <a href="https://open.spotify.com/playlist/36Y3M007cqXXTBsHUbCS4B?si=130f2c509eb14055" class="contact-card">
+                <a href="https://open.spotify.com/playlist/36Y3M007cqXXTBsHUbCS4B?si=130f2c509eb14055" target="_blank" rel="noopener" class="contact-card">
                     <div class="card-content">
                         <span class="card-label">Spotify</span>
                         <span class="card-value">listen to my playlists</span>
@@ -279,11 +293,11 @@
   import { loadGitHubRepos } from './github.js';
   import { initI18n, toggleLanguage } from './i18n.js';
   import { initContrastMode, toggleContrastMode } from './contrast.js';
-  import './animations.js'; // Import animations auto-initialization
-  import './pattern-effect.js'; // Import pattern cursor effect
-  import './tech-easter-eggs.js'; // Import tech easter eggs
-  import './github-graph-toggle.js'; // Import GitHub graph toggle
-  import './cover-letter-btn.js'; // Import cover letter button
+  import './animations.js';
+  import './pattern-effect.js';
+  import './tech-easter-eggs.js';
+  import './github-graph-toggle.js';
+  import './cover-letter-btn.js';
 
   document.addEventListener("DOMContentLoaded", () => {
       // Initialize core features
@@ -308,5 +322,8 @@
       }
   });
 </script>
+  
+  <!-- Loader Script -->
+  <script src="loader.js"></script>
   </body>
 </html>

@@ -41,6 +41,10 @@ function renderProjectInfo(container, project) {
   const description = getTranslatedField(project, 'description');
   const link = project.link;
   
+  // Get translated "Access Project" text
+  const currentLang = localStorage.getItem('preferred-language') || 'en';
+  const accessText = currentLang === 'fr' ? 'Accéder au projet' : 'Access Project';
+  
   container.innerHTML = `
     <h2 class="project-title" style="margin-bottom: 0.5rem;">${title}</h2>
     <h3 class="project-sub-title">${type}</h3>
@@ -50,7 +54,7 @@ function renderProjectInfo(container, project) {
     <div class="project-details">
         <span class="project-info-title">Context:</span> ${project.context} <br>
         <span class="project-info-title">Skills:</span> ${project.tech}
-        ${link && link.trim() !== '' ? `<br><span class="project-info-title">Link:</span> <a href="${link}" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: underline;">${link}</a>` : ''}
+        ${link && link.trim() !== '' ? `<br><span class="project-info-title">Link:</span> <a href="${link}" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: underline;">${accessText} →</a>` : ''}
     </div>
   `;
 }

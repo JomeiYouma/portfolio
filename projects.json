@@ -16,7 +16,7 @@
     "tech": "JS - CSS - HTML - UI/UX",
     "context": "Academic Project | Team of 3",
     "image": "orbis.png",
-    "link": "https://github.com/example/orbis"
+    "link": "https://github.com/thelmaquarius/ORBIS"
   },
   {
     "id": 2,
@@ -35,7 +35,7 @@
     "tech": "PHP - JAVASCRIPT - SQL - PHOTOSHOP",
     "context": "Personal Project | Solo",
     "image": "horus.png",
-    "link": "https://horus-game.example.com"
+    "link": "https://docs.google.com/document/d/1uaVd017srAvsdevmR0jjCdYLnG2sCPuUZNeSF6FJVQE/edit?usp=sharing"
   },
   {
     "id": 3,
@@ -54,7 +54,7 @@
     "tech": "JS - THREE.JS - GOOGLE SHEETS API",
     "context": "Collaborative Project | International Team",
     "image": "astdx2.png",
-    "link": "https://astdx-calculator.example.com"
+    "link": "https://github.com/riifa/astdx-dps-web"
   },
   {
     "id": 4,
@@ -73,7 +73,7 @@
     "tech": "UX RESEARCH - FIGMA - FIGJAM - GIT",
     "context": "Academic Project | Solo",
     "image": "restaure.png",
-    "link": "https://figma.com/restau-re-prototype"
+    "link": "https://github.com/Brize-Glace/restau-re"
   },
   {
     "id": 5,
@@ -92,7 +92,7 @@
     "tech": "FRONT-END DEV - JS - WEB AUDIO",
     "context": "Academic Project | Solo",
     "image": "museorium.png",
-    "link": "https://museorium.example.com"
+    "link": "https://youtu.be/Vxva5bZO98E?si=bS3rLpi_n0ZAFOPe"
   },
   {
     "id": 6,
@@ -111,7 +111,7 @@
     "tech": "VIDEO PRODUCTION - EDITING - STORYBOARDING",
     "context": "Academic Project | Team of 2",
     "image": "street-dreams.png",
-    "link": "https://vimeo.com/street-dreams"
+    "link": "https://youtu.be/7Fz4Hq_1lUM?si=Wm8HZUqJAI6NQCGK"
   },
   {
     "id": 7,
@@ -130,7 +130,7 @@
     "tech": "PHP - SQL - DATABASE ARCHITECTURE",
     "context": "Academic Project | Backend Focus",
     "image": "web-inventory.png",
-    "link": "https://github.com/example/astx-comparator"
+    "link": "https://github.com/JomeiYouma/All_Star_Tower_Rater-version-3"
   },
   {
     "id": 8,
@@ -149,6 +149,25 @@
     "tech": "FIGMA - PHOTOSHOP - ILLUSTRATOR",
     "context": "Academic Project | Design Focus",
     "image": "campain.png",
-    "link": "https://behance.net/hendaye-rebrand"
+    "link": "https://www.figma.com/design/BeetdjExLeYtnenZwmzH46/Campagne-Hendaye?node-id=0-1&t=cegyqLJzFV14nvC8-1"
+  },
+  {
+    "id": 9,
+    "title": {
+      "en": "NUIT DE L'INFO 2025",
+      "fr": "NUIT DE L'INFO 2025"
+    },
+    "type": {
+      "en": "INTERACTIVE WEB PLATFORM",
+      "fr": "PLATEFORME WEB INTERACTIVE"
+    },
+    "description": {
+      "en": "An engaging educational platform developed during the 2025 Nuit de l'Info hackathon. The project tackles digital autonomy in schools, helping them resist Big Tech dependency through NIRD principles (Inclusive, Responsible & Sustainable Digital). Features interactive content, games, and resources to guide the transition to Linux and open-source solutions.",
+      "fr": "Une plateforme éducative engageante développée lors du hackathon Nuit de l'Info 2025. Le projet aborde l'autonomie numérique dans les écoles, les aidant à résister à la dépendance aux Big Tech via les principes NIRD (Numérique Inclusif, Responsable et Durable). Propose du contenu interactif, des jeux et des ressources pour accompagner la transition vers Linux et les solutions open-source."
+    },
+    "tech": "JAVASCRIPT - THREE.JS",
+    "context": "Dev Night 2025 | Team Project",
+    "image": "nuit-info.png",
+    "link": "https://github.com/doremilx/champ-ions"
   }
 ]
