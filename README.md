@@ -38,25 +38,45 @@ Site portfolio interactif créé pour présenter mon parcours, mes projets acad�
 ```
 portfolio/
 ├── index.html              # Page principale
-├── style.css              # Styles principaux
-├── loader.css             # Écran de chargement
-├── aaa-contrast.css       # Mode contraste
-├── tech-easter-eggs.css   # Easter eggs
-├── cover-letter-btn.css   # Style bouton lettre motivation
-├── nav.js                 # Navigation et scroll
-├── projects.js            # Gestion des projets
-├── i18n.js                # Internationalisation
-├── contrast.js            # Mode contraste
-├── github.js              # Intégration GitHub
-├── github-graph-toggle.js # Bascule graphique GitHub
-├── animations.js          # Animations
-├── pattern-effect.js      # Effets géométriques
-├── tech-easter-eggs.js    # Easter eggs interactifs
-├── cover-letter-btn.js    # Génération lettre motivation
-├── loader.js              # Gestion écran de chargement
-├── projects.json          # Données des projets
-├── translations.json      # Traductions FR/EN
-└── *.png                  # Images des projets
+├── README.md               # Documentation
+├── favicon_portfolio.ico   # Icône du site
+├── css/                    # Feuilles de style
+│   ├── style.css          # Styles principaux
+│   ├── loader.css         # Écran de chargement
+│   ├── aaa-contrast.css   # Mode contraste
+│   ├── tech-easter-eggs.css   # Easter eggs
+│   └── cover-letter-btn.css   # Style bouton lettre
+├── js/                     # Scripts JavaScript
+│   ├── nav.js             # Navigation et scroll
+│   ├── projects.js        # Gestion des projets
+│   ├── i18n.js            # Internationalisation
+│   ├── contrast.js        # Mode contraste
+│   ├── github.js          # Intégration GitHub
+│   ├── github-graph-toggle.js # Bascule graphique
+│   ├── animations.js      # Animations
+│   ├── pattern-effect.js  # Effets géométriques
+│   ├── tech-easter-eggs.js    # Easter eggs
+│   ├── cover-letter-btn.js    # Génération lettre
+│   └── loader.js          # Écran de chargement
+├── assets/                 # Ressources statiques
+│   ├── fonts/             # Polices personnalisées
+│   │   ├── punc-bold.woff2
+│   │   └── punc-regular.woff2
+│   ├── images/            # Images des projets
+│   │   ├── astdx2.png
+│   │   ├── campain.png
+│   │   ├── horus.png
+│   │   ├── museorium.png
+│   │   ├── nuit-info.png
+│   │   ├── orbis.png
+│   │   ├── restaure.png
+│   │   ├── street-dreams.png
+│   │   └── web-inventory.png
+│   └── documents/         # Documents téléchargeables
+│       └── cv_raphel_madore_2026.pdf
+└── data/                   # Données JSON
+    ├── projects.json      # Données des projets
+    └── translations.json  # Traductions FR/EN
 ```
 
 ## 🚀 Installation & Utilisation

@@ -18,7 +18,7 @@
 /* --- 1. FONTS --- */
 @font-face {
     font-family: "Punc";
-    src: url("punc-bold.woff2") format("woff2");
+    src: url("../assets/fonts/punc-bold.woff2") format("woff2");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -26,7 +26,7 @@
 
 @font-face {
     font-family: "Punc";
-    src: url("punc-regular.woff2") format("woff2");
+    src: url("../assets/fonts/punc-regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;

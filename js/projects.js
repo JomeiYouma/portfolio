@@ -68,7 +68,7 @@ export async function loadProjects() {
   if (!track || !infoContainer || !viewport) return;
 
   try {
-    const response = await fetch("projects.json");
+    const response = await fetch("data/projects.json");
     const originalProjects = await response.json();
     
     // Store for language updates
@@ -109,7 +109,7 @@ function initMobile(projects, track, infoContainer, viewport) {
   projects.forEach((proj, index) => {
     const box = document.createElement("div");
     box.className = "project-box";
-    box.style.backgroundImage = `url(${proj.image})`;
+    box.style.backgroundImage = `url(assets/images/${proj.image})`;
     
     // Add click handler to select project
     box.addEventListener('click', () => {
@@ -275,7 +275,7 @@ function initDesktop(
   projects.forEach((proj, index) => {
     const box = document.createElement("div");
     box.className = "project-box";
-    box.style.backgroundImage = `url(${proj.image})`;
+    box.style.backgroundImage = `url(assets/images/${proj.image})`;
     box.addEventListener("click", () => scrollToProject(index));
     track.appendChild(box);
   });

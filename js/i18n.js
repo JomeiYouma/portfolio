@@ -9,7 +9,7 @@ let currentLang = 'en'; // Default to English
 // Load translations from JSON
 async function loadTranslations() {
     try {
-        const response = await fetch('translations.json');
+        const response = await fetch('data/translations.json');
         translations = await response.json();
         
         // Use stored preference, otherwise default to English

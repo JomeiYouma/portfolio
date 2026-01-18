@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Youma's Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="loader.css" />
-    <link rel="stylesheet" href="tech-easter-eggs.css" />
-    <link rel="stylesheet" href="cover-letter-btn.css" />
-    <link rel="stylesheet" href="aaa-contrast.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/loader.css" />
+    <link rel="stylesheet" href="css/tech-easter-eggs.css" />
+    <link rel="stylesheet" href="css/cover-letter-btn.css" />
+    <link rel="stylesheet" href="css/aaa-contrast.css" />
     <link rel="icon" href="favicon_portfolio.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -156,7 +156,7 @@
         <div class="service-cta">
             <a href="mailto:raphael.madore@edu.univ-fcomte.fr?subject=Let's work together!" class="work-with-me" data-i18n="service.cta">wOrk with mE</a>
             <div class="download-links">
-                <a href="cv_raphel_madore_2026.pdf" download class="download-item">
+                <a href="assets/documents/cv_raphel_madore_2026.pdf" download class="download-item">
                     <span class="icon">⤓</span> /curriculum_vitae
                 </a>
                 <button class="download-item cover-letter-btn" id="cover-letter-btn">
@@ -288,16 +288,16 @@
 </section>
     </div>
 <script type="module">
-  import { updateActiveNav } from './nav.js';
-  import { loadProjects } from './projects.js';
-  import { loadGitHubRepos } from './github.js';
-  import { initI18n, toggleLanguage } from './i18n.js';
-  import { initContrastMode, toggleContrastMode } from './contrast.js';
-  import './animations.js';
-  import './pattern-effect.js';
-  import './tech-easter-eggs.js';
-  import './github-graph-toggle.js';
-  import './cover-letter-btn.js';
+  import { updateActiveNav } from './js/nav.js';
+  import { loadProjects } from './js/projects.js';
+  import { loadGitHubRepos } from './js/github.js';
+  import { initI18n, toggleLanguage } from './js/i18n.js';
+  import { initContrastMode, toggleContrastMode } from './js/contrast.js';
+  import './js/animations.js';
+  import './js/pattern-effect.js';
+  import './js/tech-easter-eggs.js';
+  import './js/github-graph-toggle.js';
+  import './js/cover-letter-btn.js';
 
   document.addEventListener("DOMContentLoaded", () => {
       // Initialize core features
@@ -324,6 +324,6 @@
 </script>
   
   <!-- Loader Script -->
-  <script src="loader.js"></script>
+  <script src="js/loader.js"></script>
   </body>
 </html>
