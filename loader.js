@@ -2,7 +2,12 @@
  * Loading Screen Handler
  */
 
+let loaderHidden = false;
+
 function hideLoader() {
+    if (loaderHidden) return; // Prevent multiple calls
+    loaderHidden = true;
+    
     const loader = document.getElementById('loading-screen');
     if (loader) {
         loader.classList.add('hidden');
