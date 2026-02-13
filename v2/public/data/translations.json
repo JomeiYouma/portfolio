@@ -59,7 +59,9 @@
       "title": "Selected Works",
       "viewProject": "View Project",
       "viewCode": "View Code",
-      "selectPrompt": "Select a project to see details..."
+      "selectPrompt": "Select a project to see details...",
+      "tech": "Technologies",
+      "context": "Context"
     },
     "skills": {
       "eyebrow": "Skills",
@@ -148,10 +150,12 @@
     },
     "projects": {
       "eyebrow": "Portfolio",
-      "title": "Projets Sélectionnés",
+      "title": "Projets Selectionnés",
       "viewProject": "Voir le Projet",
       "viewCode": "Voir le Code",
-      "selectPrompt": "Sélectionnez un projet pour voir les détails..."
+      "selectPrompt": "Selectionnez un projet pour voir les details...",
+      "tech": "Technologies",
+      "context": "Contexte"
     },
     "skills": {
       "eyebrow": "Compétences",

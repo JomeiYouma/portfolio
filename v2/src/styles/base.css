@@ -34,6 +34,8 @@
   --font-main: "Punc", sans-serif;
   --font-display: "Tektur", sans-serif;
   --font-body: "Orbitron", sans-serif;
+  --font-mono: "Orbitron", monospace;
+  --nav-height: 90px;
 }
 
 * {

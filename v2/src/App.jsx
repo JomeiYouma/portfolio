@@ -54,8 +54,14 @@ function App() {
   }, [handleKeyDown])
 
   useEffect(() => {
-    const cleanup = initScrollEffects()
+    let cleanup = null
+    // Wait for DOM to be ready before initializing scroll
+    const timer = setTimeout(() => {
+      cleanup = initScrollEffects()
+    }, 100)
+    
     return () => {
+      clearTimeout(timer)
       if (cleanup) cleanup()
     }
   }, [])
@@ -72,7 +78,7 @@ function App() {
 
   return (
     <div className="app">
-      <TargetCursor targetSelector=".cursor-target, .btn, .nav-link, a" />
+      <TargetCursor targetSelector=".cursor-target, .btn, .nav-link, a" disableSpin={contrastActive} />
       <Nav sections={navSections} activeId={activeId} />
       <ScrollProgress />
       <AccessibilityControls

@@ -1,7 +1,21 @@
 import { useI18n } from '../hooks/useI18n'
+import LogoLoop from '../components/LogoLoop'
+
+const LANGUAGES = ['HTML', 'CSS', 'JS', 'PHP', 'Lua', 'Python']
+const FRAMEWORKS = ['React JS', 'Laravel', 'Bootstrap', 'Next JS', 'Tailwind CSS', 'Three JS']
 
 const About = () => {
   const { t } = useI18n()
+
+  const languageLogos = LANGUAGES.map((lang) => ({
+    node: <span className="skill-tag">{lang}</span>,
+    ariaLabel: lang,
+  }))
+
+  const frameworkLogos = FRAMEWORKS.map((fw) => ({
+    node: <span className="skill-tag">{fw}</span>,
+    ariaLabel: fw,
+  }))
 
   return (
     <section id="about" data-section className="section">
@@ -14,14 +28,32 @@ const About = () => {
         <div className="about-content">
           <p className="about-bio">{t('about.bio')}</p>
           
-          <div className="skills-group">
+          <div className="skills-loop-group">
             <h4>{t('about.languages')}</h4>
-            <p className="skill-list">{t('about.languagesList')}</p>
+            <LogoLoop 
+              logos={languageLogos} 
+              speed={60} 
+              direction="left" 
+              logoHeight={24} 
+              gap={24}
+              pauseOnHover
+              scaleOnHover
+              ariaLabel="Mastered Languages"
+            />
           </div>
           
-          <div className="skills-group">
+          <div className="skills-loop-group">
             <h4>{t('about.frameworks')}</h4>
-            <p className="skill-list">{t('about.frameworksList')}</p>
+            <LogoLoop 
+              logos={frameworkLogos} 
+              speed={45} 
+              direction="right" 
+              logoHeight={24} 
+              gap={24}
+              pauseOnHover
+              scaleOnHover
+              ariaLabel="Known Frameworks"
+            />
           </div>
           
           <div className="skills-group certification">
@@ -29,7 +61,6 @@ const About = () => {
             <p>{t('about.certifications.description')}</p>
           </div>
         </div>
-        <div className="about-star">✦</div>
       </div>
     </section>
   )

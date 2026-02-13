@@ -20,19 +20,26 @@ main {
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .section-inner {
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 clamp(1.5rem, 5vw, 6rem);
+  padding: calc(var(--nav-height) + 16px) clamp(1.5rem, 5vw, 6rem) 16px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: clamp(16px, 2.5vh, 32px);
   height: 100%;
   justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.section-inner::-webkit-scrollbar {
+  display: none;
 }
 
 .section-heading {

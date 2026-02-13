@@ -267,10 +267,13 @@ class Media {
 }
 
 class GalleryApp {
-  constructor(container, { items, bend, textColor = '#ffffff', borderRadius = 0, font = 'bold 30px Tektur', scrollSpeed = 2, scrollEase = 0.05 } = {}) {
+  constructor(container, { items, bend, textColor = '#ffffff', borderRadius = 0, font = 'bold 30px Tektur', scrollSpeed = 2, scrollEase = 0.05, onSelect } = {}) {
     this.container = container
     this.scrollSpeed = scrollSpeed
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 }
+    this.onSelectCallback = onSelect
+    this.currentIndex = 0
+    this.itemCount = items?.length || 0
     this.onCheckDebounce = debounce(this.onCheck.bind(this), 200)
     this.createRenderer()
     this.createCamera()
@@ -346,6 +349,13 @@ class GalleryApp {
     const itemIndex = Math.round(Math.abs(this.scroll.target) / width)
     const item = width * itemIndex
     this.scroll.target = this.scroll.target < 0 ? -item : item
+    
+    // Calculate actual index (modulo item count to handle duplicates)
+    const newIndex = itemIndex % this.itemCount
+    if (newIndex !== this.currentIndex && this.onSelectCallback) {
+      this.currentIndex = newIndex
+      this.onSelectCallback(newIndex)
+    }
   }
   onResize() {
     this.screen = { width: this.container.clientWidth, height: this.container.clientHeight }
@@ -415,11 +425,11 @@ export default function CircularGallery({
 
   useEffect(() => {
     if (!containerRef.current || !items || items.length === 0) return
-    appRef.current = new GalleryApp(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase })
+    appRef.current = new GalleryApp(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onSelect })
     return () => {
       if (appRef.current) appRef.current.destroy()
     }
-  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase])
+  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onSelect])
 
   return <div className="circular-gallery" ref={containerRef} />
 }

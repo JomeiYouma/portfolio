@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .github-header {
@@ -88,6 +90,30 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+.repos-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.repos-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.repos-list::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.repos-list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-soft);
 }
 
 .repo-card {

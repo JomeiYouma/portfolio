@@ -125,10 +125,11 @@
 }
 
 .about-name {
-  font-family: var(--font-main);
+  font-family: var(--font-display);
   font-size: clamp(2.5rem, 5vw, 4rem);
   color: var(--accent);
   margin: 8px 0 0 0;
+  font-weight: 700;
 }
 
 .about-content {
@@ -178,6 +179,42 @@
   border-left: 3px solid var(--accent);
 }
 
+.skills-loop-group {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.skills-loop-group h4 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  background: rgba(36, 251, 197, 0.08);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+  background: rgba(36, 251, 197, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .about-star {
   font-size: 2rem;
   color: var(--accent);
@@ -188,23 +225,23 @@
    TESTIMONIALS SECTION
 =================== */
 .testimonials-section .section-heading {
-  margin-bottom: 32px;
+  margin-bottom: clamp(16px, 2vh, 32px);
 }
 
 .testimonials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(16px, 2vh, 24px);
+  margin-bottom: clamp(20px, 3vh, 40px);
 }
 
 .testimonial-card {
   background: rgba(36, 251, 197, 0.03);
   border: 1px solid var(--border);
-  padding: 28px;
+  padding: clamp(16px, 2vh, 28px);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: clamp(12px, 1.5vh, 20px);
   transition: all 0.3s ease;
 }
 
@@ -452,5 +489,106 @@
   
   .download-links {
     flex-direction: column;
+  }
+}
+
+/* ===================
+   PROJECTS SECTION
+=================== */
+.projects-section .projects-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: center;
+  height: calc(100% - var(--nav-height));
+}
+
+.projects-gallery {
+  height: clamp(300px, 50vh, 500px);
+  position: relative;
+}
+
+.project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  background: rgba(36, 251, 197, 0.02);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+}
+
+.project-details-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--accent);
+  margin: 0;
+  font-weight: 700;
+}
+
+.project-type {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.project-description {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.project-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.project-tech,
+.project-context {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.meta-value {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 900px) {
+  .projects-section .projects-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .projects-gallery {
+    height: 280px;
+  }
+  
+  .project-details {
+    padding: 24px;
   }
 }

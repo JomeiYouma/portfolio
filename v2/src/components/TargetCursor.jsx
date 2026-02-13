@@ -8,6 +8,7 @@ const TargetCursor = ({
   hideDefaultCursor = true,
   hoverDuration = 0.2,
   parallaxOn = true,
+  disableSpin = false,
 }) => {
   const cursorRef = useRef(null)
   const cornersRef = useRef(null)
@@ -54,6 +55,10 @@ const TargetCursor = ({
 
     const createSpinTimeline = () => {
       if (spinTl.current) spinTl.current.kill()
+      if (disableSpin) {
+        gsap.set(cursor, { rotation: 0 })
+        return
+      }
       spinTl.current = gsap.timeline({ repeat: -1 }).to(cursor, { rotation: '+=360', duration: spinDuration, ease: 'none' })
     }
     createSpinTimeline()
@@ -153,7 +158,7 @@ const TargetCursor = ({
           })
         }
         resumeTimeout = setTimeout(() => {
-          if (!activeTarget && cursorRef.current && spinTl.current) {
+          if (!activeTarget && cursorRef.current && spinTl.current && !disableSpin) {
             const currentRotation = gsap.getProperty(cursorRef.current, 'rotation')
             const normalizedRotation = currentRotation % 360
             spinTl.current.kill()
@@ -187,7 +192,7 @@ const TargetCursor = ({
       targetCornerPositionsRef.current = null
       activeStrengthRef.current = 0
     }
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isMobile, hoverDuration, parallaxOn])
+  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isMobile, hoverDuration, parallaxOn, disableSpin])
 
   if (isMobile) return null
 
