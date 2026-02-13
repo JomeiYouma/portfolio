@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Tektur:wght@400..900&display=swap');
+
+@font-face {
+  font-family: "Punc";
+  src: url("/assets/fonts/punc-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Punc";
+  src: url("/assets/fonts/punc-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #231F20;
+  --bg-elev: #090909;
+  --bg-soft: #1a1a1a;
+  --text: #FFFFFF;
+  --text-muted: #646464;
+  --accent: #24FBC5;
+  --accent-soft: rgba(36, 251, 197, 0.2);
+  --accent-2: #24FBC5;
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+  --container: 1400px;
+  --font-main: "Punc", sans-serif;
+  --font-display: "Tektur", sans-serif;
+  --font-body: "Orbitron", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background: radial-gradient(circle at top left, #1a1f2c 0%, #0b0d12 50%, #0b0d12 100%);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(36, 251, 197, 0.05), transparent 45%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+#root {
+  width: 100%;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}

@@ -1,0 +1,456 @@
+/* ===================
+   HERO SECTION
+=================== */
+.hero .section-inner {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.main-title {
+  font-family: var(--font-main);
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 0.9;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.sub-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text);
+  margin: 0;
+  font-weight: 400;
+}
+
+.hero-description {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+.cta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.social-links {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.social-link svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.social-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(36, 251, 197, 0.05);
+}
+
+.hero-card {
+  padding: 28px;
+  background: rgba(36, 251, 197, 0.03);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+}
+
+.hero-card-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.hero-card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-card-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+}
+
+.hero-card-grid p:not(.hero-card-label) {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0;
+}
+
+/* ===================
+   ABOUT SECTION
+=================== */
+.about-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  margin: 0;
+}
+
+.about-name {
+  font-family: var(--font-main);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--accent);
+  margin: 8px 0 0 0;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 700px;
+}
+
+.about-bio {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.skills-group {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.skills-group h4 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.skills-group p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.skill-list {
+  font-family: var(--font-mono);
+  font-size: 0.85rem !important;
+  letter-spacing: 0.02em;
+}
+
+.skills-group.certification {
+  border-bottom: none;
+  background: rgba(36, 251, 197, 0.03);
+  padding: 20px;
+  margin-top: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+.about-star {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-top: 24px;
+}
+
+/* ===================
+   TESTIMONIALS SECTION
+=================== */
+.testimonials-section .section-heading {
+  margin-bottom: 32px;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.testimonial-card {
+  background: rgba(36, 251, 197, 0.03);
+  border: 1px solid var(--border);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  border-color: var(--accent);
+  background: rgba(36, 251, 197, 0.06);
+}
+
+.testimonial-quote {
+  position: relative;
+}
+
+.quote-mark {
+  font-family: var(--font-main);
+  font-size: 4rem;
+  color: var(--accent);
+  opacity: 0.3;
+  line-height: 0.5;
+  position: absolute;
+  top: -10px;
+  left: -5px;
+}
+
+.testimonial-quote blockquote {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 24px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.author-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text);
+  margin: 0 0 4px 0;
+}
+
+.author-role {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.testimonials-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+.download-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.download-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.download-item:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.download-item .icon {
+  font-size: 1.1rem;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  padding: 32px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin: 0 0 12px 0;
+}
+
+.modal-content p {
+  color: var(--text-muted);
+  margin: 0 0 24px 0;
+}
+
+/* ===================
+   CONTACT SECTION
+=================== */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.contact-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  margin: 0;
+  text-transform: lowercase;
+}
+
+.contact-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: rgba(36, 251, 197, 0.03);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.contact-card:hover {
+  border-color: var(--accent);
+  background: rgba(36, 251, 197, 0.08);
+  transform: translateX(4px);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+}
+
+.card-value {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.card-arrow {
+  color: var(--accent);
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.2s ease;
+}
+
+.contact-card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.footer-note {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 16px;
+}
+
+.contact-right {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* ===================
+   RESPONSIVE
+=================== */
+@media (max-width: 900px) {
+  .hero .section-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .contact-right {
+    max-height: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-title {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+  
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .testimonials-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .download-links {
+    flex-direction: column;
+  }
+}

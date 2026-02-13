@@ -1,0 +1,186 @@
+{
+  "en": {
+    "nav": {
+      "home": "Home",
+      "works": "Works",
+      "testimonials": "Testimonials",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "hero": {
+      "title": "YOUMA",
+      "subtitle": "Creative Developer",
+      "description": "Open to job opportunities worldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.",
+      "cta": "Explore My Work",
+      "status": "Available for hire",
+      "location": "France / Remote"
+    },
+    "about": {
+      "eyebrow": "About Me",
+      "title": "Me, Myself and I",
+      "subtitle": "Raphaël",
+      "bio": "Currently studying multimedia and web development, I build my journey through hands-on projects at university and on my own. I enjoy learning new technologies, experimenting, and turning ideas into concrete and functional experiences.",
+      "languages": "Mastered Languages",
+      "languagesList": "HTML – CSS – JS – PHP – Lua – Python",
+      "frameworks": "Known Frameworks",
+      "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
+      "certifications": {
+        "title": "Web Quality Training",
+        "description": "Maîtrise Opquast certified — a recognized web quality benchmark covering 240+ best practices in accessibility, SEO, performance, privacy, and user experience."
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Testimonials",
+      "title": "What They Say About My Work",
+      "intro": "I enjoy working in collaborative environments where ideas grow through teamwork. Sharing knowledge, solving problems together, and building meaningful digital experiences as a team are what motivate me the most.",
+      "items": {
+        "navy": {
+          "name": "Navy X.",
+          "quote": "Raphael quickly became an essential part of the testing phase. His structured feedback, attention to detail, and ability to spot edge cases saved us valuable time.",
+          "role": "Tester Manager"
+        },
+        "eric": {
+          "name": "Eric M.",
+          "quote": "Raphael demonstrated strong motivation and a real commitment to developing his professional skills. He approaches every challenge with creativity and persistence.",
+          "role": "Career Advisor"
+        },
+        "caroline": {
+          "name": "Caroline P.",
+          "quote": "Working with Raphael was a real pleasure. He showed great curiosity and technical precision. His attention to detail made a noticeable impact on the quality of our final product.",
+          "role": "Internship Supervisor"
+        }
+      },
+      "cta": "Work With Me",
+      "cv": "Download CV",
+      "coverLetter": "Cover Letter"
+    },
+    "projects": {
+      "eyebrow": "Portfolio",
+      "title": "Selected Works",
+      "viewProject": "View Project",
+      "viewCode": "View Code",
+      "selectPrompt": "Select a project to see details..."
+    },
+    "skills": {
+      "eyebrow": "Skills",
+      "title": "A Modern Stack Built for Impact"
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Get in Touch",
+      "email": "Email",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "spotify": "Spotify",
+      "spotifyValue": "listen_to_my_playlists",
+      "githubActivity": "github_live_activity",
+      "githubStats": "GitHub Stats",
+      "lastMonth": "Last Month",
+      "last3Months": "Last 3 Months",
+      "latestActivity": "Latest Activity",
+      "loading": "connecting_to_server...",
+      "footer": "built with passion & code // 2026"
+    },
+    "accessibility": {
+      "contrast": "Toggle high contrast",
+      "language": "Switch language"
+    },
+    "coverLetterModal": {
+      "title": "Coming Soon",
+      "message": "The cover letter will be available soon!",
+      "ok": "OK"
+    }
+  },
+  "fr": {
+    "nav": {
+      "home": "Accueil",
+      "works": "Projets",
+      "testimonials": "Témoignages",
+      "about": "À Propos",
+      "contact": "Contact"
+    },
+    "hero": {
+      "title": "YOUMA",
+      "subtitle": "Développeur Créatif",
+      "description": "Ouvert aux opportunités professionnelles dans le monde entier. Passionné par la création d'expériences numériques soignées, intuitives et réfléchies qui laissent une empreinte.",
+      "cta": "Découvrir Mon Travail",
+      "status": "Disponible",
+      "location": "France / Télétravail"
+    },
+    "about": {
+      "eyebrow": "À Propos",
+      "title": "Me, Myself and I",
+      "subtitle": "Raphaël",
+      "bio": "Actuellement en formation multimédia et développement web, je construis mon parcours à travers des projets pratiques à l'université et en autonomie. J'aime apprendre de nouvelles technologies, expérimenter et transformer des idées en expériences concrètes et fonctionnelles.",
+      "languages": "Langages Maîtrisés",
+      "languagesList": "HTML – CSS – JS – PHP – Lua – Python",
+      "frameworks": "Frameworks Connus",
+      "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
+      "certifications": {
+        "title": "Formation Qualité Web",
+        "description": "Certifié Maîtrise Opquast — référentiel reconnu de qualité web couvrant plus de 240 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur."
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Témoignages",
+      "title": "Ce Qu'ils Disent De Mon Travail",
+      "intro": "J'aime travailler dans des environnements collaboratifs où les idées grandissent grâce au travail d'équipe. Partager les connaissances, résoudre des problèmes ensemble et créer des expériences numériques significatives en équipe, c'est ce qui me motive le plus.",
+      "items": {
+        "navy": {
+          "name": "Navy X.",
+          "quote": "Raphaël est rapidement devenu un élément essentiel de la phase de test. Ses retours structurés, son attention aux détails et sa capacité à repérer les cas limites nous ont fait gagner un temps précieux.",
+          "role": "Responsable Test"
+        },
+        "eric": {
+          "name": "Eric M.",
+          "quote": "Raphaël démontre une forte motivation et un réel engagement dans le développement de ses compétences professionnelles. Il aborde chaque défi avec créativité et persévérance.",
+          "role": "Conseiller en Insertion"
+        },
+        "caroline": {
+          "name": "Caroline P.",
+          "quote": "Travailler avec Raphaël a été un réel plaisir. Il a fait preuve d'une grande curiosité et d'une précision technique remarquable. Son attention aux détails a eu un impact notable sur la qualité de notre produit final.",
+          "role": "Responsable de Stage"
+        }
+      },
+      "cta": "Travailler Avec Moi",
+      "cv": "Télécharger CV",
+      "coverLetter": "Lettre de Motivation"
+    },
+    "projects": {
+      "eyebrow": "Portfolio",
+      "title": "Projets Sélectionnés",
+      "viewProject": "Voir le Projet",
+      "viewCode": "Voir le Code",
+      "selectPrompt": "Sélectionnez un projet pour voir les détails..."
+    },
+    "skills": {
+      "eyebrow": "Compétences",
+      "title": "Une Stack Moderne Orientée Impact"
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Me Contacter",
+      "email": "Email",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "spotify": "Spotify",
+      "spotifyValue": "écoutez_mes_playlists",
+      "githubActivity": "activité_github_live",
+      "githubStats": "Statistiques GitHub",
+      "lastMonth": "Dernier Mois",
+      "last3Months": "3 Derniers Mois",
+      "latestActivity": "Activité Récente",
+      "loading": "connexion_au_serveur...",
+      "footer": "créé avec passion & code // 2026"
+    },
+    "accessibility": {
+      "contrast": "Activer fort contraste",
+      "language": "Changer de langue"
+    },
+    "coverLetterModal": {
+      "title": "Bientôt Disponible",
+      "message": "La lettre de motivation sera bientôt disponible !",
+      "ok": "OK"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "group": "Frontend",
+    "items": ["React", "Vite", "GSAP", "TypeScript", "CSS", "Three.js"]
+  },
+  {
+    "group": "Backend",
+    "items": ["Node.js", "Express", "PostgreSQL", "Supabase"]
+  },
+  {
+    "group": "Tooling",
+    "items": ["Git", "Figma", "Vercel", "CI/CD"]
+  }
+]
