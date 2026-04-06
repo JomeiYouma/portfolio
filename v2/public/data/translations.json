@@ -18,7 +18,7 @@
     "about": {
       "eyebrow": "About Me",
       "title": "Me, Myself and I",
-      "subtitle": "Raphaël",
+      "subtitle": "Raphael",
       "bio": "Currently studying multimedia and web development, I build my journey through hands-on projects at university and on my own. I enjoy learning new technologies, experimenting, and turning ideas into concrete and functional experiences.",
       "languages": "Mastered Languages",
       "languagesList": "HTML – CSS – JS – PHP – Lua – Python",
@@ -26,7 +26,7 @@
       "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
       "certifications": {
         "title": "Web Quality Training",
-        "description": "Maîtrise Opquast certified — a recognized web quality benchmark covering 240+ best practices in accessibility, SEO, performance, privacy, and user experience."
+        "description": "Maîtrise Opquast certified — a recognized web quality benchmark covering 250+ best practices in accessibility, SEO, performance, privacy, and user experience."
       }
     },
     "testimonials": {
@@ -112,7 +112,7 @@
     "about": {
       "eyebrow": "À Propos",
       "title": "Me, Myself and I",
-      "subtitle": "Raphaël",
+      "subtitle": "Raphael",
       "bio": "Actuellement en formation multimédia et développement web, je construis mon parcours à travers des projets pratiques à l'université et en autonomie. J'aime apprendre de nouvelles technologies, expérimenter et transformer des idées en expériences concrètes et fonctionnelles.",
       "languages": "Langages Maîtrisés",
       "languagesList": "HTML – CSS – JS – PHP – Lua – Python",
@@ -120,7 +120,7 @@
       "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
       "certifications": {
         "title": "Formation Qualité Web",
-        "description": "Certifié Maîtrise Opquast — référentiel reconnu de qualité web couvrant plus de 240 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur."
+        "description": "Certifié Maîtrise Opquast — référentiel reconnu de qualité web couvrant plus de 250 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur."
       }
     },
     "testimonials": {

@@ -750,3 +750,125 @@
   .projects-gallery { height: 260px; }
   .project-details  { padding: 20px; }
 }
+
+/* ═══════════════════════════════════════
+   SKILL LOGO ITEMS (About.jsx icon loops)
+═══════════════════════════════════════ */
+
+.skill-logo-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: rgba(0, 255, 179, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.skill-logo-item:hover {
+  background: rgba(0, 255, 179, 0.08);
+  border-color: rgba(0, 255, 179, 0.25);
+  transform: translateY(-2px);
+}
+
+.skill-logo-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  /* Slight desaturate at rest, pop on hover */
+  filter: saturate(0.6) brightness(0.9);
+  transition: filter 0.2s ease;
+  display: block;
+}
+
+.skill-logo-item:hover .skill-logo-icon {
+  filter: saturate(1.2) brightness(1.1) drop-shadow(0 0 6px var(--accent-glow));
+}
+
+.skill-logo-label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.skill-logo-item:hover .skill-logo-label {
+  color: var(--accent);
+}
+
+/* CSS easter egg cursor hint */
+.skill-easter-css {
+  cursor: crosshair;
+}
+
+/* ═══════════════════════════════════════
+   CSS EASTER EGG — chaos mode
+   Triggered on body via JS (.css-chaos)
+═══════════════════════════════════════ */
+
+@keyframes chaos-color {
+  0%   { filter: hue-rotate(0deg)   contrast(1.4) saturate(2.5); }
+  20%  { filter: hue-rotate(72deg)  contrast(1.8) saturate(3);   }
+  40%  { filter: hue-rotate(144deg) contrast(1.2) saturate(2);   }
+  60%  { filter: hue-rotate(216deg) contrast(2.2) saturate(4);   }
+  80%  { filter: hue-rotate(288deg) contrast(1.6) saturate(2.5); }
+  100% { filter: hue-rotate(360deg) contrast(1.4) saturate(2.5); }
+}
+
+@keyframes chaos-glitch {
+  0%, 100% { transform: translate(0, 0)   skewX(0deg); }
+  10%       { transform: translate(-3px, 2px) skewX(-2deg); }
+  20%       { transform: translate(3px, -2px) skewX(2deg); }
+  30%       { transform: translate(-2px, -2px); }
+  40%       { transform: translate(2px, 2px) skewX(1deg); }
+  50%       { transform: translate(-1px, 1px); }
+  60%       { transform: translate(3px, -1px) skewX(-1deg); }
+  70%       { transform: translate(-3px, 2px); }
+  80%       { transform: translate(1px, -3px) skewX(2deg); }
+  90%       { transform: translate(-2px, 3px); }
+}
+
+@keyframes chaos-sections {
+  from { transform: rotate(-1.5deg) scale(0.99); }
+  to   { transform: rotate(1.5deg)  scale(1.01); }
+}
+
+body.css-chaos {
+  animation: chaos-color 0.35s infinite, chaos-glitch 0.6s infinite;
+}
+
+body.css-chaos section {
+  animation: chaos-sections 0.4s ease-in-out infinite alternate;
+}
+
+/* Each section gets a slightly different timing so they don't all move in sync */
+body.css-chaos section:nth-child(2) { animation-delay: 0.06s; }
+body.css-chaos section:nth-child(3) { animation-delay: 0.12s; }
+body.css-chaos section:nth-child(4) { animation-delay: 0.18s; }
+body.css-chaos section:nth-child(5) { animation-delay: 0.24s; }
+
+/* ═══════════════════════════════════════
+   HERO — OrbitalRings integration
+═══════════════════════════════════════ */
+
+/* Position rings behind hero card */
+.hero-orbital-wrap {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 0;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Make hero card visible above rings */
+.hero-card {
+  position: relative;
+  z-index: 1;
+}
