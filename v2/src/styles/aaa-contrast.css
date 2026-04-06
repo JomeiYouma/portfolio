@@ -4,132 +4,425 @@
    ========================================= */
 
 body.aaa-contrast {
-    --main-bg-color: #000000;
-    --primary-dark: #000000;
-    --primary-light: #FFFFFF;
-    --accent-cyan: #00FFFF;
-    --text-gray: #FFFFFF;
+  --bg:           #000000;
+  --bg-elev:      #000000;
+  --bg-soft:      #0a0a0a;
+  --bg-panel:     #0a0a0a;
+  --text:         #ffffff;
+  --text-muted:   #ffffff;
+  --text-dim:     #cccccc;
+  --accent:       #00ffff;
+  --accent-soft:  rgba(0, 255, 255, 0.15);
+  --accent-glow:  rgba(0, 255, 255, 0.5);
+  --accent-2:     #00ffff;
+  --border:       rgba(255, 255, 255, 0.4);
+  --border-accent:rgba(0, 255, 255, 0.8);
 }
 
+/* Nav */
 body.aaa-contrast .nav {
-    background-color: #000000;
-    border-bottom: 2px solid #FFFFFF;
+  background-color: #000000;
+  border-bottom: 2px solid #ffffff;
 }
 
-body.aaa-contrast .navigation li {
-    color: #FFFFFF;
+body.aaa-contrast .nav-brand,
+body.aaa-contrast .nav-link {
+  color: #ffffff;
 }
 
-body.aaa-contrast .navigation li::before {
-    color: #00FFFF;
+body.aaa-contrast .nav-link:hover,
+body.aaa-contrast .nav-link.is-active {
+  color: #00ffff;
+  background: rgba(0, 255, 255, 0.12);
 }
 
-body.aaa-contrast .navigation li:hover,
-body.aaa-contrast .navigation li.active {
-    color: #00FFFF;
+body.aaa-contrast .nav-index {
+  color: #cccccc;
+  opacity: 1;
 }
 
-body.aaa-contrast .golden-ratio-bg {
-    display: none; /* Hide decorative elements for maximum clarity */
-}
-
-body.aaa-contrast .sub-title {
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-body.aaa-contrast .description,
-body.aaa-contrast .intro-text,
-body.aaa-contrast .testimonial-item blockquote,
-body.aaa-contrast .about-bio,
-body.aaa-contrast .card-label,
-body.aaa-contrast .repo-desc {
-    color: #FFFFFF;
-}
-
-body.aaa-contrast .project-description,
-body.aaa-contrast .skills-group p {
-    color: #FFFFFF;
-}
-
-body.aaa-contrast .project-box {
-    border: 2px solid #FFFFFF;
-    filter: grayscale(100%) brightness(1.2) contrast(1.5);
-}
-
-body.aaa-contrast .project-box.active {
-    border: 3px solid #00FFFF;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-}
-
-body.aaa-contrast .work-with-me {
-    background: #FFFFFF;
-    color: #000000;
-    border: 2px solid #FFFFFF;
-}
-
-body.aaa-contrast .work-with-me:hover {
-    background: #00FFFF;
-    color: #000000;
-    border: 2px solid #00FFFF;
-}
-
-body.aaa-contrast .contact-card {
-    background: #000000;
-    border: 2px solid #FFFFFF;
-}
-
-body.aaa-contrast .contact-card:hover {
-    background: #000000;
-    border-color: #00FFFF;
-}
-
-body.aaa-contrast .github-status {
-    background: #000000;
-    border: 2px solid #FFFFFF;
-}
-
-body.aaa-contrast .social-link {
-    border: 2px solid #FFFFFF;
-}
-
-body.aaa-contrast .social-link::before {
-    border: 2px solid #FFFFFF;
-}
-
-body.aaa-contrast .social-link:hover::before {
-    border-color: #00FFFF;
-}
-
-body.aaa-contrast .social-link svg {
-    fill: #FFFFFF;
-}
-
-body.aaa-contrast .about-star {
-    color: #FFFFFF;
-    opacity: 0.1;
-}
-
-/* Ensure all text has sufficient contrast */
+/* Body text */
 body.aaa-contrast h1,
 body.aaa-contrast h2,
 body.aaa-contrast h3,
 body.aaa-contrast h4,
 body.aaa-contrast p,
 body.aaa-contrast span,
-body.aaa-contrast a,
-body.aaa-contrast li {
-    color: inherit;
+body.aaa-contrast li,
+body.aaa-contrast blockquote {
+  color: #ffffff;
 }
 
-/* Strengthen borders and outlines */
-body.aaa-contrast .project-info,
-body.aaa-contrast .testimonial-item,
-body.aaa-contrast .skills-group {
-    border-left: 2px solid #FFFFFF;
-    padding-left: 1rem;
+body.aaa-contrast a {
+  color: #00ffff;
 }
 
-body.aaa-contrast .intro-text {
-    border-bottom: 2px solid #FFFFFF;
+/* Hide decorative bg elements */
+body.aaa-contrast body::before,
+body.aaa-contrast body::after,
+body.aaa-contrast .app::before {
+  display: none;
+}
+
+/* Hero */
+body.aaa-contrast .main-title {
+  color: #00ffff;
+  text-shadow: none;
+}
+
+body.aaa-contrast .sub-title {
+  color: #ffffff;
+}
+
+body.aaa-contrast .hero-description {
+  color: #ffffff;
+  border-left-color: #00ffff;
+}
+
+body.aaa-contrast .hero-card {
+  background: #0a0a0a;
+  border: 2px solid #ffffff;
+}
+
+body.aaa-contrast .hero-card-label,
+body.aaa-contrast .hero-card-grid p:not(.hero-card-label) {
+  color: #ffffff;
+}
+
+body.aaa-contrast .hero-card-title {
+  color: #00ffff;
+}
+
+/* Buttons */
+body.aaa-contrast .btn.primary {
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #ffffff;
+  box-shadow: none;
+}
+
+body.aaa-contrast .btn.primary:hover {
+  background: #00ffff;
+  color: #000000;
+  border-color: #00ffff;
+}
+
+body.aaa-contrast .btn.ghost {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+body.aaa-contrast .btn.ghost:hover {
+  border-color: #00ffff;
+  color: #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+}
+
+/* Social links */
+body.aaa-contrast .social-link {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+body.aaa-contrast .social-link:hover {
+  border-color: #00ffff;
+  color: #00ffff;
+}
+
+body.aaa-contrast .social-link svg {
+  fill: currentColor;
+}
+
+/* About */
+body.aaa-contrast .about-title {
+  color: #ffffff;
+}
+
+body.aaa-contrast .about-name {
+  color: #00ffff;
+  text-shadow: none;
+}
+
+body.aaa-contrast .about-bio {
+  color: #ffffff;
+  border-left-color: #00ffff;
+}
+
+body.aaa-contrast .skills-loop-group h4,
+body.aaa-contrast .skills-group h4 {
+  color: #cccccc;
+}
+
+body.aaa-contrast .skill-tag {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00ffff;
+  color: #ffffff;
+}
+
+body.aaa-contrast .skill-tag:hover {
+  background: rgba(0, 255, 255, 0.25);
+  color: #00ffff;
+}
+
+body.aaa-contrast .skills-group.certification {
+  background: rgba(0, 255, 255, 0.08);
+  border-left: 3px solid #00ffff;
+}
+
+body.aaa-contrast .skills-group.certification p {
+  color: #ffffff;
+}
+
+/* Testimonials */
+body.aaa-contrast .testimonial-card {
+  background: #0a0a0a;
+  border: 2px solid #ffffff;
+}
+
+body.aaa-contrast .testimonial-card:hover {
+  border-color: #00ffff;
+  background: rgba(0, 255, 255, 0.05);
+}
+
+body.aaa-contrast .testimonial-quote blockquote {
+  color: #ffffff;
+  font-style: normal;
+}
+
+body.aaa-contrast .quote-mark {
+  color: #00ffff;
+  opacity: 0.6;
+}
+
+body.aaa-contrast .author-name {
+  color: #ffffff;
+}
+
+body.aaa-contrast .author-role {
+  color: #00ffff;
+}
+
+body.aaa-contrast .testimonial-author {
+  border-top-color: rgba(255,255,255,0.3);
+}
+
+body.aaa-contrast .download-item {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+body.aaa-contrast .download-item:hover {
+  border-color: #00ffff;
+  color: #00ffff;
+}
+
+/* Projects */
+body.aaa-contrast .project-details {
+  background: #0a0a0a;
+  border: 2px solid #ffffff;
+  border-left: 4px solid #00ffff;
+}
+
+body.aaa-contrast .project-title {
+  color: #00ffff;
+  text-shadow: none;
+}
+
+body.aaa-contrast .project-type,
+body.aaa-contrast .meta-label {
+  color: #cccccc;
+  opacity: 1;
+}
+
+body.aaa-contrast .meta-value,
+body.aaa-contrast .project-description {
+  color: #ffffff;
+}
+
+body.aaa-contrast .project-meta {
+  border-top-color: rgba(255,255,255,0.3);
+  border-bottom-color: rgba(255,255,255,0.3);
+}
+
+body.aaa-contrast .nav-arrow {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+body.aaa-contrast .nav-arrow:hover {
+  border-color: #00ffff;
+  color: #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+}
+
+/* Contact */
+body.aaa-contrast .contact-title {
+  color: #ffffff;
+}
+
+body.aaa-contrast .contact-card {
+  background: #0a0a0a;
+  border: 2px solid #ffffff;
+}
+
+body.aaa-contrast .contact-card:hover {
+  border-color: #00ffff;
+  background: rgba(0, 255, 255, 0.05);
+  box-shadow: -4px 0 0 #00ffff;
+}
+
+body.aaa-contrast .card-label {
+  color: #00ffff;
+  opacity: 1;
+}
+
+body.aaa-contrast .card-value {
+  color: #ffffff;
+}
+
+body.aaa-contrast .card-arrow {
+  color: #00ffff;
+}
+
+body.aaa-contrast .footer-note {
+  color: #cccccc;
+  border-top-color: rgba(255,255,255,0.3);
+}
+
+/* GitHub activity */
+body.aaa-contrast .github-header h3,
+body.aaa-contrast .github-section-title {
+  color: #ffffff;
+}
+
+body.aaa-contrast .github-latest-activity h4 {
+  color: #ffffff;
+}
+
+body.aaa-contrast .repo-card {
+  background: #0a0a0a;
+  border: 1px solid #ffffff;
+  border-left: 3px solid #00ffff;
+}
+
+body.aaa-contrast .repo-card:hover {
+  background: rgba(0, 255, 255, 0.05);
+  border-color: #00ffff;
+}
+
+body.aaa-contrast .repo-name {
+  color: #00ffff;
+}
+
+body.aaa-contrast .repo-desc,
+body.aaa-contrast .repo-stats {
+  color: #ffffff;
+  opacity: 1;
+}
+
+body.aaa-contrast .graph-scale-btn {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+body.aaa-contrast .graph-scale-btn.active {
+  background: #00ffff;
+  color: #000000;
+  border-color: #00ffff;
+}
+
+body.aaa-contrast .graph-scale-btn:hover {
+  border-color: #00ffff;
+  color: #00ffff;
+}
+
+/* Snap dots */
+body.aaa-contrast .snap-dot {
+  background: rgba(255,255,255,0.4);
+}
+
+body.aaa-contrast .snap-dot.active {
+  background: #00ffff;
+  box-shadow: 0 0 8px #00ffff;
+}
+
+/* Scroll progress */
+body.aaa-contrast .scroll-progress {
+  background: rgba(255,255,255,0.2);
+}
+
+body.aaa-contrast .scroll-progress span {
+  background: #00ffff;
+}
+
+/* Tags */
+body.aaa-contrast .tag {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #ffffff;
+}
+
+/* Eyebrow */
+body.aaa-contrast .eyebrow {
+  color: #00ffff;
+}
+
+/* Section headings */
+body.aaa-contrast .section-heading h2,
+body.aaa-contrast .section-heading h3 {
+  color: #ffffff;
+}
+
+body.aaa-contrast .lead {
+  color: #ffffff;
+}
+
+/* Modal */
+body.aaa-contrast .modal-content {
+  background: #000000;
+  border: 2px solid #ffffff;
+}
+
+body.aaa-contrast .modal-content h3 {
+  color: #00ffff;
+}
+
+body.aaa-contrast .modal-content p {
+  color: #ffffff;
+}
+
+/* KPI cards */
+body.aaa-contrast .kpi-card {
+  background: #0a0a0a;
+  border: 1px solid #ffffff;
+  border-left: 3px solid #00ffff;
+}
+
+body.aaa-contrast .kpi-value {
+  color: #00ffff;
+}
+
+body.aaa-contrast .kpi-label,
+body.aaa-contrast .kpi-detail {
+  color: #ffffff;
+}
+
+/* Accessibility controls */
+body.aaa-contrast .contrast-toggle,
+body.aaa-contrast .lang-toggle {
+  background: #000000;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+body.aaa-contrast .contrast-toggle.active {
+  background: #00ffff;
+  color: #000000;
+  border-color: #00ffff;
+}
+
+body.aaa-contrast .contrast-toggle:hover,
+body.aaa-contrast .lang-toggle:hover {
+  border-color: #00ffff;
+  color: #00ffff;
 }

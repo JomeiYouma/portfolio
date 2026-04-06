@@ -190,13 +190,13 @@
 }
 
 .about-name {
-  font-family: var(--font-main);
+  font-family: var(--font-main), var(--font-display), sans-serif;
   font-size: clamp(2.8rem, 5.5vw, 4.5rem);
   color: var(--accent);
   margin: 6px 0 0 0;
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
   text-shadow: 0 0 40px rgba(0, 255, 179, 0.2);
 }
 
@@ -480,9 +480,9 @@
   font-family: var(--font-main);
   font-size: clamp(2rem, 3.5vw, 2.8rem);
   margin: 0;
-  line-height: 1;
+  line-height: 1.1;
   color: var(--text);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.05em;
 }
 
 .contact-grid {
@@ -603,14 +603,15 @@
 }
 
 .project-title {
-  font-family: var(--font-main);
+  font-family: var(--font-display);
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   color: var(--accent);
   margin: 0;
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
   text-shadow: 0 0 30px rgba(0, 255, 179, 0.2);
+  text-transform: uppercase;
 }
 
 .project-type {
