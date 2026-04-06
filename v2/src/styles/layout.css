@@ -2,9 +2,11 @@
   position: relative;
   width: 100vw;
   height: 100vh;
+  /* No overflow:hidden here — let wheel events reach window */
   overflow: hidden;
 }
 
+/* Horizontal strip — driven purely by gsap.to(main, { x }) */
 main {
   display: flex;
   width: fit-content;
@@ -12,6 +14,7 @@ main {
   will-change: transform;
 }
 
+/* ─── Section base ───────────────────────────────────────────────────────── */
 .section {
   width: 100vw;
   height: 100vh;
@@ -23,45 +26,81 @@ main {
   overflow: clip;
 }
 
+/* Ghost section number — behind content, above grid */
+.section::after {
+  content: attr(data-index);
+  position: absolute;
+  bottom: -0.08em;
+  right: 2vw;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 18vw, 16rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 255, 179, 0.05);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -0.04em;
+  user-select: none;
+  z-index: -1;    /* above grid (-3), below content (1) */
+}
+
+/* ─── Section inner ──────────────────────────────────────────────────────── */
 .section-inner {
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
-  padding: calc(var(--nav-height) + 16px) clamp(1.5rem, 5vw, 6rem) 16px;
+  padding: calc(var(--nav-height) + 20px) clamp(1.5rem, 5vw, 6rem) 20px;
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 2.5vh, 32px);
+  gap: clamp(14px, 2.2vh, 28px);
   height: 100%;
   justify-content: center;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
+  position: relative;
+  z-index: 1;     /* above ghost number */
 }
 
-.section-inner::-webkit-scrollbar {
-  display: none;
+.section-inner::-webkit-scrollbar { display: none; }
+
+/* Subtle top accent line per section */
+.section-inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: clamp(1.5rem, 5vw, 6rem);
+  right: clamp(1.5rem, 5vw, 6rem);
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent 60%);
+  opacity: 0.12;
+  pointer-events: none;
 }
 
+/* ─── Shared heading / lead ──────────────────────────────────────────────── */
 .section-heading {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   max-width: 720px;
 }
 
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.28em;
-  font-size: 0.68rem;
-  color: var(--text-muted);
+  letter-spacing: 0.3em;
+  font-size: 0.6rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
 }
 
 .lead {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
-  max-width: 520px;
+  max-width: 500px;
+  line-height: 1.7;
 }
 
+/* ─── Layout grids ───────────────────────────────────────────────────────── */
 .hero-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -79,13 +118,13 @@ main {
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  gap: 16px;
 }
 
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 28px;
+  gap: 24px;
   max-height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -94,23 +133,14 @@ main {
   scrollbar-color: var(--accent) transparent;
 }
 
-.project-grid::-webkit-scrollbar {
-  width: 6px;
-}
-
-.project-grid::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.project-grid::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 3px;
-}
+.project-grid::-webkit-scrollbar       { width: 3px; }
+.project-grid::-webkit-scrollbar-track { background: transparent; }
+.project-grid::-webkit-scrollbar-thumb { background: var(--accent); }
 
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
 .contact-inner {
@@ -120,7 +150,35 @@ main {
   align-items: center;
 }
 
-/* Mobile: vertical scroll mode */
+/* ─── Snap indicator dots ────────────────────────────────────────────────── */
+.snap-dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+}
+
+.snap-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--text-dim);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.snap-dot.active {
+  background: var(--accent);
+  height: 16px;
+  box-shadow: 0 0 6px var(--accent-glow);
+}
+
+/* ─── Mobile: vertical scroll ────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .app {
     width: 100%;
@@ -130,7 +188,6 @@ main {
   }
 
   main {
-    display: flex;
     flex-direction: column;
     width: 100%;
     height: auto;
@@ -143,22 +200,16 @@ main {
     min-height: 100vh;
   }
 
+  .section::after { display: none; }
+
   .section-inner {
-    padding: 80px clamp(1rem, 4vw, 2rem);
+    padding: 90px clamp(1rem, 4vw, 2rem) 40px;
   }
 
   .project-grid {
     max-height: none;
     overflow-y: visible;
   }
-}
 
-@media (max-width: 900px) and (min-width: 769px) {
-  main {
-    padding-top: 0;
-  }
-
-  .section {
-    min-height: 100vh;
-  }
+  .snap-dots { display: none; }
 }

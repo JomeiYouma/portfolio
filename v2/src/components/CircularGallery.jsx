@@ -1,5 +1,5 @@
 import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
 import './CircularGallery.css'
 
 function debounce(func, wait) {
@@ -346,12 +346,14 @@ class GalleryApp {
   onCheck() {
     if (!this.medias || !this.medias[0]) return
     const width = this.medias[0].width
-    const itemIndex = Math.round(Math.abs(this.scroll.target) / width)
-    const item = width * itemIndex
+    const rawIndex = Math.round(this.scroll.target / width)
+    const item = width * Math.abs(rawIndex)
     this.scroll.target = this.scroll.target < 0 ? -item : item
     
     // Calculate actual index (modulo item count to handle duplicates)
-    const newIndex = itemIndex % this.itemCount
+    let newIndex = rawIndex % this.itemCount
+    if (newIndex < 0) newIndex += this.itemCount
+
     if (newIndex !== this.currentIndex && this.onSelectCallback) {
       this.currentIndex = newIndex
       this.onSelectCallback(newIndex)
@@ -388,29 +390,29 @@ class GalleryApp {
     window.addEventListener('resize', this.boundOnResize)
     this.container.addEventListener('wheel', this.boundOnWheel, { passive: true })
     this.container.addEventListener('mousedown', this.boundOnTouchDown)
-    this.container.addEventListener('mousemove', this.boundOnTouchMove)
-    this.container.addEventListener('mouseup', this.boundOnTouchUp)
+    window.addEventListener('mousemove', this.boundOnTouchMove)
+    window.addEventListener('mouseup', this.boundOnTouchUp)
     this.container.addEventListener('touchstart', this.boundOnTouchDown)
-    this.container.addEventListener('touchmove', this.boundOnTouchMove)
-    this.container.addEventListener('touchend', this.boundOnTouchUp)
+    window.addEventListener('touchmove', this.boundOnTouchMove)
+    window.addEventListener('touchend', this.boundOnTouchUp)
   }
   destroy() {
     window.cancelAnimationFrame(this.raf)
     window.removeEventListener('resize', this.boundOnResize)
     this.container.removeEventListener('wheel', this.boundOnWheel)
     this.container.removeEventListener('mousedown', this.boundOnTouchDown)
-    this.container.removeEventListener('mousemove', this.boundOnTouchMove)
-    this.container.removeEventListener('mouseup', this.boundOnTouchUp)
+    window.removeEventListener('mousemove', this.boundOnTouchMove)
+    window.removeEventListener('mouseup', this.boundOnTouchUp)
     this.container.removeEventListener('touchstart', this.boundOnTouchDown)
-    this.container.removeEventListener('touchmove', this.boundOnTouchMove)
-    this.container.removeEventListener('touchend', this.boundOnTouchUp)
+    window.removeEventListener('touchmove', this.boundOnTouchMove)
+    window.removeEventListener('touchend', this.boundOnTouchUp)
     if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas)
     }
   }
 }
 
-export default function CircularGallery({
+const CircularGallery = forwardRef(({
   items,
   bend = 3,
   textColor = '#24FBC5',
@@ -419,9 +421,28 @@ export default function CircularGallery({
   scrollSpeed = 2,
   scrollEase = 0.05,
   onSelect,
-}) {
+}, ref) => {
   const containerRef = useRef(null)
   const appRef = useRef(null)
+
+  useImperativeHandle(ref, () => ({
+    next: () => {
+      if (appRef.current && appRef.current.medias && appRef.current.medias[0]) {
+        const width = appRef.current.medias[0].width
+        const rawIndex = Math.round(appRef.current.scroll.target / width)
+        appRef.current.scroll.target = (rawIndex + 1) * width
+        appRef.current.onCheck()
+      }
+    },
+    prev: () => {
+      if (appRef.current && appRef.current.medias && appRef.current.medias[0]) {
+        const width = appRef.current.medias[0].width
+        const rawIndex = Math.round(appRef.current.scroll.target / width)
+        appRef.current.scroll.target = (rawIndex - 1) * width
+        appRef.current.onCheck()
+      }
+    }
+  }))
 
   useEffect(() => {
     if (!containerRef.current || !items || items.length === 0) return
@@ -432,4 +453,6 @@ export default function CircularGallery({
   }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onSelect])
 
   return <div className="circular-gallery" ref={containerRef} />
-}
+})
+
+export default CircularGallery

@@ -1,22 +1,94 @@
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
-
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 const prefersReducedMotion = () =>
-  window.matchMedia &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
-let horizontalScroll = null
-let scrollTriggerInstance = null
+// ─── State ────────────────────────────────────────────────────────────────────
+let currentIndex = 0
+let isAnimating  = false
+let sectionEls   = []
 
+const DURATION = 0.75
+const EASE     = 'power3.inOut'
+
+// ─── Core snap ───────────────────────────────────────────────────────────────
+const goToIndex = (index, duration = DURATION) => {
+  if (isAnimating) return
+  const clamped = Math.max(0, Math.min(index, sectionEls.length - 1))
+  if (clamped === currentIndex && duration !== 0) return
+
+  isAnimating  = true
+  currentIndex = clamped
+
+  gsap.to(document.querySelector('main'), {
+    x: -(window.innerWidth * clamped),
+    duration,
+    ease: EASE,
+    onComplete: () => { isAnimating = false },
+  })
+
+  const p = sectionEls.length > 1 ? clamped / (sectionEls.length - 1) : 0
+  document.documentElement.style.setProperty('--scroll-progress', p.toFixed(3))
+  window.dispatchEvent(new CustomEvent('sectionChange', { detail: { index: clamped } }))
+}
+
+// ─── Wheel / Trackpad ────────────────────────────────────────────────────────
+// Strategy: fire on the FIRST wheel event that crosses the threshold.
+// Then lock (isAnimating) until the snap animation completes.
+// This works for both mouse wheels (large deltaY) and trackpads (small deltaY).
+
+const WHEEL_THRESHOLD = 30   // px — enough to distinguish intent from noise
+
+const onWheel = (e) => {
+  e.preventDefault()
+
+  // Already animating → swallow all events until done
+  if (isAnimating) return
+
+  const delta = e.deltaY + e.deltaX   // trackpad can send horizontal too
+
+  if (Math.abs(delta) >= WHEEL_THRESHOLD) {
+    goToIndex(currentIndex + (delta > 0 ? 1 : -1))
+  }
+}
+
+// ─── Touch ────────────────────────────────────────────────────────────────────
+let touchStartX = 0
+let touchStartY = 0
+
+const onTouchStart = (e) => {
+  touchStartX = e.touches[0].clientX
+  touchStartY = e.touches[0].clientY
+}
+
+const onTouchEnd = (e) => {
+  const dx = touchStartX - e.changedTouches[0].clientX
+  const dy = touchStartY - e.changedTouches[0].clientY
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30) {
+    goToIndex(currentIndex + (dx > 0 ? 1 : -1))
+  }
+}
+
+// ─── Keyboard ─────────────────────────────────────────────────────────────────
+const onKeyDown = (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
+  if (['ArrowRight', 'ArrowDown', 'PageDown'].includes(e.key)) { e.preventDefault(); goToIndex(currentIndex + 1) }
+  else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); goToIndex(currentIndex - 1) }
+  else if (e.key === 'Home') { e.preventDefault(); goToIndex(0) }
+  else if (e.key === 'End')  { e.preventDefault(); goToIndex(sectionEls.length - 1) }
+}
+
+// ─── Resize ───────────────────────────────────────────────────────────────────
+let resizeTimer = null
+const onResize = () => {
+  clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(() => goToIndex(currentIndex, 0), 150)
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
 export const initScrollEffects = () => {
-  // Mobile: vertical scroll
   const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window
-  
   if (isMobile || prefersReducedMotion()) {
-    // Remove horizontal constraints for mobile
     document.documentElement.style.setProperty('--scroll-mode', 'vertical')
     return () => {}
   }
@@ -24,113 +96,40 @@ export const initScrollEffects = () => {
   document.documentElement.style.setProperty('--scroll-mode', 'horizontal')
 
   const main = document.querySelector('main')
-  const sections = gsap.utils.toArray('section[data-section]')
-  
-  if (!main || sections.length < 2) {
-    return () => {}
-  }
+  sectionEls = Array.from(document.querySelectorAll('section[data-section]'))
+  if (!main || sectionEls.length < 2) return () => {}
 
-  // Calculate total width
-  const getScrollWidth = () => main.scrollWidth - window.innerWidth
+  currentIndex = 0
+  isAnimating  = false
+  gsap.set(main, { x: 0 })
 
-  // Create horizontal scroll animation
-  horizontalScroll = gsap.to(main, {
-    x: () => -getScrollWidth(),
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.app',
-      start: 'top top',
-      end: () => `+=${getScrollWidth()}`,
-      scrub: 0.8,
-      pin: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => {
-        // Dispatch custom event for scroll progress
-        window.dispatchEvent(new CustomEvent('horizontalScroll', { 
-          detail: { progress: self.progress }
-        }))
-      }
-    },
-  })
-
-  scrollTriggerInstance = horizontalScroll.scrollTrigger
-
-  // Section entrance animations
-  sections.forEach((section) => {
-    gsap.fromTo(
-      section.querySelectorAll('.section-inner > *'),
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: section,
-          containerAnimation: horizontalScroll,
-          start: 'left 80%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    )
-  })
-
-  // Handle resize
-  const handleResize = () => {
-    ScrollTrigger.refresh()
-  }
-  window.addEventListener('resize', handleResize)
+  // Non-passive wheel so we can preventDefault and block native scroll
+  window.addEventListener('wheel',      onWheel,      { passive: false })
+  window.addEventListener('touchstart', onTouchStart, { passive: true })
+  window.addEventListener('touchend',   onTouchEnd,   { passive: true })
+  window.addEventListener('keydown',    onKeyDown)
+  window.addEventListener('resize',     onResize)
 
   return () => {
-    window.removeEventListener('resize', handleResize)
-    if (scrollTriggerInstance) {
-      scrollTriggerInstance.kill()
-    }
-    if (horizontalScroll) {
-      horizontalScroll.kill()
-    }
-    ScrollTrigger.getAll().forEach(st => st.kill())
+    window.removeEventListener('wheel',      onWheel)
+    window.removeEventListener('touchstart', onTouchStart)
+    window.removeEventListener('touchend',   onTouchEnd)
+    window.removeEventListener('keydown',    onKeyDown)
+    window.removeEventListener('resize',     onResize)
+    clearTimeout(resizeTimer)
   }
 }
 
+// ─── Public ───────────────────────────────────────────────────────────────────
 export const scrollToSection = (id) => {
-  const target = document.getElementById(id)
-  const main = document.querySelector('main')
-  
-  if (!target || !main) return
-
-  const sections = Array.from(document.querySelectorAll('section[data-section]'))
-  const index = sections.findIndex((s) => s.id === id)
-  
-  if (index === -1) return
-
-  // Mobile or reduced motion: simple scroll
   const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window
-  
   if (isMobile || prefersReducedMotion()) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     return
   }
-
-  // Desktop: calculate horizontal position
-  const totalScrollWidth = main.scrollWidth - window.innerWidth
-  const sectionCount = sections.length - 1
-  const scrollPerSection = totalScrollWidth / sectionCount
-  const targetScrollY = scrollPerSection * index
-
-  gsap.to(window, {
-    duration: 1,
-    scrollTo: { y: targetScrollY, autoKill: false },
-    ease: 'power2.inOut',
-  })
+  const all   = Array.from(document.querySelectorAll('section[data-section]'))
+  const index = all.findIndex((s) => s.id === id)
+  if (index !== -1) goToIndex(index)
 }
 
-// Helper to get current section index
-export const getCurrentSectionIndex = () => {
-  if (!scrollTriggerInstance) return 0
-  const progress = scrollTriggerInstance.progress
-  const sections = document.querySelectorAll('section[data-section]')
-  return Math.round(progress * (sections.length - 1))
-}
+export const getCurrentSectionIndex = () => currentIndex

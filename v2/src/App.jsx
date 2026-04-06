@@ -4,6 +4,7 @@ import ScrollProgress from './components/ScrollProgress'
 import AccessibilityControls from './components/AccessibilityControls'
 import TargetCursor from './components/TargetCursor'
 import KpiAdmin from './components/KpiAdmin'
+import SnapDots from './components/SnapDots'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Projects from './sections/Projects'
@@ -18,33 +19,23 @@ import { initScrollEffects } from './animations/scroll'
 
 function App() {
   const [showKpiAdmin, setShowKpiAdmin] = useState(false)
-  const { activeId } = useScrollSpy(
-    sections.map((section) => section.id),
-  )
+  const { activeId } = useScrollSpy(sections.map((s) => s.id))
   const { lang, toggleLanguage, isLoaded, t } = useI18n()
   const { isActive: contrastActive, toggle: toggleContrast } = useContrast()
 
-  // Keyboard shortcut: Alt + A + K for KPI admin
+  // Keyboard shortcut: Alt + A + K
   const handleKeyDown = useCallback((e) => {
-    // Track key sequence
     if (!window.kpiKeySequence) window.kpiKeySequence = []
-    
     if (e.altKey) {
       window.kpiKeySequence.push(e.key.toLowerCase())
-      
-      // Check for 'a' then 'k' sequence while Alt is held
       const seq = window.kpiKeySequence.join('')
       if (seq.includes('ak')) {
         e.preventDefault()
         setShowKpiAdmin((prev) => !prev)
         window.kpiKeySequence = []
       }
-      
-      // Clear sequence after 1 second
       clearTimeout(window.kpiKeyTimeout)
-      window.kpiKeyTimeout = setTimeout(() => {
-        window.kpiKeySequence = []
-      }, 1000)
+      window.kpiKeyTimeout = setTimeout(() => { window.kpiKeySequence = [] }, 1000)
     }
   }, [])
 
@@ -55,32 +46,35 @@ function App() {
 
   useEffect(() => {
     let cleanup = null
-    // Wait for DOM to be ready before initializing scroll
-    const timer = setTimeout(() => {
-      cleanup = initScrollEffects()
-    }, 100)
-    
-    return () => {
-      clearTimeout(timer)
-      if (cleanup) cleanup()
-    }
+    const timer = setTimeout(() => { cleanup = initScrollEffects() }, 100)
+    return () => { clearTimeout(timer); if (cleanup) cleanup() }
   }, [])
 
-  // Get nav labels based on language
-  const navSections = sections.map((section) => ({
-    ...section,
-    label: lang === 'fr' ? section.labelFr : section.label,
+  // Add data-index attr to sections for the CSS ghost number
+  useEffect(() => {
+    document.querySelectorAll('section[data-section]').forEach((el, i) => {
+      el.setAttribute('data-index', String(i + 1).padStart(2, '0'))
+    })
+  }, [isLoaded])
+
+  const navSections = sections.map((s) => ({
+    ...s,
+    label: lang === 'fr' ? s.labelFr : s.label,
   }))
 
   if (!isLoaded) {
-    return <div className="loading-screen">Loading...</div>
+    return <div className="loading-screen" />
   }
 
   return (
     <div className="app">
-      <TargetCursor targetSelector=".cursor-target, .btn, .nav-link, a" disableSpin={contrastActive} />
+      <TargetCursor
+        targetSelector=".cursor-target, .btn, .nav-link, a"
+        disableSpin={contrastActive}
+      />
       <Nav sections={navSections} activeId={activeId} />
       <ScrollProgress />
+      <SnapDots sections={navSections} />
       <AccessibilityControls
         lang={lang}
         onToggleLang={toggleLanguage}

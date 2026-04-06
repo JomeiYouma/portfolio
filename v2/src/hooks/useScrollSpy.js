@@ -1,54 +1,52 @@
 import { useEffect, useState } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 export const useScrollSpy = (sectionIds = []) => {
   const [activeId, setActiveId] = useState(sectionIds[0] || '')
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    if (!sectionIds.length) {
-      setProgress(0)
-      return undefined
-    }
+    if (!sectionIds.length) return
 
-    // For horizontal scroll, we track based on scroll position
-    const updateProgress = () => {
-      const scrolled = window.scrollY
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      const newProgress = maxScroll > 0 ? scrolled / maxScroll : 0
-      setProgress(newProgress)
+    const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window
 
-      // Update active section based on horizontal position
-      const main = document.querySelector('main')
-      if (main) {
-        const mainX = gsap.getProperty(main, 'x')
-        const sectionWidth = window.innerWidth
-        const currentIndex = Math.round(Math.abs(mainX) / sectionWidth)
-        const clampedIndex = Math.max(0, Math.min(currentIndex, sectionIds.length - 1))
-        setActiveId(sectionIds[clampedIndex])
+    if (!isMobile) {
+      // Desktop: driven by sectionChange events from scroll.js
+      const handler = (e) => {
+        const index = e.detail.index
+        if (sectionIds[index]) setActiveId(sectionIds[index])
+        const p = sectionIds.length > 1 ? index / (sectionIds.length - 1) : 0
+        setProgress(p)
       }
-    }
-
-    const scrollListener = () => {
-      requestAnimationFrame(updateProgress)
-    }
-
-    window.addEventListener('scroll', scrollListener)
-    updateProgress()
-
-    return () => {
-      window.removeEventListener('scroll', scrollListener)
+      window.addEventListener('sectionChange', handler)
+      return () => window.removeEventListener('sectionChange', handler)
+    } else {
+      // Mobile: IntersectionObserver
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveId(entry.target.id)
+              const index = sectionIds.indexOf(entry.target.id)
+              if (index !== -1) {
+                const p = sectionIds.length > 1 ? index / (sectionIds.length - 1) : 0
+                setProgress(p)
+                document.documentElement.style.setProperty('--scroll-progress', p.toFixed(3))
+              }
+            }
+          })
+        },
+        { threshold: 0.5 }
+      )
+      sectionIds.forEach((id) => {
+        const el = document.getElementById(id)
+        if (el) observer.observe(el)
+      })
+      return () => observer.disconnect()
     }
   }, [sectionIds])
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--scroll-progress',
-      progress.toFixed(3),
-    )
+    document.documentElement.style.setProperty('--scroll-progress', progress.toFixed(3))
   }, [progress])
 
   return { activeId, progress }
