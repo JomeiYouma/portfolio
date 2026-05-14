@@ -1,0 +1,213 @@
+/* ─── Project detail modal ───────────────────────────────────────────────── */
+.pdm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 4, 6, 0.78);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 48px);
+}
+
+.pdm-dialog {
+  position: relative;
+  width: min(960px, 96vw);
+  max-height: min(86vh, 820px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  background: var(--bg-panel);
+  border: 1px solid var(--border-accent);
+  box-shadow: var(--shadow), 0 0 60px rgba(0, 255, 179, 0.08);
+  overflow: hidden;
+}
+
+/* Reuse the corner bracket motif of the rest of the UI */
+.pdm-dialog::before,
+.pdm-dialog::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--accent);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 4;
+}
+.pdm-dialog::before { top: -1px; left: -1px;  border-width: 1px 0 0 1px; }
+.pdm-dialog::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+.pdm-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  z-index: 5;
+}
+
+.pdm-close:hover,
+.pdm-close:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(0, 255, 179, 0.08);
+}
+
+.pdm-media {
+  position: relative;
+  background: #000;
+  overflow: hidden;
+  min-height: 240px;
+}
+
+.pdm-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 50%, rgba(0, 255, 179, 0.06));
+  pointer-events: none;
+}
+
+.pdm-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pdm-body {
+  padding: clamp(20px, 2.5vw, 32px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+.pdm-body::-webkit-scrollbar       { width: 4px; }
+.pdm-body::-webkit-scrollbar-track { background: transparent; }
+.pdm-body::-webkit-scrollbar-thumb { background: var(--accent); }
+
+.pdm-title {
+  font-family: var(--font-main);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  color: var(--accent);
+  margin: 0;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-shadow: 0 0 24px rgba(0, 255, 179, 0.15);
+}
+
+.pdm-description {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  border-left: 1px solid var(--border-accent);
+  padding-left: 14px;
+}
+
+.pdm-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px 24px;
+  margin: 4px 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.pdm-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0;
+}
+
+.pdm-meta-row dt {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  opacity: 0.7;
+  margin: 0;
+}
+
+.pdm-meta-row dd {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.pdm-highlights h4 {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 10px 0;
+}
+
+.pdm-highlights ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pdm-highlights li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.pdm-highlights li::before {
+  content: "▸";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  color: var(--accent);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.pdm-cta {
+  align-self: flex-start;
+  margin-top: 6px;
+}
+
+@media (max-width: 760px) {
+  .pdm-dialog {
+    grid-template-columns: 1fr;
+    max-height: 90vh;
+  }
+
+  .pdm-media {
+    min-height: 180px;
+    max-height: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdm-overlay,
+  .pdm-dialog {
+    animation: none !important;
+    transition: none !important;
+  }
+}

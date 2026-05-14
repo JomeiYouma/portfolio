@@ -131,6 +131,35 @@ body::after {
   mix-blend-mode: multiply;
 }
 
+/* Film grain — animated SVG noise, blends with overlay so it never dirties text */
+.app::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: overlay;
+  animation: grain 1.2s steps(4) infinite;
+}
+
+@keyframes grain {
+  0%   { transform: translate(0,            0); }
+  20%  { transform: translate(-3%,         -2%); }
+  40%  { transform: translate(2%,           4%); }
+  60%  { transform: translate(-2%,          1%); }
+  80%  { transform: translate(3%,          -3%); }
+  100% { transform: translate(0,            0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app::after { animation: none; opacity: 0.04; }
+}
+
 /* ─── Base elements ──────────────────────────────────────────────────────── */
 img    { max-width: 100%; display: block; }
 a      { color: inherit; text-decoration: none; }

@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import SkipLink from './components/SkipLink'
 import Nav from './components/Nav'
 import ScrollProgress from './components/ScrollProgress'
 import AccessibilityControls from './components/AccessibilityControls'
@@ -8,6 +9,7 @@ import SnapDots from './components/SnapDots'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Projects from './sections/Projects'
+import Games from './sections/Games'
 import Testimonials from './sections/Testimonials'
 import Contact from './sections/Contact'
 import sections from './data/sections.json'
@@ -68,6 +70,7 @@ function App() {
 
   return (
     <div className="app">
+      <SkipLink targetId="main-content" label={t('accessibility.skipToContent')} />
       <TargetCursor
         targetSelector=".cursor-target, .btn, .nav-link, a"
         disableSpin={contrastActive}
@@ -81,10 +84,11 @@ function App() {
         contrastActive={contrastActive}
         onToggleContrast={toggleContrast}
       />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <About />
         <Projects projects={projects} />
+        <Games />
         <Testimonials />
         <Contact />
       </main>

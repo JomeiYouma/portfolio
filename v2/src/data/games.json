@@ -1,0 +1,30 @@
+[
+  {
+    "id": "speed-chaser",
+    "title": {
+      "en": "Speed Chaser",
+      "fr": "Speed Chaser"
+    },
+    "description": {
+      "en": "Arcade-style speed runner — dodge obstacles, chase the highscore.",
+      "fr": "Runner arcade — esquive les obstacles et chasse le meilleur score."
+    },
+    "tech": "JS · HTML · Canvas",
+    "image": "speed-chaser.png",
+    "link": "https://jomeiyouma.github.io/Speed-chaser/"
+  },
+  {
+    "id": "hangman",
+    "title": {
+      "en": "Cipher Breach",
+      "fr": "Cipher Breach"
+    },
+    "description": {
+      "en": "Cyber-terminal hangman with four modes: brute force, streak, timer and mind game.",
+      "fr": "Pendu cyber-terminal en quatre modes : brute force, streak, timer et mind game."
+    },
+    "tech": "React · Three.js · OGL",
+    "image": "hangman.png",
+    "link": "https://jomeiyouma.github.io/hangman/"
+  }
+]

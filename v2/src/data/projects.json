@@ -16,7 +16,24 @@
         "tech": "JS - CSS - HTML - UI/UX",
         "context": "Academic Project | Team of 3",
         "image": "orbis.png",
-        "link": "https://github.com/thelmaquarius/ORBIS"
+        "link": "https://github.com/thelmaquarius/ORBIS",
+        "year": "2024",
+        "role": {
+            "en": "Front-end developer & UI designer",
+            "fr": "Développeur front-end & designer UI"
+        },
+        "highlights": {
+            "en": [
+                "Clean data architecture turning a dense linguistic dataset into a readable narrative.",
+                "Interactive one-page experience with smooth scroll-driven transitions.",
+                "Editorial UI work to make statistics emotional, not just informative."
+            ],
+            "fr": [
+                "Architecture de données propre transformant un jeu de données dense en récit lisible.",
+                "Expérience one-page interactive avec transitions pilotées par le scroll.",
+                "Travail UI éditorial pour rendre la statistique émotionnelle, pas seulement informative."
+            ]
+        }
     },
     {
         "id": 2,
@@ -35,7 +52,24 @@
         "tech": "PHP - JAVASCRIPT - SQL - PHOTOSHOP",
         "context": "Personal Project | Solo",
         "image": "horus.png",
-        "link": "https://docs.google.com/document/d/1uaVd017srAvsdevmR0jjCdYLnG2sCPuUZNeSF6FJVQE/edit?usp=sharing"
+        "link": "https://docs.google.com/document/d/1uaVd017srAvsdevmR0jjCdYLnG2sCPuUZNeSF6FJVQE/edit?usp=sharing",
+        "year": "2024",
+        "role": {
+            "en": "Solo full-stack developer, writer & art director",
+            "fr": "Développeur full-stack solo, scénariste & directeur artistique"
+        },
+        "highlights": {
+            "en": [
+                "Custom secure authentication system built from scratch.",
+                "Branching story engine driving a multi-path narrative.",
+                "Full-stack ownership: world-building, art direction, deployment."
+            ],
+            "fr": [
+                "Système d'authentification sécurisé conçu de zéro.",
+                "Moteur narratif à embranchements pour un récit multi-voies.",
+                "Maîtrise full-stack : univers, direction artistique, déploiement."
+            ]
+        }
     },
     {
         "id": 3,
@@ -54,7 +88,24 @@
         "tech": "JS - THREE.JS - GOOGLE SHEETS API",
         "context": "Collaborative Project | International Team",
         "image": "astdx2.png",
-        "link": "https://github.com/riifa/astdx-dps-web"
+        "link": "https://github.com/riifa/astdx-dps-web",
+        "year": "2024",
+        "role": {
+            "en": "Lead developer for an international e-sports community",
+            "fr": "Développeur principal pour une communauté e-sports internationale"
+        },
+        "highlights": {
+            "en": [
+                "Reverse-engineered complex Roblox game mechanics into a clean formula model.",
+                "Real-time damage simulator with dynamic data tables.",
+                "Used live by a competitive community to compare loadouts."
+            ],
+            "fr": [
+                "Rétro-ingénierie de mécaniques Roblox complexes en un modèle de formules clair.",
+                "Simulateur de dégâts temps réel avec tableaux de données dynamiques.",
+                "Utilisé en live par une communauté compétitive pour comparer les builds."
+            ]
+        }
     },
     {
         "id": 4,
@@ -73,7 +124,24 @@
         "tech": "UX RESEARCH - FIGMA - FIGJAM - GIT",
         "context": "Academic Project | Solo",
         "image": "restaure.png",
-        "link": "https://github.com/Brize-Glace/restau-re"
+        "link": "https://github.com/Brize-Glace/restau-re",
+        "year": "2024",
+        "role": {
+            "en": "Solo UX/UI designer & front-end developer",
+            "fr": "Designer UX/UI solo & développeur front-end"
+        },
+        "highlights": {
+            "en": [
+                "End-to-end UX research: personas, user journeys, audit.",
+                "High-fidelity interactive Figma prototype as a deliverable.",
+                "Trustworthy rating system architecture connected to user accounts."
+            ],
+            "fr": [
+                "Recherche UX complète : personas, parcours utilisateurs, audit.",
+                "Prototype interactif Figma haute-fidélité comme livrable.",
+                "Architecture de notation fiable connectée aux comptes utilisateurs."
+            ]
+        }
     },
     {
         "id": 5,
@@ -92,7 +160,24 @@
         "tech": "FRONT-END DEV - JS - WEB AUDIO",
         "context": "Academic Project | Solo",
         "image": "museorium.png",
-        "link": "https://youtu.be/Vxva5bZO98E?si=bS3rLpi_n0ZAFOPe"
+        "link": "https://youtu.be/Vxva5bZO98E?si=bS3rLpi_n0ZAFOPe",
+        "year": "2024",
+        "role": {
+            "en": "Solo creative front-end developer",
+            "fr": "Développeur front-end créatif solo"
+        },
+        "highlights": {
+            "en": [
+                "Audio-reactive scene composition driven by the Web Audio API.",
+                "Visual narrative built on rhythmic tensions and color contrast.",
+                "Emotional pacing favored over information density."
+            ],
+            "fr": [
+                "Composition de scènes audio-réactives pilotée par la Web Audio API.",
+                "Narration visuelle bâtie sur tensions rythmiques et contraste chromatique.",
+                "Rythme émotionnel privilégié à la densité d'information."
+            ]
+        }
     },
     {
         "id": 6,
@@ -111,7 +196,24 @@
         "tech": "VIDEO PRODUCTION - EDITING - STORYBOARDING",
         "context": "Academic Project | Team of 2",
         "image": "street-dreams.png",
-        "link": "https://youtu.be/7Fz4Hq_1lUM?si=Wm8HZUqJAI6NQCGK"
+        "link": "https://youtu.be/7Fz4Hq_1lUM?si=Wm8HZUqJAI6NQCGK",
+        "year": "2023",
+        "role": {
+            "en": "Co-director & editor",
+            "fr": "Co-réalisateur & monteur"
+        },
+        "highlights": {
+            "en": [
+                "Trailer co-directed and shot on location.",
+                "Storyboard-first pipeline from script to delivery.",
+                "Post-production VFX integrated to extend a real-world set."
+            ],
+            "fr": [
+                "Bande-annonce co-réalisée et tournée en extérieur.",
+                "Pipeline storyboard-first du scénario à la livraison.",
+                "Effets visuels intégrés en post-production pour prolonger le décor réel."
+            ]
+        }
     },
     {
         "id": 7,
@@ -130,7 +232,24 @@
         "tech": "PHP - SQL - DATABASE ARCHITECTURE",
         "context": "Academic Project | Backend Focus",
         "image": "astr.png",
-        "link": "https://github.com/JomeiYouma/All_Star_Tower_Rater-version-3"
+        "link": "https://github.com/JomeiYouma/All_Star_Tower_Rater-version-3",
+        "year": "2024",
+        "role": {
+            "en": "Backend developer & database architect",
+            "fr": "Développeur back-end & architecte base de données"
+        },
+        "highlights": {
+            "en": [
+                "Relational SQL schema built around competitive comparison use-cases.",
+                "PHP layer aggregating multi-criteria unit statistics.",
+                "Designed for high-level strategic analysis, not for casual browsing."
+            ],
+            "fr": [
+                "Schéma SQL relationnel conçu pour des cas de comparaison compétitifs.",
+                "Couche PHP agrégeant des statistiques d'unités multi-critères.",
+                "Conçu pour l'analyse stratégique de haut niveau, pas la consultation occasionnelle."
+            ]
+        }
     },
     {
         "id": 8,
@@ -149,7 +268,24 @@
         "tech": "FIGMA - PHOTOSHOP - ILLUSTRATOR",
         "context": "Academic Project | Design Focus",
         "image": "campain.png",
-        "link": "https://www.figma.com/design/BeetdjExLeYtnenZwmzH46/Campagne-Hendaye?node-id=0-1&t=cegyqLJzFV14nvC8-1"
+        "link": "https://www.figma.com/design/BeetdjExLeYtnenZwmzH46/Campagne-Hendaye?node-id=0-1&t=cegyqLJzFV14nvC8-1",
+        "year": "2024",
+        "role": {
+            "en": "Solo brand & web designer",
+            "fr": "Designer de marque & web solo"
+        },
+        "highlights": {
+            "en": [
+                "Cohesive graphic charter covering type, color, and tone.",
+                "Print campaign assets aligned with the web identity.",
+                "High-fidelity Figma web prototype to anchor the rebrand."
+            ],
+            "fr": [
+                "Charte graphique cohérente : typographie, couleurs, tonalité.",
+                "Supports print alignés avec l'identité web.",
+                "Prototype web Figma haute-fidélité pour ancrer la refonte."
+            ]
+        }
     },
     {
         "id": 9,
@@ -168,7 +304,24 @@
         "tech": "JAVASCRIPT - THREE.JS",
         "context": "Dev Night 2025 | Team Project",
         "image": "nuit-info.png",
-        "link": "https://github.com/doremilx/champ-ions"
+        "link": "https://github.com/doremilx/champ-ions",
+        "year": "2025",
+        "role": {
+            "en": "Hackathon team developer",
+            "fr": "Développeur en équipe lors du hackathon"
+        },
+        "highlights": {
+            "en": [
+                "Built in one night around NIRD principles (Inclusive, Responsible, Sustainable Digital).",
+                "Interactive Three.js scenes and mini-games to teach digital autonomy.",
+                "Real-world resource set to help schools migrate to Linux & open-source."
+            ],
+            "fr": [
+                "Construit en une nuit autour des principes NIRD (Numérique Inclusif, Responsable, Durable).",
+                "Scènes Three.js et mini-jeux pour enseigner l'autonomie numérique.",
+                "Ressources concrètes pour aider les écoles à migrer vers Linux et l'open-source."
+            ]
+        }
     },
     {
         "id": 10,
@@ -182,12 +335,29 @@
         },
         "description": {
             "en": "A real-time multiplayer turn-based combat game involving 1v1 and 5v5 modes. The project features a custom PHP MVC architecture, complete hero team management, an automated matchmaking queue, and dynamic combat logic.",
-            "fr": "Un jeu de combat multijoueur au tour par tour en temps réel incluant des modes 1v1 et 5v5. Le projet dispose d’une architecture PHP MVC sur mesure, d’une gestion complète d'équipes de héros, d'un matchmaking automatisé et d'une logique de combat dynamique."
+            "fr": "Un jeu de combat multijoueur au tour par tour en temps réel incluant des modes 1v1 et 5v5. Le projet dispose d'une architecture PHP MVC sur mesure, d'une gestion complète d'équipes de héros, d'un matchmaking automatisé et d'une logique de combat dynamique."
         },
         "tech": "PHP MVC - SQL - JAVASCRIPT",
         "context": "Personal Project | Solo",
         "image": "horus-b-a.png",
-        "link": "https://github.com/JomeiYouma/battle-arena"
+        "link": "https://github.com/JomeiYouma/battle-arena",
+        "year": "2025",
+        "role": {
+            "en": "Solo full-stack developer",
+            "fr": "Développeur full-stack solo"
+        },
+        "highlights": {
+            "en": [
+                "Custom PHP MVC architecture built from scratch.",
+                "1v1 and 5v5 modes with automated matchmaking.",
+                "Turn-based combat engine driving real-time interactions."
+            ],
+            "fr": [
+                "Architecture PHP MVC sur mesure développée de zéro.",
+                "Modes 1v1 et 5v5 avec matchmaking automatisé.",
+                "Moteur de combat tour-par-tour pilotant les interactions temps réel."
+            ]
+        }
     },
     {
         "id": 11,
@@ -206,7 +376,24 @@
         "tech": "REACT - PHP MVC - CSS - JAVASCRIPT",
         "context": "Professional / Academic Project",
         "image": "alter-expo.png",
-        "link": "https://www.alter-exposition.fr"
+        "link": "https://www.alter-exposition.fr",
+        "year": "2025",
+        "role": {
+            "en": "Full-stack developer on a hybrid academic / professional project",
+            "fr": "Développeur full-stack sur un projet hybride académique/pro"
+        },
+        "highlights": {
+            "en": [
+                "Real-time reservation system tied to an online boutique.",
+                "3D React frontend bound to a PHP MVC backend.",
+                "Embedded interactive game as part of the visitor journey."
+            ],
+            "fr": [
+                "Système de réservation temps réel relié à une boutique en ligne.",
+                "Frontend React 3D connecté à un back-end PHP MVC.",
+                "Mini-jeu interactif intégré dans le parcours visiteur."
+            ]
+        }
     },
     {
         "id": 12,
@@ -225,10 +412,63 @@
         "tech": "THREE.JS - JAVASCRIPT - FIREBASE",
         "context": "Academic / Personal Project",
         "image": "speed-chaser.png",
-        "link": "https://github.com/JomeiYouma/Speed-chaser"
+        "link": "https://github.com/JomeiYouma/Speed-chaser",
+        "year": "2024",
+        "role": {
+            "en": "Solo developer",
+            "fr": "Développeur solo"
+        },
+        "highlights": {
+            "en": [
+                "Three.js engine tuned for a strong sense of speed on the web.",
+                "Firebase backend syncing player data in real time.",
+                "Minimal-by-design UI to keep focus on the chase."
+            ],
+            "fr": [
+                "Moteur Three.js réglé pour donner une vraie sensation de vitesse sur le web.",
+                "Back-end Firebase synchronisant les données joueurs en temps réel.",
+                "UI volontairement minimaliste pour garder le focus sur la poursuite."
+            ]
+        }
     },
     {
         "id": 13,
+        "title": {
+            "en": "CIPHER BREACH",
+            "fr": "CIPHER BREACH"
+        },
+        "type": {
+            "en": "REACT 3D BROWSER GAME",
+            "fr": "JEU NAVIGATEUR REACT 3D"
+        },
+        "description": {
+            "en": "A hangman game reimagined as a cyber terminal cracking experience. Built on React 19 + Vite with an OGL shader background, a draggable 3D operator badge powered by React Three Fiber + Rapier, and four distinct game modes (brute force, streak, timer, mind game). Words are fetched from a remote API with a network timeout and a local FR/EN fallback for full resilience.",
+            "fr": "Un jeu du pendu repensé comme une expérience de cracking sur terminal cyber. Développé en React 19 + Vite avec un fond shader OGL, un badge opérateur 3D draggable propulsé par React Three Fiber + Rapier, et quatre modes de jeu distincts (brute force, streak, timer, mind game). Les mots sont récupérés via une API distante avec timeout réseau et fallback local FR/EN pour une résilience totale."
+        },
+        "tech": "REACT - THREE.JS - VITE - OGL",
+        "context": "Personal Project | Solo",
+        "image": "hangman.png",
+        "link": "https://github.com/JomeiYouma/hangman",
+        "year": "2025",
+        "role": {
+            "en": "Solo front-end developer & creative director",
+            "fr": "Développeur front-end solo & directeur créatif"
+        },
+        "highlights": {
+            "en": [
+                "Four game modes layered over a single hangman engine: brute force, streak, timer, mind game.",
+                "Resilient word API with network timeout and local FR/EN fallback.",
+                "3D operator badge (R3F + Rapier) and OGL terminal shader for full cyber immersion."
+            ],
+            "fr": [
+                "Quatre modes de jeu superposés sur un seul moteur de pendu : brute force, streak, timer, mind game.",
+                "API de mots résiliente avec timeout réseau et fallback local FR/EN.",
+                "Badge opérateur 3D (R3F + Rapier) et shader terminal OGL pour une immersion cyber totale."
+            ]
+        }
+    },
+    {
+        "id": 14,
         "title": {
             "en": "YOUMAGICAL AUTOCLICKER",
             "fr": "YOUMAGICAL AUTOCLICKER"
@@ -244,6 +484,23 @@
         "tech": "PYTHON - GUI - AUTOMATION",
         "context": "Personal Project | Solo",
         "image": "youmagical.png",
-        "link": "https://github.com/JomeiYouma/Youmagical-Autoclicker"
+        "link": "https://github.com/JomeiYouma/Youmagical-Autoclicker",
+        "year": "2025",
+        "role": {
+            "en": "Solo Python developer",
+            "fr": "Développeur Python solo"
+        },
+        "highlights": {
+            "en": [
+                "Two-mode UX: classic mode for simple loops, advanced mode for power users.",
+                "Visual timeline editor to compose intricate macro sequences.",
+                "No-code automation surface aimed at non-developers."
+            ],
+            "fr": [
+                "UX à deux modes : mode classique pour les boucles simples, mode avancé pour les power users.",
+                "Éditeur de timeline visuel pour composer des séquences de macros complexes.",
+                "Surface d'automatisation no-code pensée pour les non-développeurs."
+            ]
+        }
     }
 ]

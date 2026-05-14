@@ -24,9 +24,11 @@ main {
   justify-content: center;
   position: relative;
   overflow: clip;
+  isolation: isolate; /* scopes the ghost-number z-index inside the section */
+  z-index: 0;
 }
 
-/* Ghost section number — behind content, above grid */
+/* Ghost section number — strictly behind every child of the section */
 .section::after {
   content: attr(data-index);
   position: absolute;
@@ -41,7 +43,7 @@ main {
   pointer-events: none;
   letter-spacing: -0.04em;
   user-select: none;
-  z-index: -1;    /* above grid (-3), below content (1) */
+  z-index: -1;    /* guaranteed below .section-inner (z-index 1) by isolation */
 }
 
 /* ─── Section inner ──────────────────────────────────────────────────────── */

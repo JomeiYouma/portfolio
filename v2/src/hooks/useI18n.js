@@ -14,6 +14,7 @@ export const useI18n = () => {
         translations = await response.json()
         const storedLang = localStorage.getItem('preferred-language')
         currentLang = storedLang || 'en'
+        document.documentElement.lang = currentLang
         setLang(currentLang)
         setIsLoaded(true)
       } catch (error) {

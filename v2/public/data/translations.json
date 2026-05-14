@@ -3,6 +3,7 @@
     "nav": {
       "home": "Home",
       "works": "Works",
+      "games": "Games",
       "testimonials": "Testimonials",
       "about": "About",
       "contact": "Contact"
@@ -26,7 +27,8 @@
       "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
       "certifications": {
         "title": "Web Quality Training",
-        "description": "Maîtrise Opquast certified — a recognized web quality benchmark covering 250+ best practices in accessibility, SEO, performance, privacy, and user experience."
+        "description": "Opquast Advanced certified — a recognized web quality benchmark covering 250+ best practices in accessibility, SEO, performance, privacy, and user experience.",
+        "download": "Download certificate"
       }
     },
     "testimonials": {
@@ -56,16 +58,28 @@
     },
     "projects": {
       "eyebrow": "Portfolio",
-      "title": "Selected Works",
+      "title": "Projects",
+      "sectionLead": "A curated selection of full-stack, design and creative-coding work.",
       "viewProject": "View Project",
       "viewCode": "View Code",
+      "viewMore": "More details",
       "selectPrompt": "Select a project to see details...",
       "tech": "Technologies",
-      "context": "Context"
+      "context": "Context",
+      "dragHint": "Drag, scroll or use the arrows to browse projects",
+      "year": "Year",
+      "role": "Role",
+      "highlights": "Highlights",
+      "close": "Close"
     },
     "skills": {
       "eyebrow": "Skills",
       "title": "A Modern Stack Built for Impact"
+    },
+    "games": {
+      "eyebrow": "Web Games",
+      "title": "Play Things I've Made",
+      "play": "Play"
     },
     "contact": {
       "eyebrow": "Contact",
@@ -85,7 +99,15 @@
     },
     "accessibility": {
       "contrast": "Toggle high contrast",
-      "language": "Switch language"
+      "contrastEnable": "Enable high contrast mode",
+      "contrastDisable": "Disable high contrast mode",
+      "language": "Switch language",
+      "switchToFrench": "Switch to French",
+      "switchToEnglish": "Switch to English",
+      "skipToContent": "Skip to main content",
+      "opensNewTab": "opens in a new tab",
+      "mainNav": "Main navigation",
+      "sectionNav": "Section navigation"
     },
     "coverLetterModal": {
       "title": "Coming Soon",
@@ -97,6 +119,7 @@
     "nav": {
       "home": "Accueil",
       "works": "Projets",
+      "games": "Jeux",
       "testimonials": "Témoignages",
       "about": "À Propos",
       "contact": "Contact"
@@ -120,7 +143,8 @@
       "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
       "certifications": {
         "title": "Formation Qualité Web",
-        "description": "Certifié Maîtrise Opquast — référentiel reconnu de qualité web couvrant plus de 250 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur."
+        "description": "Certifié Opquast Avancé — référentiel reconnu de qualité web couvrant plus de 250 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur.",
+        "download": "Télécharger le certificat"
       }
     },
     "testimonials": {
@@ -150,16 +174,28 @@
     },
     "projects": {
       "eyebrow": "Portfolio",
-      "title": "Projets Selectionnés",
+      "title": "Projets",
+      "sectionLead": "Une sélection de travaux full-stack, design et creative-coding.",
       "viewProject": "Voir le Projet",
       "viewCode": "Voir le Code",
-      "selectPrompt": "Selectionnez un projet pour voir les details...",
+      "viewMore": "Plus de détails",
+      "selectPrompt": "Sélectionnez un projet pour voir les détails…",
       "tech": "Technologies",
-      "context": "Contexte"
+      "context": "Contexte",
+      "dragHint": "Glissez, scrollez ou utilisez les flèches pour parcourir les projets",
+      "year": "Année",
+      "role": "Rôle",
+      "highlights": "Points forts",
+      "close": "Fermer"
     },
     "skills": {
       "eyebrow": "Compétences",
       "title": "Une Stack Moderne Orientée Impact"
+    },
+    "games": {
+      "eyebrow": "Jeux Web",
+      "title": "Mes Petits Jeux",
+      "play": "Jouer"
     },
     "contact": {
       "eyebrow": "Contact",
@@ -179,7 +215,15 @@
     },
     "accessibility": {
       "contrast": "Activer fort contraste",
-      "language": "Changer de langue"
+      "contrastEnable": "Activer le mode contraste élevé",
+      "contrastDisable": "Désactiver le mode contraste élevé",
+      "language": "Changer de langue",
+      "switchToFrench": "Passer en français",
+      "switchToEnglish": "Switch to English",
+      "skipToContent": "Aller au contenu principal",
+      "opensNewTab": "ouvre dans un nouvel onglet",
+      "mainNav": "Navigation principale",
+      "sectionNav": "Navigation par section"
     },
     "coverLetterModal": {
       "title": "Bientôt Disponible",

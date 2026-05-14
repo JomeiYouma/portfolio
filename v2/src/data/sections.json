@@ -2,6 +2,7 @@
   {"id": "hero", "label": "Home", "labelFr": "Accueil"},
   {"id": "about", "label": "About", "labelFr": "À propos"},
   {"id": "projects", "label": "Works", "labelFr": "Projets"},
+  {"id": "games", "label": "Games", "labelFr": "Jeux"},
   {"id": "testimonials", "label": "Testimonials", "labelFr": "Témoignages"},
   {"id": "contact", "label": "Contact", "labelFr": "Contact"}
 ]

@@ -51,7 +51,14 @@
   display: flex;
   gap: 2px;
   flex-wrap: nowrap;
-  margin-left: auto;
+  margin: 0 0 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-links > li {
+  display: flex;
+  list-style: none;
 }
 
 .nav-link {
@@ -86,12 +93,26 @@
 
 .nav-link.is-active {
   color: var(--accent);
-  background: rgba(0, 255, 179, 0.06);
 }
 
-.nav-link.is-active::after,
 .nav-link:hover::after {
   transform: scaleX(1);
+}
+
+/* Sliding active background, animated via motion's layoutId */
+.nav-pill {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 255, 179, 0.06);
+  border-bottom: 1px solid var(--accent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nav-link > .nav-index,
+.nav-link > .nav-label {
+  position: relative;
+  z-index: 1;
 }
 
 .nav-index {

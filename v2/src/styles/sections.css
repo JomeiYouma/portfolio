@@ -16,12 +16,20 @@
 
 .main-title {
   font-family: var(--font-main);
-  font-size: clamp(4.5rem, 11vw, 9rem);
+  font-size: clamp(3.5rem, 9vw, 8rem);
   line-height: 0.88;
   color: var(--accent);
   letter-spacing: -0.03em;
   margin: 0;
   text-shadow: 0 0 60px rgba(0, 255, 179, 0.3);
+  white-space: nowrap;
+  /* Per-letter spans from SplitReveal otherwise allow line breaks */
+  overflow: visible;
+}
+
+.main-title > * {
+  display: inline-flex;
+  flex-wrap: nowrap;
 }
 
 .sub-title {
@@ -86,9 +94,14 @@
 /* Hero status card */
 .hero-card {
   padding: 28px;
-  background: rgba(0, 255, 179, 0.02);
+  background: rgba(10, 13, 18, 0.78);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
   border: 1px solid var(--border);
   position: relative;
+  /* Ensure the card blocks the orbital core behind it for readability */
+  box-shadow: 0 0 0 1px rgba(0, 255, 179, 0.04) inset,
+              0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
 /* Animated corner brackets */
@@ -461,6 +474,262 @@
 }
 
 /* ═══════════════════════════════════════
+   GAMES
+═══════════════════════════════════════ */
+.games-section { position: relative; }
+
+.games-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Screen — bordered panel that contains the waves background + content */
+.games-screen {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  min-height: min(70vh, 640px);
+  background: rgba(6, 7, 9, 0.55);
+  border: 1px solid var(--border-accent);
+  box-shadow: 0 0 0 1px rgba(0, 255, 179, 0.05) inset,
+              0 30px 70px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  isolation: isolate;
+  margin: 0 auto;
+}
+
+/* Waves canvas fills the screen */
+.games-screen .waves-bg {
+  z-index: 0;
+  /* lighter mask: lines should be visible across the whole panel */
+  mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
+/* Corner brackets, same vocabulary as hero-card */
+.games-screen-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--accent);
+  border-style: solid;
+  opacity: 0.7;
+  z-index: 2;
+  pointer-events: none;
+}
+.games-screen-corner--tl { top: -1px; left: -1px;  border-width: 1px 0 0 1px; }
+.games-screen-corner--tr { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
+.games-screen-corner--bl { bottom: -1px; left: -1px;  border-width: 0 0 1px 1px; }
+.games-screen-corner--br { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+.games-screen-content {
+  position: relative;
+  z-index: 1;
+  padding: clamp(20px, 3.5vh, 40px) clamp(24px, 4vw, 56px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vh, 32px);
+}
+
+.games-screen-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 560px;
+}
+
+.games-eyebrow { font-size: 0.6rem; }
+
+.games-screen-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin: 0;
+  text-shadow: 0 0 30px rgba(0, 255, 179, 0.15);
+}
+
+.games-screen-divider {
+  display: block;
+  height: 1px;
+  width: 100%;
+  max-width: 520px;
+  background: linear-gradient(90deg, var(--accent), transparent 75%);
+  opacity: 0.55;
+  margin-top: 4px;
+}
+
+.games-screen-intro {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 560px;
+  margin: 0;
+}
+
+/* Grid of compact game tiles */
+.games-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: clamp(14px, 2vh, 22px);
+}
+
+.game-card-wrap { display: block; }
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(10, 13, 18, 0.7);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(6px) saturate(1.1);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
+  transition: border-color 0.25s ease, transform 0.25s ease,
+              box-shadow 0.25s ease, background 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card:hover,
+.game-card:focus-visible {
+  border-color: var(--accent);
+  background: rgba(0, 255, 179, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5),
+              0 0 24px rgba(0, 255, 179, 0.12);
+}
+
+.game-card-media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+
+.game-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.3s ease;
+  filter: saturate(0.9) brightness(0.9);
+}
+
+.game-card:hover .game-card-img,
+.game-card:focus-visible .game-card-img {
+  transform: scale(1.06);
+  filter: saturate(1.15) brightness(0.55);
+}
+
+.game-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 179, 0.22), rgba(6, 7, 9, 0.55) 75%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.game-card:hover .game-card-overlay,
+.game-card:focus-visible .game-card-overlay { opacity: 1; }
+
+.game-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(10, 13, 18, 0.88);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  box-shadow: 0 0 0 1px rgba(0, 255, 179, 0.18) inset,
+              0 0 24px rgba(0, 255, 179, 0.3);
+  transform: translateY(8px);
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover .game-play-btn,
+.game-card:focus-visible .game-play-btn { transform: translateY(0); }
+
+.game-play-btn svg {
+  filter: drop-shadow(0 0 6px rgba(0, 255, 179, 0.6));
+}
+
+/* Corner brackets on each card */
+.game-card-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--accent);
+  border-style: solid;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.game-card-corner--tl { top: 6px; left: 6px;  border-width: 1px 0 0 1px; }
+.game-card-corner--br { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
+.game-card:hover .game-card-corner,
+.game-card:focus-visible .game-card-corner { opacity: 1; }
+
+.game-card-foot {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid var(--border);
+}
+
+.game-card-title {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text);
+}
+
+.game-card-tech {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.75;
+}
+
+/* Visually-hidden text for screen readers (description on the card link) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 768px) {
+  .games-screen { min-height: auto; }
+  .games-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .games-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════
    CONTACT
 ═══════════════════════════════════════ */
 .contact-layout {
@@ -564,16 +833,96 @@
    PROJECTS
 ═══════════════════════════════════════ */
 .projects-section .projects-inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.8vh, 28px);
+  justify-content: center;
+}
+
+.projects-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 720px;
+}
+
+.projects-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.projects-lead {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 620px;
+  margin: 0;
+}
+
+.projects-body {
   display: grid;
   grid-template-columns: 1fr 1.15fr;
-  gap: 48px;
+  gap: clamp(20px, 2vw, 48px);
   align-items: center;
-  height: calc(100% - var(--nav-height));
+  flex: 1;
+  min-height: 0;
+}
+
+.projects-gallery-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
 }
 
 .projects-gallery {
-  height: clamp(280px, 48vh, 480px);
+  height: clamp(260px, 42vh, 440px);
   position: relative;
+}
+
+.projects-drag-hint {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  background: rgba(0, 255, 179, 0.02);
+  align-self: center;
+  opacity: 0.85;
+}
+
+.drag-icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  animation: drag-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes drag-pulse {
+  0%, 100% { transform: translateX(-2px); opacity: 0.6; }
+  50%       { transform: translateX(2px);  opacity: 1;   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drag-icon { animation: none; opacity: 1; }
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
 }
 
 .project-details {
@@ -742,7 +1091,7 @@
 }
 
 @media (max-width: 900px) {
-  .projects-section .projects-inner {
+  .projects-body {
     grid-template-columns: 1fr;
     gap: 20px;
   }
@@ -750,125 +1099,302 @@
   .projects-gallery { height: 260px; }
   .project-details  { padding: 20px; }
 }
-
 /* ═══════════════════════════════════════
-   SKILL LOGO ITEMS (About.jsx icon loops)
+   ABOUT — two-column body layout
 ═══════════════════════════════════════ */
 
-.skill-logo-item {
+.about-body {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 48px;
+  align-items: start;
+  width: 100%;
+}
+
+.about-cert {
+  position: sticky;
+  top: calc(var(--nav-height) + 24px);
+  padding: 20px;
+  border-left: 2px solid var(--accent);
+  background: rgba(0, 255, 179, 0.03);
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.about-cert h4 {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin: 0 0 12px 0;
+}
+
+.about-cert p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.about-cert-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  align-self: flex-start;
+  width: fit-content;
+}
+
+.about-cert-download:hover,
+.about-cert-download:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(0, 255, 179, 0.05);
+}
+
+.about-cert-download .icon {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .about-body {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .about-cert {
+    position: static;
+    order: -1; /* cert first on mobile */
+  }
+}
+
+/* ═══════════════════════════════════════
+   ICON STRIP — pure CSS marquee
+   No JS, no RAF, no ResizeObserver
+═══════════════════════════════════════ */
+
+.icon-strip {
+  width: 100%;
+  overflow: hidden;
+  /* Fade edges */
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.icon-strip__track {
+  display: flex;
+  width: max-content;
+  backface-visibility: hidden;
+  /* Default: paused. Animation only runs when the strip is in view
+     (toggled via .is-active by IntersectionObserver in About.jsx). */
+  animation: icon-scroll-left 28s linear infinite;
+  animation-play-state: paused;
+}
+
+/* Reverse direction */
+.icon-strip[data-reverse='true'] .icon-strip__track {
+  animation: icon-scroll-right 28s linear infinite;
+  animation-play-state: paused;
+}
+
+/* Only run animation when strip is on-screen */
+.icon-strip.is-active .icon-strip__track {
+  animation-play-state: running;
+  /* GPU compositing hint only while actually animating */
+  will-change: transform;
+}
+
+/* Pause on hover */
+.icon-strip:hover .icon-strip__track {
+  animation-play-state: paused;
+}
+
+.icon-strip__set {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.icon-strip__item {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 8px 10px;
-  background: rgba(0, 255, 179, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 8px 14px;
+  background: rgba(0, 255, 179, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-right: 8px;
+  flex-shrink: 0;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   cursor: default;
-  white-space: nowrap;
 }
 
-.skill-logo-item:hover {
+.icon-strip__item:hover {
   background: rgba(0, 255, 179, 0.08);
   border-color: rgba(0, 255, 179, 0.25);
   transform: translateY(-2px);
 }
 
-.skill-logo-icon {
+.icon-strip__img {
   width: 28px;
   height: 28px;
   object-fit: contain;
-  /* Slight desaturate at rest, pop on hover */
-  filter: saturate(0.6) brightness(0.9);
-  transition: filter 0.2s ease;
   display: block;
+  /* opacity is much cheaper than `filter: saturate + brightness` and gives a
+     similar muted look without forcing the compositor to rasterize a filter
+     layer for every icon every frame the marquee runs. */
+  opacity: 0.78;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
 }
 
-.skill-logo-item:hover .skill-logo-icon {
-  filter: saturate(1.2) brightness(1.1) drop-shadow(0 0 6px var(--accent-glow));
+.icon-strip__item:hover .icon-strip__img {
+  /* No drop-shadow here: drop-shadow forces the element into its own
+     rasterization layer + its shadow extent, which combined with the strip's
+     mask-image and the page-wide grain blend caused visible hover stutter. */
+  opacity: 1;
 }
 
-.skill-logo-label {
+.icon-strip__label {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: 0.52rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-muted);
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
-.skill-logo-item:hover .skill-logo-label {
+.icon-strip__item:hover .icon-strip__label {
   color: var(--accent);
 }
 
-/* CSS easter egg cursor hint */
-.skill-easter-css {
+.easter-css {
   cursor: crosshair;
 }
 
+/* Loop point uses the JS-measured exact pixel width of one set.
+ * Falls back to -50% for the first paint before measurement runs. */
+@keyframes icon-scroll-left {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(calc(-1 * var(--strip-w, 50%)), 0, 0); }
+}
+
+@keyframes icon-scroll-right {
+  from { transform: translate3d(calc(-1 * var(--strip-w, 50%)), 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-strip__track {
+    animation: none !important;
+  }
+}
+
 /* ═══════════════════════════════════════
-   CSS EASTER EGG — chaos mode
-   Triggered on body via JS (.css-chaos)
+   CSS EASTER EGG
 ═══════════════════════════════════════ */
 
 @keyframes chaos-color {
   0%   { filter: hue-rotate(0deg)   contrast(1.4) saturate(2.5); }
-  20%  { filter: hue-rotate(72deg)  contrast(1.8) saturate(3);   }
-  40%  { filter: hue-rotate(144deg) contrast(1.2) saturate(2);   }
-  60%  { filter: hue-rotate(216deg) contrast(2.2) saturate(4);   }
-  80%  { filter: hue-rotate(288deg) contrast(1.6) saturate(2.5); }
+  20%  { filter: hue-rotate(72deg)  contrast(1.9) saturate(3.2); }
+  40%  { filter: hue-rotate(155deg) contrast(1.2) saturate(2);   }
+  60%  { filter: hue-rotate(230deg) contrast(2.4) saturate(4);   }
+  80%  { filter: hue-rotate(300deg) contrast(1.6) saturate(2.8); }
   100% { filter: hue-rotate(360deg) contrast(1.4) saturate(2.5); }
 }
 
-@keyframes chaos-glitch {
-  0%, 100% { transform: translate(0, 0)   skewX(0deg); }
-  10%       { transform: translate(-3px, 2px) skewX(-2deg); }
-  20%       { transform: translate(3px, -2px) skewX(2deg); }
-  30%       { transform: translate(-2px, -2px); }
-  40%       { transform: translate(2px, 2px) skewX(1deg); }
-  50%       { transform: translate(-1px, 1px); }
-  60%       { transform: translate(3px, -1px) skewX(-1deg); }
-  70%       { transform: translate(-3px, 2px); }
-  80%       { transform: translate(1px, -3px) skewX(2deg); }
-  90%       { transform: translate(-2px, 3px); }
-}
-
-@keyframes chaos-sections {
-  from { transform: rotate(-1.5deg) scale(0.99); }
-  to   { transform: rotate(1.5deg)  scale(1.01); }
+@keyframes chaos-glitch-body {
+  0%, 100% { transform: translate(0)        skewX(0deg);    }
+  12%       { transform: translate(-3px,2px) skewX(-1.5deg); }
+  25%       { transform: translate(3px,-2px) skewX(1.5deg);  }
+  37%       { transform: translate(-2px,-1px);               }
+  50%       { transform: translate(2px,3px)  skewX(1deg);    }
+  62%       { transform: translate(4px,-1px) skewX(2deg);    }
+  75%       { transform: translate(-3px,2px);                }
+  87%       { transform: translate(1px,-3px) skewX(1deg);    }
 }
 
 body.css-chaos {
-  animation: chaos-color 0.35s infinite, chaos-glitch 0.6s infinite;
+  animation: chaos-color 0.32s infinite, chaos-glitch-body 0.55s infinite;
 }
-
-body.css-chaos section {
-  animation: chaos-sections 0.4s ease-in-out infinite alternate;
-}
-
-/* Each section gets a slightly different timing so they don't all move in sync */
-body.css-chaos section:nth-child(2) { animation-delay: 0.06s; }
-body.css-chaos section:nth-child(3) { animation-delay: 0.12s; }
-body.css-chaos section:nth-child(4) { animation-delay: 0.18s; }
-body.css-chaos section:nth-child(5) { animation-delay: 0.24s; }
 
 /* ═══════════════════════════════════════
-   HERO — OrbitalRings integration
+   HERO — orbital rings
 ═══════════════════════════════════════ */
 
-/* Position rings behind hero card */
-.hero-orbital-wrap {
-  position: absolute;
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 0;
-  opacity: 0.55;
+.hero-right-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-height: 520px;
+  padding-top: clamp(180px, 24vh, 260px); /* reserves space for rings above */
+  isolation: isolate;
+}
+
+/* Rings + beam stacked together, pinned to the top-right corner */
+.hero-orbital-rings {
+  position: absolute !important;
+  top: 0 !important;
+  right: clamp(0px, 2vw, 24px) !important;
+  width: clamp(200px, 22vw, 300px) !important;
+  height: clamp(200px, 22vw, 300px) !important;
+  z-index: 0 !important;
+  opacity: 0.6;
   pointer-events: none;
 }
 
-/* Make hero card visible above rings */
-.hero-card {
+.hero-right-col .hero-card {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Hero beam — animated conic sweep behind the orbital rings (matches their position) */
+.hero-beam {
+  position: absolute;
+  top: -20px;
+  right: clamp(-20px, 1vw, 4px);
+  width: clamp(240px, 26vw, 340px);
+  height: clamp(240px, 26vw, 340px);
+  pointer-events: none;
+  z-index: 0;
+  background:
+    conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(0, 255, 179, 0.10) 18deg,
+      transparent 38deg,
+      transparent 360deg
+    );
+  filter: blur(20px);
+  opacity: 0.5;
+  animation: hero-beam-spin 14s linear infinite;
+  border-radius: 50%;
+  mask-image: radial-gradient(circle, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle, black 30%, transparent 75%);
+}
+
+@keyframes hero-beam-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-beam { animation: none; opacity: 0.25; }
 }

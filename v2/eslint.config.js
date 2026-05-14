@@ -23,7 +23,9 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Capital-cased identifiers (components) and `motion` (JSX namespace from `motion/react`)
+      // are ignored because the bundled ESLint config has no React JSX plugin to detect their usage.
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]|^motion$' }],
     },
   },
 ])

@@ -379,7 +379,21 @@ class GalleryApp {
     }
     this.renderer.render({ scene: this.scene, camera: this.camera })
     this.scroll.last = this.scroll.current
+    if (!this.paused) {
+      this.raf = window.requestAnimationFrame(this.update.bind(this))
+    }
+  }
+  start() {
+    if (!this.paused) return
+    this.paused = false
     this.raf = window.requestAnimationFrame(this.update.bind(this))
+  }
+  stop() {
+    this.paused = true
+    if (this.raf) {
+      window.cancelAnimationFrame(this.raf)
+      this.raf = null
+    }
   }
   addEventListeners() {
     this.boundOnResize = this.onResize.bind(this)
@@ -446,8 +460,27 @@ const CircularGallery = forwardRef(({
 
   useEffect(() => {
     if (!containerRef.current || !items || items.length === 0) return
-    appRef.current = new GalleryApp(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onSelect })
+    const el = containerRef.current
+    appRef.current = new GalleryApp(el, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onSelect })
+
+    // Pause the WebGL render loop when the gallery is off-screen. Without this
+    // the renderer.render() call (full GL draw) keeps firing 60fps forever in
+    // the horizontal-scroll layout where Projects stays mounted off-viewport.
+    let io = null
+    if (typeof IntersectionObserver !== 'undefined') {
+      io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (!appRef.current) return
+          if (e.isIntersecting) appRef.current.start()
+          else appRef.current.stop()
+        }),
+        { root: null, threshold: 0 }
+      )
+      io.observe(el)
+    }
+
     return () => {
+      io?.disconnect()
       if (appRef.current) appRef.current.destroy()
     }
   }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onSelect])

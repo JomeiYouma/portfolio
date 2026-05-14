@@ -1,0 +1,12 @@
+.spotlight-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+  transition: opacity 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-overlay { display: none; }
+}

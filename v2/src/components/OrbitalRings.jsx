@@ -20,8 +20,6 @@ const OrbitalRings = ({ className = '' }) => {
             targetRef.current.y = ((e.clientY - cy) / cy) * -16
         }
 
-        window.addEventListener('mousemove', onMove, { passive: true })
-
         const lerp = (a, b, t) => a + (b - a) * t
 
         const tick = () => {
@@ -36,11 +34,45 @@ const OrbitalRings = ({ className = '' }) => {
             rafRef.current = requestAnimationFrame(tick)
         }
 
-        rafRef.current = requestAnimationFrame(tick)
+        // Only run while the rings are on-screen. Without this the RAF tick +
+        // mousemove handler keep burning CPU forever even when the Hero is not
+        // visible (horizontal-scroll layout keeps every section mounted).
+        const el = containerRef.current
+        let isVisible = false
+        const start = () => {
+            if (rafRef.current || !isVisible) return
+            window.addEventListener('mousemove', onMove, { passive: true })
+            rafRef.current = requestAnimationFrame(tick)
+        }
+        const stop = () => {
+            window.removeEventListener('mousemove', onMove)
+            if (rafRef.current) {
+                cancelAnimationFrame(rafRef.current)
+                rafRef.current = null
+            }
+        }
+
+        let io = null
+        if (el && typeof IntersectionObserver !== 'undefined') {
+            io = new IntersectionObserver(
+                (entries) => entries.forEach((e) => {
+                    const next = e.isIntersecting
+                    if (next === isVisible) return
+                    isVisible = next
+                    if (isVisible) start()
+                    else stop()
+                }),
+                { root: null, threshold: 0 }
+            )
+            io.observe(el)
+        } else {
+            isVisible = true
+            start()
+        }
 
         return () => {
-            window.removeEventListener('mousemove', onMove)
-            cancelAnimationFrame(rafRef.current)
+            io?.disconnect()
+            stop()
         }
     }, [])
 

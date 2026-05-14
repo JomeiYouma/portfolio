@@ -1,0 +1,55 @@
+/* FaviconBlocks
+ * --fb-size : outer square edge in px
+ * --fb-grid : number of cells per row/column (e.g. 12 → 144 cells)
+ * --fb-img  : url() of the source image
+ *
+ * Background is transparent at all times. Each cell paints its own portion of
+ * the source image via background-position, giving the illusion of one image
+ * when at rest. On hover, each cell rotates around the Y axis on a delay
+ * derived from its diagonal coordinates (rendered inline by the JS).
+ */
+.favicon-blocks {
+  display: inline-grid;
+  grid-template-columns: repeat(var(--fb-grid, 12), 1fr);
+  grid-template-rows: repeat(var(--fb-grid, 12), 1fr);
+  width: var(--fb-size, 28px);
+  height: var(--fb-size, 28px);
+  perspective: 240px;
+  background: transparent;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.favicon-blocks__cell {
+  display: block;
+  background-image: var(--fb-img);
+  /* Each cell shows 1/grid of the image — scale background up by grid×100% */
+  background-size: calc(var(--fb-grid, 12) * 100%) calc(var(--fb-grid, 12) * 100%);
+  background-repeat: no-repeat;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition:
+    transform 540ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity   540ms ease;
+  will-change: transform;
+}
+
+/* On hover (and keyboard focus): each cell flips, the diagonal delay set on
+ * the cell's inline style sequences the wave from top-left to bottom-right. */
+.favicon-blocks:hover .favicon-blocks__cell,
+.favicon-blocks:focus-visible .favicon-blocks__cell {
+  transform: rotateY(360deg);
+}
+
+/* Respect motion preferences — fall back to a fade only */
+@media (prefers-reduced-motion: reduce) {
+  .favicon-blocks__cell {
+    transition: opacity 240ms ease;
+    transform: none !important;
+  }
+  .favicon-blocks:hover .favicon-blocks__cell,
+  .favicon-blocks:focus-visible .favicon-blocks__cell {
+    opacity: 0.7;
+  }
+}
