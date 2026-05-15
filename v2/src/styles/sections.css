@@ -497,6 +497,9 @@
   overflow: hidden;
   isolation: isolate;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Waves canvas fills the screen */
@@ -727,6 +730,181 @@
 
 @media (max-width: 480px) {
   .games-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Monitor mock: side label + 3D-ish bezel + stand ──────────────────── */
+.games-monitor-stage {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(20px, 3vw, 48px);
+  perspective: 1800px;
+}
+
+/* Side label: displaced to the left of the monitor */
+.games-side-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 140px;
+  max-width: 240px;
+  padding-bottom: 80px; /* roughly align with screen center (stand sits below) */
+}
+
+.games-side-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  line-height: 1.05;
+  color: var(--text);
+  letter-spacing: 0.06em;
+  margin: 0;
+  text-transform: uppercase;
+  text-shadow: 0 0 30px rgba(0, 255, 179, 0.15);
+}
+
+.games-side-bar {
+  display: block;
+  width: 1px;
+  height: 70px;
+  background: linear-gradient(180deg, var(--accent), transparent);
+  margin-top: 4px;
+}
+
+.games-side-meta {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Monitor with stand; rotation driven by motion in Games.jsx (scroll-bound) */
+.games-monitor {
+  position: relative;
+  flex: 1;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+  transform-origin: center 60%;
+  will-change: transform;
+}
+
+.games-monitor-frame {
+  position: relative;
+  width: 100%;
+  padding: clamp(12px, 1.8vh, 18px);
+  background: linear-gradient(180deg, #0c0e12 0%, #060709 60%, #0a0c10 100%);
+  border: 1px solid rgba(0, 255, 179, 0.18);
+  border-radius: 8px 8px 4px 4px;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 255, 179, 0.04),
+    inset 0 -8px 24px rgba(0, 0, 0, 0.6),
+    0 30px 80px rgba(0, 0, 0, 0.7),
+    0 0 70px rgba(0, 255, 179, 0.08);
+}
+
+.games-monitor-led {
+  position: absolute;
+  bottom: 5px;
+  right: 16px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent-glow), 0 0 16px rgba(0, 255, 179, 0.5);
+  animation: blink 2s step-end infinite;
+}
+
+.games-monitor-frame .games-screen {
+  max-width: none;
+  margin: 0;
+  border-radius: 2px;
+}
+
+/* Inside the screen, swap the custom corners cursor for a classic blue arrow.
+   Overrides both UA defaults (links/buttons) and the inline body { cursor: none }
+   set by TargetCursor. ":has()" hides the custom corners wrapper while hovering. */
+.games-screen,
+.games-screen * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpolygon points='3,3 3,20 7,16 11,22 14,21 10,15 18,15' fill='%2300ffb3' stroke='%23000000' stroke-width='1' stroke-linejoin='round'/%3E%3C/svg%3E") 3 3, default;
+}
+
+.target-cursor-wrapper { transition: opacity 0.15s ease; }
+body:has(.games-screen:hover) .target-cursor-wrapper { opacity: 0; }
+
+/* Subtle CRT scanlines on the screen */
+.games-screen-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 255, 179, 0.035) 3px,
+    transparent 4px
+  );
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+
+/* Stand: neck + elliptical base */
+.games-monitor-stand {
+  position: relative;
+  width: 200px;
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.games-monitor-neck {
+  width: 70px;
+  height: 28px;
+  background: linear-gradient(180deg, #1a1d22, #0a0c10);
+  margin-top: -1px;
+  box-shadow: inset 0 0 0 1px rgba(0, 255, 179, 0.06);
+  clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+}
+
+.games-monitor-base {
+  width: 100%;
+  height: 14px;
+  background: linear-gradient(180deg, #16191e, #07080a);
+  border-radius: 50%;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55),
+              inset 0 1px 0 rgba(0, 255, 179, 0.12);
+  margin-top: -2px;
+}
+
+/* Below desktop, drop the 3D illusion and stack the label above the screen */
+@media (max-width: 980px) {
+  .games-monitor-stage {
+    flex-direction: column;
+    align-items: stretch;
+    perspective: none;
+    gap: 18px;
+  }
+  .games-side-label {
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    padding-bottom: 0;
+    max-width: none;
+    gap: 14px;
+  }
+  .games-side-title { white-space: normal; }
+  .games-side-bar { display: none; }
+  .games-monitor { transform: none; }
+  .games-monitor-stand { display: none; }
 }
 
 /* ═══════════════════════════════════════

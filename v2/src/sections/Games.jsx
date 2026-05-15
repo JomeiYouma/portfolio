@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
 import { useI18n } from '../hooks/useI18n'
 import Waves from '../components/Waves'
 import Reveal from '../components/Reveal'
@@ -11,45 +13,99 @@ const PlayIcon = () => (
 
 const Games = () => {
   const { lang, t } = useI18n()
+  const reduce = useReducedMotion()
+  const sectionRef = useRef(null)
+
+  // Tracks section center vs viewport center (-1 entering from right → 0 centered → +1 leaving left)
+  const offsetX = useMotionValue(0)
+  const rotateYRaw = useTransform(offsetX, [-1, 0, 1], [24, 0, -24])
+  const rotateY = useSpring(rotateYRaw, { stiffness: 70, damping: 22, mass: 0.6 })
+
+  useEffect(() => {
+    if (reduce) return
+    const el = sectionRef.current
+    if (!el) return
+
+    let rafId = null
+    let active = false
+
+    const tick = () => {
+      const rect = el.getBoundingClientRect()
+      const sectionCenter = rect.left + rect.width / 2
+      const viewportCenter = window.innerWidth / 2
+      const normalized = (viewportCenter - sectionCenter) / (window.innerWidth / 2)
+      offsetX.set(Math.max(-1, Math.min(1, normalized)))
+      if (active) rafId = requestAnimationFrame(tick)
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !active) {
+          active = true
+          rafId = requestAnimationFrame(tick)
+        } else if (!entry.isIntersecting && active) {
+          active = false
+          if (rafId) cancelAnimationFrame(rafId)
+        }
+      },
+      { root: null, threshold: 0, rootMargin: '50% 0px' },
+    )
+    io.observe(el)
+
+    return () => {
+      io.disconnect()
+      if (rafId) cancelAnimationFrame(rafId)
+    }
+  }, [reduce, offsetX])
 
   return (
     <section
+      ref={sectionRef}
       id="games"
       data-section
       className="section games-section"
       aria-labelledby="games-heading"
     >
       <div className="section-inner games-inner">
-        <Reveal as="div" className="games-screen">
-          <Waves
-            lineColor="#00ffb3"
-            backgroundColor="transparent"
-            waveSpeedX={0.02}
-            waveSpeedY={0.01}
-            waveAmpX={40}
-            waveAmpY={20}
-            friction={0.9}
-            tension={0.01}
-            maxCursorMove={120}
-            xGap={12}
-            yGap={36}
-            opacity={0.45}
-          />
+        <Reveal as="div" className="games-monitor-stage">
+          <aside className="games-side-label" aria-hidden="false">
+            <p className="eyebrow games-eyebrow">{t('games.eyebrow')}</p>
+            <h2 id="games-heading" className="games-side-title">
+              {t('games.title')}
+            </h2>
+            <span className="games-side-bar" aria-hidden="true" />
+          </aside>
 
-          <span className="games-screen-corner games-screen-corner--tl" aria-hidden="true" />
-          <span className="games-screen-corner games-screen-corner--tr" aria-hidden="true" />
-          <span className="games-screen-corner games-screen-corner--bl" aria-hidden="true" />
-          <span className="games-screen-corner games-screen-corner--br" aria-hidden="true" />
+          <motion.div
+            className="games-monitor"
+            style={reduce ? undefined : { rotateY }}
+          >
+            <div className="games-monitor-frame">
+              <span className="games-monitor-led" aria-hidden="true" />
+              <div className="games-screen">
+                <Waves
+                  lineColor="#00ffb3"
+                  backgroundColor="transparent"
+                  waveSpeedX={0.02}
+                  waveSpeedY={0.01}
+                  waveAmpX={40}
+                  waveAmpY={20}
+                  friction={0.9}
+                  tension={0.01}
+                  maxCursorMove={120}
+                  xGap={12}
+                  yGap={36}
+                  opacity={0.45}
+                />
 
-          <div className="games-screen-content">
-            <header className="games-screen-header">
-              <p className="eyebrow games-eyebrow">{t('games.eyebrow')}</p>
-              <h2 id="games-heading" className="games-screen-title">
-                {t('games.title')}
-              </h2>
-              <span className="games-screen-divider" aria-hidden="true" />
-            </header>
+                <span className="games-screen-corner games-screen-corner--tl" aria-hidden="true" />
+                <span className="games-screen-corner games-screen-corner--tr" aria-hidden="true" />
+                <span className="games-screen-corner games-screen-corner--bl" aria-hidden="true" />
+                <span className="games-screen-corner games-screen-corner--br" aria-hidden="true" />
 
+                <span className="games-screen-scanlines" aria-hidden="true" />
+
+                <div className="games-screen-content">
             <ul className="games-grid">
               {games.map((game) => {
                 const title = game.title[lang] || game.title.en
@@ -88,8 +144,15 @@ const Games = () => {
                   </li>
                 )
               })}
-            </ul>
-          </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="games-monitor-stand" aria-hidden="true">
+              <span className="games-monitor-neck" />
+              <span className="games-monitor-base" />
+            </div>
+          </motion.div>
         </Reveal>
       </div>
     </section>

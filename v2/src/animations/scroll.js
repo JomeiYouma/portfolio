@@ -85,16 +85,16 @@ const onResize = () => {
   resizeTimer = setTimeout(() => goToIndex(currentIndex, 0), 150)
 }
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
-export const initScrollEffects = () => {
+// ─── Mode detection ──────────────────────────────────────────────────────────
+const detectMode = () => {
   const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window
-  if (isMobile || prefersReducedMotion()) {
-    document.documentElement.style.setProperty('--scroll-mode', 'vertical')
-    return () => {}
-  }
+  return (isMobile || prefersReducedMotion()) ? 'vertical' : 'horizontal'
+}
 
-  document.documentElement.style.setProperty('--scroll-mode', 'horizontal')
+let currentMode = null
+let teardownHorizontal = null
 
+const enterHorizontal = () => {
   const main = document.querySelector('main')
   sectionEls = Array.from(document.querySelectorAll('section[data-section]'))
   if (!main || sectionEls.length < 2) return () => {}
@@ -117,13 +117,49 @@ export const initScrollEffects = () => {
     window.removeEventListener('keydown',    onKeyDown)
     window.removeEventListener('resize',     onResize)
     clearTimeout(resizeTimer)
+    // Kill any in-flight snap tween and reset transform so vertical mode starts clean.
+    // (Mobile CSS forces transform: none !important, but desktop reduced-motion does not.)
+    gsap.killTweensOf(main)
+    gsap.set(main, { clearProps: 'transform' })
+    isAnimating = false
+  }
+}
+
+const applyMode = () => {
+  const nextMode = detectMode()
+  if (nextMode === currentMode) return
+  if (teardownHorizontal) { teardownHorizontal(); teardownHorizontal = null }
+  currentMode = nextMode
+  document.documentElement.style.setProperty('--scroll-mode', nextMode)
+  if (nextMode === 'horizontal') teardownHorizontal = enterHorizontal()
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+export const initScrollEffects = () => {
+  applyMode()
+
+  // Re-evaluate on viewport resize and on reduced-motion preference changes
+  let modeTimer = null
+  const onModeCheck = () => {
+    clearTimeout(modeTimer)
+    modeTimer = setTimeout(applyMode, 200)
+  }
+  window.addEventListener('resize', onModeCheck)
+  const reducedMq = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+  reducedMq?.addEventListener?.('change', onModeCheck)
+
+  return () => {
+    if (teardownHorizontal) { teardownHorizontal(); teardownHorizontal = null }
+    clearTimeout(modeTimer)
+    window.removeEventListener('resize', onModeCheck)
+    reducedMq?.removeEventListener?.('change', onModeCheck)
+    currentMode = null
   }
 }
 
 // ─── Public ───────────────────────────────────────────────────────────────────
 export const scrollToSection = (id) => {
-  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window
-  if (isMobile || prefersReducedMotion()) {
+  if ((currentMode ?? detectMode()) === 'vertical') {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     return
   }
