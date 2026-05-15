@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { asset } from '../utils/asset'
 
 let translations = {}
 let currentLang = 'en'
@@ -10,7 +11,7 @@ export const useI18n = () => {
   useEffect(() => {
     const loadTranslations = async () => {
       try {
-        const response = await fetch('/data/translations.json')
+        const response = await fetch(asset('data/translations.json'))
         translations = await response.json()
         const storedLang = localStorage.getItem('preferred-language')
         currentLang = storedLang || 'en'

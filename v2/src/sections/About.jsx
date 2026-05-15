@@ -4,6 +4,7 @@ import { useI18n } from '../hooks/useI18n'
 import skills from '../data/skills.json'
 import GlowCard from '../components/GlowCard'
 import Reveal from '../components/Reveal'
+import { asset } from '../utils/asset'
 
 // ─── CSS Easter Egg (module-level stable refs) ────────────────────────────────
 const CHAOS_DURATION = 2200
@@ -165,7 +166,7 @@ const IconStrip = ({ items, reverse = false }) => {
                   title={item.name}
                 >
                   <img
-                    src={item.icon}
+                    src={asset(item.icon)}
                     alt=""
                     className="icon-strip__img"
                     decoding="async"
@@ -229,7 +230,7 @@ const About = () => {
             <h4>{t('about.certifications.title')}</h4>
             <p>{t('about.certifications.description')}</p>
             <a
-              href="/assets/documents/opquast_certificate_2026.pdf"
+              href={asset('assets/documents/opquast_certificate_2026.pdf')}
               download
               className="about-cert-download cursor-target"
             >

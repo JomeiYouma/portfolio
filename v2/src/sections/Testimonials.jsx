@@ -5,6 +5,7 @@ import { useI18n } from '../hooks/useI18n'
 import GlowCard from '../components/GlowCard'
 import MagneticButton from '../components/MagneticButton'
 import Reveal from '../components/Reveal'
+import { asset } from '../utils/asset'
 
 const Testimonials = () => {
   const { t } = useI18n()
@@ -66,7 +67,7 @@ const Testimonials = () => {
           </MagneticButton>
           <div className="download-links">
             <a
-              href="/assets/documents/cv_raphel_madore_2026.pdf"
+              href={asset('assets/documents/CV-20260615-RM.pdf')}
               download
               className="download-item cursor-target"
             >

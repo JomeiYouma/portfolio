@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'motion/react'
+import { asset } from '../utils/asset'
 import './ProjectDetailModal.css'
 
 /**
@@ -19,10 +20,13 @@ const ProjectDetailModal = ({ open, onClose, project, lang, t }) => {
       // Lock body scroll while the dialog is open
       const prevOverflow = document.body.style.overflow
       document.body.style.overflow = 'hidden'
+      // Signal to TargetCursor (z-index 9999) that it must paint above the modal overlay (also 9999).
+      document.body.classList.add('is-modal-open')
       // Move focus to the close button on next paint
       requestAnimationFrame(() => closeRef.current?.focus())
       return () => {
         document.body.style.overflow = prevOverflow
+        document.body.classList.remove('is-modal-open')
         previousActiveRef.current?.focus?.()
       }
     }
@@ -77,7 +81,7 @@ const ProjectDetailModal = ({ open, onClose, project, lang, t }) => {
 
             <div className="pdm-media">
               <img
-                src={`/assets/images/${project.image}`}
+                src={asset(`assets/images/${project.image}`)}
                 alt={lang === 'fr'
                   ? `Capture du projet ${title}`
                   : `${title} project screenshot`}

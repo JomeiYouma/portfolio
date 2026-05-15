@@ -4,6 +4,7 @@ import { useI18n } from '../hooks/useI18n'
 import Waves from '../components/Waves'
 import Reveal from '../components/Reveal'
 import games from '../data/games.json'
+import { asset } from '../utils/asset'
 
 const PlayIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -121,7 +122,7 @@ const Games = () => {
                     >
                       <div className="game-card-media">
                         <img
-                          src={`/assets/images/${game.image}`}
+                          src={asset(`assets/images/${game.image}`)}
                           alt=""
                           loading="lazy"
                           className="game-card-img"

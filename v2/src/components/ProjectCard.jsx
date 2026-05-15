@@ -1,3 +1,5 @@
+import { asset } from '../utils/asset'
+
 const ProjectCard = ({ project, lang = 'en' }) => {
   const title = project.title?.[lang] || project.title || 'Untitled'
   const type = project.type?.[lang] || project.type || ''
@@ -13,7 +15,7 @@ const ProjectCard = ({ project, lang = 'en' }) => {
       <div className="project-media">
         {image ? (
           <img
-            src={`/assets/images/${image}`}
+            src={asset(`assets/images/${image}`)}
             alt={title}
             loading="lazy"
           />

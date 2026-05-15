@@ -2,6 +2,7 @@ import { motion, LayoutGroup } from 'motion/react'
 import { scrollToSection } from '../animations/scroll'
 import { useI18n } from '../hooks/useI18n'
 import FaviconBlocks from './FaviconBlocks'
+import { asset } from '../utils/asset'
 
 const Nav = ({ sections, activeId }) => {
   const { t } = useI18n()
@@ -9,7 +10,7 @@ const Nav = ({ sections, activeId }) => {
     <nav className="nav" aria-label={t('accessibility.mainNav')}>
       <div className="nav-brand">
         <FaviconBlocks
-          src="/favicon.png"
+          src={asset('favicon.png')}
           alt="Portfolio"
           size={28}
           grid={12}
