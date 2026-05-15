@@ -1398,3 +1398,116 @@ body.css-chaos {
 @media (prefers-reduced-motion: reduce) {
   .hero-beam { animation: none; opacity: 0.25; }
 }
+
+/* ═══════════════════════════════════════
+   HERO — "wanted" speech bubble
+═══════════════════════════════════════ */
+.hero-bubble {
+  position: absolute;
+  top: clamp(8px, 2vh, 28px);
+  left: clamp(-70px, -4vw, -18px);
+  width: clamp(220px, 22vw, 290px);
+  padding: 14px 18px 16px;
+  background: rgba(10, 13, 18, 0.92);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  border: 1px solid var(--border-accent);
+  z-index: 3;
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 179, 0.05) inset,
+    0 0 24px rgba(0, 255, 179, 0.12),
+    0 18px 40px rgba(0, 0, 0, 0.5);
+  animation: hero-bubble-float 6s ease-in-out infinite;
+}
+
+/* Corner brackets, same family as .hero-card */
+.hero-bubble::before,
+.hero-bubble::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--accent);
+  border-style: solid;
+  opacity: 0.85;
+}
+.hero-bubble::before { top: -1px; left: -1px;  border-width: 1px 0 0 1px; }
+.hero-bubble::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+.hero-bubble-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.hero-bubble-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: blink 2s step-end infinite;
+}
+
+.hero-bubble-text {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0;
+}
+
+/* Comic tail extending from the right edge.
+   Fill path overlaps the bubble's right border (hides it under the tail body);
+   stroke path only traces the 2 outer diagonals, starting on the bubble edge.
+   SVG extends below the bubble so the tip lands past its bottom edge. */
+.hero-bubble-tail {
+  position: absolute;
+  right: -70px;
+  bottom: -15px;
+  width: 80px;
+  height: 90px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hero-bubble-tail-fill {
+  fill: rgba(10, 13, 18, 0.92);
+  stroke: none;
+}
+
+.hero-bubble-tail-stroke {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+}
+
+@keyframes hero-bubble-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bubble { animation: none; }
+}
+
+@media (max-width: 900px) {
+  .hero-bubble {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 0 16px;
+  }
+  .hero-bubble-tail { display: none; }
+}

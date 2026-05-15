@@ -88,6 +88,27 @@ const Hero = () => {
         >
           <span className="hero-beam" aria-hidden="true" />
           <OrbitalRings className="hero-orbital-rings" />
+
+          <motion.div
+            className="hero-bubble"
+            role="note"
+            initial={reduce ? false : { opacity: 0, y: -12, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="hero-bubble-label">{t('hero.bubbleLabel')}</span>
+            <p className="hero-bubble-text">{t('hero.bubbleText')}</p>
+            <svg
+              className="hero-bubble-tail"
+              viewBox="0 0 80 90"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path className="hero-bubble-tail-fill" d="M0 0 L80 90 L0 50 Z" />
+              <path className="hero-bubble-tail-stroke" d="M10 11 L80 90 L10 55" />
+            </svg>
+          </motion.div>
+
           <GlowCard className="hero-card" intensity={0.16} size={320}>
             <p className="hero-card-title">{t('hero.status')}</p>
             <div className="hero-card-grid">

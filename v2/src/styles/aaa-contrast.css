@@ -93,6 +93,31 @@ body.aaa-contrast .hero-card-title {
   color: #00ffff;
 }
 
+body.aaa-contrast .hero-bubble {
+  background: #0a0a0a;
+  border: 2px solid #ffffff;
+  box-shadow: none;
+}
+
+body.aaa-contrast .hero-bubble-label {
+  color: #00ffff;
+}
+
+body.aaa-contrast .hero-bubble-text {
+  color: #ffffff;
+}
+
+body.aaa-contrast .hero-bubble-tail-fill {
+  fill: #0a0a0a;
+  stroke: none;
+}
+
+body.aaa-contrast .hero-bubble-tail-stroke {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
 /* Buttons */
 body.aaa-contrast .btn.primary {
   background: #ffffff;

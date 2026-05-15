@@ -14,7 +14,9 @@
       "description": "Open to job opportunities worldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.",
       "cta": "Explore My Work",
       "status": "Available for hire",
-      "location": "France / Remote"
+      "location": "France / Remote",
+      "bubbleLabel": "Wanted",
+      "bubbleText": "Looking for a part-time web dev apprenticeship starting September 2026."
     },
     "about": {
       "eyebrow": "About Me",
@@ -130,7 +132,9 @@
       "description": "Ouvert aux opportunités professionnelles dans le monde entier. Passionné par la création d'expériences numériques soignées, intuitives et réfléchies qui laissent une empreinte.",
       "cta": "Découvrir Mon Travail",
       "status": "Disponible",
-      "location": "France / Télétravail"
+      "location": "France / Télétravail",
+      "bubbleLabel": "Avis de recherche",
+      "bubbleText": "Je cherche une alternance à mi-temps en développement web à partir de septembre 2026."
     },
     "about": {
       "eyebrow": "À Propos",
