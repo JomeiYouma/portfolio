@@ -3,146 +3,474 @@
     "nav": {
       "home": "Home",
       "works": "Works",
-      "interpersonal": "Interpersonal",
+      "games": "Games",
+      "testimonials": "Testimonials",
       "about": "About",
       "contact": "Contact"
     },
-    "home": {
-      "title": "YOuma",
+    "hero": {
+      "title": "YOUMA",
+      "subtitle": "Creative Developer",
       "description": "Open to job opportunities worldwide. Passionate about building polished, intuitive, and thoughtful digital experiences that leave a mark.",
-      "subtitle": "Creative Developer"
-    },
-    "works": {
-      "title": "WORKS",
-      "selectPrompt": "Select a project to see details..."
-    },
-    "service": {
-      "intro": "I enjoy working in collaborative environments where ideas grow through teamwork. Sharing knowledge, solving problems together, and building meaningful digital experiences as a team are what motivate me the most.",
-      "belief": "I believe that good communication and mutual support are key to creating polished, impactful projects.",
-      "cta": "wOrk with mE",
-      "cv": "/curriculum_vitae",
-      "cover": "/cover_letter"
+      "cta": "Explore My Work",
+      "servicesCta": "Request a Quote",
+      "status": "Available for hire",
+      "location": "France / Remote",
+      "bubbleLabel": "Wanted",
+      "bubbleText": "Looking for a part-time web dev apprenticeship starting September 2026."
     },
     "about": {
-      "subtitle": "Me, Myself and I :",
-      "name": "Raphaël",
+      "eyebrow": "About Me",
+      "title": "Me, Myself and I",
+      "subtitle": "Raphael",
       "bio": "Currently studying multimedia and web development, I build my journey through hands-on projects at university and on my own. I enjoy learning new technologies, experimenting, and turning ideas into concrete and functional experiences.",
-      "languages": "Mastered Languages :",
-      "languagesList": "HTML – CSS – JS – PHP – Lua – Python – French",
-      "frameworks": "Known Frameworks :",
+      "languages": "Mastered Languages",
+      "languagesList": "HTML – CSS – JS – PHP – Lua – Python",
+      "frameworks": "Known Frameworks",
       "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
       "certifications": {
         "title": "Web Quality Training",
-        "description": "Maîtrise Opquast certified — a recognized web quality benchmark covering 240+ best practices in accessibility, SEO, performance, privacy, and user experience. Trained to build sustainable, inclusive, and high-quality digital experiences."
-      },
-      "testimonials": {
+        "description": "Opquast Advanced certified — a recognized web quality benchmark covering 250+ best practices in accessibility, SEO, performance, privacy, and user experience.",
+        "download": "Download certificate"
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Testimonials",
+      "title": "What They Say About My Work",
+      "intro": "I enjoy working in collaborative environments where ideas grow through teamwork. Sharing knowledge, solving problems together, and building meaningful digital experiences as a team are what motivate me the most.",
+      "items": {
         "navy": {
           "name": "Navy X.",
           "quote": "Raphael quickly became an essential part of the testing phase. His structured feedback, attention to detail, and ability to spot edge cases saved us valuable time.",
-          "role": "- tester manager"
+          "role": "Tester Manager"
         },
         "eric": {
-          "name": "Eric M. (translated)",
+          "name": "Eric M.",
           "quote": "Raphael demonstrated strong motivation and a real commitment to developing his professional skills. He approaches every challenge with creativity and persistence.",
-          "role": "- career advisor"
+          "role": "Career Advisor"
         },
         "caroline": {
-          "name": "Caroline P. (translated)",
+          "name": "Caroline P.",
           "quote": "Working with Raphael was a real pleasure. He showed great curiosity and technical precision. His attention to detail made a noticeable impact on the quality of our final product.",
-          "role": "- internship supervisor"
+          "role": "Internship Supervisor"
         }
-      }
+      },
+      "cta": "Work With Me",
+      "cv": "Download CV",
+      "coverLetter": "Cover Letter"
+    },
+    "projects": {
+      "eyebrow": "Portfolio",
+      "title": "Projects",
+      "sectionLead": "A curated selection of full-stack, design and creative-coding work.",
+      "viewProject": "View Project",
+      "viewCode": "View Code",
+      "viewMore": "More details",
+      "selectPrompt": "Select a project to see details...",
+      "tech": "Technologies",
+      "context": "Context",
+      "dragHint": "Drag, scroll or use the arrows to browse projects",
+      "year": "Year",
+      "role": "Role",
+      "highlights": "Highlights",
+      "close": "Close"
+    },
+    "skills": {
+      "eyebrow": "Skills",
+      "title": "A Modern Stack Built for Impact"
+    },
+    "games": {
+      "eyebrow": "Web Games",
+      "title": "Press Start",
+      "play": "Play"
+    },
+    "services": {
+      "eyebrow": "Services",
+      "title": "Need a Website? Let's Build It Together",
+      "badge": "Student Rates",
+      "intro": "As a multimedia and web development student, I offer custom websites, updates and playful experiences at reduced rates. Quality work, modern stack, fair pricing.",
+      "items": {
+        "create": {
+          "title": "New Website",
+          "description": "Tailor-made site built from scratch: portfolio, showcase, landing page or small business website.",
+          "features": ["Responsive design", "Accessibility (Opquast)", "SEO considerations", "Custom branding"],
+          "priceLabel": "Starting at",
+          "price": "400€"
+        },
+        "update": {
+          "title": "Redesign & Update",
+          "description": "Modernize an existing site: refresh the design, improve performance, fix accessibility, add features.",
+          "features": ["Visual refresh", "Performance audit", "Mobile-friendly fixes", "Content updates"],
+          "priceLabel": "Starting at",
+          "price": "200€"
+        },
+        "gamify": {
+          "title": "Gamification",
+          "description": "Add a playful layer to your site: mini-game, interactive animation, quiz, scroll-driven story or custom canvas experience.",
+          "features": ["Custom mini-game", "Interactive animations", "Score and progress", "Mobile compatible"],
+          "priceLabel": "Starting at",
+          "price": "300€"
+        }
+      },
+      "note": "Student status means fair prices. The final quote depends on your project's scope, so let's talk first.",
+      "cta": "Request a Quote"
     },
     "contact": {
+      "eyebrow": "Contact",
       "title": "Get in Touch",
       "email": "Email",
       "linkedin": "LinkedIn",
       "github": "GitHub",
-      "mood": "Spotify",
-      "moodValue": "listen_to_my_playlists",
+      "spotify": "Spotify",
+      "spotifyValue": "listen_to_my_playlists",
       "githubActivity": "github_live_activity",
       "githubStats": "GitHub Stats",
       "lastMonth": "Last Month",
       "last3Months": "Last 3 Months",
       "latestActivity": "Latest Activity",
       "loading": "connecting_to_server...",
-      "footer": "built with passion & code // 2026",
-      "comingSoon": "Coming Soon",
-      "coverLetterMessage": "The cover letter will be available soon!",
+      "footer": "built with passion & code // 2026"
+    },
+    "accessibility": {
+      "contrast": "Toggle high contrast",
+      "contrastEnable": "Enable high contrast mode",
+      "contrastDisable": "Disable high contrast mode",
+      "language": "Switch language",
+      "switchToFrench": "Switch to French",
+      "switchToEnglish": "Switch to English",
+      "skipToContent": "Skip to main content",
+      "opensNewTab": "opens in a new tab",
+      "mainNav": "Main navigation",
+      "sectionNav": "Section navigation"
+    },
+    "coverLetterModal": {
+      "title": "Coming Soon",
+      "message": "The cover letter will be available soon!",
       "ok": "OK"
+    },
+    "quoteForm": {
+      "title": "Request a Quote",
+      "lead": "Tell me about your project. I usually reply within 24 hours.",
+      "name": "Your name",
+      "email": "Email",
+      "projectType": "Project type",
+      "other": "Something else",
+      "budget": "Approximate budget",
+      "budgetPlaceholder": "e.g. 300 to 600 €",
+      "timeline": "Timeline",
+      "timelinePlaceholder": "e.g. 2 to 4 weeks",
+      "message": "Project description",
+      "privacy": "Your information is only used to reply to your request. No tracking, no sharing.",
+      "send": "Send my request",
+      "sending": "Sending...",
+      "cancel": "Cancel",
+      "close": "Close",
+      "successTitle": "Request sent",
+      "successBody": "Thanks for reaching out. I'll get back to you by email shortly.",
+      "errorBody": "Something went wrong while sending. Try again, or email me directly at raphael.madore.pro@mailo.com."
+    },
+    "legal": {
+      "close": "Close",
+      "updated": "Last updated: May 2026.",
+      "legal": {
+        "tab": "Legal notice",
+        "title": "Legal notice",
+        "blocks": [
+          {
+            "heading": "Editor",
+            "body": [
+              "This site is published by Raphaël Madoré, individual publisher, based in France.",
+              "Contact: raphael.madore.pro@mailo.com"
+            ]
+          },
+          {
+            "heading": "Hosting",
+            "body": [
+              "Site hosted by GitHub Pages, GitHub Inc., 88 Colin P Kelly Jr Street, San Francisco, CA 94107, United States.",
+              "https://github.com"
+            ]
+          },
+          {
+            "heading": "Intellectual property",
+            "body": "All texts, visuals, code and project descriptions are the property of Raphaël Madoré unless stated otherwise. Reproduction without written authorisation is prohibited."
+          },
+          {
+            "heading": "Liability",
+            "body": "The publisher does its best to keep the information on this site accurate but cannot be held responsible for omissions, inaccuracies or unavailability of the service."
+          },
+          {
+            "heading": "Applicable law",
+            "body": "This site is governed by French law. Any dispute falls under the jurisdiction of the competent French courts."
+          }
+        ]
+      },
+      "privacy": {
+        "tab": "Privacy",
+        "title": "Privacy policy",
+        "blocks": [
+          {
+            "heading": "What data is collected",
+            "body": "Only the data you actively send via the quote request form: name, email, project type, optional budget and timeline, and your message."
+          },
+          {
+            "heading": "Why",
+            "body": "Strictly to reply to your request and prepare a tailored quote. No marketing, no profiling, no resale."
+          },
+          {
+            "heading": "Where it goes",
+            "body": "Submissions are forwarded by Formspree (the form provider) to my email inbox. Formspree may temporarily store the submission to handle delivery. See https://formspree.io/legal/privacy-policy."
+          },
+          {
+            "heading": "How long it is kept",
+            "body": "Submissions are kept in my inbox as long as the project conversation is active, then archived or deleted on request."
+          },
+          {
+            "heading": "Cookies and tracking",
+            "body": "No tracking cookies, no analytics, no third-party advertising. The site stores a single preference locally: your selected language."
+          },
+          {
+            "heading": "Your rights",
+            "body": "Under the GDPR, you can request access to, correction or deletion of your personal data by emailing raphael.madore.pro@mailo.com."
+          }
+        ]
+      }
     }
   },
   "fr": {
     "nav": {
       "home": "Accueil",
       "works": "Projets",
-      "interpersonal": "Relationnel",
+      "games": "Jeux",
+      "testimonials": "Témoignages",
       "about": "À Propos",
       "contact": "Contact"
     },
-    "home": {
-      "title": "YOuma",
+    "hero": {
+      "title": "YOUMA",
+      "subtitle": "Développeur Créatif",
       "description": "Ouvert aux opportunités professionnelles dans le monde entier. Passionné par la création d'expériences numériques soignées, intuitives et réfléchies qui laissent une empreinte.",
-      "subtitle": "Développeur Créatif"
-    },
-    "works": {
-      "title": "PROJETS",
-      "selectPrompt": "Sélectionnez un projet pour voir les détails..."
-    },
-    "service": {
-      "intro": "J'aime travailler dans des environnements collaboratifs où les idées grandissent grâce au travail d'équipe. Partager les connaissances, résoudre des problèmes ensemble et créer des expériences numériques significatives en équipe, c'est ce qui me motive le plus.",
-      "belief": "Je crois que la bonne communication et le soutien mutuel sont essentiels pour créer des projets soignés et percutants.",
-      "cta": "travaillEr avEc moi",
-      "cv": "/curriculum_vitae",
-      "cover": "/lettre_motivation"
+      "cta": "Découvrir Mon Travail",
+      "servicesCta": "Demander un devis",
+      "status": "Disponible",
+      "location": "France / Télétravail",
+      "bubbleLabel": "Avis de recherche",
+      "bubbleText": "Je cherche une alternance à mi-temps en développement web à partir de septembre 2026."
     },
     "about": {
-      "subtitle": "Me, Myself and I :",
-      "name": "Raphaël",
+      "eyebrow": "À Propos",
+      "title": "Me, Myself and I",
+      "subtitle": "Raphael",
       "bio": "Actuellement en formation multimédia et développement web, je construis mon parcours à travers des projets pratiques à l'université et en autonomie. J'aime apprendre de nouvelles technologies, expérimenter et transformer des idées en expériences concrètes et fonctionnelles.",
-      "languages": "Langages Maîtrisés :",
-      "languagesList": "HTML – CSS – JS – PHP – Lua – Python ",
-      "frameworks": "Frameworks Connus :",
+      "languages": "Langages Maîtrisés",
+      "languagesList": "HTML – CSS – JS – PHP – Lua – Python",
+      "frameworks": "Frameworks Connus",
       "frameworksList": "React JS – Laravel – Bootstrap – Next JS – Tailwind CSS – Three JS",
       "certifications": {
         "title": "Formation Qualité Web",
-        "description": "Certifié Maîtrise Opquast — référentiel reconnu de qualité web couvrant plus de 240 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur. Formé à créer des expériences numériques durables, inclusives et de haute qualité."
-      },
-      "testimonials": {
+        "description": "Certifié Opquast Avancé — référentiel reconnu de qualité web couvrant plus de 250 bonnes pratiques en accessibilité, SEO, performance, confidentialité et expérience utilisateur.",
+        "download": "Télécharger le certificat"
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Témoignages",
+      "title": "Ce Qu'ils Disent De Mon Travail",
+      "intro": "J'aime travailler dans des environnements collaboratifs où les idées grandissent grâce au travail d'équipe. Partager les connaissances, résoudre des problèmes ensemble et créer des expériences numériques significatives en équipe, c'est ce qui me motive le plus.",
+      "items": {
         "navy": {
-          "name": "Navy X. (translated)",
+          "name": "Navy X.",
           "quote": "Raphaël est rapidement devenu un élément essentiel de la phase de test. Ses retours structurés, son attention aux détails et sa capacité à repérer les cas limites nous ont fait gagner un temps précieux.",
-          "role": "- responsable test"
+          "role": "Responsable Test"
         },
         "eric": {
           "name": "Eric M.",
-          "quote": "Raphaël a démontré une forte motivation et un réel engagement dans le développement de ses compétences professionnelles. Il aborde chaque défi avec créativité et persévérance.",
-          "role": "- conseiller en insertion professionnelle"
+          "quote": "Raphaël démontre une forte motivation et un réel engagement dans le développement de ses compétences professionnelles. Il aborde chaque défi avec créativité et persévérance.",
+          "role": "Conseiller en Insertion"
         },
         "caroline": {
           "name": "Caroline P.",
           "quote": "Travailler avec Raphaël a été un réel plaisir. Il a fait preuve d'une grande curiosité et d'une précision technique remarquable. Son attention aux détails a eu un impact notable sur la qualité de notre produit final.",
-          "role": "- responsable de stage"
+          "role": "Responsable de Stage"
         }
-      }
+      },
+      "cta": "Travailler Avec Moi",
+      "cv": "Télécharger CV",
+      "coverLetter": "Lettre de Motivation"
+    },
+    "projects": {
+      "eyebrow": "Portfolio",
+      "title": "Projets",
+      "sectionLead": "Une sélection de travaux full-stack, design et creative-coding.",
+      "viewProject": "Voir le Projet",
+      "viewCode": "Voir le Code",
+      "viewMore": "Plus de détails",
+      "selectPrompt": "Sélectionnez un projet pour voir les détails…",
+      "tech": "Technologies",
+      "context": "Contexte",
+      "dragHint": "Glissez, scrollez ou utilisez les flèches pour parcourir les projets",
+      "year": "Année",
+      "role": "Rôle",
+      "highlights": "Points forts",
+      "close": "Fermer"
+    },
+    "skills": {
+      "eyebrow": "Compétences",
+      "title": "Une Stack Moderne Orientée Impact"
+    },
+    "games": {
+      "eyebrow": "Jeux Web",
+      "title": "Press Start",
+      "play": "Jouer"
+    },
+    "services": {
+      "eyebrow": "Services",
+      "title": "Besoin d'un site ? Construisons-le ensemble",
+      "badge": "Tarifs Étudiant",
+      "intro": "En tant qu'étudiant en multimédia et développement web, je propose la création, la mise à jour et des expériences ludiques à tarifs réduits. Du travail soigné, une stack moderne, des prix justes.",
+      "items": {
+        "create": {
+          "title": "Nouveau Site Web",
+          "description": "Site sur mesure conçu de zéro : portfolio, vitrine, landing page ou site d'entreprise.",
+          "features": ["Design responsive", "Accessibilité (Opquast)", "Réflexions SEO", "Identité personnalisée"],
+          "priceLabel": "À partir de",
+          "price": "400€"
+        },
+        "update": {
+          "title": "Refonte & Mise à Jour",
+          "description": "Modernisation d'un site existant : refonte du design, amélioration des performances, accessibilité, nouvelles fonctionnalités.",
+          "features": ["Rafraîchissement visuel", "Audit de performance", "Adaptation mobile", "Mise à jour du contenu"],
+          "priceLabel": "À partir de",
+          "price": "200€"
+        },
+        "gamify": {
+          "title": "Gamification",
+          "description": "Ajoutez une touche ludique à votre site : mini-jeu, animation interactive, quiz, scrollytelling ou expérience canvas sur mesure.",
+          "features": ["Mini-jeu sur mesure", "Animations interactives", "Score et progression", "Compatible mobile"],
+          "priceLabel": "À partir de",
+          "price": "300€"
+        }
+      },
+      "note": "Statut étudiant rime avec prix justes. Le devis final dépend de la portée de votre projet, alors discutons-en d'abord.",
+      "cta": "Demander un devis"
     },
     "contact": {
+      "eyebrow": "Contact",
       "title": "Me Contacter",
-      "email": "EmaiL",
+      "email": "Email",
       "linkedin": "LinkedIn",
       "github": "GitHub",
-      "mood": "Spotify",
-      "moodValue": "écoutez_mes_playlists",
+      "spotify": "Spotify",
+      "spotifyValue": "écoutez_mes_playlists",
       "githubActivity": "activité_github_live",
       "githubStats": "Statistiques GitHub",
       "lastMonth": "Dernier Mois",
       "last3Months": "3 Derniers Mois",
       "latestActivity": "Activité Récente",
       "loading": "connexion_au_serveur...",
-      "footer": "créé avec passion & code // 2026",
-      "comingSoon": "Bientôt Disponible",
-      "coverLetterMessage": "La lettre de motivation sera bientôt disponible !",
+      "footer": "créé avec passion & code // 2026"
+    },
+    "accessibility": {
+      "contrast": "Activer fort contraste",
+      "contrastEnable": "Activer le mode contraste élevé",
+      "contrastDisable": "Désactiver le mode contraste élevé",
+      "language": "Changer de langue",
+      "switchToFrench": "Passer en français",
+      "switchToEnglish": "Switch to English",
+      "skipToContent": "Aller au contenu principal",
+      "opensNewTab": "ouvre dans un nouvel onglet",
+      "mainNav": "Navigation principale",
+      "sectionNav": "Navigation par section"
+    },
+    "coverLetterModal": {
+      "title": "Bientôt Disponible",
+      "message": "La lettre de motivation sera bientôt disponible !",
       "ok": "OK"
+    },
+    "quoteForm": {
+      "title": "Demander un devis",
+      "lead": "Parlez-moi de votre projet. Je réponds en général sous 24 heures.",
+      "name": "Votre nom",
+      "email": "Email",
+      "projectType": "Type de projet",
+      "other": "Autre",
+      "budget": "Budget approximatif",
+      "budgetPlaceholder": "ex. 300 à 600 €",
+      "timeline": "Délai",
+      "timelinePlaceholder": "ex. 2 à 4 semaines",
+      "message": "Description du projet",
+      "privacy": "Vos informations servent uniquement à répondre à votre demande. Pas de tracking, pas de partage.",
+      "send": "Envoyer ma demande",
+      "sending": "Envoi...",
+      "cancel": "Annuler",
+      "close": "Fermer",
+      "successTitle": "Demande envoyée",
+      "successBody": "Merci pour votre message. Je vous réponds par email rapidement.",
+      "errorBody": "L'envoi a échoué. Réessayez, ou écrivez-moi directement à raphael.madore.pro@mailo.com."
+    },
+    "legal": {
+      "close": "Fermer",
+      "updated": "Dernière mise à jour : mai 2026.",
+      "legal": {
+        "tab": "Mentions légales",
+        "title": "Mentions légales",
+        "blocks": [
+          {
+            "heading": "Éditeur",
+            "body": [
+              "Ce site est édité par Raphaël Madoré, éditeur individuel, basé en France.",
+              "Contact : raphael.madore.pro@mailo.com"
+            ]
+          },
+          {
+            "heading": "Hébergement",
+            "body": [
+              "Site hébergé par GitHub Pages, GitHub Inc., 88 Colin P Kelly Jr Street, San Francisco, CA 94107, États-Unis.",
+              "https://github.com"
+            ]
+          },
+          {
+            "heading": "Propriété intellectuelle",
+            "body": "L'ensemble des textes, visuels, codes et descriptions de projets sont la propriété de Raphaël Madoré, sauf mention contraire. Toute reproduction sans autorisation écrite est interdite."
+          },
+          {
+            "heading": "Responsabilité",
+            "body": "L'éditeur met tout en œuvre pour assurer l'exactitude des informations diffusées sur ce site, mais ne peut être tenu responsable des omissions, inexactitudes ou indisponibilités du service."
+          },
+          {
+            "heading": "Droit applicable",
+            "body": "Le présent site est soumis au droit français. Tout litige relève de la compétence des juridictions françaises compétentes."
+          }
+        ]
+      },
+      "privacy": {
+        "tab": "Confidentialité",
+        "title": "Politique de confidentialité",
+        "blocks": [
+          {
+            "heading": "Données collectées",
+            "body": "Uniquement les données que vous transmettez via le formulaire de demande de devis : nom, email, type de projet, budget et délai (facultatifs), et votre message."
+          },
+          {
+            "heading": "Finalité",
+            "body": "Strictement pour répondre à votre demande et préparer un devis adapté. Pas de marketing, pas de profilage, aucune revente."
+          },
+          {
+            "heading": "Destinataires",
+            "body": "Les soumissions sont transmises via Formspree (prestataire de formulaire) vers ma boîte mail. Formspree peut stocker temporairement la soumission pour assurer la livraison. Voir https://formspree.io/legal/privacy-policy."
+          },
+          {
+            "heading": "Durée de conservation",
+            "body": "Les demandes sont conservées dans ma boîte mail tant que la conversation projet est active, puis archivées ou supprimées sur simple demande."
+          },
+          {
+            "heading": "Cookies et traceurs",
+            "body": "Aucun cookie de tracking, aucun outil d'analyse, aucune publicité tierce. Le site enregistre localement une seule préférence : la langue sélectionnée."
+          },
+          {
+            "heading": "Vos droits",
+            "body": "Conformément au RGPD, vous pouvez demander l'accès, la rectification ou la suppression de vos données personnelles en écrivant à raphael.madore.pro@mailo.com."
+          }
+        ]
+      }
     }
   }
 }

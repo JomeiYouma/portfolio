@@ -1,0 +1,12 @@
+# IDE / agent
+.claude/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / build artifacts (in case a source folder is added later)
+node_modules/
+dist/
