@@ -29,11 +29,13 @@ const QuoteFormModal = ({ isOpen, onClose, initialProjectType }) => {
     setValues((v) => ({ ...v, projectType: initialProjectType || v.projectType }))
     setStatus('idle')
     setErrorMsg('')
+    document.body.classList.add('is-modal-open')
     const onKey = (e) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
     requestAnimationFrame(() => closeRef.current?.focus())
     return () => {
       window.removeEventListener('keydown', onKey)
+      document.body.classList.remove('is-modal-open')
       previousFocusRef.current?.focus?.()
     }
   }, [isOpen, initialProjectType, onClose])

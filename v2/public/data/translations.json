@@ -169,11 +169,19 @@
       "successBody": "Thanks for reaching out. I'll get back to you by email shortly.",
       "errorBody": "Something went wrong while sending. Try again, or email me directly at raphael.madore.pro@mailo.com."
     },
+    "cookies": {
+      "title": "Storage notice",
+      "message": "This site does not use tracking cookies, analytics or advertising. It only stores your language preference and your accessibility choices in your browser, locally.",
+      "learn": "Read the privacy policy",
+      "accept": "Got it",
+      "decline": "Hide"
+    },
     "legal": {
       "close": "Close",
       "updated": "Last updated: May 2026.",
       "legal": {
         "tab": "Legal notice",
+        "short": "Legal",
         "title": "Legal notice",
         "blocks": [
           {
@@ -204,8 +212,48 @@
           }
         ]
       },
+      "terms": {
+        "tab": "Terms of service",
+        "short": "Terms",
+        "title": "Terms of service",
+        "blocks": [
+          {
+            "heading": "Scope",
+            "body": "These terms govern any quote request, design or development engagement opened with Raphaël Madoré through this site. They are accepted in writing before any work begins, alongside a project-specific quote."
+          },
+          {
+            "heading": "Quotes and orders",
+            "body": "Each engagement starts with a written quote describing scope, deliverables, timeline and price. The quote is valid for 30 days. The engagement is confirmed once both the signed quote and the deposit are received."
+          },
+          {
+            "heading": "Pricing and payment",
+            "body": "Prices are quoted in euros, taxes excluded where applicable. A 30% deposit is due to start the work, the balance is due at delivery. Late payments incur statutory interest at the legal rate plus a fixed 40 € recovery fee, in line with French commercial law."
+          },
+          {
+            "heading": "Delivery and revisions",
+            "body": "Delivery dates are estimates and depend on timely client feedback. Each engagement includes one round of minor revisions per deliverable. Additional revisions are billed at the agreed hourly rate."
+          },
+          {
+            "heading": "Intellectual property",
+            "body": "Source files and final deliverables are transferred to the client once the final invoice is paid in full. Any third-party assets (fonts, libraries, stock media) remain governed by their own licenses."
+          },
+          {
+            "heading": "Cancellation",
+            "body": "Either party may end the engagement in writing. Work completed up to that point is invoiced and the deposit is non-refundable, except in the case of fault on my side."
+          },
+          {
+            "heading": "Liability",
+            "body": "Liability is limited to the amount actually invoiced for the engagement. I am not liable for indirect damages, loss of revenue, or third-party service outages."
+          },
+          {
+            "heading": "Applicable law",
+            "body": "These terms are governed by French law. Any dispute that cannot be resolved amicably falls under the jurisdiction of the competent French courts."
+          }
+        ]
+      },
       "privacy": {
         "tab": "Privacy",
+        "short": "Privacy",
         "title": "Privacy policy",
         "blocks": [
           {
@@ -406,11 +454,19 @@
       "successBody": "Merci pour votre message. Je vous réponds par email rapidement.",
       "errorBody": "L'envoi a échoué. Réessayez, ou écrivez-moi directement à raphael.madore.pro@mailo.com."
     },
+    "cookies": {
+      "title": "Information stockage",
+      "message": "Ce site n'utilise aucun cookie de suivi, aucun outil d'analyse ni aucune publicité. Seules votre langue et vos préférences d'accessibilité sont conservées localement dans votre navigateur.",
+      "learn": "Lire la politique de confidentialité",
+      "accept": "J'ai compris",
+      "decline": "Masquer"
+    },
     "legal": {
       "close": "Fermer",
       "updated": "Dernière mise à jour : mai 2026.",
       "legal": {
         "tab": "Mentions légales",
+        "short": "Mentions",
         "title": "Mentions légales",
         "blocks": [
           {
@@ -441,8 +497,48 @@
           }
         ]
       },
+      "terms": {
+        "tab": "CGV",
+        "short": "CGV",
+        "title": "Conditions générales de vente",
+        "blocks": [
+          {
+            "heading": "Champ d'application",
+            "body": "Les présentes CGV régissent toute prestation de design ou de développement engagée avec Raphaël Madoré via ce site. Elles sont acceptées par écrit avant tout démarrage, en complément d'un devis spécifique au projet."
+          },
+          {
+            "heading": "Devis et commandes",
+            "body": "Chaque mission débute par un devis écrit décrivant le périmètre, les livrables, le calendrier et le tarif. Le devis est valable 30 jours. La mission est confirmée à réception du devis signé et de l'acompte."
+          },
+          {
+            "heading": "Tarifs et paiement",
+            "body": "Les prix sont indiqués en euros, hors taxes le cas échéant. Un acompte de 30 % est dû au démarrage, le solde est exigible à la livraison. Tout retard de paiement entraîne des intérêts au taux légal et une indemnité forfaitaire de recouvrement de 40 €, conformément au droit français."
+          },
+          {
+            "heading": "Délais et révisions",
+            "body": "Les délais annoncés sont indicatifs et dépendent de la réactivité du client. Chaque mission inclut une série de retouches mineures par livrable. Les retouches supplémentaires sont facturées au taux horaire convenu."
+          },
+          {
+            "heading": "Propriété intellectuelle",
+            "body": "Les fichiers sources et livrables finaux sont transférés au client à réception du paiement intégral. Les ressources tierces (polices, librairies, médias) restent soumises à leurs propres licences."
+          },
+          {
+            "heading": "Résiliation",
+            "body": "Chaque partie peut mettre fin à la mission par écrit. Le travail réalisé jusqu'à la résiliation est facturé et l'acompte n'est pas remboursable, sauf faute de ma part."
+          },
+          {
+            "heading": "Responsabilité",
+            "body": "Ma responsabilité est limitée au montant effectivement facturé pour la mission concernée. Je ne saurais être tenu responsable des dommages indirects, pertes de revenus ou indisponibilités de services tiers."
+          },
+          {
+            "heading": "Droit applicable",
+            "body": "Les présentes CGV sont soumises au droit français. Tout litige qui ne pourrait être résolu à l'amiable relèvera des juridictions françaises compétentes."
+          }
+        ]
+      },
       "privacy": {
         "tab": "Confidentialité",
+        "short": "Confidentialité",
         "title": "Politique de confidentialité",
         "blocks": [
           {

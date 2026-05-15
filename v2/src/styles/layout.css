@@ -6,12 +6,16 @@
   overflow: hidden;
 }
 
-/* Horizontal strip — driven purely by gsap.to(main, { x }) */
+/* Horizontal strip — driven purely by gsap.to(main, { x }).
+   No `will-change: transform` on purpose: keeping the layer permanently
+   GPU-composited disables ClearType subpixel antialiasing on Windows, which
+   makes every body-copy paragraph inside look slightly blurry. GSAP promotes
+   the layer with force3D during the snap tween and clears it on completion
+   (see animations/scroll.js), so text is sharp at rest. */
 main {
   display: flex;
   width: fit-content;
   height: 100vh;
-  will-change: transform;
 }
 
 /* ─── Section base ───────────────────────────────────────────────────────── */

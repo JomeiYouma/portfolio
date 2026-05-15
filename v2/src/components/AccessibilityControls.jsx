@@ -1,6 +1,6 @@
 import { useI18n } from '../hooks/useI18n'
 
-const AccessibilityControls = ({ lang, onToggleLang, contrastActive, onToggleContrast }) => {
+const AccessibilityControls = ({ lang, onToggleLang, contrastActive, onToggleContrast, onOpenLegal }) => {
   const { t } = useI18n()
   const contrastLabel = contrastActive
     ? t('accessibility.contrastDisable')
@@ -31,6 +31,31 @@ const AccessibilityControls = ({ lang, onToggleLang, contrastActive, onToggleCon
       >
         <span aria-hidden="true">{lang === 'en' ? 'FR' : 'ENG'}</span>
       </button>
+      {onOpenLegal && (
+        <div className="legal-pills" aria-label={t('legal.legal.tab')}>
+          <button
+            type="button"
+            className="legal-pill cursor-target"
+            onClick={() => onOpenLegal('legal')}
+          >
+            {t('legal.legal.short') || t('legal.legal.tab')}
+          </button>
+          <button
+            type="button"
+            className="legal-pill cursor-target"
+            onClick={() => onOpenLegal('terms')}
+          >
+            {t('legal.terms.short') || t('legal.terms.tab')}
+          </button>
+          <button
+            type="button"
+            className="legal-pill cursor-target"
+            onClick={() => onOpenLegal('privacy')}
+          >
+            {t('legal.privacy.short') || t('legal.privacy.tab')}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

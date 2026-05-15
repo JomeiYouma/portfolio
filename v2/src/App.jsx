@@ -8,6 +8,7 @@ import KpiAdmin from './components/KpiAdmin'
 import SnapDots from './components/SnapDots'
 import QuoteFormModal from './components/QuoteFormModal'
 import LegalModal from './components/LegalModal'
+import CookieBanner from './components/CookieBanner'
 import ViewportGate from './components/ViewportGate'
 import Hero from './sections/Hero'
 import About from './sections/About'
@@ -103,15 +104,16 @@ function App() {
         onToggleLang={toggleLanguage}
         contrastActive={contrastActive}
         onToggleContrast={toggleContrast}
+        onOpenLegal={openLegal}
       />
       <main id="main-content" tabIndex={-1}>
-        <Hero onOpenQuote={openQuote} />
+        <Hero />
         <About />
         <Projects projects={projects} />
         <Games />
         <Testimonials />
         <Services onOpenQuote={openQuote} />
-        <Contact onOpenLegal={openLegal} />
+        <Contact />
       </main>
       {showKpiAdmin && <KpiAdmin onClose={() => setShowKpiAdmin(false)} />}
       <QuoteFormModal
@@ -124,6 +126,7 @@ function App() {
         onClose={closeLegal}
         tab={legalTab}
       />
+      <CookieBanner onOpenLegal={openLegal} />
     </div>
     </ViewportGate>
   )

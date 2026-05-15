@@ -65,6 +65,10 @@ body {
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
+  /* Sharper glyph edges on small text running over the grain/scanlines layers */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 #root {
@@ -73,7 +77,41 @@ body {
   z-index: 1;
 }
 
+/* Static gray backdrop SHAPE — fixed to viewport, sits behind every section
+   and every effect layer. Does not move when sections scroll horizontally.
+   Stepped band that spans the full viewport width: right half sits higher,
+   left half drops down, diagonal steps join the two around mid-width. Adjust
+   the polygon points to reshape. */
+html::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.015));
+  /* Stepped band, full viewport width: right half sits higher, left half drops
+     down, two short diagonal "stairs" connect the halves around mid-width. */
+  clip-path: polygon(
+    0    31%,
+    43%  31%,
+    55%  18%,
+    100% 18%,
+    100% 50%,
+    55%  50%,
+    43%  62%,
+    0    62%
+  );
+  pointer-events: none;
+  z-index: -4;
+}
+
+/* Thin outline of the same shape — drawn as a separate fixed pseudo on <html>
+   to make the form readable as a deliberate shape rather than a vague glow. */
+
 /* ─── Z-index layers (from back to front):
+   -4  static gray backdrop (fixed)
    -3  grid
    -2  ambient glows
    -1  ghost section numbers (.section::after)
@@ -143,7 +181,7 @@ body::after {
   height: 200%;
   background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-size: 220px 220px;
-  opacity: 0.05;
+  opacity: 0.035;
   pointer-events: none;
   z-index: -1;
   animation: grain 1.2s steps(4) infinite;

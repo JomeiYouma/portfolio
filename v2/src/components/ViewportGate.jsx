@@ -2,15 +2,28 @@ import { useEffect, useState } from 'react'
 
 // Two supported viewport ranges; anything in between is unsupported.
 // Mobile range stacks vertically; desktop range uses the horizontal-scroll layout.
+// Aspect ratio bounds keep us out of the in-between formats where the layouts
+// (panoramic ultrawide, near-square desktop, landscape phone) visibly break.
 const MOBILE_MIN_W = 360
 const MOBILE_MAX_W = 768
-const MOBILE_MIN_H = 500
-const DESKTOP_MIN_W = 1024
-const DESKTOP_MIN_H = 700
+const MOBILE_MIN_H = 600
+const MOBILE_MAX_AR = 0.95
+const DESKTOP_MIN_W = 1180
+const DESKTOP_MIN_H = 720
+const DESKTOP_MIN_AR = 1.30
+const DESKTOP_MAX_AR = 2.10
 
 const getMode = (w, h) => {
-  if (w >= MOBILE_MIN_W && w <= MOBILE_MAX_W && h >= MOBILE_MIN_H) return 'mobile'
-  if (w >= DESKTOP_MIN_W && h >= DESKTOP_MIN_H) return 'desktop'
+  if (!w || !h) return null
+  const ar = w / h
+  if (
+    w >= MOBILE_MIN_W && w <= MOBILE_MAX_W &&
+    h >= MOBILE_MIN_H && ar <= MOBILE_MAX_AR
+  ) return 'mobile'
+  if (
+    w >= DESKTOP_MIN_W && h >= DESKTOP_MIN_H &&
+    ar >= DESKTOP_MIN_AR && ar <= DESKTOP_MAX_AR
+  ) return 'desktop'
   return null
 }
 
@@ -56,8 +69,8 @@ const ViewportGate = ({ children }) => {
         </p>
 
         <ul className="viewport-gate-ranges">
-          <li>Desktop : largeur ≥ {DESKTOP_MIN_W} px, hauteur ≥ {DESKTOP_MIN_H} px</li>
-          <li>Mobile : {MOBILE_MIN_W} – {MOBILE_MAX_W} px de large, hauteur ≥ {MOBILE_MIN_H} px</li>
+          <li>Desktop : largeur ≥ {DESKTOP_MIN_W} px, hauteur ≥ {DESKTOP_MIN_H} px (ratio {DESKTOP_MIN_AR.toFixed(2)} – {DESKTOP_MAX_AR.toFixed(2)})</li>
+          <li>Mobile : {MOBILE_MIN_W} – {MOBILE_MAX_W} px de large, hauteur ≥ {MOBILE_MIN_H} px (portrait)</li>
         </ul>
 
         <div className="viewport-gate-grid">

@@ -13,9 +13,23 @@
 /* When the project detail modal is open, lift the custom cursor above its overlay
    (both sit at z-index 9999 and the modal is portaled to <body>, so it would
    otherwise paint over the cursor and hide it). Scoped to the modal-open state so
-   the default stacking is untouched everywhere else. */
+   the default stacking is untouched everywhere else.
+   `mix-blend-mode: difference` interacts badly with the overlay's backdrop-filter
+   (the GPU layer it creates blurs the differenced cursor and tints it grey), so
+   while a modal is open we switch to a solid bright cursor that paints normally. */
 body.is-modal-open .target-cursor-wrapper {
   z-index: 10001;
+  mix-blend-mode: normal;
+}
+
+body.is-modal-open .target-cursor-dot {
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+body.is-modal-open .target-cursor-corner {
+  border-color: #ffffff;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.6));
 }
 
 .target-cursor-dot {

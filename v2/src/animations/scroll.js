@@ -20,8 +20,17 @@ const goToIndex = (index, duration = DURATION) => {
   isAnimating  = true
   currentIndex = clamped
 
-  gsap.to(document.querySelector('main'), {
-    x: -(window.innerWidth * clamped),
+  const main = document.querySelector('main')
+  // Round to integer pixels so the resting position aligns to the device pixel
+  // grid (fractional translations disable ClearType subpixel rendering and
+  // make body copy look fuzzy on Windows). GSAP's default `force3D: 'auto'`
+  // adds translateZ(0) for the duration of the tween, then removes it on
+  // completion — that brings ClearType back at rest without us juggling
+  // will-change manually.
+  const targetX = Math.round(-(window.innerWidth * clamped))
+
+  gsap.to(main, {
+    x: targetX,
     duration,
     ease: EASE,
     onComplete: () => { isAnimating = false },

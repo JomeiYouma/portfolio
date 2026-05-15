@@ -3,7 +3,7 @@ import GitHubActivity from '../components/GitHubActivity'
 import GlowCard from '../components/GlowCard'
 import Reveal from '../components/Reveal'
 
-const Contact = ({ onOpenLegal }) => {
+const Contact = () => {
   const { t } = useI18n()
 
   const cards = [
@@ -45,18 +45,6 @@ const Contact = ({ onOpenLegal }) => {
 
           <Reveal.Item as="p" className="footer-note">
             {t('contact.footer')}
-            <span className="footer-legal-links">
-              <button
-                type="button"
-                className="footer-legal-link cursor-target"
-                onClick={() => onOpenLegal?.('legal')}
-              >{t('legal.legal.tab')}</button>
-              <button
-                type="button"
-                className="footer-legal-link cursor-target"
-                onClick={() => onOpenLegal?.('privacy')}
-              >{t('legal.privacy.tab')}</button>
-            </span>
           </Reveal.Item>
         </Reveal>
 

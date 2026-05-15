@@ -13,11 +13,13 @@ const LegalModal = ({ isOpen, onClose, tab: initialTab = 'legal' }) => {
     if (!isOpen) return
     setTab(initialTab)
     previousFocusRef.current = document.activeElement
+    document.body.classList.add('is-modal-open')
     const onKey = (e) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
     requestAnimationFrame(() => closeRef.current?.focus())
     return () => {
       window.removeEventListener('keydown', onKey)
+      document.body.classList.remove('is-modal-open')
       previousFocusRef.current?.focus?.()
     }
   }, [isOpen, initialTab, onClose])
@@ -65,6 +67,13 @@ const LegalModal = ({ isOpen, onClose, tab: initialTab = 'legal' }) => {
                 className={`legal-tab cursor-target${tab === 'legal' ? ' is-active' : ''}`}
                 onClick={() => setTab('legal')}
               >{t('legal.legal.tab')}</button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={tab === 'terms'}
+                className={`legal-tab cursor-target${tab === 'terms' ? ' is-active' : ''}`}
+                onClick={() => setTab('terms')}
+              >{t('legal.terms.tab')}</button>
               <button
                 type="button"
                 role="tab"

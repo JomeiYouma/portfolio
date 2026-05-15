@@ -22,13 +22,32 @@ const Games = () => {
   const rotateYRaw = useTransform(offsetX, [-1, 0, 1], [24, 0, -24])
   const rotateY = useSpring(rotateYRaw, { stiffness: 70, damping: 22, mass: 0.6 })
 
+  // Last known mouse position (module-level via ref). Read from rAF so we can
+  // re-evaluate inside-screen state when the section slides under a stationary
+  // cursor (horizontal scroll), which produces no mousemove events.
+  const mouseRef = useRef({ x: -1, y: -1 })
+  const insideRef = useRef(false)
+
   useEffect(() => {
     if (reduce) return
     const el = sectionRef.current
     if (!el) return
+    const screen = el.querySelector('.games-screen')
 
     let rafId = null
     let active = false
+
+    const evaluateInside = () => {
+      if (!screen) return
+      const r = screen.getBoundingClientRect()
+      const { x, y } = mouseRef.current
+      if (x < 0) return
+      const isIn = x >= r.left && x <= r.right && y >= r.top && y <= r.bottom
+      if (isIn === insideRef.current) return
+      insideRef.current = isIn
+      document.body.classList.toggle('inside-games-screen', isIn)
+      if (isIn) window.dispatchEvent(new CustomEvent('targetcursor:reset'))
+    }
 
     const tick = () => {
       const rect = el.getBoundingClientRect()
@@ -36,6 +55,9 @@ const Games = () => {
       const viewportCenter = window.innerWidth / 2
       const normalized = (viewportCenter - sectionCenter) / (window.innerWidth / 2)
       offsetX.set(Math.max(-1, Math.min(1, normalized)))
+      // Catches the case where the section scrolled into / out of the cursor
+      // without any mousemove — pure mousemove tracking misses this entirely.
+      evaluateInside()
       if (active) rafId = requestAnimationFrame(tick)
     }
 
@@ -47,6 +69,10 @@ const Games = () => {
         } else if (!entry.isIntersecting && active) {
           active = false
           if (rafId) cancelAnimationFrame(rafId)
+          if (insideRef.current) {
+            insideRef.current = false
+            document.body.classList.remove('inside-games-screen')
+          }
         }
       },
       { root: null, threshold: 0, rootMargin: '50% 0px' },
@@ -59,26 +85,19 @@ const Games = () => {
     }
   }, [reduce, offsetX])
 
-  // Track pointer position vs the screen's bounding rect on every mousemove.
-  // mouseenter/leave proved unreliable on rapid hovers over .cursor-target
-  // children (TargetCursor JS intercepted and the leave fired spuriously on
-  // the rightmost card). Pure position math sidesteps all that.
+  // Pure mouse-position tracker. mouseenter/leave proved unreliable on rapid
+  // hovers over .cursor-target children (TargetCursor JS intercepted and the
+  // leave fired spuriously on the rightmost card), and they don't fire at all
+  // when the section slides under a stationary cursor — which is why the
+  // rAF tick above also re-evaluates from the cached position.
   useEffect(() => {
-    const screen = sectionRef.current?.querySelector('.games-screen')
-    if (!screen) return
-    let inside = false
     const onMove = (e) => {
-      const r = screen.getBoundingClientRect()
-      const isIn =
-        e.clientX >= r.left && e.clientX <= r.right &&
-        e.clientY >= r.top  && e.clientY <= r.bottom
-      if (isIn === inside) return
-      inside = isIn
-      document.body.classList.toggle('inside-games-screen', isIn)
+      mouseRef.current.x = e.clientX
+      mouseRef.current.y = e.clientY
     }
     const onLeaveWindow = () => {
-      if (inside) {
-        inside = false
+      if (insideRef.current) {
+        insideRef.current = false
         document.body.classList.remove('inside-games-screen')
       }
     }

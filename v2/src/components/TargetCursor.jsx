@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
 import './TargetCursor.css'
 
@@ -101,7 +102,21 @@ const TargetCursor = ({
     window.addEventListener('mousedown', mouseDownHandler)
     window.addEventListener('mouseup', mouseUpHandler)
 
+    // Force the corner-bracket state back to its idle position. Used when
+    // another part of the app temporarily takes over the cursor (e.g. the
+    // Games CRT screen swaps in a regular OS arrow), so the corners don't
+    // stay latched to a card the user can no longer see.
+    const resetActive = () => {
+      if (!activeTarget) return
+      const target = activeTarget
+      if (currentLeaveHandler) target.dispatchEvent(new MouseEvent('mouseleave', { bubbles: false }))
+    }
+    window.addEventListener('targetcursor:reset', resetActive)
+
     const enterHandler = (e) => {
+      // Skip while another zone owns the cursor — the Games screen is the only
+      // current consumer of this flag.
+      if (document.body.classList.contains('inside-games-screen')) return
       const directTarget = e.target
       const allTargets = []
       let current = directTarget
@@ -187,6 +202,7 @@ const TargetCursor = ({
       window.removeEventListener('mouseover', enterHandler)
       window.removeEventListener('mousedown', mouseDownHandler)
       window.removeEventListener('mouseup', mouseUpHandler)
+      window.removeEventListener('targetcursor:reset', resetActive)
       if (activeTarget) cleanupTarget(activeTarget)
       spinTl.current?.kill()
       document.body.style.cursor = originalCursor
@@ -198,14 +214,18 @@ const TargetCursor = ({
 
   if (isMobile) return null
 
-  return (
+  // Portal to <body> so the cursor escapes #root's stacking context (#root has
+  // z-index: 1 and would otherwise trap the cursor below any other body-portal
+  // modal that paints at z-index 9999+).
+  return createPortal(
     <div ref={cursorRef} className="target-cursor-wrapper">
       <div ref={dotRef} className="target-cursor-dot" />
       <div className="target-cursor-corner corner-tl" />
       <div className="target-cursor-corner corner-tr" />
       <div className="target-cursor-corner corner-br" />
       <div className="target-cursor-corner corner-bl" />
-    </div>
+    </div>,
+    document.body,
   )
 }
 

@@ -12,7 +12,7 @@ const fadeUp = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 }
 
-const Hero = ({ onOpenQuote }) => {
+const Hero = () => {
   const { t } = useI18n()
   const reduce = useReducedMotion()
 
@@ -42,7 +42,7 @@ const Hero = ({ onOpenQuote }) => {
             <MagneticButton
               type="button"
               className="btn primary cursor-target"
-              onClick={() => onOpenQuote?.()}
+              onClick={() => scrollToSection('services')}
             >
               {t('hero.servicesCta')}
             </MagneticButton>
