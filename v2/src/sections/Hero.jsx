@@ -12,7 +12,7 @@ const fadeUp = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 }
 
-const Hero = () => {
+const Hero = ({ onOpenQuote }) => {
   const { t } = useI18n()
   const reduce = useReducedMotion()
 
@@ -42,16 +42,16 @@ const Hero = () => {
             <MagneticButton
               type="button"
               className="btn primary cursor-target"
+              onClick={() => onOpenQuote?.()}
+            >
+              {t('hero.servicesCta')}
+            </MagneticButton>
+            <MagneticButton
+              type="button"
+              className="btn ghost cursor-target"
               onClick={() => scrollToSection('projects')}
             >
               {t('hero.cta')}
-            </MagneticButton>
-            <MagneticButton
-              as="a"
-              className="btn ghost cursor-target"
-              href="mailto:raphael.madore.pro@mailo.com"
-            >
-              {t('contact.title')}
             </MagneticButton>
           </motion.div>
 

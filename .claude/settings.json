@@ -8,7 +8,15 @@
       "Bash(npx eslint *)",
       "Read(//c/Users/rapha/Documents/08_Projets/hangman/**)",
       "Bash(grep -q \"ready in\\\\|Local:\" \"C:\\\\\\\\Users\\\\\\\\rapha\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\c--Users-rapha-Documents-08-Projets-Portfolio-portfolio\\\\\\\\992660b9-9b9c-4979-a45b-30b5402b75a1\\\\\\\\tasks\\\\\\\\bxlwtb0n4.output\")",
-      "Bash(node -e \"console.log\\('projects:', JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Users/rapha/Documents/08_Projets/Portfolio/portfolio/v2/src/data/projects.json','utf8'\\)\\).length, 'items'\\); console.log\\('games:', JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Users/rapha/Documents/08_Projets/Portfolio/portfolio/v2/src/data/games.json','utf8'\\)\\).length, 'items'\\)\")"
+      "Bash(node -e \"console.log\\('projects:', JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Users/rapha/Documents/08_Projets/Portfolio/portfolio/v2/src/data/projects.json','utf8'\\)\\).length, 'items'\\); console.log\\('games:', JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Users/rapha/Documents/08_Projets/Portfolio/portfolio/v2/src/data/games.json','utf8'\\)\\).length, 'items'\\)\")",
+      "Bash(kill bxlwtb0n4 *)",
+      "Read(//c/Users/rapha/Documents/08_Projets/Jeu-Shooter/**)",
+      "Bash(node -e \"console.log\\(JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Users/rapha/Documents/08_Projets/Portfolio/portfolio/v2/src/data/games.json','utf8'\\)\\).map\\(g=>g.id\\)\\)\")",
+      "Bash(npm ls *)",
+      "Bash(npx playwright *)",
+      "Read(//c/Users/rapha/Documents/13_Stage_Atelier21/Paleo-cartels/Paleo cartels/**)",
+      "Bash(node -e \"const p=JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/Users/rapha/Documents/08_Projets/Portfolio/portfolio/v2/src/data/projects.json','utf8'\\)\\); console.log\\('count:',p.length,'| last:',p[p.length-1].title.fr,p[p.length-1].id\\)\")",
+      "WebSearch"
     ]
   }
 }

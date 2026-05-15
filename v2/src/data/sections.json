@@ -4,5 +4,6 @@
   {"id": "projects", "label": "Works", "labelFr": "Projets"},
   {"id": "games", "label": "Games", "labelFr": "Jeux"},
   {"id": "testimonials", "label": "Testimonials", "labelFr": "Témoignages"},
+  {"id": "services", "label": "Services", "labelFr": "Services"},
   {"id": "contact", "label": "Contact", "labelFr": "Contact"}
 ]

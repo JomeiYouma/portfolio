@@ -9,10 +9,6 @@ const TargetCursor = ({
   hoverDuration = 0.2,
   parallaxOn = true,
   disableSpin = false,
-  // Max distance (px) each corner can drift away from the cursor center while
-  // hovering. Keeps the 4-corner bracket compact even when the hovered element
-  // is large or the cursor sits near one of its edges.
-  maxCornerDrift = 42,
 }) => {
   const cursorRef = useRef(null)
   const cornersRef = useRef(null)
@@ -77,17 +73,8 @@ const TargetCursor = ({
       corners.forEach((corner, i) => {
         const currentX = gsap.getProperty(corner, 'x')
         const currentY = gsap.getProperty(corner, 'y')
-        let targetX = targetCornerPositionsRef.current[i].x - cursorX
-        let targetY = targetCornerPositionsRef.current[i].y - cursorY
-        // Clamp each corner's offset to a max radius around the cursor center
-        // — otherwise large hovered elements (or cursor near their edge) make
-        // the brackets fly far away from the cursor and look messy.
-        const dist = Math.hypot(targetX, targetY)
-        if (dist > maxCornerDrift) {
-          const k = maxCornerDrift / dist
-          targetX *= k
-          targetY *= k
-        }
+        const targetX = targetCornerPositionsRef.current[i].x - cursorX
+        const targetY = targetCornerPositionsRef.current[i].y - cursorY
         const finalX = currentX + (targetX - currentX) * strength
         const finalY = currentY + (targetY - currentY) * strength
         const duration = strength >= 0.99 ? (parallaxOn ? 0.2 : 0) : 0.05
@@ -147,13 +134,8 @@ const TargetCursor = ({
       gsap.ticker.add(tickerFnRef.current)
       gsap.to(activeStrengthRef, { current: 1, duration: hoverDuration, ease: 'power2.out' })
       corners.forEach((corner, i) => {
-        let tx = targetCornerPositionsRef.current[i].x - cursorX
-        let ty = targetCornerPositionsRef.current[i].y - cursorY
-        const dist = Math.hypot(tx, ty)
-        if (dist > maxCornerDrift) {
-          const k = maxCornerDrift / dist
-          tx *= k; ty *= k
-        }
+        const tx = targetCornerPositionsRef.current[i].x - cursorX
+        const ty = targetCornerPositionsRef.current[i].y - cursorY
         gsap.to(corner, { x: tx, y: ty, duration: 0.2, ease: 'power2.out' })
       })
       const leaveHandler = () => {
@@ -212,7 +194,7 @@ const TargetCursor = ({
       targetCornerPositionsRef.current = null
       activeStrengthRef.current = 0
     }
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isMobile, hoverDuration, parallaxOn, disableSpin, maxCornerDrift])
+  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isMobile, hoverDuration, parallaxOn, disableSpin])
 
   if (isMobile) return null
 

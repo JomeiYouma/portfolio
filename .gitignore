@@ -1,0 +1,13 @@
+# IDE / agent
+.claude/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / build artifacts
+node_modules/
+dist/
+.vite/

@@ -326,12 +326,13 @@ class GalleryApp {
   onTouchDown(e) {
     this.isDown = true
     this.scroll.position = this.scroll.current
-    this.start = e.touches ? e.touches[0].clientX : e.clientX
+    // Not `this.start` — that would shadow the start() method and break the IO resume after a drag.
+    this.touchStartX = e.touches ? e.touches[0].clientX : e.clientX
   }
   onTouchMove(e) {
     if (!this.isDown) return
     const x = e.touches ? e.touches[0].clientX : e.clientX
-    const distance = (this.start - x) * (this.scrollSpeed * 0.025)
+    const distance = (this.touchStartX - x) * (this.scrollSpeed * 0.025)
     this.scroll.target = this.scroll.position + distance
   }
   onTouchUp() {

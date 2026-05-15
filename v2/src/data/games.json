@@ -6,12 +6,26 @@
       "fr": "Speed Chaser"
     },
     "description": {
-      "en": "Arcade-style speed runner — dodge obstacles, chase the highscore.",
-      "fr": "Runner arcade — esquive les obstacles et chasse le meilleur score."
+      "en": "Arcade-style speed runner. Dodge obstacles, chase the highscore.",
+      "fr": "Runner arcade. Esquive les obstacles et chasse le meilleur score."
     },
     "tech": "JS · HTML · Canvas",
     "image": "speed-chaser.png",
     "link": "https://jomeiyouma.github.io/Speed-chaser/"
+  },
+  {
+    "id": "akira-shooter",
+    "title": {
+      "en": "Akira Shooter",
+      "fr": "Akira Shooter"
+    },
+    "description": {
+      "en": "Configurable 2D shooter. Clear the waves, grab the loot, finish the level.",
+      "fr": "Shooter 2D configurable. Nettoie les vagues, ramasse le loot, finis le niveau."
+    },
+    "tech": "React · JavaScript · Canvas",
+    "image": "shooter.png",
+    "link": "https://jomeiyouma.github.io/Jeu-Shooter/"
   },
   {
     "id": "hangman",

@@ -6,11 +6,15 @@ import AccessibilityControls from './components/AccessibilityControls'
 import TargetCursor from './components/TargetCursor'
 import KpiAdmin from './components/KpiAdmin'
 import SnapDots from './components/SnapDots'
+import QuoteFormModal from './components/QuoteFormModal'
+import LegalModal from './components/LegalModal'
+import ViewportGate from './components/ViewportGate'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Projects from './sections/Projects'
 import Games from './sections/Games'
 import Testimonials from './sections/Testimonials'
+import Services from './sections/Services'
 import Contact from './sections/Contact'
 import sections from './data/sections.json'
 import projects from './data/projects.json'
@@ -21,7 +25,22 @@ import { initScrollEffects } from './animations/scroll'
 
 function App() {
   const [showKpiAdmin, setShowKpiAdmin] = useState(false)
+  const [quoteOpen, setQuoteOpen] = useState(false)
+  const [quoteProjectType, setQuoteProjectType] = useState(null)
+  const [legalOpen, setLegalOpen] = useState(false)
+  const [legalTab, setLegalTab] = useState('legal')
   const { activeId } = useScrollSpy(sections.map((s) => s.id))
+
+  const openQuote = useCallback((projectType = null) => {
+    setQuoteProjectType(projectType)
+    setQuoteOpen(true)
+  }, [])
+  const closeQuote = useCallback(() => setQuoteOpen(false), [])
+  const openLegal = useCallback((tab = 'legal') => {
+    setLegalTab(tab)
+    setLegalOpen(true)
+  }, [])
+  const closeLegal = useCallback(() => setLegalOpen(false), [])
   const { lang, toggleLanguage, isLoaded, t } = useI18n()
   const { isActive: contrastActive, toggle: toggleContrast } = useContrast()
 
@@ -69,6 +88,7 @@ function App() {
   }
 
   return (
+    <ViewportGate>
     <div className="app">
       <SkipLink targetId="main-content" label={t('accessibility.skipToContent')} />
       <TargetCursor
@@ -85,15 +105,27 @@ function App() {
         onToggleContrast={toggleContrast}
       />
       <main id="main-content" tabIndex={-1}>
-        <Hero />
+        <Hero onOpenQuote={openQuote} />
         <About />
         <Projects projects={projects} />
         <Games />
         <Testimonials />
-        <Contact />
+        <Services onOpenQuote={openQuote} />
+        <Contact onOpenLegal={openLegal} />
       </main>
       {showKpiAdmin && <KpiAdmin onClose={() => setShowKpiAdmin(false)} />}
+      <QuoteFormModal
+        isOpen={quoteOpen}
+        onClose={closeQuote}
+        initialProjectType={quoteProjectType}
+      />
+      <LegalModal
+        isOpen={legalOpen}
+        onClose={closeLegal}
+        tab={legalTab}
+      />
     </div>
+    </ViewportGate>
   )
 }
 
