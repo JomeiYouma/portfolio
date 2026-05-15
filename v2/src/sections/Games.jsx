@@ -59,20 +59,34 @@ const Games = () => {
     }
   }, [reduce, offsetX])
 
-  // Toggle a body class while the pointer is inside the screen so the
-  // global TargetCursor can be hidden in favour of the classic blue arrow.
-  // Done in JS rather than via CSS :has() because the corner-snap cursor
-  // still leaks through on rapid hover transitions over .cursor-target children.
+  // Track pointer position vs the screen's bounding rect on every mousemove.
+  // mouseenter/leave proved unreliable on rapid hovers over .cursor-target
+  // children (TargetCursor JS intercepted and the leave fired spuriously on
+  // the rightmost card). Pure position math sidesteps all that.
   useEffect(() => {
     const screen = sectionRef.current?.querySelector('.games-screen')
     if (!screen) return
-    const onEnter = () => document.body.classList.add('inside-games-screen')
-    const onLeave = () => document.body.classList.remove('inside-games-screen')
-    screen.addEventListener('mouseenter', onEnter)
-    screen.addEventListener('mouseleave', onLeave)
+    let inside = false
+    const onMove = (e) => {
+      const r = screen.getBoundingClientRect()
+      const isIn =
+        e.clientX >= r.left && e.clientX <= r.right &&
+        e.clientY >= r.top  && e.clientY <= r.bottom
+      if (isIn === inside) return
+      inside = isIn
+      document.body.classList.toggle('inside-games-screen', isIn)
+    }
+    const onLeaveWindow = () => {
+      if (inside) {
+        inside = false
+        document.body.classList.remove('inside-games-screen')
+      }
+    }
+    window.addEventListener('mousemove', onMove, { passive: true })
+    document.addEventListener('mouseleave', onLeaveWindow)
     return () => {
-      screen.removeEventListener('mouseenter', onEnter)
-      screen.removeEventListener('mouseleave', onLeave)
+      window.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseleave', onLeaveWindow)
       document.body.classList.remove('inside-games-screen')
     }
   }, [])
