@@ -169,13 +169,6 @@
       "successBody": "Thanks for reaching out. I'll get back to you by email shortly.",
       "errorBody": "Something went wrong while sending. Try again, or email me directly at raphael.madore.pro@mailo.com."
     },
-    "cookies": {
-      "title": "Storage notice",
-      "message": "This site does not use tracking cookies, analytics or advertising. It only stores your language preference and your accessibility choices in your browser, locally.",
-      "learn": "Read the privacy policy",
-      "accept": "Got it",
-      "decline": "Hide"
-    },
     "legal": {
       "close": "Close",
       "updated": "Last updated: May 2026.",
@@ -453,13 +446,6 @@
       "successTitle": "Demande envoyée",
       "successBody": "Merci pour votre message. Je vous réponds par email rapidement.",
       "errorBody": "L'envoi a échoué. Réessayez, ou écrivez-moi directement à raphael.madore.pro@mailo.com."
-    },
-    "cookies": {
-      "title": "Information stockage",
-      "message": "Ce site n'utilise aucun cookie de suivi, aucun outil d'analyse ni aucune publicité. Seules votre langue et vos préférences d'accessibilité sont conservées localement dans votre navigateur.",
-      "learn": "Lire la politique de confidentialité",
-      "accept": "J'ai compris",
-      "decline": "Masquer"
     },
     "legal": {
       "close": "Fermer",
