@@ -667,6 +667,30 @@
   font-style: italic;
 }
 
+.viewport-gate-ranges {
+  list-style: none;
+  margin: 0 0 18px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.015);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.viewport-gate-ranges li {
+  position: relative;
+  padding-left: 14px;
+}
+
+.viewport-gate-ranges li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
 .viewport-gate-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

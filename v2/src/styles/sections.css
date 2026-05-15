@@ -1784,9 +1784,14 @@ body.inside-games-screen .target-cursor-wrapper { opacity: 0; }
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  .about-cert {
+  /* Higher specificity than .glow-card so position:relative from GlowCard
+     doesn't keep sticky-related stacking. The bio + icons were rendering
+     behind the cert on narrow viewports. */
+  .about-body .about-cert,
+  .glow-card.about-cert {
     position: static;
-    order: -1; /* cert first on mobile */
+    top: auto;
+    order: -1;
   }
 }
 
