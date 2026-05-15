@@ -837,7 +837,7 @@
 }
 
 .target-cursor-wrapper { transition: opacity 0.15s ease; }
-body:has(.games-screen:hover) .target-cursor-wrapper { opacity: 0; }
+body.inside-games-screen .target-cursor-wrapper { opacity: 0; }
 
 /* Subtle CRT scanlines on the screen */
 .games-screen-scanlines {

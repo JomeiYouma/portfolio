@@ -59,6 +59,24 @@ const Games = () => {
     }
   }, [reduce, offsetX])
 
+  // Toggle a body class while the pointer is inside the screen so the
+  // global TargetCursor can be hidden in favour of the classic blue arrow.
+  // Done in JS rather than via CSS :has() because the corner-snap cursor
+  // still leaks through on rapid hover transitions over .cursor-target children.
+  useEffect(() => {
+    const screen = sectionRef.current?.querySelector('.games-screen')
+    if (!screen) return
+    const onEnter = () => document.body.classList.add('inside-games-screen')
+    const onLeave = () => document.body.classList.remove('inside-games-screen')
+    screen.addEventListener('mouseenter', onEnter)
+    screen.addEventListener('mouseleave', onLeave)
+    return () => {
+      screen.removeEventListener('mouseenter', onEnter)
+      screen.removeEventListener('mouseleave', onLeave)
+      document.body.classList.remove('inside-games-screen')
+    }
+  }, [])
+
   return (
     <section
       ref={sectionRef}
