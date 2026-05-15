@@ -1,0 +1,206 @@
+/* ─── OrbitalRings ───────────────────────────────────────────────────────────
+   Default sizing = 420×420px, overridable via parent className.
+   The .or-scene applies the mouse-tilt transform on top of its own CSS anims.
+────────────────────────────────────────────────────────────────────────────── */
+
+.orbital-rings {
+  --rx: 0deg;
+  --ry: 0deg;
+  width: 420px;
+  height: 420px;
+  position: relative;
+  pointer-events: none;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.or-scene {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /* perspective creates the 3D space for child rings */
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  /* The JS lerp is smooth enough; no CSS transition needed here */
+}
+
+/* ─── Ring base ──────────────────────────────────────────────────────────── */
+/*  Centering strategy:
+ *    top/left: 50% places the element's top-left corner at the scene center.
+ *    transform: translate(-50%, -50%) shifts the element back by half its own
+ *    size so its visual center sits on the scene center.
+ *  Keyframes preserve that same translate(-50%, -50%) so the centering stays
+ *  applied throughout the animation.
+ */
+.or-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+}
+
+/* 1 — large dashed outer */
+.or-ring--1 {
+  width: 380px; height: 380px;
+  border: 1px dashed rgba(0, 255, 179, 0.20);
+  animation: or-3d-1 30s linear infinite;
+}
+
+/* 2 — mid, bright poles */
+.or-ring--2 {
+  width: 280px; height: 280px;
+  border: 1px solid rgba(0, 255, 179, 0.10);
+  border-top:    2px solid rgba(0, 255, 179, 0.60);
+  border-bottom: 2px solid rgba(0, 255, 179, 0.60);
+  box-shadow: 0 0 16px rgba(0, 255, 179, 0.07);
+  animation: or-3d-2 20s linear infinite reverse;
+}
+
+/* 3 — dotted inner golden */
+.or-ring--3 {
+  width: 188px; height: 188px;
+  border: 1px dotted rgba(0, 255, 179, 0.30);
+  animation: or-flat 11s linear infinite;
+}
+
+/* 4 — large tilted orbit */
+.or-ring--4 {
+  width: 340px; height: 340px;
+  border: 1px solid rgba(0, 255, 179, 0.06);
+  animation: or-3d-3 15s linear infinite;
+}
+
+/* 5 — fast dashed accent */
+.or-ring--5 {
+  width: 108px; height: 108px;
+  border-top:    2px solid var(--accent, #00ffb3);
+  border-right:  2px solid transparent;
+  border-bottom: 2px solid var(--accent, #00ffb3);
+  border-left:   2px solid transparent;
+  animation: or-flat 3.6s linear infinite;
+}
+
+/* ─── Particles ──────────────────────────────────────────────────────────── */
+.or-particle {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent, #00ffb3);
+  box-shadow: 0 0 8px var(--accent, #00ffb3), 0 0 20px rgba(0,255,179,0.35);
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+}
+
+.or-particle--1 { animation: or-orbit-1  8s linear infinite; }
+.or-particle--2 { animation: or-orbit-2 13s linear infinite; opacity: 0.6; }
+.or-particle--3 { animation: or-orbit-3 10s linear infinite reverse; }
+
+/* ─── Triangles ──────────────────────────────────────────────────────────── */
+.or-tri {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  border-left:   86px solid transparent;
+  border-right:  86px solid transparent;
+  border-bottom: 148px solid rgba(0, 255, 179, 0.04);
+  transform: translate(-50%, -100%);
+  transform-origin: 50% 66%;
+}
+
+.or-tri--1 { animation: or-tri-spin  24s linear infinite; }
+.or-tri--2 {
+  border-bottom-color: rgba(0, 255, 179, 0.025);
+  animation: or-tri-spin2 34s linear infinite reverse;
+}
+
+/* ─── Core ───────────────────────────────────────────────────────────────── */
+.or-core {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,179,0.88) 0%, rgba(0,180,120,0.45) 55%, transparent 100%);
+  box-shadow: 0 0 28px rgba(0,255,179,0.50), 0 0 55px rgba(0,255,179,0.18);
+  transform: translate(-50%, -50%);
+  animation: or-core-pulse 2.4s ease-in-out infinite;
+  z-index: 10;
+}
+
+.or-core-inner {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  filter: blur(4px);
+  opacity: 0.65;
+  transform: translate(-50%, -50%);
+  animation: or-inner-pulse 0.65s ease-in-out infinite alternate;
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes or-flat {
+  to { transform: translate(-50%,-50%) rotate(360deg); }
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+}
+
+@keyframes or-3d-1 {
+  from { transform: translate(-50%,-50%) rotateX(55deg)  rotateZ(0deg); }
+  to   { transform: translate(-50%,-50%) rotateX(55deg)  rotateZ(360deg); }
+}
+
+@keyframes or-3d-2 {
+  from { transform: translate(-50%,-50%) rotateY(42deg)  rotateZ(0deg); }
+  to   { transform: translate(-50%,-50%) rotateY(42deg)  rotateZ(360deg); }
+}
+
+@keyframes or-3d-3 {
+  from { transform: translate(-50%,-50%) rotateX(-22deg) rotateY(22deg) rotateZ(0deg); }
+  to   { transform: translate(-50%,-50%) rotateX(-22deg) rotateY(22deg) rotateZ(360deg); }
+}
+
+@keyframes or-orbit-1 {
+  from { transform: translate(-50%,-50%) rotate(0deg)   translateX(142px) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg) translateX(142px) rotate(-360deg); }
+}
+@keyframes or-orbit-2 {
+  from { transform: translate(-50%,-50%) rotateX(65deg) rotateZ(0deg)   translateX(108px); }
+  to   { transform: translate(-50%,-50%) rotateX(65deg) rotateZ(360deg) translateX(108px); }
+}
+@keyframes or-orbit-3 {
+  from { transform: translate(-50%,-50%) rotateY(55deg) rotateZ(0deg)   translateX(165px); }
+  to   { transform: translate(-50%,-50%) rotateY(55deg) rotateZ(360deg) translateX(165px); }
+}
+
+@keyframes or-tri-spin {
+  from { transform: translate(-50%,-100%) rotate(0deg); }
+  to   { transform: translate(-50%,-100%) rotate(360deg); }
+}
+@keyframes or-tri-spin2 {
+  from { transform: translate(-50%,-100%) rotate(60deg); }
+  to   { transform: translate(-50%,-100%) rotate(420deg); }
+}
+
+@keyframes or-core-pulse {
+  0%, 100% { transform: translate(-50%,-50%) scale(1);    box-shadow: 0 0 28px rgba(0,255,179,0.5), 0 0 55px rgba(0,255,179,0.18); }
+  50%       { transform: translate(-50%,-50%) scale(1.14); box-shadow: 0 0 46px rgba(0,255,179,0.70), 0 0 85px rgba(0,255,179,0.28); }
+}
+
+@keyframes or-inner-pulse {
+  from { opacity: 0.4; transform: translate(-50%,-50%) scale(0.8); }
+  to   { opacity: 0.9; transform: translate(-50%,-50%) scale(1.2); }
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .or-ring, .or-particle, .or-tri, .or-core, .or-core-inner {
+    animation: none !important;
+  }
+  .or-scene {
+    transform: rotateX(12deg) rotateY(8deg) !important;
+  }
+}

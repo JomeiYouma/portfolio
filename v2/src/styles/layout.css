@@ -1,0 +1,226 @@
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  /* No overflow:hidden here — let wheel events reach window */
+  overflow: hidden;
+}
+
+/* Horizontal strip — driven purely by gsap.to(main, { x }).
+   No `will-change: transform` on purpose: keeping the layer permanently
+   GPU-composited disables ClearType subpixel antialiasing on Windows, which
+   makes every body-copy paragraph inside look slightly blurry. GSAP promotes
+   the layer with force3D during the snap tween and clears it on completion
+   (see animations/scroll.js), so text is sharp at rest. */
+main {
+  display: flex;
+  width: fit-content;
+  height: 100vh;
+}
+
+/* ─── Section base ───────────────────────────────────────────────────────── */
+.section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: clip;
+  isolation: isolate; /* scopes the ghost-number z-index inside the section */
+  z-index: 0;
+}
+
+/* Ghost section number — strictly behind every child of the section */
+.section::after {
+  content: attr(data-index);
+  position: absolute;
+  bottom: -0.08em;
+  right: 2vw;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 18vw, 16rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 255, 179, 0.05);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -0.04em;
+  user-select: none;
+  z-index: -1;    /* guaranteed below .section-inner (z-index 1) by isolation */
+}
+
+/* ─── Section inner ──────────────────────────────────────────────────────── */
+.section-inner {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + 20px) clamp(1.5rem, 5vw, 6rem) 20px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2.2vh, 28px);
+  height: 100%;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  position: relative;
+  z-index: 1;     /* above ghost number */
+}
+
+.section-inner::-webkit-scrollbar { display: none; }
+
+/* Subtle top accent line per section */
+.section-inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: clamp(1.5rem, 5vw, 6rem);
+  right: clamp(1.5rem, 5vw, 6rem);
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent 60%);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* ─── Shared heading / lead ──────────────────────────────────────────────── */
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 720px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.6rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.lead {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+/* ─── Layout grids ───────────────────────────────────────────────────────── */
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  align-items: center;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  color: var(--text-muted);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+.project-grid::-webkit-scrollbar       { width: 3px; }
+.project-grid::-webkit-scrollbar-track { background: transparent; }
+.project-grid::-webkit-scrollbar-thumb { background: var(--accent); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  align-items: center;
+}
+
+/* ─── Snap indicator dots ────────────────────────────────────────────────── */
+.snap-dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+}
+
+.snap-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--text-dim);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.snap-dot.active {
+  background: var(--accent);
+  height: 16px;
+  box-shadow: 0 0 6px var(--accent-glow);
+}
+
+/* ─── Mobile: vertical scroll ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Let the document handle scroll instead of nesting scroll containers */
+  .app {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  main {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+
+  .section {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .section::after { display: none; }
+
+  /* Critical: drop the inner scroll box so swipes scroll the page, not the section */
+  .section-inner {
+    height: auto;
+    overflow: visible;
+    justify-content: flex-start;
+    padding: 90px clamp(1rem, 4vw, 2rem) 40px;
+  }
+
+  .project-grid {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .snap-dots { display: none; }
+}

@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Tektur:wght@400..900&display=swap');
+
+@font-face {
+  font-family: "Punc";
+  src: url("/assets/fonts/punc-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Punc";
+  src: url("/assets/fonts/punc-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Design tokens ──────────────────────────────────────────────────────── */
+:root {
+  --bg:           #0a0c0f;
+  --bg-elev:      #060709;
+  --bg-soft:      #111318;
+  --bg-panel:     #0d0f14;
+  --text:         #e8eaf0;
+  --text-muted:   #8892a4;
+  --text-dim:     #4a5568;
+  --accent:       #00ffb3;
+  --accent-soft:  rgba(0, 255, 179, 0.12);
+  --accent-glow:  rgba(0, 255, 179, 0.35);
+  --accent-2:     #00ffb3;
+  --accent-red:   #ff3355;
+  --accent-blue:  #4488ff;
+  --border:       rgba(255, 255, 255, 0.06);
+  --border-accent:rgba(0, 255, 179, 0.25);
+  --shadow:       0 32px 80px rgba(0, 0, 0, 0.8);
+  --shadow-glow:  0 0 40px rgba(0, 255, 179, 0.15);
+  --container:    1400px;
+  --font-main:    "Punc", sans-serif;
+  --font-display: "Tektur", sans-serif;
+  --font-body:    "Orbitron", sans-serif;
+  --font-mono:    "Orbitron", monospace;
+  --nav-height:   80px;
+  --grid-size:    48px;
+  --grid-color:   rgba(0, 255, 179, 0.03);
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  font-size: 16px;
+}
+
+/* ─── Body ───────────────────────────────────────────────────────────────── */
+body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  /* Sharper glyph edges on small text running over the grain/scanlines layers */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Static gray backdrop SHAPE — fixed to viewport, sits behind every section
+   and every effect layer. Does not move when sections scroll horizontally.
+   Stepped band that spans the full viewport width: right half sits higher,
+   left half drops down, diagonal steps join the two around mid-width. Adjust
+   the polygon points to reshape. */
+html::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.015));
+  /* Stepped band, full viewport width: right half sits higher, left half drops
+     down, two short diagonal "stairs" connect the halves around mid-width. */
+  clip-path: polygon(
+    0    31%,
+    43%  31%,
+    55%  18%,
+    100% 18%,
+    100% 50%,
+    55%  50%,
+    43%  62%,
+    0    62%
+  );
+  pointer-events: none;
+  z-index: -4;
+}
+
+/* Thin outline of the same shape — drawn as a separate fixed pseudo on <html>
+   to make the form readable as a deliberate shape rather than a vague glow. */
+
+/* ─── Z-index layers (from back to front):
+   -4  static gray backdrop (fixed)
+   -3  grid
+   -2  ambient glows
+   -1  ghost section numbers (.section::after)
+    0  section background
+    1  .section-inner content          ← readable text lives here
+   20  nav
+   25  accessibility controls
+   30  scroll progress
+   99  cursor
+   100 scanlines overlay
+──────────────────────────────────────────────────────────────────────────── */
+
+/* Grid — absolute back, very low opacity */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  pointer-events: none;
+  z-index: -3;
+  /* Fade out toward center so text area stays dark */
+  mask-image: radial-gradient(ellipse 140% 120% at 50% 50%, transparent 35%, black 100%);
+  -webkit-mask-image: radial-gradient(ellipse 140% 120% at 50% 50%, transparent 35%, black 100%);
+}
+
+/* Ambient glow — behind content but above grid */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at -5% -5%, rgba(0, 255, 179, 0.06) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 35% at 105% 100%, rgba(68, 136, 255, 0.04) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* Scanlines: original 3+1 CRT density, positioned BEHIND the content stack
+   so text is never sliced. Multiply-blend on a near-black bg was invisible
+   without text underneath, so we switch to light stripes via normal
+   compositing which stay visible on the dark backdrop. */
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.045) 3px,
+    rgba(255, 255, 255, 0.045) 4px
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Film grain — animated SVG noise. Sits BEHIND the content stack so small
+   thin text never picks up the grain noise on its glyph edges. */
+.app::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: -1;
+  animation: grain 1.2s steps(4) infinite;
+}
+
+@keyframes grain {
+  0%   { transform: translate(0,            0); }
+  20%  { transform: translate(-3%,         -2%); }
+  40%  { transform: translate(2%,           4%); }
+  60%  { transform: translate(-2%,          1%); }
+  80%  { transform: translate(3%,          -3%); }
+  100% { transform: translate(0,            0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app::after { animation: none; opacity: 0.04; }
+}
+
+/* ─── Base elements ──────────────────────────────────────────────────────── */
+img    { max-width: 100%; display: block; }
+a      { color: inherit; text-decoration: none; }
+button { font-family: inherit; border: none; background: none; cursor: pointer; }
+ul     { list-style: none; }
+
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--accent); }
+
+/* ─── Glitch heading utility ─────────────────────────────────────────────── */
+@keyframes glitch-clip-1 {
+  0%, 100% { clip-path: inset(0 0 96% 0); transform: translate(-2px, 0); }
+  25%       { clip-path: inset(30% 0 50% 0); transform: translate(2px, 0); }
+  50%       { clip-path: inset(60% 0 20% 0); transform: translate(-1px, 0); }
+  75%       { clip-path: inset(80% 0 5%  0); transform: translate(1px, 0); }
+}
+@keyframes glitch-clip-2 {
+  0%, 100% { clip-path: inset(80% 0 5%  0); transform: translate(2px, 0); }
+  25%       { clip-path: inset(50% 0 30% 0); transform: translate(-2px, 0); }
+  50%       { clip-path: inset(10% 0 80% 0); transform: translate(1px, 0); }
+  75%       { clip-path: inset(0  0 96% 0); transform: translate(-1px, 0); }
+}
+
+.glitch { position: relative; display: inline-block; }
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  font: inherit;
+  color: inherit;
+}
+.glitch::before {
+  color: var(--accent-red);
+  opacity: 0.7;
+  animation: glitch-clip-1 4s steps(1) infinite;
+}
+.glitch::after {
+  color: var(--accent-blue);
+  opacity: 0.7;
+  animation: glitch-clip-2 4s steps(1) infinite;
+  animation-delay: 0.3s;
+}
+
+/* ─── Blinking cursor ────────────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: "▮";
+  animation: blink 1s step-end infinite;
+  color: var(--accent);
+  margin-left: 4px;
+  font-size: 0.85em;
+}
+
+/* ─── Loading screen ─────────────────────────────────────────────────────── */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}

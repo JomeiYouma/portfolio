@@ -1,0 +1,578 @@
+[
+    {
+        "id": 1,
+        "title": {
+            "en": "ALTER EXHIBITION",
+            "fr": "EXPOSITION ALTER"
+        },
+        "type": {
+            "en": "FULL-STACK INTERACTIVE EXHIBITION",
+            "fr": "EXPOSITION INTERACTIVE FULL-STACK"
+        },
+        "description": {
+            "en": "A comprehensive digital platform for an immersive physical exhibition. This full-stack application integrates a dynamic 3D frontend with a robust PHP backend, managing everything from a real-time reservation system and online boutique to an embedded interactive game experience. Please note: A long loading time is to be expected initially.",
+            "fr": "Une plateforme numérique complète conçue pour une exposition physique immersive. Cette application full-stack intègre un frontend 3D dynamique et un backend PHP robuste, gérant un système de billetterie/réservation, une boutique en ligne, et une expérience de mini-jeu intégré. Attention : un long temps de chargement initial est à prévoir."
+        },
+        "tech": "REACT - PHP MVC - CSS - JAVASCRIPT",
+        "context": "Professional / Academic Project",
+        "image": "alter-expo.png",
+        "link": "https://www.alter-exposition.fr",
+        "year": "2025",
+        "role": {
+            "en": "Full-stack developer on a hybrid academic / professional project",
+            "fr": "Développeur full-stack sur un projet hybride académique/pro"
+        },
+        "highlights": {
+            "en": [
+                "Real-time reservation system tied to an online boutique.",
+                "3D React frontend bound to a PHP MVC backend.",
+                "Embedded interactive game as part of the visitor journey."
+            ],
+            "fr": [
+                "Système de réservation temps réel relié à une boutique en ligne.",
+                "Frontend React 3D connecté à un back-end PHP MVC.",
+                "Mini-jeu interactif intégré dans le parcours visiteur."
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "title": {
+            "en": "PALÉO ÉNERGÉTIQUE",
+            "fr": "PALÉO ÉNERGÉTIQUE"
+        },
+        "type": {
+            "en": "FULL-STACK EXHIBITION PLATFORM",
+            "fr": "PLATEFORME D'EXPOSITION FULL-STACK"
+        },
+        "description": {
+            "en": "A full-stack platform built during an internship at Atelier 21 to power a travelling exhibition on energy history and sobriety. Visitors browse interactive cartels (labels), maps and data visualisations; the back-office lets the editorial team publish content, manage partners and generate printable assets (PDFs, QR codes) from the same database.",
+            "fr": "Une plateforme full-stack développée durant un stage à l'Atelier 21 pour porter une exposition itinérante sur l'histoire et la sobriété énergétiques. Les visiteurs parcourent des cartels interactifs, des cartes et des visualisations de données ; le back-office permet à l'équipe éditoriale de publier le contenu, gérer les partenaires et générer les supports imprimables (PDF, QR codes) depuis la même base."
+        },
+        "tech": "REACT 19 - NODE/EXPRESS - POSTGRESQL - JWT",
+        "context": "Professional Internship | Atelier 21",
+        "image": "paleo.png",
+        "link": "https://paleo.madore.projetsmmichamps.fr/#/",
+        "year": "2026",
+        "role": {
+            "en": "Full-stack developer on a real-world editorial product",
+            "fr": "Développeur full-stack sur un produit éditorial en conditions réelles"
+        },
+        "highlights": {
+            "en": [
+                "React 19 + Express + PostgreSQL stack with JWT auth, i18n and a custom back-office.",
+                "Editorial output bridged to print: PDF export (jsPDF + html2canvas), QR codes and ZIP bundles.",
+                "Visitor-side maps and dashboards via Leaflet, D3 and Recharts to make energy data legible."
+            ],
+            "fr": [
+                "Stack React 19 + Express + PostgreSQL avec auth JWT, i18n et back-office sur mesure.",
+                "Sortie éditoriale jusqu'au print : export PDF (jsPDF + html2canvas), QR codes et archives ZIP.",
+                "Cartes et tableaux de bord visiteurs (Leaflet, D3, Recharts) pour rendre la donnée énergétique lisible."
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "title": {
+            "en": "RESTAU RE",
+            "fr": "RESTAU RE"
+        },
+        "type": {
+            "en": "UX/UI PROTOTYPE & PLATFORM",
+            "fr": "PROTOTYPE UX/UI & PLATEFORME"
+        },
+        "description": {
+            "en": "Re-evaluating the culinary experience. This project involved a complete UX research phase (personas, user journeys) followed by a high-fidelity interactive prototype. It features a reliable rating system and a fully functional user account architecture.",
+            "fr": "Réévaluation de l'expérience culinaire. Ce projet a impliqué une phase complète de recherche UX (personas, parcours utilisateurs) suivie d'un prototype interactif haute-fidélité. Il présente un système de notation fiable et une architecture de comptes utilisateur entièrement fonctionnelle."
+        },
+        "tech": "UX RESEARCH - FIGMA - FIGJAM - GIT",
+        "context": "Academic Project | Solo",
+        "image": "restaure.png",
+        "link": "https://github.com/Brize-Glace/restau-re",
+        "year": "2024",
+        "role": {
+            "en": "Solo UX/UI designer & front-end developer",
+            "fr": "Designer UX/UI solo & développeur front-end"
+        },
+        "highlights": {
+            "en": [
+                "End-to-end UX research: personas, user journeys, audit.",
+                "High-fidelity interactive Figma prototype as a deliverable.",
+                "Trustworthy rating system architecture connected to user accounts."
+            ],
+            "fr": [
+                "Recherche UX complète : personas, parcours utilisateurs, audit.",
+                "Prototype interactif Figma haute-fidélité comme livrable.",
+                "Architecture de notation fiable connectée aux comptes utilisateurs."
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "title": {
+            "en": "ORBIS",
+            "fr": "ORBIS"
+        },
+        "type": {
+            "en": "DATA VISUALIZATION WEBSITE",
+            "fr": "SITE DE VISUALISATION DE DONNÉES"
+        },
+        "description": {
+            "en": "A deep dive into linguistic evolution. This interactive one-page site visualizes the decline of global languages and the cultural heritage they carry. Built with a focus on clean data architecture and meaningful UI to bring complex statistics to life.",
+            "fr": "Une exploration approfondie de l'évolution linguistique. Ce site interactif d'une page visualise le déclin des langues mondiales et le patrimoine culturel qu'elles portent. Conçu avec une architecture de données claire et une interface significative pour donner vie à des statistiques complexes."
+        },
+        "tech": "JS - CSS - HTML - UI/UX",
+        "context": "Academic Project | Team of 3",
+        "image": "orbis.png",
+        "link": "https://github.com/thelmaquarius/ORBIS",
+        "year": "2024",
+        "role": {
+            "en": "Front-end developer & UI designer",
+            "fr": "Développeur front-end & designer UI"
+        },
+        "highlights": {
+            "en": [
+                "Clean data architecture turning a dense linguistic dataset into a readable narrative.",
+                "Interactive one-page experience with smooth scroll-driven transitions.",
+                "Editorial UI work to make statistics emotional, not just informative."
+            ],
+            "fr": [
+                "Architecture de données propre transformant un jeu de données dense en récit lisible.",
+                "Expérience one-page interactive avec transitions pilotées par le scroll.",
+                "Travail UI éditorial pour rendre la statistique émotionnelle, pas seulement informative."
+            ]
+        }
+    },
+    {
+        "id": 5,
+        "title": {
+            "en": "YOUMAGICAL AUTOCLICKER",
+            "fr": "YOUMAGICAL AUTOCLICKER"
+        },
+        "type": {
+            "en": "PYTHON DESKTOP APPLICATION",
+            "fr": "APPLICATION BUREAU PYTHON"
+        },
+        "description": {
+            "en": "A super versatile desktop automation no code tool built with Python. It features both a straightforward classic mode for basic repetitive tasks and an advanced mode equipped with a complex timeline editor. This allows users to program, record, and loop precise, intricate macro sequences visually.",
+            "fr": "Un outil d'automatisation no code de bureau super polyvalent développé en Python. Il propose un mode classique intuitif pour les tâches répétitives simples, ainsi qu'un mode avancé doté d'un éditeur de timeline complexe. Cela permet aux utilisateurs de programmer, d'enregistrer et de boucler visuellement des séquences de macros précises et élaborées."
+        },
+        "tech": "PYTHON - GUI - AUTOMATION",
+        "context": "Personal Project | Solo",
+        "image": "youmagical.png",
+        "link": "https://github.com/JomeiYouma/Youmagical-Autoclicker",
+        "year": "2025",
+        "role": {
+            "en": "Solo Python developer",
+            "fr": "Développeur Python solo"
+        },
+        "highlights": {
+            "en": [
+                "Two-mode UX: classic mode for simple loops, advanced mode for power users.",
+                "Visual timeline editor to compose intricate macro sequences.",
+                "No-code automation surface aimed at non-developers."
+            ],
+            "fr": [
+                "UX à deux modes : mode classique pour les boucles simples, mode avancé pour les power users.",
+                "Éditeur de timeline visuel pour composer des séquences de macros complexes.",
+                "Surface d'automatisation no-code pensée pour les non-développeurs."
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "title": {
+            "en": "QR CODE CUSTOMIZER",
+            "fr": "QR CODE CUSTOMIZER"
+        },
+        "type": {
+            "en": "BROWSER-SIDE QR GENERATOR",
+            "fr": "GÉNÉRATEUR DE QR CODES CÔTÉ NAVIGATEUR"
+        },
+        "description": {
+            "en": "A fully browser-side QR code generator with a polished glass and aurora UI. Users pick a preset, tweak colors and gradients, drop in a logo via drag and drop, then export the result as PNG, SVG or JPG. Built on React 18 + Vite with the qr-code-styling library, and a Three.js Silk background for the ambient feel.",
+            "fr": "Un générateur de QR codes 100% côté navigateur avec une UI soignée style glass et aurora. L'utilisateur choisit un preset, ajuste les couleurs et les dégradés, dépose un logo en drag and drop, puis exporte le résultat en PNG, SVG ou JPG. Développé sur React 18 + Vite avec la librairie qr-code-styling, et un fond Silk en Three.js pour l'ambiance."
+        },
+        "tech": "REACT 18 - VITE - QR-CODE-STYLING - THREE.JS",
+        "context": "Personal Project | Solo",
+        "image": "qrcode.png",
+        "link": "https://github.com/JomeiYouma/qr-stylise-react",
+        "year": "2026",
+        "role": {
+            "en": "Solo front-end developer & UI designer",
+            "fr": "Développeur front-end solo & designer UI"
+        },
+        "highlights": {
+            "en": [
+                "100% client-side: no server, no tracking, instant feedback on every tweak.",
+                "Presets, custom gradients and drag and drop logo with PNG, SVG and JPG export.",
+                "Three.js Silk background paired with a glass UI for a calm, focused workspace."
+            ],
+            "fr": [
+                "100% côté client : pas de serveur, pas de tracking, retour visuel instantané à chaque réglage.",
+                "Presets, dégradés sur mesure et drop du logo en drag and drop avec export PNG, SVG et JPG.",
+                "Fond Silk en Three.js combiné à une UI glass pour un espace de travail calme et concentré."
+            ]
+        }
+    },
+    {
+        "id": 7,
+        "title": {
+            "en": "ASTDX CALCULATOR",
+            "fr": "CALCULATEUR ASTDX"
+        },
+        "type": {
+            "en": "COMPETITIVE GAMING TOOL",
+            "fr": "OUTIL DE JEU COMPÉTITIF"
+        },
+        "description": {
+            "en": "A high-performance utility for the Roblox competitive scene. I reverse-engineered complex game mechanics to create a real-time damage simulator. Used by an international e-sports community to optimize strategies through dynamic data tables and precision JS logic.",
+            "fr": "Un outil haute performance pour la scène compétitive Roblox. J'ai rétro-ingénié des mécaniques de jeu complexes pour créer un simulateur de dégâts en temps réel. Utilisé par une communauté e-sports internationale pour optimiser les stratégies via des tableaux dynamiques et une logique JS précise."
+        },
+        "tech": "JS - THREE.JS - GOOGLE SHEETS API",
+        "context": "Collaborative Project | International Team",
+        "image": "astdx2.png",
+        "link": "https://github.com/riifa/astdx-dps-web",
+        "year": "2024",
+        "role": {
+            "en": "Lead developer for an international e-sports community",
+            "fr": "Développeur principal pour une communauté e-sports internationale"
+        },
+        "highlights": {
+            "en": [
+                "Reverse-engineered complex Roblox game mechanics into a clean formula model.",
+                "Real-time damage simulator with dynamic data tables.",
+                "Used live by a competitive community to compare loadouts."
+            ],
+            "fr": [
+                "Rétro-ingénierie de mécaniques Roblox complexes en un modèle de formules clair.",
+                "Simulateur de dégâts temps réel avec tableaux de données dynamiques.",
+                "Utilisé en live par une communauté compétitive pour comparer les builds."
+            ]
+        }
+    },
+    {
+        "id": 8,
+        "title": {
+            "en": "ASTD COMPARATOR",
+            "fr": "COMPARATEUR ASTD"
+        },
+        "type": {
+            "en": "DATABASE & ANALYTICS PLATFORM",
+            "fr": "PLATEFORME BASE DE DONNÉES & ANALYTIQUE"
+        },
+        "description": {
+            "en": "A comprehensive census and comparison tool designed for professional tower defense players. Unlike a simple wiki, this project focuses on backend architecture, utilizing a robust SQL database and PHP to organize complex unit statistics for high-level strategic analysis.",
+            "fr": "Un outil de recensement et de comparaison conçu pour les joueurs professionnels de tower defense. Contrairement à un simple wiki, ce projet se concentre sur l'architecture backend, utilisant une base de données SQL robuste et PHP pour organiser des statistiques d'unités complexes pour une analyse stratégique de haut niveau."
+        },
+        "tech": "PHP - SQL - DATABASE ARCHITECTURE",
+        "context": "Academic Project | Backend Focus",
+        "image": "astr.png",
+        "link": "https://github.com/JomeiYouma/All_Star_Tower_Rater-version-3",
+        "year": "2024",
+        "role": {
+            "en": "Backend developer & database architect",
+            "fr": "Développeur back-end & architecte base de données"
+        },
+        "highlights": {
+            "en": [
+                "Relational SQL schema built around competitive comparison use-cases.",
+                "PHP layer aggregating multi-criteria unit statistics.",
+                "Designed for high-level strategic analysis, not for casual browsing."
+            ],
+            "fr": [
+                "Schéma SQL relationnel conçu pour des cas de comparaison compétitifs.",
+                "Couche PHP agrégeant des statistiques d'unités multi-critères.",
+                "Conçu pour l'analyse stratégique de haut niveau, pas la consultation occasionnelle."
+            ]
+        }
+    },
+    {
+        "id": 9,
+        "title": {
+            "en": "HENDAYE REBRAND",
+            "fr": "REFONTE HENDAYE"
+        },
+        "type": {
+            "en": "BRAND IDENTITY & WEB DESIGN",
+            "fr": "IDENTITÉ DE MARQUE & DESIGN WEB"
+        },
+        "description": {
+            "en": "A strategic visual overhaul for the city of Hendaye. This project bridged the gap between institutional communication and modern web design. I developed a cohesive graphic charter, promotional print assets, and a high-fidelity web interface to revitalize the city's image.",
+            "fr": "Une refonte visuelle stratégique pour la ville d'Hendaye. Ce projet a comblé le fossé entre communication institutionnelle et design web moderne. J'ai développé une charte graphique cohérente, des supports print promotionnels et une interface web haute-fidélité pour revitaliser l'image de la ville."
+        },
+        "tech": "FIGMA - PHOTOSHOP - ILLUSTRATOR",
+        "context": "Academic Project | Design Focus",
+        "image": "campain.png",
+        "link": "https://www.figma.com/design/BeetdjExLeYtnenZwmzH46/Campagne-Hendaye?node-id=0-1&t=cegyqLJzFV14nvC8-1",
+        "year": "2024",
+        "role": {
+            "en": "Solo brand & web designer",
+            "fr": "Designer de marque & web solo"
+        },
+        "highlights": {
+            "en": [
+                "Cohesive graphic charter covering type, color, and tone.",
+                "Print campaign assets aligned with the web identity.",
+                "High-fidelity Figma web prototype to anchor the rebrand."
+            ],
+            "fr": [
+                "Charte graphique cohérente : typographie, couleurs, tonalité.",
+                "Supports print alignés avec l'identité web.",
+                "Prototype web Figma haute-fidélité pour ancrer la refonte."
+            ]
+        }
+    },
+    {
+        "id": 10,
+        "title": {
+            "en": "HORUS",
+            "fr": "HORUS"
+        },
+        "type": {
+            "en": "NARRATIVE BROWSER GAME",
+            "fr": "JEU NARRATIF EN LIGNE"
+        },
+        "description": {
+            "en": "An immersive journey into a low-tech futuristic underworld. Beyond the narrative, I engineered a custom secure authentication system and a branching story engine. Developed as a personal passion project, managing everything from world-building to full-stack deployment.",
+            "fr": "Un voyage immersif dans un monde souterrain futuriste low-tech. Au-delà du récit, j'ai conçu un système d'authentification sécurisé personnalisé et un moteur narratif à embranchements. Développé comme projet passion personnel, gérant tout de l'univers à déploiement full-stack."
+        },
+        "tech": "PHP - JAVASCRIPT - SQL - PHOTOSHOP",
+        "context": "Personal Project | Solo",
+        "image": "horus.png",
+        "link": "https://docs.google.com/document/d/1uaVd017srAvsdevmR0jjCdYLnG2sCPuUZNeSF6FJVQE/edit?usp=sharing",
+        "year": "2024",
+        "role": {
+            "en": "Solo full-stack developer, writer & art director",
+            "fr": "Développeur full-stack solo, scénariste & directeur artistique"
+        },
+        "highlights": {
+            "en": [
+                "Custom secure authentication system built from scratch.",
+                "Branching story engine driving a multi-path narrative.",
+                "Full-stack ownership: world-building, art direction, deployment."
+            ],
+            "fr": [
+                "Système d'authentification sécurisé conçu de zéro.",
+                "Moteur narratif à embranchements pour un récit multi-voies.",
+                "Maîtrise full-stack : univers, direction artistique, déploiement."
+            ]
+        }
+    },
+    {
+        "id": 11,
+        "title": {
+            "en": "MUSEORIUM",
+            "fr": "MUSEORIUM"
+        },
+        "type": {
+            "en": "EXPERIMENTAL MUSICAL EXHIBITION",
+            "fr": "EXPOSITION MUSICALE EXPÉRIMENTALE"
+        },
+        "description": {
+            "en": "A digital gallery exploring the theme of Chaos through sound and motion. This project focuses on the intersection of artistic narration and front-end experimentation, using rhythmic tensions and contrasting visual landscapes to guide the user's emotions.",
+            "fr": "Une galerie numérique explorant le thème du Chaos à travers le son et le mouvement. Ce projet se concentre sur l'intersection entre narration artistique et expérimentation front-end, utilisant des tensions rythmiques et des paysages visuels contrastés pour guider les émotions de l'utilisateur."
+        },
+        "tech": "FRONT-END DEV - JS - WEB AUDIO",
+        "context": "Academic Project | Solo",
+        "image": "museorium.png",
+        "link": "https://youtu.be/Vxva5bZO98E?si=bS3rLpi_n0ZAFOPe",
+        "year": "2024",
+        "role": {
+            "en": "Solo creative front-end developer",
+            "fr": "Développeur front-end créatif solo"
+        },
+        "highlights": {
+            "en": [
+                "Audio-reactive scene composition driven by the Web Audio API.",
+                "Visual narrative built on rhythmic tensions and color contrast.",
+                "Emotional pacing favored over information density."
+            ],
+            "fr": [
+                "Composition de scènes audio-réactives pilotée par la Web Audio API.",
+                "Narration visuelle bâtie sur tensions rythmiques et contraste chromatique.",
+                "Rythme émotionnel privilégié à la densité d'information."
+            ]
+        }
+    },
+    {
+        "id": 12,
+        "title": {
+            "en": "STREET DREAMS",
+            "fr": "STREET DREAMS"
+        },
+        "type": {
+            "en": "AUDIOVISUAL PRODUCTION",
+            "fr": "PRODUCTION AUDIOVISUELLE"
+        },
+        "description": {
+            "en": "A cinematic tribute to contemporary urban art. I co-directed and edited a fictional trailer inspired by Banksy's universe. This project balanced creative storytelling with technical constraints, from on-location filming to post-production visual effects.",
+            "fr": "Un hommage cinématographique à l'art urbain contemporain. J'ai co-réalisé et monté une bande-annonce fictive inspirée de l'univers de Banksy. Ce projet a équilibré narration créative et contraintes techniques, du tournage sur site aux effets visuels en post-production."
+        },
+        "tech": "VIDEO PRODUCTION - EDITING - STORYBOARDING",
+        "context": "Academic Project | Team of 2",
+        "image": "street-dreams.png",
+        "link": "https://youtu.be/7Fz4Hq_1lUM?si=Wm8HZUqJAI6NQCGK",
+        "year": "2023",
+        "role": {
+            "en": "Co-director & editor",
+            "fr": "Co-réalisateur & monteur"
+        },
+        "highlights": {
+            "en": [
+                "Trailer co-directed and shot on location.",
+                "Storyboard-first pipeline from script to delivery.",
+                "Post-production VFX integrated to extend a real-world set."
+            ],
+            "fr": [
+                "Bande-annonce co-réalisée et tournée en extérieur.",
+                "Pipeline storyboard-first du scénario à la livraison.",
+                "Effets visuels intégrés en post-production pour prolonger le décor réel."
+            ]
+        }
+    },
+    {
+        "id": 13,
+        "title": {
+            "en": "NUIT DE L'INFO 2025",
+            "fr": "NUIT DE L'INFO 2025"
+        },
+        "type": {
+            "en": "INTERACTIVE WEB PLATFORM",
+            "fr": "PLATEFORME WEB INTERACTIVE"
+        },
+        "description": {
+            "en": "An engaging educational platform developed during the 2025 Nuit de l'Info hackathon. The project tackles digital autonomy in schools, helping them resist Big Tech dependency through NIRD principles (Inclusive, Responsible & Sustainable Digital). Features interactive content, games, and resources to guide the transition to Linux and open-source solutions.",
+            "fr": "Une plateforme éducative engageante développée lors du hackathon Nuit de l'Info 2025. Le projet aborde l'autonomie numérique dans les écoles, les aidant à résister à la dépendance aux Big Tech via les principes NIRD (Numérique Inclusif, Responsable et Durable). Propose du contenu interactif, des jeux et des ressources pour accompagner la transition vers Linux et les solutions open-source."
+        },
+        "tech": "JAVASCRIPT - THREE.JS",
+        "context": "Dev Night 2025 | Team Project",
+        "image": "nuit-info.png",
+        "link": "https://github.com/doremilx/champ-ions",
+        "year": "2025",
+        "role": {
+            "en": "Hackathon team developer",
+            "fr": "Développeur en équipe lors du hackathon"
+        },
+        "highlights": {
+            "en": [
+                "Built in one night around NIRD principles (Inclusive, Responsible, Sustainable Digital).",
+                "Interactive Three.js scenes and mini-games to teach digital autonomy.",
+                "Real-world resource set to help schools migrate to Linux & open-source."
+            ],
+            "fr": [
+                "Construit en une nuit autour des principes NIRD (Numérique Inclusif, Responsable, Durable).",
+                "Scènes Three.js et mini-jeux pour enseigner l'autonomie numérique.",
+                "Ressources concrètes pour aider les écoles à migrer vers Linux et l'open-source."
+            ]
+        }
+    },
+    {
+        "id": 14,
+        "title": {
+            "en": "HORUS BATTLE ARENA",
+            "fr": "HORUS BATTLE ARENA"
+        },
+        "type": {
+            "en": "MULTIPLAYER COMBAT GAME",
+            "fr": "JEU DE COMBAT MULTIJOUEUR"
+        },
+        "description": {
+            "en": "A real-time multiplayer turn-based combat game involving 1v1 and 5v5 modes. The project features a custom PHP MVC architecture, complete hero team management, an automated matchmaking queue, and dynamic combat logic.",
+            "fr": "Un jeu de combat multijoueur au tour par tour en temps réel incluant des modes 1v1 et 5v5. Le projet dispose d'une architecture PHP MVC sur mesure, d'une gestion complète d'équipes de héros, d'un matchmaking automatisé et d'une logique de combat dynamique."
+        },
+        "tech": "PHP MVC - SQL - JAVASCRIPT",
+        "context": "Personal Project | Solo",
+        "image": "horus-b-a.png",
+        "link": "https://github.com/JomeiYouma/battle-arena",
+        "year": "2025",
+        "role": {
+            "en": "Solo full-stack developer",
+            "fr": "Développeur full-stack solo"
+        },
+        "highlights": {
+            "en": [
+                "Custom PHP MVC architecture built from scratch.",
+                "1v1 and 5v5 modes with automated matchmaking.",
+                "Turn-based combat engine driving real-time interactions."
+            ],
+            "fr": [
+                "Architecture PHP MVC sur mesure développée de zéro.",
+                "Modes 1v1 et 5v5 avec matchmaking automatisé.",
+                "Moteur de combat tour-par-tour pilotant les interactions temps réel."
+            ]
+        }
+    },
+    {
+        "id": 15,
+        "title": {
+            "en": "SPEED CHASER",
+            "fr": "SPEED CHASER"
+        },
+        "type": {
+            "en": "3D REAL-TIME BROWSER GAME",
+            "fr": "JEU 3D SUR NAVIGATEUR EN TEMPS RÉEL"
+        },
+        "description": {
+            "en": "A real-time 3D web experience built with Three.js. This project focus on giving the user the best and simplest possible experience in terms of speed and graphics. Furthermore, it incorporates a real-time database architecture (Firebase) to seamlessly synchronize user data and maintain an active online environment.",
+            "fr": "Une expérience web 3D en temps réel développée avec Three.js. Ce projet se concentre sur la manière la plus simple et efficace et transmettre une impression de vitesse. De plus, il intègre une architecture de base de données (Firebase) pour synchroniser les données des utilisateurs et maintenir un environnement en ligne persistant."
+        },
+        "tech": "THREE.JS - JAVASCRIPT - FIREBASE",
+        "context": "Academic / Personal Project",
+        "image": "speed-chaser.png",
+        "link": "https://github.com/JomeiYouma/Speed-chaser",
+        "year": "2024",
+        "role": {
+            "en": "Solo developer",
+            "fr": "Développeur solo"
+        },
+        "highlights": {
+            "en": [
+                "Three.js engine tuned for a strong sense of speed on the web.",
+                "Firebase backend syncing player data in real time.",
+                "Minimal-by-design UI to keep focus on the chase."
+            ],
+            "fr": [
+                "Moteur Three.js réglé pour donner une vraie sensation de vitesse sur le web.",
+                "Back-end Firebase synchronisant les données joueurs en temps réel.",
+                "UI volontairement minimaliste pour garder le focus sur la poursuite."
+            ]
+        }
+    },
+    {
+        "id": 16,
+        "title": {
+            "en": "CIPHER BREACH",
+            "fr": "CIPHER BREACH"
+        },
+        "type": {
+            "en": "REACT 3D BROWSER GAME",
+            "fr": "JEU NAVIGATEUR REACT 3D"
+        },
+        "description": {
+            "en": "A hangman game reimagined as a cyber terminal cracking experience. Built on React 19 + Vite with an OGL shader background, a draggable 3D operator badge powered by React Three Fiber + Rapier, and four distinct game modes (brute force, streak, timer, mind game). Words are fetched from a remote API with a network timeout and a local FR/EN fallback for full resilience.",
+            "fr": "Un jeu du pendu repensé comme une expérience de cracking sur terminal cyber. Développé en React 19 + Vite avec un fond shader OGL, un badge opérateur 3D draggable propulsé par React Three Fiber + Rapier, et quatre modes de jeu distincts (brute force, streak, timer, mind game). Les mots sont récupérés via une API distante avec timeout réseau et fallback local FR/EN pour une résilience totale."
+        },
+        "tech": "REACT - THREE.JS - VITE - OGL",
+        "context": "Personal Project | Solo",
+        "image": "hangman.png",
+        "link": "https://github.com/JomeiYouma/hangman",
+        "year": "2025",
+        "role": {
+            "en": "Solo front-end developer & creative director",
+            "fr": "Développeur front-end solo & directeur créatif"
+        },
+        "highlights": {
+            "en": [
+                "Four game modes layered over a single hangman engine: brute force, streak, timer, mind game.",
+                "Resilient word API with network timeout and local FR/EN fallback.",
+                "3D operator badge (R3F + Rapier) and OGL terminal shader for full cyber immersion."
+            ],
+            "fr": [
+                "Quatre modes de jeu superposés sur un seul moteur de pendu : brute force, streak, timer, mind game.",
+                "API de mots résiliente avec timeout réseau et fallback local FR/EN.",
+                "Badge opérateur 3D (R3F + Rapier) et shader terminal OGL pour une immersion cyber totale."
+            ]
+        }
+    }
+]

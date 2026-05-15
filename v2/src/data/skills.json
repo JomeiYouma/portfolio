@@ -1,0 +1,150 @@
+[
+  {
+    "group": "Languages",
+    "items": [
+      {
+        "name": "HTML",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+      },
+      {
+        "name": "CSS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        "easter": "css"
+      },
+      {
+        "name": "JS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "easter": "js"
+      },
+      {
+        "name": "PHP",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
+      },
+      {
+        "name": "Lua",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg"
+      },
+      {
+        "name": "Python",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+      },
+      {
+        "name": "PostgreSQL",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+      },
+      {
+        "name": "MySQL",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+      }
+    ]
+  },
+  {
+    "group": "Frameworks",
+    "items": [
+      {
+        "name": "React JS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+      },
+      {
+        "name": "Laravel",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg"
+      },
+      {
+        "name": "Bootstrap",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
+        "easter": "bootstrap"
+      },
+      {
+        "name": "Next JS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+      },
+      {
+        "name": "Tailwind CSS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        "easter": "tailwind"
+      },
+      {
+        "name": "Three JS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg",
+        "easter": "three"
+      },
+      {
+        "name": "Symfony",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/symfony/symfony-original.svg"
+      },
+      {
+        "name": "Prisma",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg"
+      }
+    ]
+  },
+  {
+    "group": "Tooling",
+    "items": [
+      {
+        "name": "Git",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+      },
+      {
+        "name": "Figma",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+      },
+      {
+        "name": "Vercel",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg"
+      },
+      {
+        "name": "Vite",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg"
+      },
+      {
+        "name": "Notion",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg"
+      },
+      {
+        "name": "Airtable",
+        "icon": "https://cdn.simpleicons.org/airtable/FCB400"
+      },
+      {
+        "name": "Photoshop",
+        "icon": "/assets/icons/photoshop.svg"
+      },
+      {
+        "name": "Illustrator",
+        "icon": "/assets/icons/illustrator.svg"
+      },
+      {
+        "name": "InDesign",
+        "icon": "/assets/icons/indesign.svg"
+      },
+      {
+        "name": "Premiere Pro",
+        "icon": "/assets/icons/premierepro.svg"
+      },
+      {
+        "name": "After Effects",
+        "icon": "/assets/icons/aftereffects.svg"
+      },
+      {
+        "name": "React DevTools",
+        "icon": "/assets/icons/react-devtools.svg"
+      },
+      {
+        "name": "Lighthouse",
+        "icon": "/assets/icons/lighthouse.svg"
+      },
+      {
+        "name": "WAVE",
+        "icon": "/assets/icons/wave.svg"
+      },
+      {
+        "name": "SEOquake",
+        "icon": "/assets/icons/seoquake.png"
+      },
+      {
+        "name": "Google Analytics",
+        "icon": "/assets/icons/google-analytics.svg"
+      }
+    ]
+  }
+]

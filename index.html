@@ -1,143 +1,329 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0a0c0f" />
-
-    <link rel="icon" type="image/x-icon" href="/portfolio/favicon_portfolio.ico" />
-    <link rel="alternate icon" type="image/png" href="/portfolio/favicon.png" />
-    <link rel="apple-touch-icon" href="/portfolio/favicon.png" />
-    <link rel="canonical" href="https://jomeiyouma.github.io/portfolio/" />
-
-    <title>Raphaël Madoré, développeur créatif full-stack | Portfolio</title>
-    <meta name="description" content="Portfolio de Raphaël Madoré, développeur créatif full-stack basé en France. Projets web, design, creative-coding et services de création de sites à tarifs étudiant." />
-    <meta name="author" content="Raphaël Madoré" />
-    <meta name="keywords" content="Raphaël Madoré, développeur web, développeur freelance, création site internet, refonte site web, gamification, React, Three.js, portfolio, étudiant, France, full-stack, creative developer" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="generator" content="React + Vite" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Raphaël Madoré, Portfolio" />
-    <meta property="og:locale" content="fr_FR" />
-    <meta property="og:locale:alternate" content="en_US" />
-    <meta property="og:url" content="https://jomeiyouma.github.io/portfolio/" />
-    <meta property="og:title" content="Raphaël Madoré, développeur créatif full-stack" />
-    <meta property="og:description" content="Portfolio, projets web et services de création de sites internet à tarifs étudiant." />
-    <meta property="og:image" content="https://jomeiyouma.github.io/portfolio/assets/images/og-image.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Raphaël Madoré, développeur créatif" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Raphaël Madoré, développeur créatif full-stack" />
-    <meta name="twitter:description" content="Portfolio, projets web et services de création de sites internet à tarifs étudiant." />
-    <meta name="twitter:image" content="https://jomeiyouma.github.io/portfolio/assets/images/og-image.png" />
-    <meta name="twitter:image:alt" content="Raphaël Madoré, développeur créatif" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Raphaël Madoré",
-        "alternateName": "Youma",
-        "url": "https://jomeiyouma.github.io/portfolio/",
-        "image": "https://jomeiyouma.github.io/portfolio/assets/images/og-image.png",
-        "jobTitle": "Développeur créatif full-stack",
-        "description": "Développeur web créatif, étudiant en multimédia et développement web. Création de sites, refonte et gamification à tarifs étudiant.",
-        "nationality": "FR",
-        "knowsLanguage": ["fr", "en"],
-        "knowsAbout": [
-          "Développement web",
-          "React",
-          "Three.js",
-          "PHP",
-          "Laravel",
-          "Node.js",
-          "PostgreSQL",
-          "UX/UI",
-          "Accessibilité",
-          "SEO",
-          "Gamification",
-          "Creative coding"
-        ],
-        "sameAs": [
-          "https://github.com/JomeiYouma",
-          "https://www.linkedin.com/in/raphaël-madoré/"
-        ],
-        "email": "mailto:raphael.madore.pro@mailo.com",
-        "makesOffer": [
-          {
-            "@type": "Offer",
-            "name": "Création de site web",
-            "priceCurrency": "EUR",
-            "price": "400",
-            "priceSpecification": {
-              "@type": "PriceSpecification",
-              "minPrice": "400",
-              "priceCurrency": "EUR"
-            }
-          },
-          {
-            "@type": "Offer",
-            "name": "Refonte et mise à jour de site web",
-            "priceCurrency": "EUR",
-            "price": "200"
-          },
-          {
-            "@type": "Offer",
-            "name": "Gamification et expériences interactives",
-            "priceCurrency": "EUR",
-            "price": "300"
-          }
-        ]
-      }
-    </script>
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Raphaël Madoré, Portfolio",
-        "url": "https://jomeiyouma.github.io/portfolio/",
-        "inLanguage": ["fr-FR", "en-US"],
-        "author": {
-          "@type": "Person",
-          "name": "Raphaël Madoré"
-        }
-      }
-    </script>
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "Raphaël Madoré, services de développement web",
-        "url": "https://jomeiyouma.github.io/portfolio/#services",
-        "description": "Création de sites internet, refonte et gamification à tarifs étudiant.",
-        "areaServed": "FR",
-        "serviceType": ["Création de site web", "Refonte de site web", "Gamification"],
-        "provider": {
-          "@type": "Person",
-          "name": "Raphaël Madoré"
-        }
-      }
-    </script>
-    <script type="module" crossorigin src="/portfolio/assets/index-42_Kku7b.js"></script>
-    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-B8ar2XXB.css">
+    <title>Youma's Portfolio</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/loader.css" />
+    <link rel="stylesheet" href="css/tech-easter-eggs.css" />
+    <link rel="stylesheet" href="css/cover-letter-btn.css" />
+    <link rel="stylesheet" href="css/aaa-contrast.css" />
+    <link rel="icon" href="favicon_portfolio.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet"> <!-- orbitron -->
+<link href="https://fonts.googleapis.com/css2?family=Monofett&display=swap" rel="stylesheet"> <!-- monofett -->
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div id="root"></div>
-    <noscript>
-      <h1>Raphaël Madoré, développeur créatif full-stack</h1>
-      <p>Portfolio interactif nécessitant JavaScript. Vous pouvez me contacter par email à raphael.madore.pro@mailo.com.</p>
-      <p>Mon GitHub : <a href="https://github.com/JomeiYouma">github.com/JomeiYouma</a>.</p>
-      <p>Mon LinkedIn : <a href="https://www.linkedin.com/in/raphaël-madoré/">linkedin.com/in/raphaelmadore</a>.</p>
-      <p>Services proposés : création de site web, refonte et mise à jour de site web, gamification d'expériences. Tarifs étudiant.</p>
-    </noscript>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loader-content">
+        <div class="loader-logo">YOUMA</div>
+        <div class="loader-spinner">
+          <div class="spinner-circle"></div>
+          <div class="spinner-circle"></div>
+          <div class="spinner-circle"></div>
+        </div>
+        <div class="loader-text">Loading Portfolio...</div>
+      </div>
+    </div>
+
+    <header class="nav">
+      <ul class="navigation">
+        <li data-i18n="nav.home">Home</li>
+        <li data-i18n="nav.works">Works</li>
+        <li data-i18n="nav.interpersonal">Interpersonal</li>
+        <li data-i18n="nav.about">About</li>
+        <li data-i18n="nav.contact">Contact</li>
+      </ul>
+    </header>
+    
+    <!-- Accessibility Controls - Fixed Position -->
+    <div class="accessibility-controls">
+      <button class="contrast-toggle" aria-label="Toggle high contrast mode" aria-pressed="false">
+        <svg class="icon-contrast" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+        </svg>
+      </button>
+      <button class="lang-toggle" aria-label="Switch language">
+        <span>FR</span>
+      </button>
+    </div>
+    
+    <div class="container">
+      <section class="section home">
+        <div class="home-content">
+          <h1 class="main-title">YOuma</h1>
+          <p class="description" data-i18n="home.description">
+            Oppen to job opportunities woldwide.
+            Passionate about building polished,
+            intuitive, and thoughtful digital
+            experiences that leave a mark.
+          </p>
+        </div>
+
+        <div class="home-visual">
+          <!-- Aesthetic Geometric Pattern -->
+          <div class="geometric-pattern">
+            <div class="pattern-square pattern-square-1"></div>
+            <div class="pattern-square pattern-square-2"></div>
+            <div class="pattern-square pattern-square-3"></div>
+            <div class="pattern-line pattern-line-1"></div>
+            <div class="pattern-line pattern-line-2"></div>
+            <div class="pattern-circle"></div>
+          </div>
+          
+          <h2 class="sub-title" data-i18n="home.subtitle">crEAtivE <br />DeveloPer</h2>
+          
+          <!-- Social Links -->
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/raphaël-madoré/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn Profile">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+              <span>IN</span>
+            </a>
+            <a href="https://github.com/JomeiYouma" target="_blank" rel="noopener" class="social-link" aria-label="GitHub Profile">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              <span>GH</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+<!-- Desktop Project Navigation Arrows - Hidden by default -->
+<div class="desktop-project-nav" style="display: none;">
+  <button class="desktop-project-nav-btn" id="prev-project-desktop" aria-label="Previous project">▲</button>
+  <button class="desktop-project-nav-btn" id="next-project-desktop" aria-label="Next project">▼</button>
+</div>
+
+<section class="section works" id="works">
+  <div class="project-info">
+    
+    <div class="title-group">
+      <h2 id="view-title">WORKS</h2>
+      <h3 id="view-type">PROJECT TYPE</h3>
+    </div>
+
+    <div class="description-group">
+      <p id="view-desc">Select a project to see details...</p>
+    </div>
+
+    <div class="info-footer">
+      <span id="view-context">CONTEXT</span><br>
+      <span id="view-tech">TECHNOLOGIES</span>
+    </div>
+    
+  </div>
+
+  <div class="project-list-viewport">
+    <div class="project-scroll-track" id="project-track">
+  </div>
+</section>
+      <section class="section service">
+        <div class="intro-layout">
+                  <p class="intro-text" data-i18n="service.intro">
+                I enjoy working in collaborative environments where ideas grow through teamwork.
+                Sharing knowledge, solving problems together, and building meaningful digital experiences 
+                as a team are what motivate me the most.
+            </p>
+    <div class="service-layout">
+        <div class="testimonials">
+  
+
+            <div class="testimonial-item">
+                <h4 class="name" data-i18n="about.testimonials.navy.name">Navy X.</h4>
+                <blockquote data-i18n="about.testimonials.navy.quote">"Raphael quickly became an essential part of the testing phase. His structured feedback, attention to detail, and ability to spot edge cases saved us valuable time."</blockquote>
+                <span class="role" data-i18n="about.testimonials.navy.role">- tester manager</span>
+            </div>
+
+            <div class="testimonial-item">
+                <h4 class="name" data-i18n="about.testimonials.eric.name">Eric M. (translated)</h4>
+                <blockquote data-i18n="about.testimonials.eric.quote">"Raphael demonstrated strong motivation and a real commitment to developing his professional skills. He approaches every challenge with creativity and persistence."</blockquote>
+                <span class="role" data-i18n="about.testimonials.eric.role">- career advisor</span>
+            </div>
+            <div class="testimonial-item">
+                <h4 class="name" data-i18n="about.testimonials.caroline.name">Caroline P. (translated)</h4>
+                <blockquote data-i18n="about.testimonials.caroline.quote">"Working with Raphael was a real pleasure. He showed great curiosity and technical precision. His attention to detail made a noticeable impact on the quality of our final product."</blockquote>
+                <span class="role" data-i18n="about.testimonials.caroline.role">- stage supervisor</span>
+            </div> 
+        </div>
+
+        <div class="service-cta">
+            <a href="mailto:raphael.madore@edu.univ-fcomte.fr?subject=Let's work together!" class="work-with-me" data-i18n="service.cta">wOrk with mE</a>
+            <div class="download-links">
+                <a href="assets/documents/cv_raphel_madore_2026.pdf" download class="download-item">
+                    <span class="icon">⤓</span> /curriculum_vitae
+                </a>
+                <button class="download-item cover-letter-btn" id="cover-letter-btn">
+                    <span class="icon">⤓</span> /cover_letter
+                </button>
+            </div>
+        </div>
+
+<!--         <div class="service-visual">
+            <div class="diagonal-title">
+                <span class="small-text">WHat ThEy say abOut MY</span>
+                <h2 class="huge-text">Productions</h2>
+            </div>
+        </div> -->
+    </div>
+    </div>
+</section>
+      <section class="section about" id="about">
+    <div class="about-container">
+        <div class="about-header">
+            <span class="small-title" data-i18n="about.subtitle">Me, Myself and I :</span>
+            <h2 class="name-title" data-i18n="about.name">Raphaël</h2>
+<p class="about-bio" data-i18n="about.bio">
+    currently studying multimedia and web development, i build my journey through 
+    hands-on projects at university and on my own.  
+    i enjoy learning new technologies, experimenting, and turning ideas into 
+    concrete and functional experiences.
+</p>
+        </div>
+
+        <div class="about-content">
+            <div class="skills-group">
+                <h3 data-i18n="about.languages">mastered languages :</h3>
+                <p data-i18n="about.languagesList">html – css – js – php – lua – python – french</p>
+            </div>
+
+            <div class="skills-group">
+                <h3 data-i18n="about.frameworks">known frameworks :</h3>
+                <p data-i18n="about.frameworksList">react js – laravel – backbone js – vue js – bootstrap – next js – tailwind css – three js</p>
+            </div>
+
+            <div class="skills-group">
+                <h3 data-i18n="about.certifications.title">Web Quality Training</h3>
+                <p data-i18n="about.certifications.description">Maîtrise Opquast certified — trained in creating accessible, performant, and sustainable web experiences.</p>
+            </div>
+        </div>
+
+        <div class="about-star">✦</div>
+    </div>
+</section>
+      <section class="section contact" id="contact">
+    <div class="contact-container">
+        
+        <div class="contact-left">
+            <h2 class="contact-title" data-i18n="contact.title">get in touch</h2>
+            
+            <div class="contact-grid">
+                <a href="mailto:raphael.madore.pro@mailo.com" class="contact-card">
+                    <div class="card-content">
+                        <span class="card-label">Email</span>
+                        <span class="card-value">raphael.madore.pro@mailo.com</span>
+                    </div>
+                    <span class="card-arrow">❯</span>
+                </a>
+
+                <a href="https://www.linkedin.com/in/raphaël-madoré/" target="_blank" class="contact-card">
+                    <div class="card-content">
+                        <span class="card-label">LinkedIn</span>
+                        <span class="card-value">/in/raphaelmadore</span>
+                    </div>
+                    <span class="card-arrow">❯</span>
+                </a>
+
+                <a href="https://github.com/JomeiYouma" target="_blank" class="contact-card">
+                    <div class="card-content">
+                        <span class="card-label">GitHub</span>
+                        <span class="card-value">github.com/JomeiYouma</span>
+                    </div>
+                    <span class="card-arrow">❯</span>
+                </a>
+
+                <a href="https://open.spotify.com/playlist/36Y3M007cqXXTBsHUbCS4B?si=130f2c509eb14055" target="_blank" rel="noopener" class="contact-card">
+                    <div class="card-content">
+                        <span class="card-label">Spotify</span>
+                        <span class="card-value">listen to my playlists</span>
+                    </div>
+                    <span class="card-arrow">❯</span>
+                </a>
+                 <p class="footer-note" data-i18n="contact.footer">built with passion & code // 2025</p>
+            </div>
+        </div>
+
+        <div class="github-status">
+            <div class="github-header">
+                <span class="status-dot"></span>
+                <h3 data-i18n="contact.githubActivity">github_live_activity</h3>
+            </div>
+            
+            <!-- GitHub Stats Title -->
+            <h4 class="github-section-title" data-i18n="contact.githubStats">GitHub Stats</h4>
+            
+            <!-- GitHub Contribution Graph with Toggle -->
+            <div class="github-cards">
+                <div class="github-graph-container">
+                    <div class="graph-controls">
+                        <button class="graph-scale-btn active" data-scale="monthly" data-i18n="contact.lastMonth" aria-label="Last month view">Last Month</button>
+                        <button class="graph-scale-btn" data-scale="quarterly" data-i18n="contact.last3Months" aria-label="Last 3 months view">Last 3 Months</button>
+                    </div>
+                    <img id="github-contribution-graph"
+                         src="https://github-readme-activity-graph.vercel.app/graph?username=JomeiYouma&theme=react-dark&bg_color=111111&color=24FBC5&line=24FBC5&point=dddddd&area=true&hide_border=true&custom_title=Last%20Month&days=30" 
+                         alt="GitHub Contribution Graph" 
+                         class="github-activity-graph"
+                         loading="lazy">
+                </div>
+            </div>
+            
+            <!-- Latest Activity (Repos) -->
+            <div class="github-latest-activity">
+                <h4 data-i18n="contact.latestActivity">Latest Activity</h4>
+                <div id="github-repos" class="repos-list">
+                    <p class="loading">connecting_to_server...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+   
+</section>
+    </div>
+<script type="module">
+  import { updateActiveNav } from './js/nav.js';
+  import { loadProjects } from './js/projects.js';
+  import { loadGitHubRepos } from './js/github.js';
+  import { initI18n, toggleLanguage } from './js/i18n.js';
+  import { initContrastMode, toggleContrastMode } from './js/contrast.js';
+  import './js/animations.js';
+  import './js/pattern-effect.js';
+  import './js/tech-easter-eggs.js';
+  import './js/github-graph-toggle.js';
+  import './js/cover-letter-btn.js';
+
+  document.addEventListener("DOMContentLoaded", () => {
+      // Initialize core features
+      updateActiveNav();
+      loadProjects();
+      loadGitHubRepos('JomeiYouma');
+      
+      // Initialize i18n and contrast mode
+      initI18n();
+      initContrastMode();
+      
+      // Bind toggle buttons
+      const contrastToggle = document.querySelector('.contrast-toggle');
+      const langToggle = document.querySelector('.lang-toggle');
+      
+      if (contrastToggle) {
+          contrastToggle.addEventListener('click', toggleContrastMode);
+      }
+      
+      if (langToggle) {
+          langToggle.addEventListener('click', toggleLanguage);
+      }
+  });
+</script>
+  
+  <!-- Loader Script -->
+  <script src="js/loader.js"></script>
   </body>
 </html>
