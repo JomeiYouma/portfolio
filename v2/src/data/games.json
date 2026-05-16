@@ -10,7 +10,7 @@
       "fr": "Runner arcade. Esquive les obstacles et chasse le meilleur score."
     },
     "tech": "JS · HTML · Canvas",
-    "image": "speed-chaser.png",
+    "image": "speed-chaser.webp",
     "link": "https://jomeiyouma.github.io/Speed-chaser/"
   },
   {
@@ -24,7 +24,7 @@
       "fr": "Shooter 2D configurable. Nettoie les vagues, ramasse le loot, finis le niveau."
     },
     "tech": "React · JavaScript · Canvas",
-    "image": "shooter.png",
+    "image": "shooter.webp",
     "link": "https://jomeiyouma.github.io/Jeu-Shooter/"
   },
   {
@@ -38,7 +38,7 @@
       "fr": "Pendu cyber-terminal en quatre modes : brute force, streak, timer et mind game."
     },
     "tech": "React · Three.js · OGL",
-    "image": "hangman.png",
+    "image": "hangman.webp",
     "link": "https://jomeiyouma.github.io/hangman/"
   }
 ]

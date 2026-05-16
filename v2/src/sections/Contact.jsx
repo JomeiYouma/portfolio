@@ -8,7 +8,7 @@ const Contact = () => {
 
   const cards = [
     { href: 'mailto:raphael.madore.pro@mailo.com', label: t('contact.email'),    value: 'raphael.madore.pro@mailo.com', external: false },
-    { href: 'https://www.linkedin.com/in/raphaël-madoré/', label: t('contact.linkedin'), value: '/in/raphaelmadore',          external: true },
+    { href: 'https://www.linkedin.com/in/raphael-madore/', label: t('contact.linkedin'), value: '/in/raphael-madore',          external: true },
     { href: 'https://github.com/JomeiYouma',                label: t('contact.github'),   value: 'github.com/JomeiYouma',        external: true },
     { href: 'https://open.spotify.com/playlist/36Y3M007cqXXTBsHUbCS4B', label: t('contact.spotify'), value: t('contact.spotifyValue'), external: true },
   ]

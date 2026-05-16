@@ -20,21 +20,21 @@ const GitHubActivity = () => {
           <button
             className={`graph-scale-btn ${graphScale === 'monthly' ? 'active' : ''}`}
             onClick={() => setGraphScale('monthly')}
-            aria-label="Last month view"
+            aria-label={t('contact.lastMonthAria')}
           >
             {t('contact.lastMonth')}
           </button>
           <button
             className={`graph-scale-btn ${graphScale === 'quarterly' ? 'active' : ''}`}
             onClick={() => setGraphScale('quarterly')}
-            aria-label="Last 3 months view"
+            aria-label={t('contact.last3MonthsAria')}
           >
             {t('contact.last3Months')}
           </button>
         </div>
         <img
           src={getGraphUrl()}
-          alt="GitHub Contribution Graph"
+          alt={t('contact.githubGraphAlt')}
           className="github-activity-graph"
           loading="lazy"
         />

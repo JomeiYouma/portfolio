@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { motion, LayoutGroup } from 'motion/react'
 import { scrollToSection } from '../animations/scroll'
 import { useI18n } from '../hooks/useI18n'
@@ -5,9 +6,31 @@ import FaviconBlocks from './FaviconBlocks'
 import { asset } from '../utils/asset'
 
 const Nav = ({ sections, activeId }) => {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // Close the mobile menu whenever the active section changes (e.g. after a tap)
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [activeId])
+
+  // Close on Escape and lock body scroll while open
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false) }
+    window.addEventListener('keydown', onKey)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+    }
+  }, [menuOpen])
+
+  const menuLabel = lang === 'fr' ? 'Menu' : 'Menu'
+
   return (
-    <nav className="nav" aria-label={t('accessibility.mainNav')}>
+    <nav className={`nav ${menuOpen ? 'is-open' : ''}`} aria-label={t('accessibility.mainNav')}>
       <div className="nav-brand">
         <FaviconBlocks
           src={asset('favicon.png')}
@@ -16,10 +39,25 @@ const Nav = ({ sections, activeId }) => {
           grid={12}
           className="nav-brand-icon"
         />
-        <span>Portfolio V2</span>
+        <span className="nav-brand-full">Portfolio Raphaël Madoré</span>
+        <span className="nav-brand-short">Portfolio R. Madoré</span>
       </div>
+
+      <button
+        type="button"
+        className="nav-burger"
+        aria-expanded={menuOpen}
+        aria-controls="primary-nav-list"
+        aria-label={menuLabel}
+        onClick={() => setMenuOpen((v) => !v)}
+      >
+        <span className="nav-burger-bar" aria-hidden="true" />
+        <span className="nav-burger-bar" aria-hidden="true" />
+        <span className="nav-burger-bar" aria-hidden="true" />
+      </button>
+
       <LayoutGroup id="nav">
-        <ul className="nav-links">
+        <ul className="nav-links" id="primary-nav-list">
           {sections.map((section, index) => {
             const isActive = activeId === section.id
             return (
@@ -27,7 +65,10 @@ const Nav = ({ sections, activeId }) => {
                 <button
                   type="button"
                   className={`nav-link ${isActive ? 'is-active' : ''}`}
-                  onClick={() => scrollToSection(section.id)}
+                  onClick={() => {
+                    scrollToSection(section.id)
+                    setMenuOpen(false)
+                  }}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {isActive && (
