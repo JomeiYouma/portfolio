@@ -88,6 +88,13 @@ try {
   await page.waitForSelector('main#main-content h1.sr-only', { timeout: 10000 })
   await page.evaluate(() => new Promise((r) => setTimeout(r, 250)))
 
+  // Strip client-only body portals (e.g. TargetCursor). main.jsx uses createRoot,
+  // not hydrateRoot, so anything outside #root survives the client mount and
+  // shows up as a frozen ghost until React's own portal paints over it.
+  await page.evaluate(() => {
+    document.querySelectorAll('body > .target-cursor-wrapper').forEach((el) => el.remove())
+  })
+
   const html = await page.content()
   await writeFile(join(DIST, 'index.html'), html, 'utf8')
   console.log(`Wrote prerendered HTML to dist/index.html (${(html.length / 1024).toFixed(1)} KB)`)
