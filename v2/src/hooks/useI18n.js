@@ -1,29 +1,29 @@
 import { useEffect, useState } from 'react'
-import { asset } from '../utils/asset'
+import translations from '../data/translations.json'
 
-let translations = {}
-let currentLang = 'en'
+const detectDefaultLang = () => {
+  if (typeof navigator === 'undefined') return 'fr'
+  const lang = (navigator.language || '').toLowerCase()
+  return lang.startsWith('en') ? 'en' : 'fr'
+}
+
+const resolveInitialLang = () => {
+  if (typeof window === 'undefined') return 'fr'
+  return window.localStorage?.getItem('preferred-language') || detectDefaultLang()
+}
+
+let currentLang = typeof window === 'undefined' ? 'fr' : resolveInitialLang()
 
 export const useI18n = () => {
-  const [lang, setLang] = useState('en')
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [lang, setLang] = useState(currentLang)
 
   useEffect(() => {
-    const loadTranslations = async () => {
-      try {
-        const response = await fetch(asset('data/translations.json'))
-        translations = await response.json()
-        const storedLang = localStorage.getItem('preferred-language')
-        currentLang = storedLang || 'en'
-        document.documentElement.lang = currentLang
-        setLang(currentLang)
-        setIsLoaded(true)
-      } catch (error) {
-        console.error('Error loading translations:', error)
-        setIsLoaded(true)
-      }
+    const resolved = resolveInitialLang()
+    if (resolved !== currentLang) {
+      currentLang = resolved
+      setLang(resolved)
     }
-    loadTranslations()
+    document.documentElement.lang = resolved
   }, [])
 
   const t = (path) => {
@@ -43,7 +43,7 @@ export const useI18n = () => {
     document.documentElement.lang = newLang
   }
 
-  return { lang, t, toggleLanguage, isLoaded }
+  return { lang, t, toggleLanguage, isLoaded: true }
 }
 
 export const getCurrentLanguage = () => currentLang

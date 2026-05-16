@@ -174,7 +174,7 @@ const Games = () => {
                       <div className="game-card-media">
                         <img
                           src={asset(`assets/images/${game.image}`)}
-                          alt=""
+                          alt={lang === 'fr' ? `Aperçu du jeu ${title}` : `${title} game screenshot`}
                           loading="lazy"
                           className="game-card-img"
                         />

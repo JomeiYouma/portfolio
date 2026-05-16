@@ -41,6 +41,7 @@
   --font-body:    "Orbitron", sans-serif;
   --font-mono:    "Orbitron", monospace;
   --nav-height:   80px;
+  --nav-height-mobile: 56px;
   --grid-size:    48px;
   --grid-color:   rgba(0, 255, 179, 0.03);
 }

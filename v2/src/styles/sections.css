@@ -218,6 +218,7 @@
   flex-direction: column;
   gap: 20px;
   max-width: 680px;
+  min-width: 0;
 }
 
 .about-bio {
@@ -268,6 +269,10 @@
   padding: 14px 0;
   border-bottom: 1px solid var(--border);
   overflow: hidden;
+  /* Allow the group to shrink inside its flex/grid parent so the icon strip
+     doesn't push the section wider than the viewport on small screens. */
+  min-width: 0;
+  max-width: 100%;
 }
 
 .skills-loop-group h4 {
@@ -1702,6 +1707,7 @@ body.inside-games-screen .target-cursor-wrapper { opacity: 0; }
   gap: 48px;
   align-items: start;
   width: 100%;
+  min-width: 0;
 }
 
 .about-cert {
@@ -1785,6 +1791,8 @@ body.inside-games-screen .target-cursor-wrapper { opacity: 0; }
 
 .icon-strip {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow: hidden;
   /* Fade edges */
   mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);

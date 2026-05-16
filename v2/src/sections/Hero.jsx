@@ -26,13 +26,15 @@ const Hero = () => {
           animate="show"
           variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } } }}
         >
-          <h1 className="main-title">
-            <SplitReveal text={t('hero.title')} delay={0.15} stagger={0.045} />
-          </h1>
+          <h1 className="sr-only">{t('hero.seoH1')}</h1>
 
-          <motion.h2 className="sub-title" variants={fadeUp}>
+          <h2 className="main-title" aria-hidden="true">
+            <SplitReveal text={t('hero.title')} delay={0.15} stagger={0.045} />
+          </h2>
+
+          <motion.p className="sub-title" variants={fadeUp}>
             {t('hero.subtitle')}
-          </motion.h2>
+          </motion.p>
 
           <motion.p className="hero-description" variants={fadeUp}>
             {t('hero.description')}
@@ -57,7 +59,7 @@ const Hero = () => {
 
           <motion.div className="social-links" variants={fadeUp}>
             <a
-              href="https://www.linkedin.com/in/raphaël-madoré/"
+              href="https://www.linkedin.com/in/raphael-madore/"
               target="_blank"
               rel="noopener noreferrer"
               className="social-link cursor-target"
