@@ -58,6 +58,17 @@ html {
   font-size: 16px;
 }
 
+/* Low-perf mode (toggled by utils/perf.js based on cores / device memory /
+   Save-Data / reduced-motion). Backdrop blur is the heaviest paint on
+   integrated GPUs and Firefox; we drop it entirely and lean on the panel's
+   own background. Heavy box-shadows and animated grain are dialled back too. */
+html.low-perf *,
+html.low-perf *::before,
+html.low-perf *::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 /* ─── Body ───────────────────────────────────────────────────────────────── */
 body {
   min-height: 100vh;

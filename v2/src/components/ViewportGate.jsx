@@ -8,10 +8,10 @@ const MOBILE_MIN_W = 360
 const MOBILE_MAX_W = 768
 const MOBILE_MIN_H = 600
 const MOBILE_MAX_AR = 0.95
-const DESKTOP_MIN_W = 1180
-const DESKTOP_MIN_H = 720
-const DESKTOP_MIN_AR = 1.30
-const DESKTOP_MAX_AR = 2.10
+const DESKTOP_MIN_W = 1024
+const DESKTOP_MIN_H = 640
+const DESKTOP_MIN_AR = 1.10
+const DESKTOP_MAX_AR = 3.60
 
 const getMode = (w, h) => {
   if (!w || !h) return null

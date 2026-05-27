@@ -21,6 +21,7 @@ import { useScrollSpy } from './hooks/useScrollSpy'
 import { useI18n } from './hooks/useI18n'
 import { useContrast } from './hooks/useContrast'
 import { initScrollEffects } from './animations/scroll'
+import { IS_LOW_PERF } from './utils/perf'
 
 function App() {
   const [quoteOpen, setQuoteOpen] = useState(false)
@@ -70,7 +71,7 @@ function App() {
       <SkipLink targetId="main-content" label={t('accessibility.skipToContent')} />
       <TargetCursor
         targetSelector=".cursor-target, .btn, .nav-link, a"
-        disableSpin={contrastActive}
+        disableSpin={contrastActive || IS_LOW_PERF}
       />
       <Nav sections={navSections} activeId={activeId} />
       <ScrollProgress />
