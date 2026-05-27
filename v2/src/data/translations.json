@@ -18,7 +18,7 @@
       "status": "Available for hire",
       "location": "France / Remote",
       "bubbleLabel": "Wanted",
-      "bubbleText": "Looking for a part-time web dev apprenticeship starting September 2026."
+      "bubbleText": "Looking for a web dev apprenticeship starting September 2026."
     },
     "about": {
       "eyebrow": "About Me",
@@ -300,7 +300,7 @@
       "status": "Disponible",
       "location": "France / Télétravail",
       "bubbleLabel": "Avis de recherche",
-      "bubbleText": "Je cherche une alternance à mi-temps en développement web à partir de septembre 2026."
+      "bubbleText": "Je cherche une alternance en développement web à partir de septembre 2026."
     },
     "about": {
       "eyebrow": "À Propos",
