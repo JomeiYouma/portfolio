@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { IS_LOW_PERF } from '../utils/perf'
 import './Waves.css'
 
 /**
@@ -26,6 +27,12 @@ const Waves = ({
   const wrapRef = useRef(null)
 
   useEffect(() => {
+    // The Waves canvas runs a per-frame physics pass over a dense point grid
+    // and rebuilds smooth Bezier paths for every line. On low-perf machines
+    // that's enough to keep the main thread busy whenever the Games section
+    // is on screen, so we skip the whole effect and let the section's static
+    // background do the talking.
+    if (IS_LOW_PERF) return
     const canvas = canvasRef.current
     const wrap = wrapRef.current
     if (!canvas || !wrap) return

@@ -1,5 +1,6 @@
 import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl'
 import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import { IS_LOW_PERF } from '../utils/perf'
 import './CircularGallery.css'
 
 function debounce(func, wait) {
@@ -285,7 +286,16 @@ class GalleryApp {
     this.addEventListeners()
   }
   createRenderer() {
-    this.renderer = new Renderer({ alpha: true, antialias: true, dpr: Math.min(window.devicePixelRatio || 1, 2) })
+    // Low-perf: disable MSAA and clamp DPR to 1. The two combined cut the GL
+    // fill cost on integrated GPUs roughly in half without changing the
+    // composition itself (the rounded-corner SDF already does its own edge
+    // smoothing in the fragment shader).
+    const dprCap = IS_LOW_PERF ? 1 : 2
+    this.renderer = new Renderer({
+      alpha: true,
+      antialias: !IS_LOW_PERF,
+      dpr: Math.min(window.devicePixelRatio || 1, dprCap),
+    })
     this.gl = this.renderer.gl
     this.gl.clearColor(0, 0, 0, 0)
     this.container.appendChild(this.gl.canvas)
@@ -299,7 +309,13 @@ class GalleryApp {
     this.scene = new Transform()
   }
   createGeometry() {
-    this.planeGeometry = new Plane(this.gl, { heightSegments: 50, widthSegments: 100 })
+    // The vertex shader wobbles each vertex with sin/cos; on low-perf machines
+    // 100×50 = 5k verts per plane × ~32 planes is the dominant CPU cost. Drop
+    // the tessellation by ~10× when we know the GPU is weak — the wave still
+    // reads as a wave at 32×16.
+    const wSeg = IS_LOW_PERF ? 32 : 100
+    const hSeg = IS_LOW_PERF ? 16 : 50
+    this.planeGeometry = new Plane(this.gl, { heightSegments: hSeg, widthSegments: wSeg })
   }
   createMedias(items, bend = 1, textColor, borderRadius, font) {
     const galleryItems = items && items.length ? items : []
