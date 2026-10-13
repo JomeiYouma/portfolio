@@ -72,6 +72,78 @@
         }
     },
     {
+        "id": 17,
+        "title": {
+            "en": "TUBEE",
+            "fr": "TUBEE"
+        },
+        "type": {
+            "en": "DESKTOP APP & SUBSCRIPTION WEBSITE",
+            "fr": "APPLICATION DE BUREAU & SITE D'ABONNEMENT"
+        },
+        "description": {
+            "en": "A desktop app for macOS and Windows that saves a video, its audio track, its transcript or its thumbnail from a pasted link. One window: the analysed video and its options on the left, the download queue on the right. Built in Python with PySide6 on top of the open-source yt-dlp engine, with a Flask website that handles accounts, the yearly subscription and the API the app talks to.",
+            "fr": "Une application de bureau pour macOS et Windows qui enregistre une vidéo, sa piste audio, sa transcription ou sa miniature à partir d'un lien collé. Une seule fenêtre : à gauche la vidéo analysée et ses options, à droite la file de téléchargements. Développée en Python avec PySide6 sur le moteur open source yt-dlp, avec un site Flask qui gère les comptes, l'abonnement annuel et l'API que l'application interroge."
+        },
+        "tech": "PYTHON - PYSIDE6 - YT-DLP - FLASK - POSTGRESQL",
+        "context": "Personal Project | Solo",
+        "image": "tubee.webp",
+        "link": "https://tubee-phi.vercel.app",
+        "year": "2026",
+        "role": {
+            "en": "Solo developer: desktop app, website and release packaging",
+            "fr": "Développeur solo : application de bureau, site et versions distribuables"
+        },
+        "highlights": {
+            "en": [
+                "Video, audio (MP3, M4A, Opus, WAV), transcript (plain text or SRT) and thumbnail, with playlists and clips cut to the second.",
+                "Distributed as a macOS .dmg and a Windows installer, with updates to the app and its engine.",
+                "Bilingual website (FR/EN) with accounts, subscription and an admin area, built with Flask and PostgreSQL."
+            ],
+            "fr": [
+                "Vidéo, audio (MP3, M4A, Opus, WAV), transcription (texte ou SRT) et miniature, avec playlists et extraits coupés à la seconde.",
+                "Distribuée en .dmg pour macOS et en installateur Windows, avec mises à jour de l'application et de son moteur.",
+                "Site bilingue (FR/EN) avec comptes, abonnement et espace d'administration, en Flask et PostgreSQL."
+            ]
+        }
+    },
+    {
+        "id": 18,
+        "title": {
+            "en": "POCKET DECK LAB",
+            "fr": "POCKET DECK LAB"
+        },
+        "type": {
+            "en": "DECK ANALYSIS TOOL",
+            "fr": "OUTIL D'ANALYSE DE DECKS"
+        },
+        "description": {
+            "en": "A web tool that scores Pokémon TCG Pocket decks on measurable criteria: consistency, speed, energy, resilience and damage output. Probabilities come from exact hypergeometric formulas and from a Monte-Carlo simulator running in a Web Worker, and every sub-score can be inspected. It also offers a visual deck builder, a ranking of meta decks and a versus mode that plays full simulated games.",
+            "fr": "Un outil web qui note les decks Pokémon TCG Pocket sur des critères mesurables : consistance, vitesse, énergie, résilience et sortie de dégâts. Les probabilités viennent de formules hypergéométriques exactes et d'un simulateur Monte-Carlo exécuté dans un Web Worker, et chaque sous-score est inspectable. L'outil propose aussi un constructeur de deck visuel, un classement des decks méta et un mode versus qui joue des parties simulées complètes."
+        },
+        "tech": "REACT 19 - TYPESCRIPT - VITE - VITEST - WEB WORKERS",
+        "context": "Personal Project | Solo",
+        "image": "pocket-deck-lab.webp",
+        "link": "https://github.com/JomeiYouma/pocket-deck-lab",
+        "year": "2026",
+        "role": {
+            "en": "Solo developer: simulation engine and interface",
+            "fr": "Développeur solo : moteur de simulation et interface"
+        },
+        "highlights": {
+            "en": [
+                "Exact hypergeometric probabilities and a Monte-Carlo simulator, covered by unit tests.",
+                "Global score from 0 to 100 that displays its own confidence, with five detailed sub-scores.",
+                "Deck builder, meta ranking and versus mode with simulated games: damage, weakness, knock-outs and points."
+            ],
+            "fr": [
+                "Probabilités hypergéométriques exactes et simulateur Monte-Carlo, couverts par des tests unitaires.",
+                "Score global de 0 à 100 qui affiche sa propre confiance, avec cinq sous-scores détaillés.",
+                "Constructeur de deck, classement méta et mode versus en parties simulées : dégâts, faiblesse, K.O. et points."
+            ]
+        }
+    },
+    {
         "id": 3,
         "title": {
             "en": "RESTAU RE",
@@ -212,6 +284,78 @@
                 "100% côté client : pas de serveur, pas de tracking, retour visuel instantané à chaque réglage.",
                 "Presets, dégradés sur mesure et drop du logo en drag and drop avec export PNG, SVG et JPG.",
                 "Fond Silk en Three.js combiné à une UI glass pour un espace de travail calme et concentré."
+            ]
+        }
+    },
+    {
+        "id": 19,
+        "title": {
+            "en": "PARICI",
+            "fr": "PARICI"
+        },
+        "type": {
+            "en": "EVENT FINDER WEB APP",
+            "fr": "APPLICATION WEB DE SORTIES"
+        },
+        "description": {
+            "en": "A single-page app to find concerts, exhibitions and outings in Paris, powered by the City of Paris open-data agenda. Search and filters live in the URL, so any result can be shared and survives a refresh; favourites are stored locally, without an account. An optional AI search turns a plain-language wish into filters, while the events shown stay real data.",
+            "fr": "Une application single-page pour trouver concerts, expositions et sorties à Paris, alimentée par l'agenda open data de la Ville de Paris. La recherche et les filtres vivent dans l'URL : tout résultat se partage et survit au rafraîchissement ; les favoris sont enregistrés localement, sans compte. Une recherche par IA, optionnelle, traduit une envie en langage naturel en filtres, les événements affichés restant des données réelles."
+        },
+        "tech": "REACT 19 - TYPESCRIPT - TANSTACK QUERY - TAILWIND CSS - VITEST",
+        "context": "Personal Project | Solo",
+        "image": "parici.webp",
+        "link": "https://parici-murex.vercel.app",
+        "year": "2026",
+        "role": {
+            "en": "Solo front-end developer",
+            "fr": "Développeur front-end solo"
+        },
+        "highlights": {
+            "en": [
+                "The URL is the single source of truth: shareable searches, working back and forward buttons.",
+                "An adapter layer maps the API response to the app's own event model, so a renamed field is fixed in one place.",
+                "Lint, type-check, unit tests and build run in CI on every push."
+            ],
+            "fr": [
+                "L'URL est la source de vérité : recherches partageables, boutons précédent et suivant fonctionnels.",
+                "Une couche d'adaptation traduit la réponse de l'API vers le modèle de l'application : un champ renommé se corrige à un seul endroit.",
+                "Lint, vérification des types, tests unitaires et build s'exécutent en CI à chaque push."
+            ]
+        }
+    },
+    {
+        "id": 20,
+        "title": {
+            "en": "PIXELATE STUDIO",
+            "fr": "PIXELATE STUDIO"
+        },
+        "type": {
+            "en": "BROWSER IMAGE EDITOR",
+            "fr": "ÉDITEUR D'IMAGES DANS LE NAVIGATEUR"
+        },
+        "description": {
+            "en": "An image editor that pixelates a picture on a grid of a chosen resolution, lets you edit it cell by cell, then exports a PNG with a transparent background. Erase and restore brushes, flood-fill erase with a tolerance, colour removal and optional palette reduction. Everything runs in the browser: images never leave the device.",
+            "fr": "Un éditeur qui pixelise une image sur une grille de résolution choisie, permet de la retoucher case par case, puis exporte un PNG à fond transparent. Pinceaux gomme et restauration, gomme magique avec tolérance, suppression d'une couleur et réduction de palette optionnelle. Tout s'exécute dans le navigateur : les images ne quittent pas l'appareil."
+        },
+        "tech": "REACT 18 - TYPESCRIPT - CANVAS - VITE",
+        "context": "Personal Project | Solo",
+        "image": "pixelate-studio.webp",
+        "link": "https://pixelate-studio-chi.vercel.app",
+        "year": "2026",
+        "role": {
+            "en": "Solo front-end developer & UI designer",
+            "fr": "Développeur front-end solo & designer UI"
+        },
+        "highlights": {
+            "en": [
+                "Load an image by drag and drop, file picker or paste from the clipboard.",
+                "Grid from 8 to 256 px wide, with the aspect ratio preserved.",
+                "Transparent PNG export from 1× to 16×, with crisp nearest-neighbour upscaling."
+            ],
+            "fr": [
+                "Chargement de l'image par glisser-déposer, sélecteur de fichier ou collage depuis le presse-papiers.",
+                "Grille de 8 à 256 px de large, proportions conservées.",
+                "Export PNG transparent de 1× à 16×, en agrandissement net au plus proche voisin."
             ]
         }
     },
