@@ -145,7 +145,38 @@
       "skipToContent": "Skip to main content",
       "opensNewTab": "opens in a new tab",
       "mainNav": "Main navigation",
-      "sectionNav": "Section navigation"
+      "sectionNav": "Section navigation",
+      "contrastTooltip": "High contrast mode",
+      "themeSwitch": "Switch theme",
+      "themeActive": "Theme:"
+    },
+    "themes": {
+      "neon": "Neon",
+      "riso": "Riso",
+      "galerie": "Gallery"
+    },
+    "galerie": {
+      "room": "Room",
+      "permanent": "Permanent exhibition",
+      "start": "Start the visit",
+      "enter": "Enter the room",
+      "back": "Back to the rotunda",
+      "previous": "Previous room",
+      "next": "Next room",
+      "hint": "Scroll or use ← → to look around",
+      "view3d": "3D view",
+      "viewPlan": "Plan view",
+      "exit": "Write to me, the door is open",
+      "loading": "Loading…",
+      "githubError": "GitHub data could not be loaded."
+    },
+    "riso": {
+      "index": "Index",
+      "backToTop": "Back to top",
+      "showAllProjects": "See all {count} projects",
+      "showFewerProjects": "Show fewer",
+      "loading": "Loading…",
+      "githubError": "GitHub data could not be loaded."
     },
     "coverLetterModal": {
       "title": "Coming Soon",
@@ -427,7 +458,38 @@
       "skipToContent": "Aller au contenu principal",
       "opensNewTab": "ouvre dans un nouvel onglet",
       "mainNav": "Navigation principale",
-      "sectionNav": "Navigation par section"
+      "sectionNav": "Navigation par section",
+      "contrastTooltip": "Mode contraste élevé",
+      "themeSwitch": "Changer de thème",
+      "themeActive": "Thème :"
+    },
+    "themes": {
+      "neon": "Néon",
+      "riso": "Riso",
+      "galerie": "Galerie"
+    },
+    "galerie": {
+      "room": "Salle",
+      "permanent": "Exposition permanente",
+      "start": "Commencer la visite",
+      "enter": "Entrer dans la salle",
+      "back": "Retour à la rotonde",
+      "previous": "Salle précédente",
+      "next": "Salle suivante",
+      "hint": "Molette ou flèches ← → pour tourner",
+      "view3d": "Vue 3D",
+      "viewPlan": "Vue plan",
+      "exit": "Écrivez-moi, la porte est ouverte",
+      "loading": "Chargement…",
+      "githubError": "Les données GitHub n'ont pas pu être chargées."
+    },
+    "riso": {
+      "index": "Index",
+      "backToTop": "Retour en haut",
+      "showAllProjects": "Voir les {count} projets",
+      "showFewerProjects": "Réduire la liste",
+      "loading": "Chargement…",
+      "githubError": "Les données GitHub n'ont pas pu être chargées."
     },
     "coverLetterModal": {
       "title": "Bientôt Disponible",

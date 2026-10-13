@@ -459,6 +459,16 @@
   display: flex;
   gap: 8px;
   z-index: 25;
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* On About the left column runs down to the bottom edge, so the controls slide
+   over to the right. translateX (not left/right) so the move can be animated;
+   48px = the 24px gutter on both sides. Desktop only: the mobile layout stacks. */
+@media (min-width: 769px) {
+  .accessibility-controls.is-right {
+    transform: translateX(calc(100vw - 48px - 100%));
+  }
 }
 
 .contrast-toggle,
@@ -497,6 +507,109 @@
   width: 16px;
   height: 16px;
   fill: currentColor;
+}
+
+/* Shift held: the same button now switches theme (see AccessibilityControls) */
+.contrast-toggle {
+  position: relative; /* anchors .control-tooltip and .contrast-frame */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+/* Tooltip of the contrast button. No delay and no transition: it is there the
+   moment the button is hovered or focused, and for as long as Shift is held
+   (it then names the theme switch). Each theme restyles it. */
+.control-tooltip {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  visibility: hidden;
+  padding: 7px 10px;
+  border: 1px solid var(--border-accent);
+  background: var(--bg-elev);
+  box-shadow: 0 0 14px var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.control-tooltip::before {
+  content: "// ";
+  opacity: 0.5;
+}
+
+.contrast-toggle:focus-visible .control-tooltip,
+.contrast-toggle.is-theme-mode .control-tooltip {
+  visibility: visible;
+}
+
+/* Hover only where there is a real pointer: on touch it would stick after a tap */
+@media (hover: hover) {
+  .contrast-toggle:hover .control-tooltip {
+    visibility: visible;
+  }
+}
+
+/* The button's own square steps aside (transparent border and fill) and
+   .contrast-frame takes its place: the same outline, orbiting the icon. The
+   perspective on the button is what squeezes it into a trapezoid as it turns. */
+.contrast-toggle.is-theme-mode,
+.contrast-toggle.active.is-theme-mode {
+  background: transparent;
+  border-color: transparent;
+  color: var(--accent);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  perspective: 110px;
+}
+
+.contrast-frame {
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  /* The frame tumbles on two axes: this box turns around X, the outline drawn
+     on its ::before turns around Y inside it. Same period, half a period apart,
+     and eased: one axis is at full speed while the other is nearly at rest, so
+     the motion hands over from one to the other instead of spinning flat. */
+  transform-style: preserve-3d;
+  animation: contrast-frame-x 2.4s ease-in-out infinite;
+}
+
+.contrast-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid currentColor;
+  box-shadow: 0 0 10px var(--accent-glow);
+  animation: contrast-frame-y 2.4s ease-in-out -1.2s infinite;
+}
+
+@keyframes contrast-frame-x {
+  to { transform: rotateX(360deg); }
+}
+
+@keyframes contrast-frame-y {
+  to { transform: rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contrast-frame {
+    animation: none;
+    transform: rotateX(24deg);
+  }
+
+  .contrast-frame::before {
+    animation: none;
+    transform: rotateY(-40deg);
+  }
 }
 
 /* Legal/CGV inline links next to the accessibility controls — matches the
