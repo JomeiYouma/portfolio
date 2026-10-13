@@ -377,7 +377,13 @@ class GalleryApp {
     }
   }
   onResize() {
-    this.screen = { width: this.container.clientWidth, height: this.container.clientHeight }
+    // The container can be measured before the page stylesheet applies (it has
+    // no height yet): fall back to 1px so the camera aspect stays finite. The
+    // ResizeObserver re-runs this as soon as the real box is known.
+    const screenWidth = this.container.clientWidth || 1
+    const screenHeight = this.container.clientHeight || 1
+    if (this.screen && this.screen.width === screenWidth && this.screen.height === screenHeight) return
+    this.screen = { width: screenWidth, height: screenHeight }
     this.renderer.setSize(this.screen.width, this.screen.height)
     this.camera.perspective({ aspect: this.screen.width / this.screen.height })
     const fov = (this.camera.fov * Math.PI) / 180
@@ -418,7 +424,10 @@ class GalleryApp {
     this.boundOnTouchDown = this.onTouchDown.bind(this)
     this.boundOnTouchMove = this.onTouchMove.bind(this)
     this.boundOnTouchUp = this.onTouchUp.bind(this)
-    window.addEventListener('resize', this.boundOnResize)
+    // Follow the container, not the window: its box also changes without any
+    // window resize (stylesheet applied after mount, layout breakpoint, fonts).
+    this.resizeObserver = new ResizeObserver(this.boundOnResize)
+    this.resizeObserver.observe(this.container)
     this.container.addEventListener('wheel', this.boundOnWheel, { passive: true })
     this.container.addEventListener('mousedown', this.boundOnTouchDown)
     window.addEventListener('mousemove', this.boundOnTouchMove)
@@ -429,7 +438,7 @@ class GalleryApp {
   }
   destroy() {
     window.cancelAnimationFrame(this.raf)
-    window.removeEventListener('resize', this.boundOnResize)
+    this.resizeObserver?.disconnect()
     this.container.removeEventListener('wheel', this.boundOnWheel)
     this.container.removeEventListener('mousedown', this.boundOnTouchDown)
     window.removeEventListener('mousemove', this.boundOnTouchMove)

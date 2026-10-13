@@ -10,6 +10,11 @@
   cursor: grabbing;
 }
 
+/* Out of flow: the canvas has a fixed pixel size, so in flow it would dictate
+   the container's height and pin the Projects grid column to a stale width. */
 .circular-gallery canvas {
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
