@@ -287,6 +287,14 @@ ul     { list-style: none; }
    sight until React swaps it for the right root. */
 html[data-theme]:not([data-theme="neon"]) .app { display: none; }
 
+/* Theme stylesheets other than neon are lazy chunks: give their ground colour
+   to the first paint and to the Suspense fallback, so a stored theme never
+   flashes dark. */
+html[data-theme="riso"] body,
+html[data-theme="riso"] .loading-screen { background: #f3eee2; }
+html[data-theme="galerie"] body,
+html[data-theme="galerie"] .loading-screen { background: #ffd400; }
+
 /* ─── Loading screen ─────────────────────────────────────────────────────── */
 .loading-screen {
   position: fixed;

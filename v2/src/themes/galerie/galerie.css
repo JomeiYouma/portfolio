@@ -1,0 +1,1130 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   GALERIE THEME
+   The portfolio as an exhibition where every room is painted one saturated
+   colour from floor to ceiling: a 3D rotunda (Scene.jsx), or the same content
+   as a page of full-bleed colour bands ("plan view").
+
+   Everything here is either scoped under html[data-theme="galerie"] or uses a
+   class prefixed `ga-` that only this theme's markup carries, so the sheet is
+   inert while another theme is active.
+
+   Colour: GalerieTheme.jsx sets --ga-a (the room's colour) and --ga-b (its
+   ink) from PALETTE in room.js. Every block then works with two roles,
+   --ga-room (ground) and --ga-room-ink (what is drawn on it); inverse blocks
+   such as the cartel simply swap them. Rules below mostly use currentColor,
+   so they follow whichever block they end up in.
+
+   Two type families: Bodoni Moda for titles and quotations, Schibsted Grotesk
+   for labels and running text.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Tokens ─────────────────────────────────────────────────────────────── */
+html[data-theme="galerie"] {
+  /* Keep in sync with INK and PAPER in room.js */
+  --ga-ink:   #141311;
+  --ga-paper: #f6f3ec;
+
+  --ga-gutter: clamp(16px, 3.4vw, 48px);
+  --ga-bar:    60px;
+
+  --ga-serif: "Bodoni Moda Variable", Didot, "Bodoni MT", serif;
+  --ga-sans:  "Schibsted Grotesk Variable", Arial, sans-serif;
+
+  /* Shared components (modals, contribution graph, controls) read the neon
+     tokens. Dialogs stay neutral: ink on paper, with the blue of room 01. */
+  --bg:            var(--ga-paper);
+  --bg-elev:       var(--ga-paper);
+  --bg-soft:       #ebe7dd;
+  --bg-panel:      var(--ga-paper);
+  --text:          var(--ga-ink);
+  --text-muted:    #4c4841;
+  --text-dim:      #5f5a52;
+  --accent:        #2238f5;
+  --accent-soft:   rgba(34, 56, 245, 0.12);
+  --accent-glow:   transparent;
+  --accent-2:      #2238f5;
+  --border:        rgba(20, 19, 17, 0.2);
+  --border-accent: var(--ga-ink);
+  --shadow:        none;
+  --shadow-glow:   none;
+  --font-main:     var(--ga-serif);
+  --font-display:  var(--ga-serif);
+  --font-body:     var(--ga-sans);
+  --font-mono:     var(--ga-sans);
+
+  color-scheme: light;
+  scroll-padding-top: calc(var(--ga-bar) + 24px);
+}
+
+/* ─── Neon globals, neutralised ──────────────────────────────────────────── */
+html[data-theme="galerie"]::before,
+html[data-theme="galerie"] body::before,
+html[data-theme="galerie"] body::after {
+  display: none;
+}
+
+html[data-theme="galerie"] body {
+  background: var(--ga-paper);
+  color: var(--ga-ink);
+  font-family: var(--ga-sans);
+}
+
+/* Drawn in the ink of whatever block the control sits in (dialogs: plain ink) */
+html[data-theme="galerie"] :focus-visible {
+  outline: 3px solid var(--ga-room-ink, var(--ga-ink));
+  outline-offset: 3px;
+}
+
+html[data-theme="galerie"] ::selection {
+  background: var(--ga-ink);
+  color: var(--ga-paper);
+}
+
+/* ─── Frame ──────────────────────────────────────────────────────────────── */
+/* The two colour roles. Declared again on every block that carries its own
+   --ga-a/--ga-b (a room of the plan view), and swapped on inverse blocks. */
+.ga-app,
+.ga-room {
+  --ga-room: var(--ga-a, var(--ga-paper));
+  --ga-room-ink: var(--ga-b, var(--ga-ink));
+  background: var(--ga-room);
+  color: var(--ga-room-ink);
+}
+
+.ga-cartel,
+.ga-turn button {
+  --ga-room: var(--ga-b, var(--ga-ink));
+  --ga-room-ink: var(--ga-a, var(--ga-paper));
+  background: var(--ga-room);
+  color: var(--ga-room-ink);
+}
+
+.ga-app {
+  min-height: 100vh;
+  font-family: var(--ga-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* The 3D view fills the window and never scrolls: rooms are turned to, not scrolled to */
+.ga-app.is-3d {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+:where(.ga-app) ol,
+:where(.ga-app) ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.ga-app) p,
+:where(.ga-app) dl,
+:where(.ga-app) dd,
+:where(.ga-app) figure,
+:where(.ga-app) blockquote {
+  margin: 0;
+}
+
+:where(.ga-app) a {
+  color: inherit;
+}
+
+/* layout.css turns <main> into the neon horizontal strip */
+.ga-overlay,
+.ga-plan {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+/* ─── Type ───────────────────────────────────────────────────────────────── */
+/* Cartel label: small tracked capitals */
+.ga-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.ga-title,
+.ga-subtitle,
+.ga-cartel-title {
+  margin: 0;
+  font-family: var(--ga-serif);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.ga-title {
+  font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+}
+
+.ga-subtitle {
+  font-size: 1.6rem;
+}
+
+.ga-lead {
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+
+/* ─── Links & buttons ────────────────────────────────────────────────────── */
+.ga-link {
+  display: inline-block;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font-family: var(--ga-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  cursor: pointer;
+}
+
+.ga-link:hover {
+  text-decoration-thickness: 4px;
+}
+
+.ga-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 12px 20px;
+  border: 2px solid var(--ga-room-ink);
+  background: var(--ga-room-ink);
+  font-family: var(--ga-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ga-room);
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+/* Hover inverts the two colours of the block the button sits in */
+.ga-btn:hover,
+.ga-btn--ghost {
+  background: transparent;
+  color: var(--ga-room-ink);
+}
+
+.ga-btn--ghost:hover {
+  background: var(--ga-room-ink);
+  color: var(--ga-room);
+}
+
+.ga-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+}
+
+/* ─── Top bar ────────────────────────────────────────────────────────────── */
+.ga-bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.6vw, 24px);
+  min-height: var(--ga-bar);
+  padding-inline: var(--ga-gutter);
+  border-bottom: 2px solid var(--ga-room-ink);
+  background: var(--ga-room);
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.ga-app.is-3d .ga-bar {
+  position: absolute;
+  inset: 0 0 auto 0;
+}
+
+.ga-brand {
+  margin-right: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--ga-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ga-nav ol {
+  display: flex;
+  gap: 2px;
+}
+
+.ga-nav button {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 8px 9px;
+  border: 0;
+  background: none;
+  font-family: var(--ga-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ga-nav-num {
+  font-weight: 400;
+}
+
+.ga-nav button:hover {
+  box-shadow: inset 0 -2px 0 currentColor;
+}
+
+/* Current room: a solid block in the ink of the room */
+.ga-nav button[aria-current] {
+  background: var(--ga-room-ink);
+  color: var(--ga-room);
+}
+
+.ga-mode {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 2px solid var(--ga-room-ink);
+  background: none;
+  font-family: var(--ga-sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ga-mode:hover {
+  background: var(--ga-room-ink);
+  color: var(--ga-room);
+}
+
+/* The shared controls sit in the bar here */
+.ga-bar .accessibility-controls {
+  position: static;
+  transform: none;
+  gap: 6px;
+}
+
+.ga-bar .legal-pills {
+  display: none; /* the legal links are in the Contact room */
+}
+
+.ga-bar .contrast-toggle,
+.ga-bar .lang-toggle {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--ga-room-ink);
+  background: transparent;
+  color: var(--ga-room-ink);
+  font-family: var(--ga-sans);
+  font-weight: 700;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  transition: none;
+}
+
+.ga-bar .contrast-toggle:hover,
+.ga-bar .lang-toggle:hover,
+.ga-bar .contrast-toggle.active {
+  border-color: var(--ga-room-ink);
+  background: var(--ga-room-ink);
+  color: var(--ga-room);
+  box-shadow: none;
+}
+
+.ga-bar .contrast-toggle.is-theme-mode,
+.ga-bar .contrast-toggle.active.is-theme-mode {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ga-room-ink);
+}
+
+.ga-bar .contrast-frame {
+  inset: -2px;
+}
+
+.ga-bar .contrast-frame::before {
+  border: 2px solid var(--ga-room-ink);
+  box-shadow: none;
+}
+
+/* Tooltip: a small inverse cartel under the bar */
+.ga-bar .control-tooltip {
+  top: calc(100% + 13px);
+  right: 0;
+  bottom: auto;
+  left: auto;
+  padding: 8px 11px;
+  border: 0;
+  background: var(--ga-room-ink);
+  box-shadow: none;
+  color: var(--ga-room);
+  font-family: var(--ga-sans);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.ga-bar .control-tooltip::before {
+  content: none;
+}
+
+/* ─── 3D view ────────────────────────────────────────────────────────────── */
+.ga-stage {
+  position: absolute;
+  inset: var(--ga-bar) 0 0 0;
+}
+
+.ga-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+html.ga-pointing .ga-canvas {
+  cursor: pointer;
+}
+
+/* Lets clicks through to the walls except on its own panels */
+.ga-overlay {
+  position: absolute;
+  inset: var(--ga-bar) 0 0 0;
+  pointer-events: none;
+}
+
+.ga-overlay > * {
+  pointer-events: auto;
+}
+
+/* The cartel: a caption strip along the floor, clear of what hangs on the
+   wall, in the two colours of the room inverted. Name of the room on the left,
+   a word about it, the way in on the right. */
+.ga-cartel {
+  position: absolute;
+  left: var(--ga-gutter);
+  /* leaves the bottom-right corner to the turning controls */
+  right: calc(var(--ga-gutter) + 250px);
+  bottom: clamp(20px, 5vh, 44px);
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: clamp(18px, 2.4vw, 36px);
+  align-items: center;
+  max-width: 1040px;
+  padding: 16px 22px 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+  animation: ga-rise 0.4s ease both;
+}
+
+.ga-cartel .ga-label {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.ga-cartel-title {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+  white-space: nowrap;
+}
+
+.ga-cartel-lead {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  max-width: 34em;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.ga-cartel .ga-actions {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+@keyframes ga-rise {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+/* Turning: two arrows around the plan of the room */
+.ga-turn {
+  position: absolute;
+  right: var(--ga-gutter);
+  bottom: clamp(20px, 5vh, 44px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ga-turn button {
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--ga-room);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.ga-turn button:hover {
+  background: var(--ga-room-ink);
+  color: var(--ga-room);
+}
+
+.ga-floorplan {
+  width: 112px;
+  height: 112px;
+}
+
+.ga-floorplan-view {
+  fill: currentColor;
+  fill-opacity: 0.22;
+}
+
+.ga-floorplan-wall {
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.ga-floorplan-hit {
+  stroke: transparent;
+  stroke-width: 14;
+}
+
+.ga-floorplan g {
+  cursor: pointer;
+}
+
+.ga-floorplan text {
+  font-family: var(--ga-sans);
+  font-size: 8px;
+  font-weight: 500;
+  fill: currentColor;
+}
+
+.ga-floorplan g.is-current .ga-floorplan-wall,
+.ga-floorplan g:hover .ga-floorplan-wall {
+  stroke-width: 5;
+}
+
+.ga-floorplan g.is-current text {
+  font-weight: 800;
+}
+
+.ga-floorplan-you {
+  fill: currentColor;
+}
+
+.ga-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* The content sheet of a room, beside its wall and in the same colour.
+   Width mirrored in GalerieTheme.jsx. */
+.ga-sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(420px, 50vw, 680px);
+  overflow-y: auto;
+  padding: clamp(22px, 3vw, 40px) clamp(22px, 3vw, 44px) 28px;
+  border-left: 2px solid var(--ga-room-ink);
+  background: var(--ga-room);
+  animation: ga-slide 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ga-room-ink) transparent;
+}
+
+@keyframes ga-slide {
+  from { opacity: 0; transform: translateX(32px); }
+}
+
+.ga-sheet-head {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin-bottom: clamp(22px, 3vw, 36px);
+}
+
+.ga-sheet-head .ga-link {
+  margin-bottom: 12px;
+}
+
+.ga-sheet-head .ga-title:focus {
+  outline: none; /* focused by script when a room is entered, not a control */
+}
+
+.ga-sheet-body,
+.ga-room-body {
+  display: grid;
+  gap: clamp(22px, 2.6vw, 34px);
+}
+
+.ga-sheet-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: clamp(32px, 4vw, 52px);
+  padding-top: 16px;
+  border-top: 2px solid currentColor;
+}
+
+/* ─── Plan view ──────────────────────────────────────────────────────────── */
+/* Each room is a full-bleed band in its own colour, its number printed huge
+   and tone on tone behind the content, as on the walls of the 3D view. */
+.ga-room {
+  position: relative;
+  overflow: clip;
+}
+
+.ga-room-num {
+  position: absolute;
+  right: -0.03em;
+  bottom: -0.2em;
+  font-family: var(--ga-serif);
+  font-size: clamp(15rem, 46vw, 42rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: var(--ga-tone);
+  pointer-events: none;
+  user-select: none;
+}
+
+.ga-room-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+  width: min(100% - 2 * var(--ga-gutter), 1240px);
+  margin-inline: auto;
+  padding-block: clamp(56px, 9vw, 130px);
+}
+
+.ga-room-head {
+  position: sticky;
+  top: calc(var(--ga-bar) + 28px);
+  display: grid;
+  gap: 12px;
+}
+
+/* The title wall: the name as large as the page allows */
+.ga-room--title .ga-room-inner {
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: clamp(36px, 7vw, 90px) clamp(48px, 8vw, 110px);
+}
+
+.ga-room--title .ga-room-head {
+  position: static;
+}
+
+.ga-room--title .ga-title {
+  font-size: clamp(4.2rem, 21vw, 17rem);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+}
+
+.ga-subhead {
+  font-family: var(--ga-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3.4vw, 2.8rem);
+  line-height: 1.1;
+}
+
+.ga-room--title .ga-room-body {
+  max-width: 46rem;
+}
+
+/* ─── Room contents ──────────────────────────────────────────────────────── */
+.ga-hero {
+  display: grid;
+  gap: 24px;
+}
+
+.ga-facts,
+.ga-skills {
+  display: grid;
+  border-top: 2px solid currentColor;
+}
+
+.ga-facts > div,
+.ga-skills > div {
+  display: grid;
+  grid-template-columns: 11em minmax(0, 1fr);
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.ga-facts dt {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ga-facts dd {
+  overflow-wrap: anywhere;
+}
+
+/* A note pinned beside the works: certificate, terms of a commission */
+.ga-note {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: 16px 0 16px 18px;
+  border-left: 5px solid currentColor;
+  font-size: 0.95rem;
+}
+
+.ga-badge {
+  justify-self: start;
+  padding: 5px 10px;
+  border: 2px solid currentColor;
+}
+
+/* Works: each thumbnail on a wide white mount, as on the walls, with its
+   cartel underneath */
+.ga-works {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 30px 22px;
+}
+
+.ga-works--wide {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.ga-work {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--ga-sans);
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ga-work-shot {
+  display: block;
+  aspect-ratio: 16 / 10;
+  margin-bottom: 8px;
+  padding: 9px;
+  background: #ffffff;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ga-work-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ga-work:hover .ga-work-shot,
+.ga-work:focus-visible .ga-work-shot {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
+}
+
+.ga-work-title {
+  font-family: var(--ga-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.ga-work:hover .ga-work-title,
+.ga-repos a:hover .ga-repo-name {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.ga-work-text {
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.ga-work-meta {
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.ga-quote {
+  display: grid;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.ga-quote blockquote {
+  font-family: var(--ga-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  line-height: 1.35;
+}
+
+.ga-quote figcaption {
+  font-size: 0.82rem;
+}
+
+.ga-quote figcaption strong {
+  font-weight: 700;
+}
+
+.ga-offers {
+  display: grid;
+  border-top: 2px solid currentColor;
+}
+
+.ga-offer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px 20px;
+  align-items: start;
+  padding: 22px 0 26px;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.ga-offer h3 {
+  margin: 0;
+  font-family: var(--ga-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.ga-offer-price {
+  display: grid;
+  justify-items: end;
+  grid-row: span 2;
+}
+
+.ga-offer-price strong {
+  font-family: var(--ga-serif);
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ga-offer > p:not(.ga-offer-price),
+.ga-offer-features,
+.ga-offer .ga-btn {
+  grid-column: 1;
+}
+
+.ga-offer .ga-btn {
+  justify-self: start;
+  margin-top: 6px;
+}
+
+.ga-offer-features {
+  display: grid;
+  gap: 2px;
+  font-size: 0.9rem;
+}
+
+.ga-offer-features li::before {
+  content: "— ";
+}
+
+.ga-contacts {
+  border-top: 2px solid currentColor;
+}
+
+.ga-contacts a {
+  display: grid;
+  grid-template-columns: 7.5em minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 14px;
+  padding: 15px 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.ga-contact-value {
+  font-family: var(--ga-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.ga-contacts a:hover .ga-contact-value {
+  font-style: italic;
+}
+
+.ga-github {
+  display: grid;
+  gap: 16px;
+}
+
+.ga-github > header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+}
+
+.ga-switch {
+  display: inline-flex;
+  border: 2px solid var(--ga-room-ink);
+}
+
+.ga-switch button {
+  min-height: 32px;
+  padding: 0 11px;
+  border: 0;
+  background: none;
+  font-family: var(--ga-sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ga-switch button + button {
+  border-left: 2px solid var(--ga-room-ink);
+}
+
+.ga-switch button[aria-pressed="true"] {
+  background: var(--ga-room-ink);
+  color: var(--ga-room);
+}
+
+/* The shared contribution graph, mounted on white like the pictures: inside
+   it, plain ink whatever the colour of the room */
+.ga-github .github-graph {
+  --text: var(--ga-ink);
+  --text-muted: #4c4841;
+  --text-dim: #5f5a52;
+  --accent: var(--ga-ink);
+  --border: rgba(20, 19, 17, 0.2);
+  --bg-elev: #ffffff;
+  --border-accent: var(--ga-ink);
+  border: 0;
+  border-radius: 0;
+  background: #ffffff;
+  color: var(--ga-ink);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+
+.ga-github .github-graph-tooltip {
+  border: 2px solid var(--ga-ink);
+}
+
+.ga-repos {
+  border-top: 2px solid currentColor;
+}
+
+.ga-repos a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.ga-repo-name {
+  font-family: var(--ga-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.ga-repos time {
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.ga-repo-desc {
+  grid-column: 1 / -1;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.ga-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+}
+
+/* ─── Shared dialogs ─────────────────────────────────────────────────────── */
+html[data-theme="galerie"] .modal-overlay {
+  background: rgba(20, 19, 17, 0.6);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-theme="galerie"] .modal-content {
+  border: 2px solid var(--ga-ink);
+}
+
+html[data-theme="galerie"] .modal-content::before,
+html[data-theme="galerie"] .modal-content::after {
+  display: none;
+}
+
+/* ─── Narrower screens ───────────────────────────────────────────────────── */
+@media (max-width: 1180px) {
+  .ga-nav-num {
+    display: none;
+  }
+
+  /* No room for the sentence: the cartel keeps the name and the way in */
+  .ga-cartel-lead {
+    display: none;
+  }
+
+  .ga-cartel {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .ga-cartel .ga-actions {
+    grid-column: 2;
+  }
+}
+
+/* Under 900px there is no 3D view (see ROOMY in GalerieTheme.jsx): plan view only */
+@media (max-width: 899px) {
+  .ga-bar {
+    flex-wrap: wrap;
+    row-gap: 0;
+    padding-top: 10px;
+  }
+
+  /* The room list drops to its own row and scrolls sideways */
+  .ga-nav {
+    order: 3;
+    width: calc(100% + 2 * var(--ga-gutter));
+    margin-inline: calc(var(--ga-gutter) * -1);
+    padding-inline: calc(var(--ga-gutter) - 9px);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .ga-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ga-nav button {
+    padding-block: 12px;
+  }
+
+  .ga-room-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ga-room-head {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .ga-facts > div,
+  .ga-skills > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+
+  .ga-contacts a {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .ga-contacts .ga-label {
+    grid-column: 1 / -1;
+  }
+
+  .ga-offer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ga-offer-price {
+    grid-row: auto;
+    justify-items: start;
+  }
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ga-cartel,
+  .ga-sheet {
+    animation: none;
+  }
+
+  .ga-app,
+  .ga-bar,
+  .ga-btn,
+  .ga-work-shot {
+    transition: none;
+  }
+
+  .ga-work:hover .ga-work-shot,
+  .ga-work:focus-visible .ga-work-shot {
+    transform: none;
+  }
+}
+
+/* ─── High contrast ──────────────────────────────────────────────────────── */
+/* Every room goes black on white. !important: the room colours are set inline. */
+html[data-theme="galerie"] body.aaa-contrast .ga-app,
+html[data-theme="galerie"] body.aaa-contrast .ga-room {
+  --ga-a: #ffffff !important;
+  --ga-b: #000000 !important;
+  --ga-tone: #e4e4e4 !important;
+}

@@ -1,0 +1,1710 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   RISO THEME
+   Two inks (blue, red-orange) on paper, ordered dithering, one long page.
+
+   Everything here is either scoped under html[data-theme="riso"] or uses a
+   class prefixed `rz-` that only this theme's markup carries, so the sheet is
+   inert while another theme is active (Vite never unloads it).
+
+   The dither textures (--rz-d25, --rz-d50, --rz-ramp-down, --rz-tile,
+   --rz-ramp-len) are generated in dither.js and set on .rz-app.
+
+   One type family, Anybody, at three widths: very wide for the wordmark and
+   the figures (section numbers, prices), narrow for titles, regular for text
+   and labels.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Tokens ─────────────────────────────────────────────────────────────── */
+html[data-theme="riso"] {
+  /* Keep the four ink values in sync with palette.js */
+  --rz-paper:  #f3eee2;
+  --rz-ink:    #16246b;
+  --rz-blue:   #2743c4;
+  --rz-red:    #e63f1a;
+  --rz-muted:  #3d4a86;
+  --rz-line:   rgba(22, 36, 107, 0.3);
+  --rz-tint:   #e9e2d0;
+
+  --rz-gutter: clamp(16px, 4vw, 56px);
+  --rz-mast:   60px;
+  --rz-rail:   16px;
+
+  --rz-display: "Anybody Variable", "Arial Narrow", Arial, sans-serif;
+
+  /* Shared components (modals, contribution graph, controls) read the neon tokens */
+  --bg:            var(--rz-paper);
+  --bg-elev:       var(--rz-paper);
+  --bg-soft:       var(--rz-tint);
+  --bg-panel:      var(--rz-paper);
+  --text:          var(--rz-ink);
+  --text-muted:    var(--rz-muted);
+  --text-dim:      #5b6699;
+  --accent:        var(--rz-blue);
+  --accent-soft:   rgba(39, 67, 196, 0.12);
+  --accent-glow:   transparent;
+  --accent-2:      var(--rz-blue);
+  --border:        var(--rz-line);
+  --border-accent: var(--rz-ink);
+  --shadow:        none;
+  --shadow-glow:   none;
+  --font-main:     var(--rz-display);
+  --font-display:  var(--rz-display);
+  --font-body:     var(--rz-display);
+  --font-mono:     var(--rz-display);
+
+  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--rz-mast) + 20px);
+}
+
+/* ─── Neon globals, neutralised ──────────────────────────────────────────── */
+/* base.css paints the neon backdrop on these pseudo-elements */
+html[data-theme="riso"]::before,
+html[data-theme="riso"] body::before,
+html[data-theme="riso"] body::after {
+  display: none;
+}
+
+html[data-theme="riso"] body {
+  background-color: var(--rz-paper);
+  color: var(--rz-ink);
+  font-family: var(--rz-display);
+}
+
+html[data-theme="riso"] :focus-visible {
+  outline: 3px solid var(--rz-red);
+  outline-offset: 3px;
+}
+
+html[data-theme="riso"] ::selection {
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+}
+
+/* ─── Frame ──────────────────────────────────────────────────────────────── */
+/* Paper: flat colour plus a faint static grain. It is painted here, not only
+   on <body>: #root is its own stacking context (base.css), so anything using
+   mix-blend-mode inside it needs a backdrop inside it too. */
+.rz-app {
+  min-height: 100vh;
+  background-color: var(--rz-paper);
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.09  0 0 0 0 0.14  0 0 0 0 0.42  0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
+  overflow-x: clip; /* clip, not hidden: the masthead is sticky */
+  font-family: var(--rz-display);
+  font-stretch: 100%;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+/* :where() keeps this reset at element-level specificity, below every class */
+:where(.rz-app) ol,
+:where(.rz-app) ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* layout.css turns <main> into the neon horizontal strip */
+.rz-main {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.rz-wrap {
+  width: min(100% - 2 * var(--rz-gutter), 1320px);
+  margin-inline: auto;
+}
+
+.rz-section {
+  position: relative;
+  padding-bottom: clamp(56px, 9vw, 130px);
+}
+
+/* ─── Type ───────────────────────────────────────────────────────────────── */
+/* Small capitals label: eyebrows, metadata, anything that names a value */
+.rz-eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rz-muted);
+}
+
+/* Poster title: the narrow end of the family */
+.rz-title,
+.rz-subtitle {
+  margin: 0;
+  font-stretch: 62%;
+  font-weight: 800;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--rz-ink);
+}
+
+.rz-title {
+  font-size: clamp(2.6rem, 8vw, 6.4rem);
+  text-wrap: balance;
+}
+
+.rz-subtitle {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+}
+
+.rz-nowrap {
+  white-space: nowrap;
+}
+
+/* Figures: the wide, black end of the family, like the wordmark */
+.rz-num {
+  font-stretch: 150%;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.rz-lead {
+  margin: 0;
+  max-width: 34em;
+  font-size: clamp(1.12rem, 1.75vw, 1.45rem);
+  line-height: 1.45;
+}
+
+.rz-section-lead {
+  margin-bottom: clamp(28px, 4vw, 56px);
+}
+
+/* Two-ink lettering: the blue plate, plus a red plate printed slightly off
+   register. Where both inks overlap they multiply into a near-black. */
+.rz-ink {
+  position: relative;
+  isolation: isolate;
+  color: var(--rz-blue);
+}
+
+.rz-ink::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--rz-red);
+  mix-blend-mode: multiply;
+  transform: translate(-0.04em, 0.03em);
+  animation: rz-misregister 5s steps(1) infinite;
+  pointer-events: none;
+}
+
+/* The press never lands twice in the same spot */
+@keyframes rz-misregister {
+  0%   { transform: translate(-0.040em, 0.030em); }
+  25%  { transform: translate(-0.052em, 0.022em); }
+  50%  { transform: translate(-0.034em, 0.038em); }
+  75%  { transform: translate(-0.046em, 0.026em); }
+}
+
+/* ─── Links & buttons ────────────────────────────────────────────────────── */
+.rz-link {
+  display: inline-block;
+  padding: 6px 0;
+  background: none;
+  border: 0;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rz-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  cursor: pointer;
+}
+
+.rz-link:hover {
+  color: var(--rz-blue);
+  text-decoration-color: var(--rz-red);
+}
+
+/* Box with a hard dithered shadow: a 50% screen of blue, offset behind it.
+   The box is always its own stacking context and paints two layers under its
+   content: ::before the shadow, ::after the face (fill and border). Drawing
+   the face as a layer, rather than as the element's own background, is what
+   keeps the shadow behind it whatever happens to the element — a transform on
+   hover used to lift the shadow above the background and over the text. */
+.rz-btn,
+.rz-card {
+  --rz-face: var(--rz-paper);
+  position: relative;
+  isolation: isolate;
+  border: 2px solid transparent; /* keeps the box size; the visible border is on ::after */
+  background: none;
+  color: var(--rz-ink);
+}
+
+.rz-btn::before,
+.rz-card::before,
+.rz-btn::after,
+.rz-card::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+}
+
+.rz-btn::before,
+.rz-card::before {
+  z-index: -2;
+  background: var(--rz-blue);
+  -webkit-mask-image: var(--rz-d50);
+  mask-image: var(--rz-d50);
+  -webkit-mask-size: var(--rz-tile);
+  mask-size: var(--rz-tile);
+  transform: translate(var(--rz-drop, 8px), var(--rz-drop, 8px));
+  transition: transform 0.12s steps(3);
+}
+
+.rz-btn::after,
+.rz-card::after {
+  z-index: -1;
+  border: 2px solid var(--rz-ink);
+  background: var(--rz-face);
+}
+
+.rz-btn {
+  --rz-drop: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 22px;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.12s steps(3);
+}
+
+.rz-btn--solid {
+  --rz-face: var(--rz-ink);
+  color: var(--rz-paper);
+}
+
+.rz-btn:hover {
+  --rz-drop: 10px;
+  transform: translate(-2px, -2px);
+}
+
+.rz-btn:active {
+  --rz-drop: 0px;
+  transform: translate(4px, 4px);
+}
+
+/* Cards that are one big link or button lift the same way */
+a.rz-card,
+button.rz-card {
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.12s steps(3);
+}
+
+a.rz-card:hover,
+button.rz-card:hover {
+  --rz-drop: 13px;
+  transform: translate(-3px, -3px);
+}
+
+.rz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.rz-actions--spread {
+  gap: 18px 32px;
+  margin-top: clamp(36px, 6vw, 72px);
+}
+
+/* Screenshot at the top of a card, in its true colours */
+.rz-shot {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 2px solid var(--rz-ink);
+  background: var(--rz-tint);
+}
+
+.rz-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── Print-in reveal ────────────────────────────────────────────────────── */
+/* A stepped wipe, like a print head passing. Blocks wait at opacity 0 rather
+   than clipped: a fully clipped box never intersects, so the observer that
+   adds .is-in would not fire. The -24px insets leave room for the dither
+   shadows, which sit outside their box. */
+[data-rz-reveal] {
+  opacity: 0;
+}
+
+[data-rz-reveal].is-in {
+  opacity: 1;
+  animation: rz-print 0.7s steps(12, end) both;
+}
+
+@keyframes rz-print {
+  from { clip-path: inset(-24px 100% -24px -24px); }
+  to   { clip-path: inset(-24px); }
+}
+
+/* ─── Masthead ───────────────────────────────────────────────────────────── */
+.rz-mast {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--rz-paper);
+  border-bottom: 2px solid var(--rz-ink);
+}
+
+.rz-mast-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+  height: var(--rz-mast);
+}
+
+.rz-mast-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--rz-ink);
+}
+
+/* Two overprinted dots */
+.rz-mast-mark {
+  position: relative;
+  width: 24px;
+  height: 16px;
+  isolation: isolate;
+}
+
+.rz-mast-mark::before,
+.rz-mast-mark::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.rz-mast-mark::before { left: 0; background: var(--rz-blue); }
+.rz-mast-mark::after  { left: 8px; background: var(--rz-red); mix-blend-mode: multiply; }
+
+.rz-index ol {
+  display: flex;
+  gap: 4px;
+}
+
+.rz-index a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 8px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--rz-ink);
+}
+
+.rz-index-num {
+  font-weight: 400;
+  color: var(--rz-muted);
+}
+
+.rz-index a:hover {
+  background: var(--rz-tint);
+}
+
+.rz-index a[aria-current] {
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+}
+
+.rz-index a[aria-current] .rz-index-num {
+  color: var(--rz-paper);
+}
+
+.rz-mast-toggle {
+  display: none;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 2px solid var(--rz-ink);
+  background: var(--rz-paper);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rz-ink);
+  cursor: pointer;
+}
+
+.rz-mast.is-open .rz-mast-toggle {
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+}
+
+/* The shared controls live in the bar here, not pinned to a corner */
+.rz-mast .accessibility-controls {
+  position: static;
+  transform: none;
+  gap: 6px;
+}
+
+.rz-mast .legal-pills {
+  display: none; /* the legal links are in the footer in this theme */
+}
+
+.rz-mast .contrast-toggle,
+.rz-mast .lang-toggle {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--rz-ink);
+  background: var(--rz-paper);
+  color: var(--rz-ink);
+  font-family: inherit;
+  font-weight: 700;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  transition: none;
+}
+
+.rz-mast .contrast-toggle:hover,
+.rz-mast .lang-toggle:hover,
+.rz-mast .contrast-toggle.active {
+  border-color: var(--rz-ink);
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+  box-shadow: none;
+}
+
+/* Shift held: the square outline leaves the button and orbits the icon
+   (see .contrast-frame in components.css) */
+.rz-mast .contrast-toggle.is-theme-mode,
+.rz-mast .contrast-toggle.active.is-theme-mode {
+  border-color: transparent;
+  background: transparent;
+  color: var(--rz-ink);
+  box-shadow: none;
+}
+
+.rz-mast .contrast-frame {
+  inset: -2px;
+}
+
+.rz-mast .contrast-frame::before {
+  border: 2px solid var(--rz-red);
+  box-shadow: none;
+}
+
+/* Tooltip, printed: an ink label hanging under the bar, with the dithered
+   shadow of the cards (two layers under the text, see .rz-card) */
+.rz-mast .control-tooltip {
+  top: calc(100% + 14px);
+  right: 0;
+  bottom: auto;
+  left: auto;
+  isolation: isolate;
+  padding: 9px 12px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--rz-paper);
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.rz-mast .control-tooltip::before,
+.rz-mast .control-tooltip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+}
+
+.rz-mast .control-tooltip::before {
+  z-index: -2;
+  background: var(--rz-red);
+  -webkit-mask-image: var(--rz-d50);
+  mask-image: var(--rz-d50);
+  -webkit-mask-size: var(--rz-tile);
+  mask-size: var(--rz-tile);
+  transform: translate(5px, 5px);
+}
+
+.rz-mast .control-tooltip::after {
+  z-index: -1;
+  background: var(--rz-ink);
+}
+
+/* ─── Scroll rail ────────────────────────────────────────────────────────── */
+/* Stands in for the native scrollbar, for mouse users only: on touch screens
+   the rail stays hidden and native scrolling is left as it is. */
+.rz-rail {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="riso"] {
+    scrollbar-width: none;
+  }
+
+  html[data-theme="riso"]::-webkit-scrollbar,
+  html[data-theme="riso"] body::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Like the bar it replaces, the rail takes its own column: nothing on the
+     page runs underneath it */
+  .rz-app {
+    padding-right: var(--rz-rail);
+  }
+
+  .rz-rail {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 31;
+    display: block;
+    width: var(--rz-rail);
+    border-left: 2px solid var(--rz-ink);
+    background: var(--rz-paper);
+    cursor: pointer;
+    touch-action: none;
+  }
+
+  /* Track: a light screen of blue */
+  .rz-rail::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--rz-blue);
+    -webkit-mask-image: var(--rz-d25);
+    mask-image: var(--rz-d25);
+    -webkit-mask-size: var(--rz-tile);
+    mask-size: var(--rz-tile);
+  }
+
+  /* Red, not ink: the page ends on a solid ink plate, where an ink thumb
+     would vanish */
+  .rz-rail-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--rz-red);
+  }
+
+  .rz-rail:hover .rz-rail-thumb,
+  .rz-rail:active .rz-rail-thumb {
+    background: var(--rz-ink);
+    outline: 2px solid var(--rz-paper);
+    outline-offset: -2px;
+  }
+}
+
+/* ─── Section opener ─────────────────────────────────────────────────────── */
+/* Ink band dissolving downward into the paper, in both inks, off register */
+.rz-band,
+.rz-foot-band {
+  position: relative;
+  height: var(--rz-ramp-len);
+  isolation: isolate;
+}
+
+.rz-band::before,
+.rz-band::after,
+.rz-foot-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: var(--rz-ramp-down);
+  mask-image: var(--rz-ramp-down);
+  -webkit-mask-size: var(--rz-tile) var(--rz-ramp-len);
+  mask-size: var(--rz-tile) var(--rz-ramp-len);
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+}
+
+.rz-band::before {
+  background: var(--rz-blue);
+}
+
+.rz-band::after {
+  background: var(--rz-red);
+  mix-blend-mode: multiply;
+  transform: translate(9px, 6px);
+  opacity: 0.9;
+  clip-path: inset(0 0 55% 0);
+}
+
+.rz-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: clamp(14px, 3vw, 44px);
+  row-gap: 10px;
+  align-items: end;
+  margin-top: clamp(4px, 1.5vw, 20px);
+  margin-bottom: clamp(32px, 5vw, 76px);
+}
+
+.rz-head-num {
+  grid-row: 1 / span 2;
+  font-stretch: 150%;
+  font-weight: 900;
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  line-height: 0.76;
+  letter-spacing: -0.03em;
+  color: var(--rz-red);
+}
+
+.rz-head .rz-eyebrow {
+  align-self: end;
+}
+
+/* ─── Hero ───────────────────────────────────────────────────────────────── */
+.rz-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(12px, 2vw, 28px);
+  row-gap: clamp(20px, 3vw, 36px);
+  align-content: end;
+  min-height: calc(100vh - var(--rz-mast));
+  min-height: calc(100svh - var(--rz-mast));
+  padding-block: clamp(28px, 6vh, 72px) clamp(40px, 8vh, 96px);
+}
+
+/* Two plates behind the lettering: a red disc, then the blue sphere printed
+   over it (the shader's background is transparent) */
+.rz-hero-art {
+  position: absolute;
+  top: clamp(8px, 3vh, 40px);
+  right: calc(var(--rz-gutter) * -0.5);
+  width: min(54vw, 700px);
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.rz-hero-shader {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
+}
+
+/* Static stand-in when the shader is not running: a dithered blue disc */
+.rz-hero-shader.is-static {
+  inset: 14%;
+  border-radius: 50%;
+  background: var(--rz-blue);
+  -webkit-mask-image: var(--rz-d50);
+  mask-image: var(--rz-d50);
+  -webkit-mask-size: var(--rz-tile);
+  mask-size: var(--rz-tile);
+}
+
+/* Red plate under the sphere, off register */
+.rz-hero-disc {
+  position: absolute;
+  inset: 20% 4% 8% 24%;
+  border-radius: 50%;
+  background: var(--rz-red);
+  -webkit-mask-image: var(--rz-d25);
+  mask-image: var(--rz-d25);
+  -webkit-mask-size: var(--rz-tile);
+  mask-size: var(--rz-tile);
+}
+
+.rz-hero-copy {
+  position: relative;
+  grid-column: 1 / -1;
+  display: grid;
+  gap: clamp(14px, 2vw, 24px);
+}
+
+/* The wordmark: the one place the family runs at its widest */
+.rz-hero-title {
+  margin: 0;
+  font-stretch: 150%;
+  font-weight: 900;
+  font-size: clamp(3rem, 15.6vw, 14rem);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rz-hero-lead {
+  margin: 0;
+  max-width: 30em;
+  font-size: clamp(1.08rem, 1.6vw, 1.32rem);
+  line-height: 1.45;
+}
+
+/* Status ticket, stapled on at an angle */
+.rz-ticket {
+  position: absolute;
+  right: 0;
+  bottom: clamp(40px, 8vh, 96px);
+  width: min(100%, 340px);
+  padding: 18px 20px;
+  border: 2px solid var(--rz-ink);
+  background: var(--rz-paper);
+  font-size: 0.86rem;
+  transform: rotate(-2deg);
+}
+
+.rz-ticket-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding-bottom: 12px;
+  border-bottom: 2px dashed var(--rz-ink);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rz-ticket-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--rz-red);
+  animation: rz-blink 1.4s steps(1) infinite;
+}
+
+@keyframes rz-blink {
+  50% { background: transparent; }
+}
+
+.rz-ticket dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.rz-ticket dt {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rz-muted);
+}
+
+.rz-ticket dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.rz-ticket a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.rz-ticket-links {
+  display: flex;
+  gap: 18px;
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 2px dashed var(--rz-ink);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─── About ──────────────────────────────────────────────────────────────── */
+.rz-about {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(16px, 3vw, 48px);
+  row-gap: clamp(36px, 6vw, 80px);
+  align-items: start;
+}
+
+.rz-about-bio {
+  grid-column: 1 / span 7;
+  display: grid;
+  gap: clamp(14px, 2vw, 26px);
+}
+
+.rz-about-name {
+  margin: 0;
+  width: fit-content;
+  font-stretch: 62%;
+  font-weight: 900;
+  font-size: clamp(3.6rem, 12vw, 10rem);
+  line-height: 0.84;
+  text-transform: uppercase;
+}
+
+/* Certificate, as a rubber stamp */
+.rz-stamp {
+  grid-column: 9 / -1;
+  padding: 22px 24px;
+  border: 2px solid var(--rz-red);
+  outline: 2px solid var(--rz-red);
+  outline-offset: 5px;
+  font-size: 0.96rem;
+  transform: rotate(2.5deg);
+}
+
+.rz-stamp p {
+  margin: 0 0 12px;
+}
+
+.rz-stamp-title {
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.rz-skills {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(20px, 3vw, 44px);
+}
+
+.rz-skill-table h3 {
+  margin: 0 0 4px;
+  padding: 8px 10px;
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.rz-skill-table ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  column-gap: 16px;
+}
+
+.rz-skill-table li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 2px;
+  border-bottom: 1px dotted var(--rz-ink);
+  font-size: 0.84rem;
+}
+
+/* Logos drop to one ink so the page stays two-colour */
+.rz-skill-table img {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  filter: grayscale(1) contrast(1.15);
+  mix-blend-mode: multiply;
+}
+
+/* ─── Projects ───────────────────────────────────────────────────────────── */
+.rz-project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(22px, 2.8vw, 40px);
+}
+
+.rz-project-grid > li {
+  display: flex;
+}
+
+/* The lead project takes a 2×2 block; its capture stretches to fill it */
+.rz-project-grid > li.is-lead {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.rz-project {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+}
+
+/* Its capture fills whatever the two rows leave it. The image is taken out of
+   flow so its own proportions do not set the height of those rows. */
+.rz-project-grid > li.is-lead .rz-shot {
+  position: relative;
+  flex: 1;
+  aspect-ratio: auto;
+  min-height: 260px;
+}
+
+.rz-project-grid > li.is-lead .rz-shot img {
+  position: absolute;
+  inset: 0;
+}
+
+.rz-project-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px 18px;
+}
+
+.rz-project-grid > li:not(.is-lead) .rz-project-body {
+  flex: 1;
+}
+
+.rz-project-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rz-project-meta .rz-num {
+  font-size: 1.05rem;
+  color: var(--rz-red);
+}
+
+.rz-project-meta .rz-eyebrow {
+  flex: 1;
+  min-width: 0;
+}
+
+.rz-project-year {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--rz-muted);
+}
+
+.rz-project-name {
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  line-height: 0.96;
+  text-transform: uppercase;
+}
+
+.rz-project-grid > li.is-lead .rz-project-name {
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+}
+
+.rz-project-excerpt {
+  max-width: 46em;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+/* What a click does, spelled out on every card */
+.rz-project-more {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 2px dashed var(--rz-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rz-project-all {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(32px, 5vw, 60px);
+}
+
+/* ─── Games ──────────────────────────────────────────────────────────────── */
+.rz-games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(24px, 3.4vw, 48px);
+}
+
+.rz-game {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.rz-game-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px 20px;
+}
+
+.rz-game-title {
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.rz-game-desc {
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.rz-game-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 2px dashed var(--rz-ink);
+}
+
+.rz-game-play {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ─── Testimonials ───────────────────────────────────────────────────────── */
+.rz-quotes {
+  display: grid;
+  gap: clamp(40px, 7vw, 100px);
+}
+
+.rz-quote {
+  position: relative;
+  max-width: 47rem;
+  margin: 0;
+  padding-left: clamp(44px, 7vw, 104px);
+}
+
+/* Staggered down the page instead of three equal cards */
+.rz-quote:nth-child(even) {
+  margin-left: auto;
+}
+
+.rz-quote-mark {
+  position: absolute;
+  top: -0.1em;
+  left: 0;
+  font-weight: 900;
+  font-size: clamp(5rem, 12vw, 10.5rem);
+  line-height: 1;
+  color: var(--rz-red);
+}
+
+.rz-quote blockquote {
+  margin: 0 0 18px;
+  font-weight: 500;
+  font-size: clamp(1.2rem, 2.2vw, 1.85rem);
+  line-height: 1.3;
+}
+
+.rz-quote figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  padding-top: 12px;
+  border-top: 2px solid var(--rz-ink);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rz-quote figcaption span {
+  font-weight: 400;
+  color: var(--rz-muted);
+}
+
+/* ─── Services ───────────────────────────────────────────────────────────── */
+.rz-services-intro {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  margin-bottom: clamp(32px, 5vw, 64px);
+}
+
+.rz-badge {
+  padding: 6px 12px;
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rz-coupons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+  gap: clamp(24px, 3.4vw, 48px);
+}
+
+.rz-coupons > li {
+  display: flex;
+}
+
+.rz-coupon {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 24px 26px;
+}
+
+.rz-coupon > p {
+  margin: 0;
+}
+
+.rz-coupon-num {
+  font-stretch: 150%;
+  font-weight: 900;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--rz-muted);
+}
+
+.rz-coupon h3 {
+  margin: 0;
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.rz-coupon-features {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.rz-coupon-features li {
+  display: flex;
+  gap: 10px;
+}
+
+.rz-coupon-features li::before {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-top: 0.5em;
+  background: var(--rz-red);
+}
+
+/* Tear-off stub */
+.rz-coupon-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto !important;
+  padding-top: 16px;
+  border-top: 2px dashed var(--rz-ink);
+}
+
+.rz-coupon-price span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rz-muted);
+}
+
+.rz-coupon-price strong {
+  font-stretch: 150%;
+  font-weight: 900;
+  font-size: clamp(2.2rem, 3.6vw, 3.1rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--rz-red);
+}
+
+.rz-note {
+  max-width: 44em;
+  margin: clamp(32px, 5vw, 60px) 0 0;
+  padding-left: 16px;
+  border-left: 6px solid var(--rz-blue);
+  font-size: 0.98rem;
+}
+
+/* ─── Contact ────────────────────────────────────────────────────────────── */
+.rz-contact {
+  padding-bottom: 0;
+}
+
+/* Four ways in, four equal cards */
+.rz-contact-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2.6vw, 36px);
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+
+.rz-contact-cards > li {
+  display: flex;
+}
+
+.rz-contact-card {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 6px 16px;
+  padding: 20px 22px;
+}
+
+.rz-contact-card .rz-eyebrow {
+  grid-column: 1 / -1;
+}
+
+.rz-contact-value {
+  font-stretch: 75%;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2.1vw, 1.7rem);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.rz-contact-arrow {
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--rz-red);
+}
+
+/* GitHub: the graph, then the latest repositories */
+.rz-gh {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.rz-gh-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-bottom: 16px;
+}
+
+.rz-gh-repos .rz-subtitle {
+  margin-bottom: 16px;
+}
+
+.rz-gh-status {
+  margin: 0;
+  padding: 18px 0;
+  border-top: 2px solid var(--rz-ink);
+}
+
+/* Two-way switch, joined */
+.rz-switch {
+  display: inline-flex;
+  border: 2px solid var(--rz-ink);
+}
+
+.rz-switch button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 0;
+  background: var(--rz-paper);
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rz-ink);
+  cursor: pointer;
+}
+
+.rz-switch button + button {
+  border-left: 2px solid var(--rz-ink);
+}
+
+.rz-switch button[aria-pressed="true"] {
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+}
+
+/* The shared contribution graph, re-inked */
+.rz-gh .github-graph {
+  border: 2px solid var(--rz-ink);
+  border-radius: 0;
+  background: var(--rz-paper);
+}
+
+.rz-gh .github-graph-area {
+  fill: var(--rz-red);
+  fill-opacity: 0.2;
+}
+
+.rz-gh .github-graph-tooltip {
+  border: 2px solid var(--rz-ink);
+}
+
+.rz-gh-repos ul {
+  border-top: 2px solid var(--rz-ink);
+}
+
+.rz-repo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 14px;
+  padding: 13px 6px;
+  border-bottom: 1px solid var(--rz-line);
+  color: var(--rz-ink);
+}
+
+.rz-repo:hover {
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+}
+
+.rz-repo-name {
+  font-stretch: 75%;
+  font-weight: 700;
+  font-size: 1.15rem;
+  overflow-wrap: anywhere;
+}
+
+.rz-repo-date {
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--rz-muted);
+}
+
+.rz-repo-desc {
+  grid-column: 1 / -1;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.rz-repo:hover .rz-repo-date {
+  color: var(--rz-paper);
+}
+
+/* Closing plate: the paper dissolves into solid ink, and the page ends on it */
+.rz-foot {
+  margin-top: clamp(56px, 9vw, 120px);
+}
+
+/* Same ramp as the section openers, turned upside down */
+.rz-foot-band {
+  transform: scaleY(-1);
+}
+
+.rz-foot-band::before {
+  background: var(--rz-ink);
+}
+
+.rz-foot-plate {
+  background: var(--rz-ink);
+  color: var(--rz-paper);
+}
+
+.rz-foot-inner {
+  display: grid;
+  gap: clamp(14px, 2vw, 22px);
+  padding-block: clamp(28px, 5vw, 64px) clamp(28px, 4vw, 48px);
+}
+
+/* The name once more, paper on ink with the red plate off register */
+.rz-foot-name {
+  margin: 0;
+  font-stretch: 62%;
+  font-weight: 900;
+  font-size: clamp(2.8rem, 15vw, 13.6rem);
+  line-height: 0.86;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0.035em 0.03em 0 var(--rz-red);
+}
+
+.rz-foot-note {
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+.rz-foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 26px;
+  padding-top: 14px;
+  border-top: 2px solid var(--rz-paper);
+}
+
+.rz-foot-links li:last-child {
+  margin-left: auto;
+}
+
+.rz-foot .rz-link,
+.rz-foot .rz-link:hover {
+  color: var(--rz-paper);
+}
+
+.rz-foot .rz-link:hover {
+  text-decoration-color: var(--rz-red);
+}
+
+/* ─── Shared dialogs on paper ────────────────────────────────────────────── */
+html[data-theme="riso"] .modal-overlay {
+  background: rgba(22, 36, 107, 0.72);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-theme="riso"] .modal-content {
+  border: 2px solid var(--rz-ink);
+}
+
+html[data-theme="riso"] .modal-content::before,
+html[data-theme="riso"] .modal-content::after {
+  display: none;
+}
+
+/* ─── Narrow screens ─────────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .rz-mast-toggle {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* The index becomes a full-screen panel under the bar */
+  .rz-index {
+    position: fixed;
+    inset: calc(var(--rz-mast) + 2px) 0 0 0;
+    display: none;
+    overflow-y: auto;
+    padding: 20px var(--rz-gutter) 40px;
+    background: var(--rz-paper);
+  }
+
+  .rz-mast.is-open .rz-index {
+    display: block;
+  }
+
+  .rz-index ol {
+    flex-direction: column;
+    gap: 0;
+    border-top: 2px solid var(--rz-ink);
+  }
+
+  .rz-index a {
+    display: flex;
+    gap: 14px;
+    padding: 16px 8px;
+    border-bottom: 1px solid var(--rz-line);
+    font-stretch: 62%;
+    font-weight: 800;
+    font-size: clamp(2rem, 9vw, 3.4rem);
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .rz-index-num {
+    font-stretch: 100%;
+    font-size: 0.8rem;
+  }
+
+  .rz-hero {
+    min-height: 0;
+    padding-top: clamp(200px, 52vw, 420px);
+  }
+
+  .rz-hero-art {
+    top: 0;
+    right: -8vw;
+    width: min(82vw, 520px);
+  }
+
+  /* The sphere now sits above the copy: the lettering may overlap it, the
+     small label may not, so it drops under the title */
+  .rz-hero-copy .rz-eyebrow {
+    order: 1;
+  }
+
+  .rz-hero-copy .rz-hero-lead,
+  .rz-hero-copy .rz-actions {
+    order: 2;
+  }
+
+  .rz-ticket {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 12px;
+  }
+
+  .rz-about-bio,
+  .rz-stamp {
+    grid-column: 1 / -1;
+  }
+
+  .rz-stamp {
+    max-width: 30rem;
+    margin: 6px;
+    transform: rotate(1deg);
+  }
+
+  .rz-skills,
+  .rz-gh {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rz-project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rz-project-grid > li.is-lead {
+    grid-row: auto;
+  }
+
+  .rz-project-grid > li.is-lead .rz-shot {
+    flex: none;
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
+
+  .rz-project-grid > li.is-lead .rz-shot img {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .rz-mast-brand span:last-child {
+    display: none;
+  }
+
+  .rz-project-grid,
+  .rz-contact-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rz-project-grid > li.is-lead {
+    grid-column: auto;
+  }
+
+  .rz-quote {
+    padding-left: 0;
+    padding-top: 3.2rem;
+  }
+
+  .rz-quote-mark {
+    top: -0.16em;
+    font-size: 5.5rem;
+  }
+
+  .rz-foot-links li:last-child {
+    margin-left: 0;
+  }
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="riso"] {
+    scroll-behavior: auto;
+  }
+
+  [data-rz-reveal],
+  [data-rz-reveal].is-in {
+    opacity: 1;
+    animation: none;
+  }
+
+  .rz-ink::before,
+  .rz-ticket-dot {
+    animation: none;
+  }
+
+  .rz-btn,
+  .rz-btn::before,
+  .rz-card::before,
+  a.rz-card,
+  button.rz-card {
+    transition: none;
+  }
+}
+
+/* ─── High contrast ──────────────────────────────────────────────────────── */
+/* Black on white, both inks darkened, and every screen that sits behind or on
+   top of text removed. Declared on body so it wins over body.aaa-contrast. */
+html[data-theme="riso"] body.aaa-contrast .rz-app {
+  background-image: none;
+}
+
+html[data-theme="riso"] body.aaa-contrast {
+  --rz-paper: #ffffff;
+  --rz-ink:   #000000;
+  --rz-blue:  #0a1a66;
+  --rz-red:   #8a1f00;
+  --rz-muted: #000000;
+  --rz-line:  #000000;
+  --rz-tint:  #ffffff;
+
+  --bg:            #ffffff;
+  --bg-elev:       #ffffff;
+  --bg-soft:       #ffffff;
+  --bg-panel:      #ffffff;
+  --text:          #000000;
+  --text-muted:    #000000;
+  --text-dim:      #000000;
+  --accent:        #0a1a66;
+  --accent-soft:   transparent;
+  --accent-glow:   transparent;
+  --accent-2:      #0a1a66;
+  --border:        #000000;
+  --border-accent: #000000;
+}
+
+html[data-theme="riso"] body.aaa-contrast .rz-ink::before,
+html[data-theme="riso"] body.aaa-contrast .rz-band::after,
+html[data-theme="riso"] body.aaa-contrast .rz-hero-art {
+  display: none;
+}
+
+html[data-theme="riso"] body.aaa-contrast .rz-foot-name {
+  text-shadow: none;
+}
+
+html[data-theme="riso"] body.aaa-contrast .rz-skill-table img {
+  filter: none;
+  mix-blend-mode: normal;
+}
