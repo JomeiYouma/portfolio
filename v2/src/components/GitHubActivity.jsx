@@ -1,9 +1,10 @@
 import { useGitHub } from '../hooks/useGitHub'
 import { useI18n } from '../hooks/useI18n'
+import ContributionGraph from './ContributionGraph'
 import './GitHubActivity.css'
 
 const GitHubActivity = () => {
-  const { repos, loading, error, graphScale, setGraphScale, getGraphUrl } = useGitHub()
+  const { repos, loading, error, contributions, contributionsError, graphScale, setGraphScale } = useGitHub()
   const { t } = useI18n()
 
   return (
@@ -32,12 +33,16 @@ const GitHubActivity = () => {
             {t('contact.last3Months')}
           </button>
         </div>
-        <img
-          src={getGraphUrl()}
-          alt={t('contact.githubGraphAlt')}
-          className="github-activity-graph"
-          loading="lazy"
-        />
+        {contributions && (
+          <ContributionGraph
+            contributions={contributions}
+            days={graphScale === 'monthly' ? 30 : 90}
+            label={t(graphScale === 'monthly' ? 'contact.lastMonth' : 'contact.last3Months')}
+            alt={t('contact.githubGraphAlt')}
+          />
+        )}
+        {!contributions && !contributionsError && <p className="loading">{t('contact.loading')}</p>}
+        {contributionsError && <p className="error">failed_to_load_github_data</p>}
       </div>
 
       <div className="github-latest-activity">

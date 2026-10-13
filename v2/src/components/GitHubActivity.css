@@ -73,10 +73,138 @@
   color: var(--bg);
 }
 
-.github-activity-graph {
-  width: 100%;
+.github-graph {
+  margin: 0;
+  padding: 12px 12px 6px;
+  background: var(--bg-soft);
   border-radius: 4px;
   border: 1px solid var(--border);
+}
+
+.github-graph-caption {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.github-graph-caption strong {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.github-graph-plot {
+  position: relative;
+}
+
+.github-graph-plot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+}
+
+.github-graph-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.github-graph-tick {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--text-muted);
+}
+
+.github-graph-area {
+  fill: var(--accent);
+  fill-opacity: 0.1;
+}
+
+.github-graph-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Draw-in: the line traces left to right (pathLength="1" normalises the dash),
+   then the area fades in under it. Hidden until the chart is on screen. */
+.github-graph-line,
+.github-graph-area {
+  visibility: hidden;
+}
+
+.github-graph.is-visible .github-graph-line {
+  visibility: visible;
+  stroke-dasharray: 1;
+  animation: github-graph-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.github-graph.is-visible .github-graph-area {
+  visibility: visible;
+  animation: github-graph-fade 0.6s ease 0.9s both;
+}
+
+@keyframes github-graph-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes github-graph-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .github-graph.is-visible .github-graph-line,
+  .github-graph.is-visible .github-graph-area {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}
+
+.github-graph-crosshair {
+  stroke: var(--text-dim);
+  stroke-width: 1;
+}
+
+/* Ring in the surface colour keeps the point legible where it sits on the line */
+.github-graph-point {
+  fill: var(--accent);
+  stroke: var(--bg-soft);
+  stroke-width: 2;
+}
+
+.github-graph-tooltip {
+  position: absolute;
+  top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 10px;
+  padding: 6px 10px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-accent);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.github-graph-tooltip.is-left {
+  margin-left: -10px;
+  transform: translateX(-100%);
+}
+
+.github-graph-tooltip strong {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .github-latest-activity h4 {
@@ -177,11 +305,6 @@
 }
 
 @media (max-width: 768px) {
-  .github-activity-graph {
-    max-width: 100%;
-    height: auto;
-  }
-  
   .graph-controls {
     flex-wrap: wrap;
   }
