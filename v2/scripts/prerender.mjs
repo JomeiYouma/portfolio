@@ -91,8 +91,12 @@ try {
   // Strip client-only body portals (e.g. TargetCursor). main.jsx uses createRoot,
   // not hydrateRoot, so anything outside #root survives the client mount and
   // shows up as a frozen ghost until React's own portal paints over it.
+  // Same for the inline `cursor: none` TargetCursor sets on <body>: left in the
+  // snapshot, it hides the pointer in every theme that has no custom cursor.
   await page.evaluate(() => {
     document.querySelectorAll('body > .target-cursor-wrapper').forEach((el) => el.remove())
+    document.body.style.removeProperty('cursor')
+    if (!document.body.getAttribute('style')) document.body.removeAttribute('style')
   })
 
   const html = await page.content()

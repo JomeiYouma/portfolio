@@ -39,7 +39,10 @@ const TargetCursor = ({
 
   useEffect(() => {
     if (isMobile || !cursorRef.current) return
-    const originalCursor = document.body.style.cursor
+    // A `none` already on <body> is a leftover (prerendered HTML, another instance),
+    // never a value to hand back: restoring it would leave the page without a pointer
+    const inlineCursor = document.body.style.cursor
+    const originalCursor = inlineCursor === 'none' ? '' : inlineCursor
     if (hideDefaultCursor) document.body.style.cursor = 'none'
     const cursor = cursorRef.current
     cornersRef.current = cursor.querySelectorAll('.target-cursor-corner')
