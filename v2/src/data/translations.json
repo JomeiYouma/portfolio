@@ -88,32 +88,32 @@
     "services": {
       "eyebrow": "Services",
       "title": "Need a Website? Let's Build It Together",
-      "badge": "Student Rates",
-      "intro": "As a multimedia and web development student, I offer custom websites, updates and playful experiences at reduced rates. Quality work, modern stack, fair pricing.",
+      "badge": "Opquast Certified",
+      "intro": "Opquast certified, I offer custom websites, redesigns and playful experiences. Quality work, modern stack, fair pricing.",
       "items": {
         "create": {
           "title": "New Website",
           "description": "Tailor-made site built from scratch: portfolio, showcase, landing page or small business website.",
           "features": ["Responsive design", "Accessibility (Opquast)", "SEO considerations", "Custom branding"],
           "priceLabel": "Starting at",
-          "price": "400€"
+          "price": "900€"
         },
         "update": {
-          "title": "Redesign & Update",
+          "title": "Website Redesign",
           "description": "Modernize an existing site: refresh the design, improve performance, fix accessibility, add features.",
           "features": ["Visual refresh", "Performance audit", "Mobile-friendly fixes", "Content updates"],
           "priceLabel": "Starting at",
-          "price": "200€"
+          "price": "700€"
         },
         "gamify": {
           "title": "Gamification",
           "description": "Add a playful layer to your site: mini-game, interactive animation, quiz, scroll-driven story or custom canvas experience.",
           "features": ["Custom mini-game", "Interactive animations", "Score and progress", "Mobile compatible"],
           "priceLabel": "Starting at",
-          "price": "300€"
+          "price": "800€"
         }
       },
-      "note": "Student status means fair prices. The final quote depends on your project's scope, so let's talk first.",
+      "note": "Every project starts with a written quote: scope, deliverables, schedule and price are set before work begins. The final quote depends on your project's scope, so let's talk first.",
       "cta": "Request a Quote"
     },
     "contact": {
@@ -160,7 +160,7 @@
       "projectType": "Project type",
       "other": "Something else",
       "budget": "Approximate budget",
-      "budgetPlaceholder": "e.g. 300 to 600 €",
+      "budgetPlaceholder": "e.g. 800 to 1,500 €",
       "timeline": "Timeline",
       "timelinePlaceholder": "e.g. 2 to 4 weeks",
       "message": "Project description",
@@ -370,32 +370,32 @@
     "services": {
       "eyebrow": "Services",
       "title": "Besoin d'un site ? Construisons-le ensemble",
-      "badge": "Tarifs Étudiant",
-      "intro": "En tant qu'étudiant en multimédia et développement web, je propose la création, la mise à jour et des expériences ludiques à tarifs réduits. Du travail soigné, une stack moderne, des prix justes.",
+      "badge": "Certifié Opquast",
+      "intro": "Certifié Opquast, je propose la création, la refonte et des expériences ludiques sur mesure. Du travail soigné, une stack moderne, des prix justes.",
       "items": {
         "create": {
           "title": "Nouveau Site Web",
           "description": "Site sur mesure conçu de zéro : portfolio, vitrine, landing page ou site d'entreprise.",
           "features": ["Design responsive", "Accessibilité (Opquast)", "Réflexions SEO", "Identité personnalisée"],
           "priceLabel": "À partir de",
-          "price": "400€"
+          "price": "900€"
         },
         "update": {
-          "title": "Refonte & Mise à Jour",
+          "title": "Refonte de Site",
           "description": "Modernisation d'un site existant : refonte du design, amélioration des performances, accessibilité, nouvelles fonctionnalités.",
           "features": ["Rafraîchissement visuel", "Audit de performance", "Adaptation mobile", "Mise à jour du contenu"],
           "priceLabel": "À partir de",
-          "price": "200€"
+          "price": "700€"
         },
         "gamify": {
           "title": "Gamification",
           "description": "Ajoutez une touche ludique à votre site : mini-jeu, animation interactive, quiz, scrollytelling ou expérience canvas sur mesure.",
           "features": ["Mini-jeu sur mesure", "Animations interactives", "Score et progression", "Compatible mobile"],
           "priceLabel": "À partir de",
-          "price": "300€"
+          "price": "800€"
         }
       },
-      "note": "Statut étudiant rime avec prix justes. Le devis final dépend de la portée de votre projet, alors discutons-en d'abord.",
+      "note": "Chaque mission débute par un devis écrit : périmètre, livrables, calendrier et tarif sont fixés avant de commencer. Le devis final dépend de la portée de votre projet, alors discutons-en d'abord.",
       "cta": "Demander un devis"
     },
     "contact": {
@@ -442,7 +442,7 @@
       "projectType": "Type de projet",
       "other": "Autre",
       "budget": "Budget approximatif",
-      "budgetPlaceholder": "ex. 300 à 600 €",
+      "budgetPlaceholder": "ex. 800 à 1 500 €",
       "timeline": "Délai",
       "timelinePlaceholder": "ex. 2 à 4 semaines",
       "message": "Description du projet",
