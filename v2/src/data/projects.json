@@ -360,6 +360,78 @@
         }
     },
     {
+        "id": 21,
+        "title": {
+            "en": "INSPIRATIONS",
+            "fr": "INSPIRATIONS"
+        },
+        "type": {
+            "en": "INTERACTIVE EDITORIAL WEBSITE",
+            "fr": "SITE ÉDITORIAL INTERACTIF"
+        },
+        "description": {
+            "en": "Twenty inspirations plotted on a graph: the emotion they bring on the x axis, the share of the work that draws on them on the y axis. Each point opens a sheet with a text, dithered images, sometimes an audio excerpt and links to the work. Images are dithered to 1 bit in a canvas, and the background is an animated dithered shader that pauses while a sheet is open.",
+            "fr": "Vingt inspirations placées sur un graphe : en abscisse l'émotion qu'elles procurent, en ordonnée la part du travail qui y fait appel. Chaque point ouvre une fiche avec un texte, des images tramées, parfois un extrait sonore et des liens vers l'œuvre. Les images sont tramées en 1 bit dans un canvas, et le fond est un shader tramé animé qui se met en pause quand une fiche est ouverte."
+        },
+        "tech": "REACT 19 - VITE - MOTION - THREE.JS - CANVAS",
+        "context": "Academic Project | Solo",
+        "image": "inspirations.webp",
+        "link": "https://inspirations-five.vercel.app",
+        "year": "2026",
+        "role": {
+            "en": "Solo designer & front-end developer",
+            "fr": "Designer & développeur front-end solo"
+        },
+        "highlights": {
+            "en": [
+                "Two-axis graph whose scale fits the data, so no point overlaps an axis or the edge.",
+                "Images dithered to 1 bit (Atkinson error diffusion), revealed pixel by pixel along a Bayer matrix.",
+                "Keyboard navigation between sheets, focus restored on close, and a background that stops moving when the system asks for reduced motion."
+            ],
+            "fr": [
+                "Graphe à deux axes dont l'échelle se cale sur les données : aucun point ne mord sur un axe ni sur le bord.",
+                "Images tramées en 1 bit (diffusion d'erreur Atkinson), révélées pixel par pixel selon une matrice de Bayer.",
+                "Navigation au clavier entre les fiches, focus restitué à la fermeture, et fond immobile si le système demande moins d'animations."
+            ]
+        }
+    },
+    {
+        "id": 22,
+        "title": {
+            "en": "NEON HORIZON",
+            "fr": "NEON HORIZON"
+        },
+        "type": {
+            "en": "3D RHYTHM GAME IN THE BROWSER",
+            "fr": "JEU DE RYTHME 3D SUR NAVIGATEUR"
+        },
+        "description": {
+            "en": "A rhythm game built with Three.js in a synthwave setting: spheres roll along the lines of a grid and are hit on the keyboard when they reach the rings. The notes are not written by hand, they are derived from the track the player picks: onset detection, tempo tracking, then placement on a sixteenth-note grid. The terrain reacts to sound, from the track or from the microphone.",
+            "fr": "Un jeu de rythme en Three.js dans un décor synthwave : des sphères roulent sur les lignes d'une grille et se frappent au clavier quand elles atteignent les anneaux. Les notes ne sont pas écrites à la main, elles sont déduites du morceau choisi par le joueur : détection des attaques, suivi du tempo, puis placement sur une grille de doubles croches. Le relief réagit au son, celui du morceau ou du microphone."
+        },
+        "tech": "THREE.JS - JAVASCRIPT - WEB AUDIO API - GLSL - VITE",
+        "context": "Academic Project | Solo",
+        "image": "neon-horizon.webp",
+        "link": "https://github.com/JomeiYouma/neon-horizon",
+        "year": "2026",
+        "role": {
+            "en": "Solo developer",
+            "fr": "Développeur solo"
+        },
+        "highlights": {
+            "en": [
+                "Notes generated from any audio file: spectral flux, tempo tracking, lanes spread from low to high sounds.",
+                "Judgement windows of 50 and 120 ms, compensated for audio output latency.",
+                "Spheres, rings and terrain drawn by shaders, with bloom and RGB shift; feedback sounds synthesised with Web Audio."
+            ],
+            "fr": [
+                "Notes générées depuis n'importe quel fichier audio : flux spectral, suivi du tempo, pistes réparties des graves aux aigus.",
+                "Fenêtres de jugement de 50 et 120 ms, compensées par la latence de sortie audio.",
+                "Sphères, anneaux et relief dessinés par des shaders, avec bloom et décalage RVB ; sons de retour synthétisés en Web Audio."
+            ]
+        }
+    },
+    {
         "id": 7,
         "title": {
             "en": "ASTDX CALCULATOR",

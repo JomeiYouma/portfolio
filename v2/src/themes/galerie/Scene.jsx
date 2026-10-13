@@ -391,6 +391,11 @@ const ARCH = (() => {
 
 const HEADER = { x: -SIDE / 2 + 0.5 + 2.8, top: 4.72, width: 5.6, height: 1 }
 
+// Games wall: the row of screens spans 7.75 units, with 0.5 between two screens
+const SCREENS_SPAN = 7.75
+const SCREEN_GAP = 0.5
+const SCREEN_RATIO = 1.4 / 2.25
+
 const Rotunda = ({ room, entered, lang, onEnterRoom, onPickProject }) => {
   const { t } = useI18n()
   const [fontsReady, setFontsReady] = useState(false)
@@ -427,6 +432,8 @@ const Rotunda = ({ room, entered, lang, onEnterRoom, onPickProject }) => {
   const openProject = (index) => () => (entered && room === 2 ? onPickProject(index) : onEnterRoom(2))
   const projectImage = (index) => asset(`assets/images/${projects[index].image}`)
   const services = ['create', 'update', 'gamify']
+  // The screens share one row: they narrow as games are added, the row keeps its span
+  const screenWidth = (SCREENS_SPAN - SCREEN_GAP * (games.length - 1)) / games.length
 
   return (
     <>
@@ -503,16 +510,16 @@ const Rotunda = ({ room, entered, lang, onEnterRoom, onPickProject }) => {
         </Solid>
       </Bay>
 
-      {/* 3 — Games, black: three screens and a yellow cube balanced on a corner */}
+      {/* 3 — Games, black: a row of screens and a yellow cube balanced on a corner */}
       <Bay index={3} onClick={door(3)}>
         {lettering(3, t('games.title'))}
         {games.map((game, i) => (
           <Frame
             key={game.id}
-            x={(i - 1) * 2.75}
+            x={(i - (games.length - 1) / 2) * (screenWidth + SCREEN_GAP)}
             y={2.2}
-            width={2.25}
-            height={1.4}
+            width={screenWidth}
+            height={screenWidth * SCREEN_RATIO}
             src={asset(`assets/images/${game.image}`)}
             onClick={() => onEnterRoom(3)}
           />
