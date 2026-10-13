@@ -17,8 +17,8 @@
       "servicesCta": "Request a Quote",
       "status": "Available for hire",
       "location": "France / Remote",
-      "bubbleLabel": "Wanted",
-      "bubbleText": "Looking for a web dev apprenticeship starting September 2026."
+      "bubbleLabel": "Welcome",
+      "bubbleText": "Thanks for stopping by. Enjoy the portfolio."
     },
     "about": {
       "eyebrow": "About Me",
@@ -299,8 +299,8 @@
       "servicesCta": "Demander un devis",
       "status": "Disponible",
       "location": "France / Télétravail",
-      "bubbleLabel": "Avis de recherche",
-      "bubbleText": "Je cherche une alternance en développement web à partir de septembre 2026."
+      "bubbleLabel": "Bienvenue",
+      "bubbleText": "Merci de passer par ici. Bonne visite du portfolio."
     },
     "about": {
       "eyebrow": "À Propos",
