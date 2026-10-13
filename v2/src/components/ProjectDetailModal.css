@@ -17,6 +17,9 @@
   max-height: min(86vh, 820px);
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  /* The row follows the dialog, not its content: past max-height the text
+     scrolls and the picture keeps the visible height instead of being clipped */
+  grid-template-rows: minmax(0, 1fr);
   background: var(--bg-panel);
   border: 1px solid var(--border-accent);
   box-shadow: var(--shadow), 0 0 60px rgba(0, 255, 179, 0.08);
@@ -74,6 +77,10 @@
   inset: 0;
   background: linear-gradient(135deg, transparent 50%, rgba(0, 255, 179, 0.06));
   pointer-events: none;
+}
+
+.pdm-media picture {
+  display: contents;
 }
 
 .pdm-media img {
@@ -195,6 +202,7 @@
 @media (max-width: 760px) {
   .pdm-dialog {
     grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
     max-height: 90vh;
   }
 

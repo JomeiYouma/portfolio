@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { asset } from '../utils/asset'
+import { workImage } from '../utils/workImage'
 import './ProjectDetailModal.css'
 
 /**
@@ -80,13 +80,19 @@ const ProjectDetailModal = ({ open, onClose, project, lang, t }) => {
             </button>
 
             <div className="pdm-media">
-              <img
-                src={asset(`assets/images/${project.image}`)}
-                alt={lang === 'fr'
-                  ? `Capture du projet ${title}`
-                  : `${title} project screenshot`}
-                loading="lazy"
-              />
+              <picture>
+                {/* Same breakpoint as the stylesheet: above it the panel is tall */}
+                {project.imagePortrait && (
+                  <source media="(min-width: 761px)" srcSet={workImage(project, 'portrait')} />
+                )}
+                <img
+                  src={workImage(project)}
+                  alt={lang === 'fr'
+                    ? `Capture du projet ${title}`
+                    : `${title} project screenshot`}
+                  loading="lazy"
+                />
+              </picture>
             </div>
 
             <div className="pdm-body">

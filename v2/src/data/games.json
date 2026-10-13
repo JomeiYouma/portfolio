@@ -53,6 +53,7 @@
     },
     "tech": "Three.js · Web Audio · GLSL",
     "image": "neon-horizon.webp",
+    "imageSquare": "neon-horizon-square.webp",
     "link": "https://jomeiyouma.github.io/neon-horizon/"
   }
 ]

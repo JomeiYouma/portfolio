@@ -376,6 +376,7 @@
         "tech": "REACT 19 - VITE - MOTION - THREE.JS - CANVAS",
         "context": "Academic Project | Solo",
         "image": "inspirations.webp",
+        "imagePortrait": "inspirations-portrait.webp",
         "link": "https://inspirations-five.vercel.app",
         "year": "2026",
         "role": {
@@ -412,6 +413,7 @@
         "tech": "THREE.JS - JAVASCRIPT - WEB AUDIO API - GLSL - VITE",
         "context": "Academic Project | Solo",
         "image": "neon-horizon.webp",
+        "imagePortrait": "neon-horizon-portrait.webp",
         "link": "https://github.com/JomeiYouma/neon-horizon",
         "year": "2026",
         "role": {

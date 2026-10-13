@@ -5,7 +5,7 @@ import GlowCard from '../components/GlowCard'
 import MagneticButton from '../components/MagneticButton'
 import ProjectDetailModal from '../components/ProjectDetailModal'
 import { useI18n } from '../hooks/useI18n'
-import { asset } from '../utils/asset'
+import { workImage } from '../utils/workImage'
 
 const fadeSwap = {
   initial: { opacity: 0, y: 14 },
@@ -25,7 +25,7 @@ const Projects = ({ projects }) => {
 
   const galleryItems = useMemo(() =>
     projects.map((project) => ({
-      image: asset(`assets/images/${project.image}`),
+      image: workImage(project, 'portrait'),
       text: project.title[lang] || project.title.en,
     })), [projects, lang])
 
