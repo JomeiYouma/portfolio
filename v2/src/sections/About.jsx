@@ -187,12 +187,43 @@ const IconStrip = ({ items, reverse = false }) => {
 
 const About = () => {
   const { t } = useI18n()
+  const headingRef = useRef(null)
+  const eyebrowRef = useRef(null)
+
+  // On short viewports the centred content overflows upward and the eyebrow
+  // ends up behind the fixed nav: hide it there. Measured on the heading (the
+  // eyebrow is its first child) because the eyebrow itself is translated while
+  // its reveal animation plays.
+  useEffect(() => {
+    const heading = headingRef.current
+    const eyebrow = eyebrowRef.current
+    const inner = heading?.closest('.section-inner')
+    const nav = document.querySelector('.nav')
+    if (!heading || !eyebrow || !inner || !nav) return undefined
+
+    const update = () => {
+      const underNav = heading.getBoundingClientRect().top < nav.getBoundingClientRect().bottom
+      eyebrow.classList.toggle('is-under-nav', underNav)
+    }
+
+    update()
+    inner.addEventListener('scroll', update, { passive: true })
+
+    // Re-measure on viewport changes and when the content reflows (fonts, language)
+    const ro = new ResizeObserver(update)
+    ro.observe(inner)
+    Array.from(inner.children).forEach((child) => ro.observe(child))
+    return () => {
+      inner.removeEventListener('scroll', update)
+      ro.disconnect()
+    }
+  }, [])
 
   return (
     <section id="about" data-section className="section">
       <div className="section-inner">
-        <Reveal as="div" stagger className="section-heading">
-          <Reveal.Item as="p" className="eyebrow">{t('about.eyebrow')}</Reveal.Item>
+        <Reveal as="div" stagger className="section-heading" ref={headingRef}>
+          <Reveal.Item as="p" className="eyebrow" ref={eyebrowRef}>{t('about.eyebrow')}</Reveal.Item>
           <Reveal.Item as="h2" className="about-title">{t('about.title')}</Reveal.Item>
           <Reveal.Item as="h3" className="about-name">{t('about.subtitle')}</Reveal.Item>
         </Reveal>

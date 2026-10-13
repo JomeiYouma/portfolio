@@ -184,6 +184,11 @@
   opacity: 0.4;
 }
 
+/* Set from About.jsx when the eyebrow ends up behind the fixed nav */
+@media (min-width: 769px) {
+  .eyebrow.is-under-nav { visibility: hidden; }
+}
+
 .lead {
   font-size: 0.95rem;
   color: var(--text-muted);
