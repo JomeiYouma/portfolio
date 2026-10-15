@@ -3,7 +3,7 @@ import ContributionGraph from '../../components/ContributionGraph'
 import CoverLetterModal from '../../components/CoverLetterModal'
 // The graph's own styles live with the neon block that first used it
 import '../../components/GitHubActivity.css'
-import projects from '../../data/projects.json'
+import { projects } from '../../data/projects'
 import games from '../../data/games.json'
 import skills from '../../data/skills.json'
 import { useGitHub } from '../../hooks/useGitHub'

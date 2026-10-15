@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
-import projects from '../../data/projects.json'
+import { projects } from '../../data/projects'
 import games from '../../data/games.json'
 import { useI18n } from '../../hooks/useI18n'
 import { asset } from '../../utils/asset'
@@ -103,6 +103,17 @@ const Rig = ({ room, entered, shift, instant }) => {
 // ─── Building blocks ─────────────────────────────────────────────────────────
 // Floor (or ceiling) of one bay: the triangle between its wall and the middle
 // of the room. A hair wider than the wall so neighbouring bays leave no crack.
+// That overlap is two colours on the same plane, which flickers: each bay gets
+// its own height, SKIN apart, so one of the two always wins.
+const SKIN = 0.0004
+
+// Flat things lying on a surface are transparent and write no depth, so the
+// renderer would order them by distance and reshuffle them as the head turns.
+// They are drawn in this order instead, and stacked a little apart.
+const LAYER = { giant: 1, paint: 2, shadow: 3 }
+const FLOOR_LIFT = 0.004
+const LAYER_GAP = 0.002
+
 const WEDGE = new THREE.BufferGeometry()
 WEDGE.setAttribute(
   'position',
@@ -119,10 +130,10 @@ const Bay = ({ index, onClick, children }) => {
   return (
     <group rotation={[0, -index * STEP, 0]}>
       <group position={[0, 0, -APOTHEM]}>
-        <mesh geometry={WEDGE}>
+        <mesh geometry={WEDGE} position={[0, index * SKIN, 0]}>
           <meshBasicMaterial color={colors.floor} side={THREE.DoubleSide} />
         </mesh>
-        <mesh geometry={WEDGE} position={[0, WALL_H, 0]}>
+        <mesh geometry={WEDGE} position={[0, WALL_H - index * SKIN, 0]}>
           <meshBasicMaterial color={colors.ceiling} side={THREE.DoubleSide} />
         </mesh>
         <mesh
@@ -144,8 +155,9 @@ const Bay = ({ index, onClick, children }) => {
  * Text or artwork drawn on a canvas (see textures.js). Hung flat on the wall by
  * default (`x` centre, `top` edge); with `floor`, painted on the ground from
  * the foot of the wall toward the room. `draw` must be a stable function.
+ * `layer` (see LAYER) says what it is drawn over and under.
  */
-const Print = ({ x = 0, top = 0, z = 0.012, floor = false, width, height, draw, data, density, background }) => {
+const Print = ({ x = 0, top = 0, z = 0.012, floor = false, layer = LAYER.paint, width, height, draw, data, density, background }) => {
   const dataKey = JSON.stringify(data)
   const texture = useMemo(
     () => paint(width, height, (ctx) => draw(ctx, JSON.parse(dataKey)), { density, background }),
@@ -155,8 +167,9 @@ const Print = ({ x = 0, top = 0, z = 0.012, floor = false, width, height, draw, 
 
   return (
     <mesh
-      position={floor ? [x, 0.004, height / 2] : [x, top - height / 2, z]}
+      position={floor ? [x, FLOOR_LIFT + (layer - 1) * LAYER_GAP, height / 2] : [x, top - height / 2, z]}
       rotation={floor ? [-Math.PI / 2, 0, 0] : undefined}
+      renderOrder={layer}
     >
       <planeGeometry args={[width, height]} />
       <meshBasicMaterial map={texture} transparent={!background} depthWrite={Boolean(background)} />
@@ -196,14 +209,20 @@ const shadowTexture = () => {
 
 /** Soft dark patch lying on a surface: behind a frame, under a sculpture. */
 const Shadow = ({ width, height, opacity = 0.3, ...props }) => (
-  <mesh {...props}>
+  <mesh renderOrder={LAYER.shadow} {...props}>
     <planeGeometry args={[width, height]} />
     <meshBasicMaterial map={shadowTexture()} color="#000000" transparent opacity={opacity} depthWrite={false} />
   </mesh>
 )
 
 const FloorShadow = ({ x, z, size, opacity = 0.3 }) => (
-  <Shadow width={size} height={size} opacity={opacity} position={[x, 0.008, z]} rotation={[-Math.PI / 2, 0, 0]} />
+  <Shadow
+    width={size}
+    height={size}
+    opacity={opacity}
+    position={[x, FLOOR_LIFT + (LAYER.shadow - 1) * LAYER_GAP, z]}
+    rotation={[-Math.PI / 2, 0, 0]}
+  />
 )
 
 // A wide white mount: on a saturated wall the picture needs air around it
@@ -365,9 +384,10 @@ const Giant = ({ text, color }) => {
   const x = 0
   return (
     <>
-      <Print x={x} top={GIANT.wall} z={0.006} width={GIANT.width} height={GIANT.wall} density={128} draw={drawGiant} data={common} />
+      <Print x={x} top={GIANT.wall} z={0.006} layer={LAYER.giant} width={GIANT.width} height={GIANT.wall} density={128} draw={drawGiant} data={common} />
       <Print
         floor
+        layer={LAYER.giant}
         x={x}
         width={GIANT.width}
         height={GIANT.floor}

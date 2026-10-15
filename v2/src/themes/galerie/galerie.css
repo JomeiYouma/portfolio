@@ -1020,6 +1020,160 @@ html[data-theme="galerie"] .modal-content::after {
   display: none;
 }
 
+/* ─── Project sheet ──────────────────────────────────────────────────────── */
+/* The shared project dialog, set like a wall label: the picture mounted on
+   white, a Bodoni title, small sans labels, ink buttons. Remapping the neon
+   tokens is not enough here, the dialog also carries neon shapes (corner
+   brackets, glow, slashes, arrows), removed one by one below. */
+html[data-theme="galerie"] .pdm-overlay {
+  background: rgba(20, 19, 17, 0.6);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-theme="galerie"] .pdm-dialog {
+  border: 2px solid var(--ga-ink);
+  box-shadow: none;
+}
+
+html[data-theme="galerie"] .pdm-dialog::before,
+html[data-theme="galerie"] .pdm-dialog::after,
+html[data-theme="galerie"] .pdm-media::after,
+html[data-theme="galerie"] .pdm-body .eyebrow::before,
+html[data-theme="galerie"] .pdm-cta::before,
+html[data-theme="galerie"] .pdm-cta::after {
+  content: none;
+}
+
+/* The capture hangs in a white mount, as on the walls and in the room sheets */
+html[data-theme="galerie"] .pdm-media {
+  padding: clamp(16px, 2.2vw, 30px);
+  border-right: 2px solid var(--ga-ink);
+  background: var(--bg-soft);
+}
+
+html[data-theme="galerie"] .pdm-media img {
+  border: 9px solid #ffffff;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+
+html[data-theme="galerie"] .pdm-body {
+  gap: 16px;
+  scrollbar-color: var(--ga-ink) transparent;
+}
+
+html[data-theme="galerie"] .pdm-body::-webkit-scrollbar-thumb {
+  background: var(--ga-ink);
+}
+
+html[data-theme="galerie"] .pdm-body .eyebrow,
+html[data-theme="galerie"] .pdm-meta-row dt,
+html[data-theme="galerie"] .pdm-highlights h4 {
+  font-family: var(--ga-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--ga-ink);
+  opacity: 1;
+}
+
+/* Keeps clear of the close button */
+html[data-theme="galerie"] .pdm-body .eyebrow {
+  margin: 0;
+  padding-right: 48px;
+}
+
+html[data-theme="galerie"] .pdm-title {
+  font-family: var(--ga-serif);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.02;
+  text-transform: none;
+  text-shadow: none;
+  color: var(--ga-ink);
+}
+
+html[data-theme="galerie"] .pdm-description {
+  padding-left: 0;
+  border-left: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ga-ink);
+}
+
+html[data-theme="galerie"] .pdm-meta {
+  border-color: var(--ga-ink);
+}
+
+html[data-theme="galerie"] .pdm-meta-row dd {
+  font-size: 0.9rem;
+  letter-spacing: 0;
+}
+
+html[data-theme="galerie"] .pdm-highlights li {
+  padding-left: 26px;
+  font-size: 0.94rem;
+}
+
+html[data-theme="galerie"] .pdm-highlights li::before {
+  content: "—";
+  left: 0;
+  font-size: inherit;
+  color: var(--ga-ink);
+}
+
+/* Same button as "enter the room" */
+html[data-theme="galerie"] .pdm-cta {
+  min-height: 46px;
+  padding: 12px 20px;
+  border: 2px solid var(--ga-ink);
+  background: var(--ga-ink);
+  box-shadow: none;
+  font-family: var(--ga-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ga-paper);
+  transform: none;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+html[data-theme="galerie"] .pdm-cta:hover {
+  background: transparent;
+  box-shadow: none;
+  color: var(--ga-ink);
+  transform: none;
+}
+
+html[data-theme="galerie"] .pdm-close {
+  border: 2px solid var(--ga-ink);
+  background: var(--ga-paper);
+  color: var(--ga-ink);
+}
+
+html[data-theme="galerie"] .pdm-close:hover,
+html[data-theme="galerie"] .pdm-close:focus-visible {
+  border-color: var(--ga-ink);
+  background: var(--ga-ink);
+  color: var(--ga-paper);
+}
+
+@media (max-width: 760px) {
+  /* The picture sits above the text: the rule moves under it, the mount thins */
+  html[data-theme="galerie"] .pdm-media {
+    padding: 12px;
+    border-right: 0;
+    border-bottom: 2px solid var(--ga-ink);
+  }
+
+  html[data-theme="galerie"] .pdm-media img {
+    border-width: 6px;
+  }
+}
+
 /* ─── Narrower screens ───────────────────────────────────────────────────── */
 @media (max-width: 1180px) {
   .ga-nav-num {

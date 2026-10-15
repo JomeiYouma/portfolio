@@ -4,6 +4,7 @@ import './riso.css'
 import SkipLink from '../../components/SkipLink'
 import Masthead from './components/Masthead'
 import ScrollRail from './components/ScrollRail'
+import Torch from './components/Torch'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Projects from './sections/Projects'
@@ -78,6 +79,7 @@ const RisoTheme = ({ lang, contrastActive, onOpenQuote, onOpenLegal, controlsPro
         <Services number={number('services')} onOpenQuote={onOpenQuote} />
         <Contact number={number('contact')} lang={lang} onOpenLegal={onOpenLegal} />
       </main>
+      <Torch rootRef={rootRef} />
     </div>
   )
 }

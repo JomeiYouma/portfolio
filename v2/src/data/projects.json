@@ -398,6 +398,7 @@
     },
     {
         "id": 22,
+        "game": "neon-horizon",
         "title": {
             "en": "NEON HORIZON",
             "fr": "NEON HORIZON"
@@ -723,6 +724,7 @@
     },
     {
         "id": 15,
+        "game": "speed-chaser",
         "title": {
             "en": "SPEED CHASER",
             "fr": "SPEED CHASER"
@@ -759,6 +761,7 @@
     },
     {
         "id": 16,
+        "game": "hangman",
         "title": {
             "en": "CIPHER BREACH",
             "fr": "CIPHER BREACH"

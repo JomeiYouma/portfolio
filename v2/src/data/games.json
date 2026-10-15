@@ -1,5 +1,20 @@
 [
   {
+    "id": "neon-horizon",
+    "title": {
+      "en": "Neon Horizon",
+      "fr": "Neon Horizon"
+    },
+    "description": {
+      "en": "Synthwave rhythm game. Pick a track and hit A Z O P on the beat.",
+      "fr": "Jeu de rythme synthwave. Choisis un morceau et frappe A Z O P en rythme."
+    },
+    "tech": "Three.js · Web Audio · GLSL",
+    "image": "neon-horizon.webp",
+    "imageSquare": "neon-horizon-square.webp",
+    "link": "https://jomeiyouma.github.io/neon-horizon/"
+  },
+  {
     "id": "speed-chaser",
     "title": {
       "en": "Speed Chaser",
@@ -40,20 +55,5 @@
     "tech": "React · Three.js · OGL",
     "image": "hangman.webp",
     "link": "https://jomeiyouma.github.io/hangman/"
-  },
-  {
-    "id": "neon-horizon",
-    "title": {
-      "en": "Neon Horizon",
-      "fr": "Neon Horizon"
-    },
-    "description": {
-      "en": "Synthwave rhythm game. Pick a track and hit A Z O P on the beat.",
-      "fr": "Jeu de rythme synthwave. Choisis un morceau et frappe A Z O P en rythme."
-    },
-    "tech": "Three.js · Web Audio · GLSL",
-    "image": "neon-horizon.webp",
-    "imageSquare": "neon-horizon-square.webp",
-    "link": "https://jomeiyouma.github.io/neon-horizon/"
   }
 ]

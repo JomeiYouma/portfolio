@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import SectionHead from '../components/SectionHead'
 import ProjectDetailModal from '../../../components/ProjectDetailModal'
-import projects from '../../../data/projects.json'
+import { projects } from '../../../data/projects'
 import { useI18n } from '../../../hooks/useI18n'
 import { asset } from '../../../utils/asset'
 

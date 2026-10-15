@@ -24,7 +24,7 @@ const About = ({ number }) => {
         <aside className="rz-stamp" data-rz-reveal>
           <p className="rz-stamp-title">{t('about.certifications.title')}</p>
           <p>{t('about.certifications.description')}</p>
-          <a className="rz-link" href={asset('assets/documents/opquast_certificate_2026.pdf')} download>
+          <a className="rz-link" href={asset('assets/documents/opquast_certificate_2026.pdf')} download data-rz-torch>
             <span aria-hidden="true">↓ </span>{t('about.certifications.download')}
           </a>
         </aside>

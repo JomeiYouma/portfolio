@@ -39,6 +39,23 @@ const tile = (coverage) => draw(8, 8, () => coverage)
 // Screen that runs from solid ink (top) to bare paper (bottom) over `length` cells
 const ramp = (length) => draw(8, length, (_, y) => 1 - y / (length - 1))
 
+// Disc that is solid up to `inner` px, then thins out to bare paper over
+// `edge` px. One texture per size, drawn the first time it is asked for.
+const holes = new Map()
+
+export const holeTexture = (inner, edge) => {
+  const innerCells = Math.ceil(inner / CELL)
+  const edgeCells = Math.round(edge / CELL)
+  const half = innerCells + edgeCells
+  const key = `${innerCells}/${edgeCells}`
+  if (!holes.has(key)) {
+    holes.set(key, draw(half * 2, half * 2, (x, y) => (
+      1 - (Math.hypot(x + 0.5 - half, y + 0.5 - half) - innerCells) / edgeCells
+    )))
+  }
+  return { image: holes.get(key), size: half * 2 * CELL }
+}
+
 export const RAMP_CELLS = 40
 
 export const applyDitherVars = (el) => {

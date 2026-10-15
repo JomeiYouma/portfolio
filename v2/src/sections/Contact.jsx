@@ -1,4 +1,5 @@
 import { useI18n } from '../hooks/useI18n'
+import FooterLine from '../components/FooterLine'
 import GitHubActivity from '../components/GitHubActivity'
 import GlowCard from '../components/GlowCard'
 import Reveal from '../components/Reveal'
@@ -44,7 +45,7 @@ const Contact = () => {
           </Reveal.Item>
 
           <Reveal.Item as="p" className="footer-note">
-            {t('contact.footer')}
+            <FooterLine />
           </Reveal.Item>
         </Reveal>
 

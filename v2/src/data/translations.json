@@ -133,7 +133,16 @@
       "last3Months": "Last 3 Months",
       "latestActivity": "Latest Activity",
       "loading": "connecting_to_server...",
-      "footer": "built with passion & code // 2026"
+      "footerLead": "built with",
+      "footerLines": [
+        { "struck": "passion & dedication", "instead": "lots of coffee" },
+        { "struck": "method & rigour", "instead": "forty open tabs" },
+        { "struck": "a precise plan", "instead": "trial and error" },
+        { "struck": "clean code", "instead": "one last console.log" },
+        { "struck": "a clear vision", "instead": "several fresh starts" },
+        { "struck": "eight hours of sleep", "instead": "very short nights" }
+      ],
+      "footerYear": "// 2026"
     },
     "accessibility": {
       "contrast": "Toggle high contrast",
@@ -446,7 +455,16 @@
       "last3Months": "3 Derniers Mois",
       "latestActivity": "Activité Récente",
       "loading": "connexion_au_serveur...",
-      "footer": "créé avec passion & code // 2026"
+      "footerLead": "créé avec",
+      "footerLines": [
+        { "struck": "passion & dévouement", "instead": "beaucoup de café" },
+        { "struck": "méthode & rigueur", "instead": "quarante onglets ouverts" },
+        { "struck": "un plan précis", "instead": "des essais et des erreurs" },
+        { "struck": "du code propre", "instead": "un dernier console.log" },
+        { "struck": "une vision claire", "instead": "plusieurs recommencements" },
+        { "struck": "huit heures de sommeil", "instead": "des nuits trop courtes" }
+      ],
+      "footerYear": "// 2026"
     },
     "accessibility": {
       "contrast": "Activer fort contraste",

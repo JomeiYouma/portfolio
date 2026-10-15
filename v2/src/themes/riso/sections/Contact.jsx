@@ -1,5 +1,6 @@
 import SectionHead from '../components/SectionHead'
 import GithubPanel from '../components/GithubPanel'
+import FooterLine from '../../../components/FooterLine'
 import { useI18n } from '../../../hooks/useI18n'
 
 const EMAIL = 'raphael.madore.pro@mailo.com'
@@ -47,7 +48,7 @@ const Contact = ({ number, lang, onOpenLegal }) => {
         <div className="rz-foot-plate">
           <div className="rz-foot-inner rz-wrap">
             <p className="rz-foot-name" aria-hidden="true">Raphaël Madoré</p>
-            <p className="rz-foot-note">{t('contact.footer')}</p>
+            <p className="rz-foot-note"><FooterLine /></p>
             <ul className="rz-foot-links">
               {['legal', 'terms', 'privacy'].map((tab) => (
                 <li key={tab}>

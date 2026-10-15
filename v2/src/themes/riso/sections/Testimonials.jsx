@@ -35,7 +35,7 @@ const Testimonials = ({ number }) => {
           <a className="rz-btn rz-btn--solid" href="mailto:raphael.madore.pro@mailo.com?subject=Let's work together!">
             {t('testimonials.cta')}
           </a>
-          <a className="rz-link" href={asset('assets/documents/CV-20260615-RM.pdf')} download>
+          <a className="rz-link" href={asset('assets/documents/CV-20260615-RM.pdf')} download data-rz-torch>
             <span aria-hidden="true">↓ </span>{t('testimonials.cv')}
           </a>
           <button
@@ -44,6 +44,7 @@ const Testimonials = ({ number }) => {
             onClick={() => setLetterOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={letterOpen}
+            data-rz-torch
           >
             <span aria-hidden="true">↓ </span>{t('testimonials.coverLetter')}
           </button>

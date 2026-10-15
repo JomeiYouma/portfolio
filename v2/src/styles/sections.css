@@ -1204,6 +1204,11 @@ body.inside-games-screen .target-cursor-wrapper { opacity: 0; }
   border-top: 1px solid var(--border);
 }
 
+.footer-note s {
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+}
+
 .contact-right {
   max-height: 70vh;
   overflow-y: auto;
