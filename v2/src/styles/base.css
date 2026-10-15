@@ -294,6 +294,8 @@ html[data-theme="riso"] body,
 html[data-theme="riso"] .loading-screen { background: #f3eee2; }
 html[data-theme="galerie"] body,
 html[data-theme="galerie"] .loading-screen { background: #ffd400; }
+html[data-theme="origami"] body,
+html[data-theme="origami"] .loading-screen { background: #f4ead8; }
 
 /* ─── Loading screen ─────────────────────────────────────────────────────── */
 .loading-screen {

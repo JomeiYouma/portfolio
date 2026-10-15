@@ -162,7 +162,8 @@
     "themes": {
       "neon": "Neon",
       "riso": "Riso",
-      "galerie": "Gallery"
+      "galerie": "Gallery",
+      "origami": "Origami"
     },
     "galerie": {
       "room": "Room",
@@ -178,6 +179,58 @@
       "exit": "Write to me, the door is open",
       "loading": "Loading…",
       "githubError": "GitHub data could not be loaded."
+    },
+    "origami": {
+      "view3d": "3D map",
+      "viewMap": "Page version, no 3D",
+      "station": "Stop",
+      "departure": "Starting point",
+      "hint": "Scroll to unroll the map",
+      "landmarkHint": "The landmarks on the map can be clicked; everything is also in the panels.",
+      "previous": "Previous stop",
+      "next": "Next stop",
+      "backToStart": "Back to the start",
+      "loadingScene": "Unfolding the map…",
+      "rail": {
+        "title": "Journey map"
+      },
+      "loading": "Loading…",
+      "githubError": "GitHub data could not be loaded.",
+      "landmarks": {
+        "start": "Start the journey",
+        "about": "Get to know me",
+        "project": "View the project",
+        "play": "Play",
+        "testimonial": "Read the testimonial",
+        "service": "Request a quote",
+        "quote": "Send a message",
+        "mail": "Write to me",
+        "compass": "Find your bearings",
+        "globe": "Orbis: a globe of data",
+        "strata": "Paléo Énergétique: reading the strata",
+        "qr": "QR Code Customizer",
+        "pixel": "Pixelate Studio",
+        "neon": "Neon Horizon",
+        "ticket": "Alter Exhibition: the ticket booth",
+        "hammer": "Geology, a first life: the hammer",
+        "outcrop": "Geology, a first life: the outcrop",
+        "geode": "Geology, a first life: the geode",
+        "laptop": "Code, day to day",
+        "scroll": "Opquast certificate (PDF)",
+        "bike": "Hobby: cycling",
+        "racket": "Hobby: badminton"
+      },
+      "taglines": {
+        "hero": "Unroll the map, the journey starts here.",
+        "about": "Background, tools and certification",
+        "projects": "A city of projects to visit",
+        "games": "Web games to try",
+        "testimonials": "Around the fire, what they say",
+        "services": "Build, redesign, gamify",
+        "contact": "Last stop: write to me"
+      },
+      "allProjects": "All projects ({count})",
+      "allProjectsHint": "The others are pinned on the map."
     },
     "riso": {
       "index": "Index",
@@ -484,7 +537,8 @@
     "themes": {
       "neon": "Néon",
       "riso": "Riso",
-      "galerie": "Galerie"
+      "galerie": "Galerie",
+      "origami": "Origami"
     },
     "galerie": {
       "room": "Salle",
@@ -500,6 +554,58 @@
       "exit": "Écrivez-moi, la porte est ouverte",
       "loading": "Chargement…",
       "githubError": "Les données GitHub n'ont pas pu être chargées."
+    },
+    "origami": {
+      "view3d": "Carte en 3D",
+      "viewMap": "Version page, sans 3D",
+      "station": "Escale",
+      "departure": "Point de départ",
+      "hint": "Faites défiler pour dérouler la carte",
+      "landmarkHint": "Les repères de la carte sont cliquables ; tout est aussi dans les cartouches.",
+      "previous": "Escale précédente",
+      "next": "Escale suivante",
+      "backToStart": "Retour au départ",
+      "loadingScene": "La carte se déplie…",
+      "rail": {
+        "title": "Plan du voyage"
+      },
+      "loading": "Chargement…",
+      "githubError": "Les données GitHub n'ont pas pu être chargées.",
+      "landmarks": {
+        "start": "Commencer le voyage",
+        "about": "Faire connaissance",
+        "project": "Voir le projet",
+        "play": "Jouer",
+        "testimonial": "Lire le témoignage",
+        "service": "Demander un devis",
+        "quote": "Envoyer un message",
+        "mail": "M'écrire",
+        "compass": "S'orienter",
+        "globe": "Orbis : un globe de données",
+        "strata": "Paléo Énergétique : lire les strates",
+        "qr": "QR Code Customizer",
+        "pixel": "Pixelate Studio",
+        "neon": "Neon Horizon",
+        "ticket": "Alter Exhibition : le guichet",
+        "hammer": "Géologie, une première vie : le marteau",
+        "outcrop": "Géologie, une première vie : l'affleurement",
+        "geode": "Géologie, une première vie : la géode",
+        "laptop": "Le code, au quotidien",
+        "scroll": "Certificat Opquast (PDF)",
+        "bike": "Loisir : le vélo",
+        "racket": "Loisir : le badminton"
+      },
+      "taglines": {
+        "hero": "Déroulez la carte, le voyage commence ici.",
+        "about": "Parcours, outils et certification",
+        "projects": "Une ville de projets à visiter",
+        "games": "Des jeux web à essayer",
+        "testimonials": "Autour du feu, ce qu'ils disent",
+        "services": "Création, refonte, gamification",
+        "contact": "Dernière escale : écrivez-moi"
+      },
+      "allProjects": "Tous les projets ({count})",
+      "allProjectsHint": "Les autres sont épinglés sur la carte."
     },
     "riso": {
       "index": "Index",

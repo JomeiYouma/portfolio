@@ -9,6 +9,7 @@ export const THEMES = [
   { id: 'neon', Component: NeonTheme },
   { id: 'riso', Component: lazy(() => import('./riso/RisoTheme')) },
   { id: 'galerie', Component: lazy(() => import('./galerie/GalerieTheme')) },
+  { id: 'origami', Component: lazy(() => import('./origami/OrigamiTheme')) },
 ]
 
 export const DEFAULT_THEME_ID = THEMES[0].id

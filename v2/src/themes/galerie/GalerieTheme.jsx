@@ -13,7 +13,7 @@ import games from '../../data/games.json'
 import { useI18n } from '../../hooks/useI18n'
 import { IS_LOW_PERF } from '../../utils/perf'
 import FloorPlan from './FloorPlan'
-import { useMediaQuery, useViewportWidth } from './hooks'
+import { useMediaQuery, useViewportWidth } from '../../hooks/useMediaQuery'
 import { PALETTE } from './room'
 import { AboutSheet, ContactSheet, GamesSheet, HeroSheet, ProjectsSheet, ServicesSheet, TestimonialsSheet } from './sheets'
 

@@ -9,13 +9,17 @@
     "build:no-prerender": "vite build",
     "prerender": "node scripts/prerender.mjs",
     "convert-images": "node scripts/convert-to-webp.mjs",
+    "make-textures": "node scripts/make-textures.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@fontsource-variable/anybody": "^5.3.0",
     "@fontsource-variable/bodoni-moda": "^5.3.0",
+    "@fontsource-variable/eb-garamond": "^5.3.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
     "@fontsource-variable/schibsted-grotesk": "^5.3.0",
+    "@fontsource/im-fell-english": "^5.3.0",
     "@paper-design/shaders-react": "0.0.81",
     "@react-three/fiber": "^9.8.1",
     "gsap": "^3.14.2",

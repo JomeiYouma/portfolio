@@ -7,6 +7,7 @@ Personal portfolio of Raphaël Madoré (Youma), creative developer.
 ## What it shows
 
 - Projects with a detail view, a section for browser games, skills, testimonials, services and contact
+- Four themes (Neon, Riso, Galerie, Origami), switched with Shift+click on the contrast button; Origami is a paper map in 3D that unrolls as you scroll
 - French and English, switchable at any time
 - A high-contrast mode for readability
 - Recent GitHub activity, fetched from the GitHub API

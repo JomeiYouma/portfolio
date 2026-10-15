@@ -1,0 +1,1869 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   ORIGAMI THEME
+   The portfolio as a paper map on an explorer's desk, unrolling under the
+   visitor as they scroll: a 3D scene (Scene.jsx) behind paper notes pinned
+   left and right of the map, one per stop, or the same notes laid on the
+   desk ("map view"). A strip of torn kraft paper down the left edge carries
+   the brand, the journey as a folded map with the stops pinned on it, and the
+   controls pressed into the paper.
+
+   Everything here is either scoped under html[data-theme="origami"] or uses a
+   class prefixed `ori-` that only this theme's markup carries, so the sheet is
+   inert while another theme is active.
+
+   Textures and tears: --ori-grain and --ori-wood are url() tiles meant for a
+   multiply blend, --ori-torn-photo and --ori-torn-label small torn polygons,
+   all set inline by OrigamiTheme.jsx (none in high contrast).
+   Two type families: IM Fell English, an engraver's face of the 1670s, for
+   titles, as on an old map; EB Garamond for everything else, upright for
+   text, italic for taglines and quotations, small capitals for labels.
+   Clickable text is marked as with a highlighter on hover and focus.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Tokens ─────────────────────────────────────────────────────────────── */
+html[data-theme="origami"] {
+  /* Keep in sync with ORIGAMI in palette.js */
+  --ori-cream:  #f4ead8;
+  --ori-paper:  #efe4cc;
+  --ori-kraft:  #d8bd93;
+  --ori-desk:   #4a2f1b;
+  --ori-ink:    #2a2118;
+  --ori-muted:  #6b5b47;
+  --ori-accent: #b8381f;
+  --ori-fold:   rgba(42, 33, 24, 0.18);
+  --ori-rule:   rgba(42, 33, 24, 0.35);
+  /* Warm shadow, as an RGB triplet */
+  --ori-shadow: 70 42 16;
+
+  /* A pen stroke for rules: thin between items, bold over a list */
+  --ori-stroke: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 6' preserveAspectRatio='none'%3E%3Cpath d='M2 3.4C80 2.2 150 4.3 230 3.1S380 2 460 3.6 560 3.9 598 2.7' fill='none' stroke='%232a2118' stroke-opacity='.42' stroke-width='1.3' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  --ori-stroke-bold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 6' preserveAspectRatio='none'%3E%3Cpath d='M2 2.8C90 3.9 170 2.1 260 3.2S420 4.1 500 2.6 570 3 598 3.5' fill='none' stroke='%232a2118' stroke-opacity='.85' stroke-width='2.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  /* A curly brace in the margin */
+  --ori-brace: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 100' preserveAspectRatio='none'%3E%3Cpath d='M12 1C5 1 7.5 12 7.5 26S6 46 1.5 50C6 54 7.5 62 7.5 75S5 99 12 99' fill='none' stroke='%23b8381f' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  /* The highlighter: a wash of the seal's red, slanted at both ends */
+  --ori-marker: linear-gradient(100deg, transparent 0.25em, rgb(184 56 31 / 0.26) 0.4em, rgb(184 56 31 / 0.18) 90%, transparent);
+
+  --ori-gutter: clamp(16px, 3.4vw, 48px);
+  --ori-rail:   68px;
+  --ori-bar:    0px;
+  /* Travel left under each cartouche: between two notes, the map alone, on the move */
+  --ori-run:    70svh;
+
+  --ori-serif:   "EB Garamond Variable", Garamond, Georgia, "Times New Roman", serif;
+  --ori-display: "IM Fell English", "EB Garamond Variable", Georgia, serif;
+
+  /* Shared components (modals, contribution graph, controls) read the neon tokens */
+  --bg:            var(--ori-cream);
+  --bg-elev:       var(--ori-cream);
+  --bg-soft:       #ebdfc6;
+  --bg-panel:      var(--ori-cream);
+  --text:          var(--ori-ink);
+  --text-muted:    var(--ori-muted);
+  --text-dim:      var(--ori-muted);
+  --accent:        var(--ori-accent);
+  --accent-soft:   rgba(184, 56, 31, 0.12);
+  --accent-glow:   transparent;
+  --accent-2:      var(--ori-accent);
+  --border:        var(--ori-fold);
+  --border-accent: var(--ori-ink);
+  --shadow:        none;
+  --shadow-glow:   none;
+  --font-main:     var(--ori-serif);
+  --font-display:  var(--ori-display);
+  --font-body:     var(--ori-serif);
+  --font-mono:     var(--ori-serif);
+
+  color-scheme: light;
+  scroll-behavior: smooth;
+  /* The stops: each station settles near the top when the scroll ends near it */
+  scroll-snap-type: y proximity;
+  scroll-padding-top: calc(var(--ori-bar) + 16px);
+}
+
+/* ─── Neon globals, neutralised ──────────────────────────────────────────── */
+html[data-theme="origami"]::before,
+html[data-theme="origami"] body::before,
+html[data-theme="origami"] body::after {
+  display: none;
+}
+
+html[data-theme="origami"] body {
+  background: var(--ori-cream);
+  color: var(--ori-ink);
+  font-family: var(--ori-serif);
+}
+
+/* What is not text (pictures, the portrait, buttons) keeps a ring that
+   follows its shape; text gets the highlighter and an underline instead */
+html[data-theme="origami"] :focus-visible {
+  outline: 2px solid var(--ori-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+html[data-theme="origami"] ::selection {
+  background: rgb(184 56 31 / 0.25);
+  color: var(--ori-ink);
+}
+
+/* Hand cursor over what can be clicked in the scene (toggled by hotspot.js) */
+html.ori-pointing .ori-canvas {
+  cursor: pointer;
+}
+
+/* ─── Frame ──────────────────────────────────────────────────────────────── */
+.ori-app {
+  min-height: 100vh;
+  font-family: var(--ori-serif);
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--ori-ink);
+  font-variant-numeric: oldstyle-nums;
+}
+
+/* Map view: the notes lie on the desk itself */
+.ori-app.is-map {
+  background-color: #6a4729;
+  background-image: var(--ori-wood, none);
+  background-size: 512px 512px;
+  background-blend-mode: multiply;
+}
+
+.ori-app.is-map::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 95% at 50% 40%, transparent 55%, rgb(var(--ori-shadow) / 0.35) 100%);
+}
+
+:where(.ori-app) ol,
+:where(.ori-app) ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.ori-app) p,
+:where(.ori-app) dl,
+:where(.ori-app) dd,
+:where(.ori-app) figure,
+:where(.ori-app) blockquote {
+  margin: 0;
+}
+
+:where(.ori-app) a {
+  color: inherit;
+}
+
+:where(.ori-app) button {
+  font: inherit;
+}
+
+/* layout.css turns <main> into the neon horizontal strip */
+.ori-main {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: auto;
+  padding-left: var(--ori-rail);
+}
+
+/* Over the scene, clicks go through to the map except on the cartouches */
+.is-3d .ori-main {
+  pointer-events: none;
+}
+
+.is-3d .ori-cartouche {
+  pointer-events: auto;
+}
+
+/* ─── Type ───────────────────────────────────────────────────────────────── */
+/* Small capitals, lightly spaced: every label of the theme */
+.ori-label,
+.ori-stamp,
+.ori-link,
+.ori-btn,
+.ori-facts dt,
+.ori-skills dt,
+.ori-work-meta,
+.ori-index-meta,
+.ori-tip,
+.ori-pin-name,
+.ori-rail .control-tooltip {
+  font-variant-caps: all-small-caps;
+  font-variant-numeric: lining-nums;
+  letter-spacing: 0.07em;
+  text-transform: none;
+}
+
+.ori-label {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* A rubber stamp in the seal's red, oval, inked unevenly by the paper grain */
+.ori-stamp {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 16px 5px;
+  border: 2px solid var(--ori-accent);
+  border-radius: 50%;
+  outline: 1px solid var(--ori-accent);
+  outline-offset: 2px;
+  color: var(--ori-accent);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  transform: rotate(-3deg);
+  -webkit-mask-image: var(--ori-grain, none);
+  mask-image: var(--ori-grain, none);
+  -webkit-mask-size: 256px 256px;
+  mask-size: 256px 256px;
+  mask-mode: luminance;
+}
+
+/* Engraved titles: the face has one weight, never a faked bold */
+.ori-title,
+.ori-subtitle,
+.ori-offer h3,
+.ori-offer-price strong {
+  margin: 0;
+  font-family: var(--ori-display);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1.02;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.ori-title {
+  font-size: clamp(2.3rem, 3.9vw, 3.3rem);
+  outline: none;
+}
+
+.ori-subtitle {
+  font-size: 1.65rem;
+}
+
+.ori-tagline {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.3;
+  color: var(--ori-muted);
+}
+
+/* In the 3D view the tagline is lettered on the map itself */
+.is-3d .ori-tagline {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.ori-lead {
+  font-size: 1.17rem;
+  line-height: 1.5;
+}
+
+/* ─── The highlighter ────────────────────────────────────────────────────── */
+/* Drawn behind the text of what can be clicked, from left to right, on hover
+   and keyboard focus. `--hl` is set on the control, the stroke is drawn on
+   the text inside it, line by line. */
+.ori-link,
+.ori-mail,
+.ori-contact-value,
+.ori-repo-name,
+.ori-work-title,
+.ori-index-name,
+.ori-index-title,
+.ori-switch button,
+.ori-quote-text {
+  background-image: var(--ori-marker);
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: var(--hl, 0%) 0.72em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 0.28s ease-out;
+}
+
+.ori-link:is(:hover, :focus-visible),
+.ori-mail:is(:hover, :focus-visible),
+.ori-contacts a:is(:hover, :focus-visible),
+.ori-repos a:is(:hover, :focus-visible),
+.ori-work:is(:hover, :focus-visible),
+.ori-index-item:is(:hover, :focus-visible),
+.ori-index summary:is(:hover, :focus-visible),
+.ori-switch button:is(:hover, :focus-visible, [aria-pressed="true"]),
+.ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle):is(:hover, :focus-visible) {
+  --hl: 100%;
+}
+
+/* Keyboard focus on text: highlighter plus an underline, never colour alone */
+.ori-link:focus-visible,
+.ori-mail:focus-visible,
+.ori-contacts a:focus-visible,
+.ori-repos a:focus-visible,
+.ori-work:focus-visible,
+.ori-index-item:focus-visible,
+.ori-index summary:focus-visible,
+.ori-switch button:focus-visible {
+  outline: none;
+}
+
+.ori-link:focus-visible,
+.ori-mail:focus-visible,
+.ori-switch button:focus-visible,
+.ori-contacts a:focus-visible .ori-contact-value,
+.ori-repos a:focus-visible .ori-repo-name,
+.ori-work:focus-visible .ori-work-title,
+.ori-index-item:focus-visible .ori-index-name,
+.ori-index summary:focus-visible .ori-index-title {
+  text-decoration: underline;
+  text-decoration-color: var(--ori-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* ─── Links & buttons ────────────────────────────────────────────────────── */
+.ori-link {
+  display: inline;
+  padding: 4px 0;
+  border: 0;
+  background-color: transparent;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--ori-rule);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+/* The address, as written by hand: on one line, never cut */
+.ori-mail {
+  font-size: 1.05rem;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-color: var(--ori-rule);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+/* Drawn by hand: no two corners alike, a red wash for the main action */
+.ori-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 8px 22px 10px;
+  border: 2px solid var(--ori-ink);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  background: rgb(184 56 31 / 0.12);
+  font-size: 1.12rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ori-ink);
+  cursor: pointer;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.ori-btn:hover {
+  background-color: rgb(184 56 31 / 0.24);
+  transform: rotate(-0.8deg);
+}
+
+.ori-btn:focus-visible {
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
+.ori-btn--ghost {
+  border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+  background: transparent;
+}
+
+.ori-btn--ghost:hover {
+  background-color: rgb(42 33 24 / 0.07);
+  transform: rotate(0.8deg);
+}
+
+.ori-btn--ghost:focus-visible {
+  border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+}
+
+.ori-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+}
+
+/* A paper label torn from the margin: pin names, tooltips, the scene's labels */
+.ori-pin-name,
+.ori-rail .control-tooltip {
+  padding: 5px 12px 7px;
+  border: 0;
+  background-color: var(--ori-cream);
+  background-image: var(--ori-grain, none);
+  background-size: 256px 256px;
+  background-blend-mode: multiply;
+  box-shadow: none;
+  color: var(--ori-ink);
+  font-family: var(--ori-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-shadow: none;
+  white-space: nowrap;
+  clip-path: var(--ori-torn-label);
+}
+
+/* ─── The rail ───────────────────────────────────────────────────────────── */
+/* One strip of torn kraft paper down the left edge: whatever the scene shows
+   behind it, everything on it is ink on kraft. Its shadow falls on the desk. */
+.ori-rail {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: var(--ori-rail);
+  padding: 16px 6px 14px 0;
+  color: var(--ori-ink);
+  filter: drop-shadow(3px 0 5px rgb(var(--ori-shadow) / 0.4));
+}
+
+.ori-rail::before {
+  content: "";
+  position: absolute;
+  inset: -8px 0 -8px -8px;
+  z-index: -1;
+  background-color: var(--ori-kraft);
+  background-image: var(--ori-grain, none);
+  background-size: 512px 512px;
+  background-blend-mode: multiply;
+  clip-path: var(--ori-deckle);
+}
+
+.ori-brand {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  border-radius: 6px;
+  color: var(--ori-ink);
+  text-decoration: none;
+}
+
+/* The portrait, glued on a scrap of cream paper torn around it */
+.ori-avatar {
+  display: block;
+  width: 46px;
+  height: 46px;
+  padding: 4px;
+  background-color: var(--ori-cream);
+  background-image: var(--ori-grain, none);
+  background-size: 256px 256px;
+  background-blend-mode: multiply;
+  clip-path: var(--ori-scrap);
+  transform: rotate(-4deg);
+  transition: transform 0.25s ease;
+}
+
+.ori-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip-path: var(--ori-scrap);
+}
+
+.ori-brand:hover .ori-avatar,
+.ori-brand:focus-visible .ori-avatar {
+  transform: rotate(2deg) scale(1.06);
+}
+
+/* The name, read bottom to top */
+.ori-brand-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* The journey: a strip of folded map, unrolled as far as the scroll went */
+.ori-nav {
+  position: relative;
+  flex: 1 1 auto;
+  width: 36px;
+  min-height: 200px;
+  margin-block: 4px;
+}
+
+.ori-strip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ori-strip-back {
+  fill: #b99a6c;
+  fill-opacity: 0.55;
+}
+
+.ori-strip-front {
+  fill: var(--ori-cream);
+  transform: scaleY(var(--ori-progress, 0));
+  transform-box: fill-box;
+  transform-origin: 0 0;
+}
+
+.ori-strip-road {
+  fill: none;
+  stroke: var(--ori-ink);
+  stroke-width: 2;
+  stroke-dasharray: 0.9 2.1;
+  opacity: 0.55;
+  vector-effect: non-scaling-stroke;
+}
+
+.ori-pins {
+  position: absolute;
+  inset: 14px 0;
+}
+
+.ori-pins li {
+  position: absolute;
+  top: calc(var(--i) * 100%);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Stops not reached yet are faded, in CSS alone */
+  opacity: calc(0.45 + 0.55 * clamp(0, (var(--ori-progress, 0) - var(--i)) * 1000 + 1, 1));
+}
+
+.ori-pins a {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.ori-pins a:focus-visible {
+  outline-offset: 1px;
+  border-radius: 50%;
+}
+
+.ori-pin {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ori-ink);
+  box-shadow: 0 0 0 2px var(--ori-cream);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+}
+
+.ori-pins a:hover .ori-pin {
+  background: var(--ori-accent);
+}
+
+.ori-pins a[aria-current] .ori-pin {
+  width: 14px;
+  height: 14px;
+  background: var(--ori-accent);
+  box-shadow: 0 0 0 2px var(--ori-cream), 0 0 0 4px var(--ori-accent);
+}
+
+.is-3d .ori-pins a[aria-current] .ori-pin {
+  animation: ori-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes ori-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--ori-cream), 0 0 0 4px var(--ori-accent); }
+  50%      { box-shadow: 0 0 0 2px var(--ori-cream), 0 0 0 7px rgba(184, 56, 31, 0.35); }
+}
+
+/* Name of the stop, on a scrap beside its pin */
+.ori-pin-name {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 12px);
+  transform: translateY(-50%) rotate(-1.5deg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.ori-pins a:hover .ori-pin-name,
+.ori-pins a:focus-visible .ori-pin-name {
+  opacity: 1;
+}
+
+/* The roll at the front of the unrolled part */
+.ori-roll {
+  position: absolute;
+  top: calc(14px + var(--ori-progress, 0) * (100% - 28px));
+  left: 50%;
+  width: 40px;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #fbf4e4, #c9ab7d);
+  box-shadow: 0 2px 3px rgb(var(--ori-shadow) / 0.35);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.ori-rail-tools {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+
+/* The shared controls, stacked */
+.ori-rail .accessibility-controls {
+  position: static;
+  display: grid;
+  gap: 2px;
+  transform: none;
+}
+
+.ori-rail .legal-pills {
+  display: none; /* the legal links are in the Contact cartouche */
+}
+
+/* No frame, no fill: each control is pressed into the kraft, lit from
+   above (a light lip under the glyph, a dark one over it) and rises a
+   little under the pointer. The highlighter marks hover and focus. */
+.ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle),
+.ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle):is(:hover, :focus-visible, .active, .is-theme-mode) {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--ori-marker) no-repeat 50% 82% / var(--hl, 0%) 0.6em;
+  box-shadow: none;
+  color: var(--ori-ink);
+  font-family: var(--ori-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 0 rgb(255 248 230 / 0.65), 0 -1px 0 rgb(42 33 24 / 0.3);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  cursor: pointer;
+  transition: background-size 0.28s ease-out, transform 0.18s ease, color 0.18s ease;
+}
+
+.ori-rail :is(.ori-mode svg, .icon-contrast) {
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(0 1px 0 rgb(255 248 230 / 0.65)) drop-shadow(0 -1px 0 rgb(42 33 24 / 0.3));
+}
+
+.ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle):hover {
+  transform: translateY(-1px);
+  text-shadow: 0 2px 1px rgb(255 248 230 / 0.75), 0 -1px 0 rgb(42 33 24 / 0.3);
+}
+
+.ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle):focus-visible {
+  outline: none;
+  color: var(--ori-accent);
+}
+
+/* Contrast on: the eye inked in red */
+.ori-rail .contrast-toggle.active {
+  color: var(--ori-accent);
+}
+
+.ori-rail .contrast-toggle.is-theme-mode {
+  color: var(--ori-accent);
+}
+
+.ori-rail .contrast-frame {
+  inset: 2px;
+}
+
+.ori-rail .contrast-frame::before {
+  border: 2px solid var(--ori-accent);
+  border-radius: 40% 60% 45% 55% / 55% 45% 60% 40%;
+  box-shadow: none;
+}
+
+/* Tooltip: a scrap beside the button */
+.ori-rail .control-tooltip {
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: calc(100% + 14px);
+  transform: translateY(-50%) rotate(-1.5deg);
+}
+
+.ori-rail .control-tooltip::before {
+  content: none;
+}
+
+.ori-mode:focus-visible .control-tooltip {
+  visibility: visible;
+}
+
+@media (hover: hover) {
+  .ori-mode:hover .control-tooltip {
+    visibility: visible;
+  }
+}
+
+/* ─── The scene ──────────────────────────────────────────────────────────── */
+.ori-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--ori-desk);
+}
+
+/* Vignette: the lamp lights the middle, the edges of the desk fall off */
+.ori-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 95% at 42% 45%, transparent 52%, rgb(var(--ori-shadow) / 0.32) 100%),
+    linear-gradient(180deg, rgba(255, 214, 150, 0.08), transparent 40%, rgb(var(--ori-shadow) / 0.12));
+}
+
+.ori-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ori-stage-loading {
+  position: absolute;
+  left: 50%;
+  bottom: 12vh;
+  z-index: 2;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ori-cream);
+}
+
+/* Name of the landmark under the pointer, on a scrap; the scene moves it.
+   The scrap is drawn on ::before so the shadow can follow its torn edge. */
+.ori-tip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  margin: 18px 0 0 16px;
+  padding: 5px 12px 7px;
+  color: var(--ori-ink);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 3px 4px rgb(var(--ori-shadow) / 0.45));
+  transition: opacity 0.15s ease;
+}
+
+.ori-tip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--ori-cream);
+  background-image: var(--ori-grain, none);
+  background-size: 256px 256px;
+  background-blend-mode: multiply;
+  clip-path: var(--ori-torn-label);
+  transform: rotate(-1.5deg);
+}
+
+/* Below the middle of the window, the label goes above the pointer so it
+   never covers the name lettered on the map */
+.ori-tip.is-above {
+  margin-top: -44px;
+}
+
+.ori-tip.is-on {
+  opacity: 1;
+}
+
+/* ─── Stops and cartouches ───────────────────────────────────────────────── */
+.ori-station {
+  position: relative;
+  display: grid;
+  align-content: start;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--ori-gutter) + 20px) var(--ori-gutter) var(--ori-run);
+  scroll-snap-align: start;
+}
+
+.ori-station:last-child {
+  padding-bottom: var(--ori-gutter);
+}
+
+/* One stop right, the next left: the map slides to the free side */
+.ori-station--right .ori-cartouche {
+  margin-left: auto;
+}
+
+.ori-station--left .ori-cartouche {
+  margin-right: auto;
+}
+
+/* The first cartouche sits low and small: the map's own lettering is the hero */
+.ori-station--hero {
+  align-content: end;
+}
+
+/* A note pinned over the map: tilted a little, with a warm shadow that
+   follows its torn edges and its fastener */
+.ori-cartouche {
+  position: relative;
+  width: min(560px, 44vw);
+  transform: translateY(10px) rotate(var(--ori-tilt, 0deg));
+  filter: drop-shadow(0 18px 14px rgb(var(--ori-shadow) / 0.28)) drop-shadow(0 2px 2px rgb(var(--ori-shadow) / 0.22));
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ori-cartouche.is-in {
+  transform: rotate(var(--ori-tilt, 0deg));
+}
+
+.ori-station--hero .ori-cartouche {
+  width: min(460px, 40vw);
+}
+
+/* Real paper: the grain tile multiplied over the cream, edges torn by the
+   clip. Its width drives the layout of what is written on it. */
+.ori-paper {
+  position: relative;
+  display: grid;
+  gap: 24px;
+  padding: clamp(22px, 2.8vw, 40px);
+  background-color: var(--ori-cream);
+  background-image: var(--ori-grain, none);
+  background-size: 512px 512px;
+  background-blend-mode: multiply;
+  color: var(--ori-ink);
+  clip-path: var(--ori-deckle);
+  container: note / inline-size;
+}
+
+/* Fasteners, on the unclipped wrapper so they overhang the paper */
+.ori-cartouche::before,
+.ori-cartouche::after {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* A strip of masking tape across the top */
+.ori-cartouche--note::before {
+  content: "";
+  top: -13px;
+  left: 50%;
+  width: 112px;
+  height: 28px;
+  background-color: rgba(255, 244, 196, 0.62);
+  background-image: var(--ori-grain, none);
+  background-size: 256px 256px;
+  background-blend-mode: multiply;
+  clip-path: polygon(0 20%, 3% 0, 97% 4%, 100% 25%, 98% 100%, 2% 96%);
+  transform: translateX(-50%) rotate(-3deg);
+  mix-blend-mode: multiply;
+}
+
+/* A wax seal on the first and last notes */
+.ori-cartouche--sealed::before {
+  content: "RM";
+  top: -18px;
+  right: 26px;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 48% 52% 50% 50% / 50% 48% 52% 50%;
+  background: radial-gradient(circle at 35% 30%, #d9583a, var(--ori-accent) 45%, #8d2512 100%);
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.35),
+    inset 0 -3px 4px rgba(0, 0, 0, 0.35),
+    0 2px 4px rgb(var(--ori-shadow) / 0.35);
+  color: var(--ori-cream);
+  font-family: var(--ori-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transform: rotate(-8deg);
+}
+
+.ori-cartouche-head {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding-bottom: 16px;
+  background: var(--ori-stroke-bold) 0 100% / 100% 6px no-repeat;
+}
+
+.ori-cartouche-body {
+  display: grid;
+  gap: 24px;
+}
+
+.ori-cartouche-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 22px;
+  padding-top: 16px;
+  background: var(--ori-stroke) 0 0 / 100% 6px no-repeat;
+}
+
+.ori-hint {
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--ori-muted);
+}
+
+/* Map view: notes down the middle of the desk, the stop's name in large */
+.is-map .ori-cartouche,
+.is-map .ori-station--hero .ori-cartouche {
+  width: min(680px, 60vw);
+  margin-inline: auto;
+}
+
+.is-map .ori-station--hero {
+  align-content: start;
+}
+
+.is-map .ori-title {
+  font-size: clamp(2.8rem, 5.6vw, 4.8rem);
+}
+
+/* ─── Cartouche contents ─────────────────────────────────────────────────── */
+.ori-hero {
+  display: grid;
+  gap: 20px;
+}
+
+.ori-facts,
+.ori-skills {
+  display: grid;
+  background: var(--ori-stroke-bold) 0 0 / 100% 6px no-repeat;
+}
+
+.ori-facts > div,
+.ori-skills > div {
+  display: grid;
+  grid-template-columns: 9em minmax(0, 1fr);
+  gap: 16px;
+  padding: 12px 0;
+  background: var(--ori-stroke) 0 100% / 100% 6px no-repeat;
+}
+
+/* The foot of the cartouche draws its own rule */
+.ori-facts > div:last-child,
+.ori-skills > div:last-child {
+  background: none;
+}
+
+/* Dotted leaders run from each label to its value */
+.ori-facts dt,
+.ori-skills dt {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.ori-facts dt::after,
+.ori-skills dt::after {
+  content: "";
+  flex: 1;
+  border-bottom: 2px dotted var(--ori-rule);
+  transform: translateY(-4px);
+}
+
+/* Skills: each logo in grey ink, multiplied into the paper so a white
+   background or a light shape never makes a patch */
+.ori-skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.ori-skill-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.3;
+}
+
+.ori-skill-list img {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.15) brightness(0.85);
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+}
+
+/* A narrow note puts each label over its value, leaders dropped */
+@container note (width < 440px) {
+  .ori-facts > div,
+  .ori-skills > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .ori-facts dt::after,
+  .ori-skills dt::after {
+    content: none;
+  }
+}
+
+/* A note in the margin, behind a curly brace drawn in red */
+.ori-note {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: 10px 0 10px 28px;
+  font-size: 1.05rem;
+}
+
+.ori-note::before {
+  content: "";
+  position: absolute;
+  inset: 4px auto 4px 0;
+  width: 14px;
+  background: var(--ori-brace) 0 0 / 100% 100% no-repeat;
+}
+
+.ori-badge {
+  justify-self: start;
+}
+
+/* Works: each capture on a torn white mount, tilted this way and that */
+.ori-works {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 22px;
+}
+
+.ori-work {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* The shadow lives on the outer span so it follows the torn mount inside */
+.ori-work-shot {
+  display: block;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 8px 10px rgb(var(--ori-shadow) / 0.24));
+  transform: rotate(-1.2deg);
+  transition: transform 0.2s ease;
+}
+
+.ori-works li:nth-child(even) .ori-work-shot {
+  transform: rotate(1.1deg);
+}
+
+.ori-work-mount {
+  display: block;
+  aspect-ratio: 16 / 10;
+  padding: 7px;
+  background: #fffdf6;
+  clip-path: var(--ori-torn-photo);
+}
+
+.ori-work-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ori-works li:is(:hover, :focus-within) .ori-work-shot {
+  transform: translateY(-3px) rotate(0deg);
+}
+
+.ori-work-title {
+  justify-self: start;
+  font-size: 1.32rem;
+  font-weight: 600;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+}
+
+.ori-work-text {
+  font-size: 1.02rem;
+  line-height: 1.4;
+}
+
+.ori-work-meta {
+  font-size: 0.92rem;
+  line-height: 1.35;
+  color: var(--ori-muted);
+}
+
+/* Every project, in one line each, folded under the six pictures */
+.ori-index {
+  padding-top: 14px;
+  background: var(--ori-stroke-bold) 0 0 / 100% 6px no-repeat;
+}
+
+.ori-index summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+  padding: 4px 0;
+  border-radius: 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.ori-index summary::-webkit-details-marker {
+  display: none;
+}
+
+.ori-index summary::before {
+  content: "☞";
+  color: var(--ori-accent);
+  transition: transform 0.2s ease;
+}
+
+.ori-index[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.ori-index-title {
+  font-size: 1.12rem;
+  font-weight: 600;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.06em;
+}
+
+.ori-index-hint {
+  font-style: italic;
+  color: var(--ori-muted);
+}
+
+.ori-index ul {
+  columns: 2;
+  column-gap: 26px;
+  margin-top: 10px;
+}
+
+.ori-index li {
+  break-inside: avoid;
+}
+
+.ori-index-item {
+  display: grid;
+  width: 100%;
+  padding: 5px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ori-index-name {
+  justify-self: start;
+  font-size: 1.06rem;
+  font-weight: 600;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+}
+
+.ori-index-meta {
+  font-size: 0.88rem;
+  line-height: 1.3;
+  color: var(--ori-muted);
+}
+
+.ori-quote {
+  display: grid;
+  gap: 10px;
+  padding-top: 18px;
+  outline: none;
+  background: var(--ori-stroke) 0 0 / 100% 6px no-repeat;
+}
+
+.ori-quote blockquote {
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.2rem, 1.6vw, 1.42rem);
+  line-height: 1.38;
+}
+
+/* Only the highlighter of the lit quote shows on its text */
+.ori-quote-text {
+  transition: none;
+}
+
+.ori-quote figcaption {
+  font-size: 0.98rem;
+}
+
+.ori-quote figcaption strong {
+  font-weight: 700;
+}
+
+/* The quote a figure of the scene pointed at: highlighted, stroke by stroke */
+.ori-quote.is-lit .ori-quote-text {
+  background-size: 100% 0.72em;
+  animation: ori-mark 1.1s ease-out;
+}
+
+@keyframes ori-mark {
+  from { background-size: 0% 0.72em; }
+  to   { background-size: 100% 0.72em; }
+}
+
+.ori-offers {
+  display: grid;
+  background: var(--ori-stroke-bold) 0 0 / 100% 6px no-repeat;
+}
+
+.ori-offer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px 20px;
+  align-items: start;
+  padding: 22px 0 26px;
+  background: var(--ori-stroke) 0 100% / 100% 6px no-repeat;
+}
+
+.ori-offer h3 {
+  font-size: 1.85rem;
+  line-height: 1.1;
+}
+
+.ori-offer-price {
+  display: grid;
+  justify-items: end;
+  grid-row: span 2;
+}
+
+.ori-offer-price strong {
+  font-size: 2.7rem;
+  line-height: 1;
+  color: var(--ori-accent);
+}
+
+.ori-offer > p:not(.ori-offer-price),
+.ori-offer-features,
+.ori-offer .ori-btn {
+  grid-column: 1;
+}
+
+.ori-offer .ori-btn {
+  justify-self: start;
+  margin-top: 6px;
+}
+
+.ori-offer-features {
+  display: grid;
+  gap: 2px;
+  font-size: 1rem;
+}
+
+.ori-offer-features li::before {
+  content: "— ";
+}
+
+.ori-contacts {
+  background: var(--ori-stroke-bold) 0 0 / 100% 6px no-repeat;
+}
+
+.ori-contacts a {
+  display: grid;
+  grid-template-columns: 6.5em minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 0;
+  background: var(--ori-stroke) 0 100% / 100% 6px no-repeat;
+  text-decoration: none;
+}
+
+.ori-contacts a:focus-visible {
+  border-radius: 0;
+}
+
+.ori-contact-value {
+  justify-self: start;
+  font-size: clamp(1.08rem, 1.6vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* A narrow note: the label over its value, the address still on one line */
+@container note (width < 440px) {
+  .ori-contacts a {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 14px;
+  }
+
+  .ori-contacts .ori-label {
+    grid-column: 1 / -1;
+  }
+}
+
+.ori-github {
+  display: grid;
+  gap: 16px;
+}
+
+.ori-github > header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+}
+
+/* Two words, the one in force highlighted */
+.ori-switch {
+  display: inline-flex;
+  gap: 16px;
+}
+
+.ori-switch button {
+  min-height: 32px;
+  padding: 0 2px;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.06em;
+  color: var(--ori-muted);
+  cursor: pointer;
+}
+
+.ori-switch button[aria-pressed="true"] {
+  color: var(--ori-ink);
+}
+
+/* The shared contribution graph, a cutting glued on the note */
+.ori-github .github-graph {
+  --accent: var(--ori-accent);
+  --bg-elev: #fffdf6;
+  border: 0;
+  border-radius: 4px 9px 5px 8px / 8px 5px 9px 4px;
+  background: #fffdf6;
+  box-shadow: 0 8px 16px rgb(var(--ori-shadow) / 0.18);
+  transform: rotate(-0.5deg);
+}
+
+.ori-github .github-graph-tooltip {
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgb(var(--ori-shadow) / 0.3);
+}
+
+.ori-status {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ori-muted);
+}
+
+.ori-repos {
+  background: var(--ori-stroke-bold) 0 0 / 100% 6px no-repeat;
+}
+
+.ori-repos a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 14px;
+  padding: 12px 0;
+  background: var(--ori-stroke) 0 100% / 100% 6px no-repeat;
+  text-decoration: none;
+}
+
+.ori-repos a:focus-visible {
+  border-radius: 0;
+}
+
+.ori-repo-name {
+  justify-self: start;
+  font-size: 1.2rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.ori-repos time {
+  font-size: 0.9rem;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.ori-repo-desc {
+  grid-column: 1 / -1;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.ori-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+}
+
+/* ─── Shared dialogs ─────────────────────────────────────────────────────── */
+html[data-theme="origami"] .modal-overlay,
+html[data-theme="origami"] .pdm-overlay {
+  background: rgba(42, 33, 24, 0.6);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-theme="origami"] .modal-content,
+html[data-theme="origami"] .pdm-dialog {
+  border: 0;
+  border-radius: 6px 12px 8px 14px / 14px 8px 12px 6px;
+  box-shadow: 0 24px 60px rgba(42, 33, 24, 0.35);
+}
+
+html[data-theme="origami"] .modal-content::before,
+html[data-theme="origami"] .modal-content::after {
+  display: none;
+}
+
+/* ─── Narrower screens ───────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  html[data-theme="origami"] {
+    --ori-rail: 0px;
+    --ori-bar: 100px;
+    --ori-run: 50svh;
+  }
+
+  /* The rail becomes a strip of torn paper across the top: brand, tools,
+     then the pins */
+  .ori-rail {
+    inset: 0 0 auto 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 8px;
+    width: auto;
+    padding: 8px var(--ori-gutter) 6px;
+    filter: drop-shadow(0 3px 5px rgb(var(--ori-shadow) / 0.4));
+  }
+
+  .ori-rail::before {
+    inset: -8px -8px 0;
+  }
+
+  .ori-brand {
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ori-avatar {
+    width: 36px;
+    height: 36px;
+    padding: 3px;
+  }
+
+  .ori-brand-name {
+    font-size: 1.2rem;
+    font-variant-caps: normal;
+    letter-spacing: 0;
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .ori-rail-tools {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .ori-rail .accessibility-controls {
+    display: flex;
+  }
+
+  .ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle),
+  .ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle):is(:hover, :focus-visible, .active, .is-theme-mode) {
+    width: 44px;
+    height: 44px;
+  }
+
+  .ori-rail .control-tooltip {
+    top: calc(100% + 10px);
+    right: 0;
+    left: auto;
+    transform: rotate(-1.5deg);
+  }
+
+  .ori-nav {
+    order: 3;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 44px;
+    min-height: 0;
+    margin: 2px 0 0;
+  }
+
+  .ori-strip-front {
+    transform: scaleX(var(--ori-progress, 0));
+  }
+
+  .ori-pins {
+    inset: 0 22px;
+  }
+
+  .ori-pins li {
+    top: 50%;
+    left: calc(var(--i) * 100%);
+  }
+
+  .ori-pins a {
+    width: 44px;
+    height: 44px;
+  }
+
+  .ori-pin-name {
+    display: none;
+  }
+
+  .ori-roll {
+    top: 50%;
+    left: calc(22px + var(--ori-progress, 0) * (100% - 44px));
+    width: 12px;
+    height: 40px;
+  }
+
+  .ori-main {
+    padding: var(--ori-bar) 0 0;
+  }
+
+  /* The scene shows above the cartouche instead of beside it */
+  .ori-cartouche,
+  .ori-station--hero .ori-cartouche,
+  .is-map .ori-cartouche,
+  .is-map .ori-station--hero .ori-cartouche {
+    width: 100%;
+    transform: translateY(10px) rotate(calc(var(--ori-tilt, 0deg) * 0.5));
+  }
+
+  .ori-cartouche.is-in {
+    transform: rotate(calc(var(--ori-tilt, 0deg) * 0.5));
+  }
+
+  .is-3d .ori-station {
+    align-content: start;
+  }
+
+  .is-3d .ori-cartouche {
+    margin-top: 42svh;
+  }
+
+  .is-3d .ori-station--hero .ori-cartouche {
+    margin-top: 50svh;
+  }
+
+  .ori-cartouche--sealed::before {
+    right: 16px;
+  }
+
+  .ori-index ul {
+    columns: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .ori-works {
+    gap: 22px 14px;
+  }
+
+  .ori-offer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ori-offer-price {
+    grid-row: auto;
+    justify-items: start;
+  }
+}
+
+/* ─── Low-perf and reduced motion ────────────────────────────────────────── */
+html.low-perf .ori-cartouche,
+html.low-perf .ori-rail,
+html.low-perf .ori-tip {
+  filter: none;
+  transition: none;
+}
+
+html.low-perf .ori-work-shot {
+  filter: none;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="origami"] {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+
+  .ori-cartouche,
+  .ori-cartouche.is-in {
+    transform: rotate(var(--ori-tilt, 0deg));
+    transition: none;
+  }
+
+  .is-3d .ori-pins a[aria-current] .ori-pin {
+    animation: none;
+  }
+
+  .ori-pin,
+  .ori-pin-name,
+  .ori-btn,
+  .ori-avatar,
+  .ori-work-shot,
+  .ori-tip,
+  .ori-index summary::before,
+  .ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle),
+  .ori-link,
+  .ori-mail,
+  .ori-contact-value,
+  .ori-repo-name,
+  .ori-work-title,
+  .ori-index-name,
+  .ori-index-title,
+  .ori-switch button {
+    transition: none;
+  }
+
+  .ori-btn:hover,
+  .ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle):hover,
+  .ori-works li:is(:hover, :focus-within) .ori-work-shot {
+    transform: none;
+  }
+
+  .ori-quote.is-lit .ori-quote-text {
+    animation: none;
+  }
+}
+
+/* ─── High contrast ──────────────────────────────────────────────────────── */
+/* Black on white: no grain, no torn edges, no tilt, the seal darkened, the
+   highlighter a solid yellow */
+html[data-theme="origami"] body.aaa-contrast {
+  --ori-cream:  #ffffff;
+  --ori-paper:  #ffffff;
+  --ori-kraft:  #ffffff;
+  --ori-desk:   #d9d9d9;
+  --ori-ink:    #000000;
+  --ori-muted:  #000000;
+  --ori-accent: #7a2000;
+  --ori-fold:   #000000;
+  --ori-rule:   #000000;
+  --ori-marker: linear-gradient(#ffe600, #ffe600);
+  --ori-stroke: linear-gradient(#000000, #000000);
+  --ori-stroke-bold: linear-gradient(#000000, #000000);
+  --ori-brace: linear-gradient(#000000, #000000);
+  --bg:            #ffffff;
+  --bg-elev:       #ffffff;
+  --bg-soft:       #ffffff;
+  --bg-panel:      #ffffff;
+  --text:          #000000;
+  --text-muted:    #000000;
+  --text-dim:      #000000;
+  --accent:        #7a2000;
+  --accent-soft:   transparent;
+  --accent-2:      #7a2000;
+  --border:        #000000;
+  --border-accent: #000000;
+}
+
+/* The solid rules stand in for the pen strokes: 1 px between items, 2 over a list */
+html[data-theme="origami"] body.aaa-contrast :is(.ori-facts > div, .ori-skills > div, .ori-offer, .ori-contacts a, .ori-repos a) {
+  background-size: 100% 1px;
+}
+
+html[data-theme="origami"] body.aaa-contrast :is(.ori-cartouche-foot, .ori-quote) {
+  background-size: 100% 1px;
+}
+
+html[data-theme="origami"] body.aaa-contrast :is(.ori-cartouche-head, .ori-facts, .ori-skills, .ori-offers, .ori-contacts, .ori-repos, .ori-index) {
+  background-size: 100% 2px;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-note::before {
+  width: 4px;
+}
+
+html[data-theme="origami"] body.aaa-contrast :focus-visible {
+  outline-color: #000000;
+  outline-width: 3px;
+}
+
+html[data-theme="origami"] body.aaa-contrast :is(.ori-link, .ori-mail, .ori-switch button, .ori-contact-value, .ori-repo-name, .ori-work-title, .ori-index-name, .ori-index-title) {
+  text-decoration-color: #000000;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-app.is-map {
+  background: #ffffff;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-app.is-map::before,
+html[data-theme="origami"] body.aaa-contrast .ori-stage::after {
+  display: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-station {
+  --ori-tilt: 0deg;
+}
+
+html[data-theme="origami"] body.aaa-contrast :is(.ori-cartouche, .ori-rail, .ori-tip, .ori-work-shot) {
+  filter: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-paper {
+  border: 2px solid #000000;
+  background-image: none;
+  clip-path: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-rail::before {
+  inset: 0;
+  border-right: 2px solid #000000;
+  background: #ffffff;
+  clip-path: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-avatar {
+  padding: 0;
+  border: 2px solid #000000;
+  transform: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-rail :is(.ori-mode, .contrast-toggle, .lang-toggle) {
+  text-shadow: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-rail :is(.ori-mode svg, .icon-contrast) {
+  filter: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast :is(.ori-pin-name, .ori-rail .control-tooltip) {
+  border: 2px solid #000000;
+  background: #ffffff;
+  transform: translateY(-50%);
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-tip::before {
+  border: 2px solid #000000;
+  background: #ffffff;
+  transform: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-cartouche--note::before {
+  border: 2px solid #000000;
+  background: #ffffff;
+  clip-path: none;
+  mix-blend-mode: normal;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-cartouche--sealed::before {
+  background: #000000;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-btn {
+  border-color: #000000;
+  background: #ffffff;
+  color: #000000;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-btn:hover {
+  background: #ffe600;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-stamp {
+  -webkit-mask: none;
+  mask: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-strip-back {
+  fill: #ffffff;
+  fill-opacity: 1;
+  stroke: #000000;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-roll {
+  border: 2px solid #000000;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-work-mount {
+  border: 2px solid #000000;
+  clip-path: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast :is(.ori-work-shot, .ori-works li:nth-child(even) .ori-work-shot, .ori-github .github-graph) {
+  transform: none;
+}
+
+html[data-theme="origami"] body.aaa-contrast .ori-github .github-graph {
+  border: 2px solid #000000;
+  border-radius: 0;
+  box-shadow: none;
+}

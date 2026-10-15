@@ -1,94 +1,22 @@
 import * as THREE from 'three'
 import { INK } from './room'
+import { createTypesetter, paint, softShadowTexture } from '../../utils/canvasText'
 
 // Wall lettering and prints are drawn on a 2D canvas with the theme's web
-// fonts, then used as textures. Drawing units are centimetres.
+// fonts, then used as textures (utils/canvasText.js). Drawing units are centimetres.
 
 export const SERIF = '"Bodoni Moda Variable", Didot, "Bodoni MT", serif'
 export const SANS = '"Schibsted Grotesk Variable", Arial, sans-serif'
 
-// The canvas only knows the fonts once the browser has loaded these faces
-export const loadFonts = () =>
-  Promise.all([
-    document.fonts.load(`700 40px ${SERIF}`),
-    document.fonts.load(`italic 500 40px ${SERIF}`),
-    document.fonts.load(`500 40px ${SANS}`),
-  ])
+const typesetter = createTypesetter({
+  serif: SERIF,
+  sans: SANS,
+  ink: INK,
+  faces: [`700 40px ${SERIF}`, `italic 500 40px ${SERIF}`, `500 40px ${SANS}`],
+})
 
-const wrap = (ctx, text, maxWidth) => {
-  const rows = []
-  let row = ''
-  text.split(' ').forEach((word) => {
-    const attempt = row ? `${row} ${word}` : word
-    if (row && ctx.measureText(attempt).width > maxWidth) {
-      rows.push(row)
-      row = word
-    } else {
-      row = attempt
-    }
-  })
-  if (row) rows.push(row)
-  return rows
-}
-
-/**
- * Sets a column of text lines from the top of the canvas.
- * line: { text, size (cm), sans?, weight?, italic?, upper?, color?, tracking? (em),
- *         leading?, wrap?, gap? (cm after the line) }
- * A line that is too wide and does not wrap is shrunk to fit. `ink` is the
- * colour of every line that does not set its own.
- */
-export const drawLines = (ctx, { lines, w, align = 'left', pad = 0, ink = INK }) => {
-  const maxWidth = w - 2 * pad
-  let top = pad
-  ctx.textBaseline = 'alphabetic'
-  ctx.textAlign = align
-  lines.forEach((line) => {
-    const text = line.upper ? line.text.toUpperCase() : line.text
-    const setFont = (size) => {
-      ctx.font = `${line.italic ? 'italic ' : ''}${line.weight ?? 400} ${size}px ${line.sans ? SANS : SERIF}`
-      if ('letterSpacing' in ctx) ctx.letterSpacing = `${(line.tracking ?? 0) * size}px`
-    }
-    let size = line.size
-    setFont(size)
-    let rows = [text]
-    if (line.wrap) {
-      rows = wrap(ctx, text, maxWidth)
-    } else {
-      const measured = ctx.measureText(text).width
-      if (measured > maxWidth) {
-        size = (size * maxWidth) / measured
-        setFont(size)
-      }
-    }
-    ctx.fillStyle = line.color ?? ink
-    const lineHeight = size * (line.leading ?? 1.08)
-    const x = align === 'center' ? w / 2 : align === 'right' ? w - pad : pad
-    rows.forEach((row) => {
-      ctx.fillText(row, x, top + size * 0.82)
-      top += lineHeight
-    })
-    top += line.gap ?? 0
-  })
-}
-
-/** Canvas texture of `width` × `height` metres; `draw(ctx)` works in centimetres. */
-export const paint = (width, height, draw, { density = 256, background } = {}) => {
-  const canvas = document.createElement('canvas')
-  canvas.width = Math.round(width * density)
-  canvas.height = Math.round(height * density)
-  const ctx = canvas.getContext('2d')
-  if (background) {
-    ctx.fillStyle = background
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-  }
-  ctx.scale(density / 100, density / 100)
-  draw(ctx)
-  const texture = new THREE.CanvasTexture(canvas)
-  texture.colorSpace = THREE.SRGBColorSpace
-  texture.anisotropy = 8
-  return texture
-}
+export const { drawLines, loadFonts } = typesetter
+export { paint, softShadowTexture }
 
 /** Crops a loaded image texture to `aspect`, like CSS object-fit: cover. */
 export const coverTexture = (texture, aspect) => {
@@ -100,25 +28,6 @@ export const coverTexture = (texture, aspect) => {
     texture.repeat.set(1, imageAspect / aspect)
     texture.offset.set(0, (1 - imageAspect / aspect) / 2)
   }
-}
-
-/**
- * Soft-edged dark square, stretched behind frames and under plinths as a fake
- * shadow: far cheaper than shadow maps, and free of their artefacts on walls
- * lit at a grazing angle.
- */
-export const softShadowTexture = () => {
-  const size = 128
-  const canvas = document.createElement('canvas')
-  canvas.width = size
-  canvas.height = size
-  const ctx = canvas.getContext('2d')
-  // Only the blurred shadow of the square is kept: the square itself is drawn off-canvas
-  ctx.shadowColor = '#000000'
-  ctx.shadowBlur = 22
-  ctx.shadowOffsetX = size * 2
-  ctx.fillRect(-size * 2 + 30, 30, size - 60, size - 60)
-  return new THREE.CanvasTexture(canvas)
 }
 
 /**
