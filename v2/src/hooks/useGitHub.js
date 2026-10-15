@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const GITHUB_USERNAME = 'JomeiYouma'
+export const GITHUB_USERNAME = 'JomeiYouma'
 
 // Both endpoints are public and rate-limited per visitor IP (GitHub allows 60
 // unauthenticated calls an hour), so answers are kept for the browsing session.

@@ -3,12 +3,15 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { projects } from '../../data/projects'
 import games from '../../data/games.json'
+import { GITHUB_USERNAME } from '../../hooks/useGitHub'
 import { useI18n } from '../../hooks/useI18n'
 import { asset } from '../../utils/asset'
 import { APOTHEM, BAYS, BLUE, EYE, FOV, INK, PALETTE, PAPER, PINK, RED, SIDE, STEP, WALL_H, YELLOW } from './room'
 import { coverTexture, drawGiant, drawLines, loadFonts, paint, softShadowTexture, stripeTexture } from './textures'
 
 const EMAIL = 'raphael.madore.pro@mailo.com'
+// Served with CORS headers, unlike github.com/<user>.png whose redirect has none
+const GITHUB_AVATAR = `https://avatars.githubusercontent.com/${GITHUB_USERNAME}?size=460`
 // How far the pointer can turn the head, in radians
 const LOOK_YAW = 0.045
 const LOOK_PITCH = 0.025
@@ -177,25 +180,33 @@ const Print = ({ x = 0, top = 0, z = 0.012, floor = false, layer = LAYER.paint, 
   )
 }
 
-const useImageTexture = (src, aspect) => {
+// `fallback` is loaded instead when `src` fails (offline, remote host down)
+const useImageTexture = (src, aspect, fallback) => {
   const invalidate = useThree((state) => state.invalidate)
   const [texture, setTexture] = useState(null)
 
   useEffect(() => {
     let alive = true
-    const loaded = new THREE.TextureLoader().load(src, (tex) => {
-      tex.colorSpace = THREE.SRGBColorSpace
-      tex.anisotropy = 8
-      coverTexture(tex, aspect)
-      if (!alive) return
-      setTexture(tex)
-      invalidate()
-    })
+    let loaded
+    const load = (url, onError) => {
+      loaded = new THREE.TextureLoader().load(url, (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace
+        tex.anisotropy = 8
+        coverTexture(tex, aspect)
+        if (!alive) return
+        setTexture(tex)
+        invalidate()
+      }, undefined, onError)
+    }
+    load(src, fallback ? () => {
+      loaded.dispose()
+      if (alive) load(fallback)
+    } : undefined)
     return () => {
       alive = false
       loaded.dispose()
     }
-  }, [src, aspect, invalidate])
+  }, [src, aspect, fallback, invalidate])
 
   return texture
 }
@@ -230,7 +241,7 @@ const FRAME_BORDER = 0.1
 const FRAME_DEPTH = 0.06
 
 /** A mounted picture. Children are hung inside the mount instead of an image when `src` is absent. */
-const Frame = ({ x, y, width, height, src, onClick, children }) => {
+const Frame = ({ x, y, width, height, src, fallback, onClick, children }) => {
   const invalidate = useThree((state) => state.invalidate)
   const [hovered, setHovered] = useState(false)
   const scale = hovered && onClick ? 1.03 : 1
@@ -256,14 +267,14 @@ const Frame = ({ x, y, width, height, src, onClick, children }) => {
         <boxGeometry args={[width + 2 * FRAME_BORDER, height + 2 * FRAME_BORDER, FRAME_DEPTH]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>
-      {src ? <Picture src={src} width={width} height={height} /> : null}
+      {src ? <Picture src={src} fallback={fallback} width={width} height={height} /> : null}
       <group position={[0, height / 2, FRAME_DEPTH]}>{children}</group>
     </group>
   )
 }
 
-const Picture = ({ src, width, height }) => {
-  const texture = useImageTexture(src, width / height)
+const Picture = ({ src, fallback, width, height }) => {
+  const texture = useImageTexture(src, width / height, fallback)
   return (
     <mesh position={[0, 0, FRAME_DEPTH + 0.002]}>
       <planeGeometry args={[width, height]} />
@@ -481,7 +492,7 @@ const Rotunda = ({ room, entered, lang, onEnterRoom, onPickProject }) => {
         </Solid>
       </Bay>
 
-      {/* 1 — About, blue: two prints and a striped column */}
+      {/* 1 — About, blue: two prints, the GitHub portrait and a striped column */}
       <Bay index={1} onClick={door(1)}>
         {lettering(1, t('about.title'))}
         <Frame x={-2.3} y={2.05} width={1.9} height={2.5}>
@@ -509,6 +520,7 @@ const Rotunda = ({ room, entered, lang, onEnterRoom, onPickProject }) => {
             />
           )}
         </Frame>
+        <Frame x={2.25} y={2.55} width={0.95} height={0.95} src={GITHUB_AVATAR} fallback={asset('assets/images/github-avatar.webp')} />
         <FloorShadow x={3.45} z={0.9} size={1.9} />
         <mesh position={[3.45, 2.1, 0.9]}>
           <cylinderGeometry args={[0.42, 0.42, 4.2, 48]} />
