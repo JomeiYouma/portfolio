@@ -11,6 +11,7 @@
     },
     "tech": "Three.js · Web Audio · GLSL",
     "image": "neon-horizon.webp",
+    "imagePortrait": "neon-horizon-portrait.webp",
     "imageSquare": "neon-horizon-square.webp",
     "link": "https://jomeiyouma.github.io/neon-horizon/"
   },
@@ -26,6 +27,8 @@
     },
     "tech": "JS · HTML · Canvas",
     "image": "speed-chaser.webp",
+    "imagePortrait": "speed-chaser-portrait.webp",
+    "imageSquare": "speed-chaser-square.webp",
     "link": "https://jomeiyouma.github.io/Speed-chaser/"
   },
   {
@@ -40,6 +43,8 @@
     },
     "tech": "React · JavaScript · Canvas",
     "image": "shooter.webp",
+    "imagePortrait": "shooter-portrait.webp",
+    "imageSquare": "shooter-square.webp",
     "link": "https://jomeiyouma.github.io/Jeu-Shooter/"
   },
   {
@@ -54,6 +59,8 @@
     },
     "tech": "React · Three.js · OGL",
     "image": "hangman.webp",
+    "imagePortrait": "hangman-portrait.webp",
+    "imageSquare": "hangman-square.webp",
     "link": "https://jomeiyouma.github.io/hangman/"
   }
 ]
