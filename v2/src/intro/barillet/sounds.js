@@ -70,6 +70,12 @@ export const EVENTS = {
     { sample: 'ratchet', at: 0.008, gain: 0.9, maxDuration: 0.1, detune: -450, lowpass: 2200 },
     { synth: 'clunk', at: 0, gain: 1 },
   ],
+  // A dry, ringing clac: a hard steel strike with a short bright ring after it
+  clac: () => [
+    { sample: 'cock', at: 0, gain: 1.1, maxDuration: 0.1, detune: 150 + jitter(40), synth: 'click', arg: 3600 },
+    { sample: 'ratchet', at: 0.004, gain: 0.7, maxDuration: 0.06, detune: 250 },
+    { synth: 'clac', at: 0, gain: 1 },
+  ],
   ratchet: (omega = 10) => [
     { sample: 'ratchet', at: 0, gain: 0.3 + 0.5 * Math.min(1, omega / 20), maxDuration: 0.08, detune: jitter(60), synth: 'ratchet' },
   ],

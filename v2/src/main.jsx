@@ -9,3 +9,6 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+// The inline boot screen of index.html has done its job once React has painted
+requestAnimationFrame(() => requestAnimationFrame(() => document.getElementById('boot')?.remove()))

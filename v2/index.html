@@ -138,6 +138,12 @@
     </script>
   </head>
   <body>
+    <div id="boot" aria-hidden="true" style="position:fixed;inset:0;z-index:20010;display:grid;place-content:center;justify-items:center;gap:18px;background:#07090c;color:#8a93a3;font:12px/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:.4em;text-transform:uppercase">
+      <p style="margin:0">Raphaël Madoré</p>
+      <div style="position:relative;width:min(240px,60vw);height:2px;overflow:hidden;background:rgba(255,255,255,.12)"><span style="position:absolute;inset:0;width:40%;background:#e8eaf0;animation:boot-sweep 1.1s ease-in-out infinite"></span></div>
+      <p style="margin:0;font-size:11px;visibility:hidden">Chargement</p>
+      <style>@keyframes boot-sweep{from{transform:translateX(-100%)}to{transform:translateX(250%)}}</style>
+    </div>
     <div id="root"></div>
     <noscript>
       <h1>Raphaël Madoré, développeur créatif full-stack</h1>

@@ -5,6 +5,7 @@ import { useI18n } from './hooks/useI18n'
 import { useContrast } from './hooks/useContrast'
 import { useTheme } from './hooks/useTheme'
 import { markIntroDone, shouldPlayIntro } from './intro/barillet/gate'
+import IntroLoader from './intro/barillet/IntroLoader'
 import { THEMES } from './themes/registry'
 
 // The opening sequence and its three.js only load when it plays
@@ -94,7 +95,7 @@ function App() {
         </Suspense>
       )}
       {intro !== 'done' && (
-        <Suspense fallback={<div className="loading-screen" />}>
+        <Suspense fallback={<IntroLoader label={t('intro.loading')} />}>
           <BarilletIntro
             themes={THEMES}
             lang={lang}

@@ -64,6 +64,8 @@ export const createAudio = () => {
   const lastPick = {}
   const failed = []
   let prefetched = false
+  let settled = 0
+  const total = Object.values(FILES).flat().length
   // Fetches still in flight when the engine is disposed must not land in the next one
   let generation = 0
 
@@ -157,6 +159,9 @@ export const createAudio = () => {
           .catch(() => {
             if (mine === generation) failed.push(file)
           })
+          .finally(() => {
+            if (mine === generation) settled += 1
+          })
       })
     })
   }
@@ -228,6 +233,12 @@ export const createAudio = () => {
     ring: (gain, at) => {
       tone({ freq: 5600, duration: 0.09, gain: 0.05 * gain, at })
       tone({ freq: 8300, duration: 0.06, gain: 0.03 * gain, at })
+    },
+    clac: (gain, at) => {
+      noise({ type: 'highpass', freq: 2200, duration: 0.02, gain: 0.5 * gain, attack: 0.001, at })
+      tone({ freq: 3100, duration: 0.2, gain: 0.07 * gain, at })
+      tone({ freq: 4700, duration: 0.14, gain: 0.05 * gain, at })
+      tone({ freq: 7400, duration: 0.08, gain: 0.03 * gain, at })
     },
     clunk: (gain, at) => {
       noise({ type: 'lowpass', freq: 1100, endFreq: 350, q: 0.8, duration: 0.07, gain: 0.8 * gain, at })
@@ -330,6 +341,7 @@ export const createAudio = () => {
     play,
     setMuted,
     isMuted: () => muted,
+    progress: () => settled / total,
     status: () => ({
       loaded: Object.fromEntries(Object.entries(slices).map(([k, v]) => [k, v.length])),
       shots: (slices.shot || []).map((s) => [+s.offset.toFixed(2), +s.duration.toFixed(2)]),
@@ -344,6 +356,7 @@ export const createAudio = () => {
       bus = master = verbIn = tailIn = noiseBuffer = null
       generation += 1
       prefetched = false
+      settled = 0
       failed.length = 0
       Object.keys(slices).forEach((k) => delete slices[k])
       if (old) setTimeout(() => old.close().catch(() => {}), 8000)

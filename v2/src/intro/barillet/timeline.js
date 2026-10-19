@@ -68,6 +68,7 @@ export const buildTimeline = (rig, { count, emit }) => {
     tl.to(rig, { crane: SWING, duration: 0.38, ease: 'elastic.out(1, 0.3)' }, flick + 0.23)
     call(() => emit('sfx', 'swing'), flick + 0.02)
     call(() => emit('sfx', 'knock'), flick + 0.13)
+    call(() => emit('sfx', 'clac'), flick + 0.13)
     tl.fromTo(rig, { impact: 0 }, { impact: 0.7, duration: 0.02 }, flick + 0.13)
     tl.to(rig, { impact: 0, duration: 0.04 }, flick + 0.15)
     tl.fromTo(rig, { aberr: 0 }, { aberr: 0.6, duration: 0.02 }, flick + 0.13)
@@ -137,6 +138,7 @@ export const buildTimeline = (rig, { count, emit }) => {
       rig.phase = 'closed'
       emit('phase', 'closed')
       emit('sfx', 'close')
+      emit('sfx', 'clac')
     }, snap)
     tl.fromTo(rig, { impact: 0 }, { impact: 0.5, duration: 0.03 }, snap)
     tl.to(rig, { impact: 0, duration: 0.05 }, snap + 0.03)

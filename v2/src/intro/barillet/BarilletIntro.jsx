@@ -9,6 +9,7 @@ import { IS_LOW_PERF } from '../../utils/perf'
 import { commitShot } from './aim'
 import { createAudio } from './audio'
 import Hud from './Hud'
+import IntroLoader from './IntroLoader'
 import Picker from './Picker'
 import { createRig, landShot, listenSnapshot, markRound, nextRound, recordShot, setAimForce, setPhaseOf, stepsToNext } from './rig'
 import { requestSnapshot } from './shatter'
@@ -82,6 +83,12 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
   const [fireKey, setFireKey] = useState(0)
   const [snapshot, setSnapshot] = useState(null)
   const [shardsReady, setShardsReady] = useState(false)
+  // Loading: the scene's chunk, its hand model, the sounds. The sequence waits for all of it.
+  const [handDone, setHandDone] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [ready, setReady] = useState(!immersive)
+  const [loaderGone, setLoaderGone] = useState(!immersive)
+  const onSceneReady = useCallback(() => setHandDone(true), [])
   const onShardsReady = useCallback(() => setShardsReady(true), [])
   // The radial mask is the fallback only; while the snapshot is on its way the intro stays opaque
   const [maskReveal, setMaskReveal] = useState(false)
@@ -219,7 +226,6 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
     if (!immersive) return undefined
     const seq = buildTimeline(rig, { count: themes.length, emit })
     seqRef.current = seq
-    seq.tl.play()
     if (import.meta.env.DEV) {
       window.__barillet = {
         rig,
@@ -249,6 +255,30 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
       if (import.meta.env.DEV) delete window.__barillet
     }
   }, [immersive, rig, themes, emit, fire, audio, pointer])
+
+  // Progress of the wait, then the go: never before a short minimum (no flicker),
+  // never after a ceiling (a missing file must not keep the visitor out)
+  useEffect(() => {
+    if (!immersive) return undefined
+    const t0 = performance.now()
+    const id = setInterval(() => {
+      const elapsed = performance.now() - t0
+      const value = Math.min(1, (audio.progress() * 0.6 + (handDone ? 0.4 : 0)))
+      setProgress(value)
+      if ((value >= 1 && elapsed > 500) || elapsed > 9000) {
+        setReady(true)
+        clearInterval(id)
+      }
+    }, 100)
+    return () => clearInterval(id)
+  }, [immersive, audio, handDone])
+
+  useEffect(() => {
+    if (!ready) return undefined
+    seqRef.current?.tl.play()
+    const id = setTimeout(() => setLoaderGone(true), 500)
+    return () => clearTimeout(id)
+  }, [ready])
 
   // Nothing moves while the tab is hidden
   useEffect(() => {
@@ -348,7 +378,7 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
       {immersive ? (
         <>
           <Suspense fallback={null}>
-            <Scene rig={rig} themes={themes} lowPerf={lowPerf} portrait={portrait} coarse={coarse} pointer={pointer} emit={emit} />
+            <Scene rig={rig} themes={themes} lowPerf={lowPerf} portrait={portrait} coarse={coarse} pointer={pointer} emit={emit} onReady={onSceneReady} />
           </Suspense>
           <Hud
             rig={rig}
@@ -383,6 +413,7 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
           <div className={`bar-flash ${flash ? 'is-on' : ''}`} />
         </>
       )}
+      {!loaderGone && <IntroLoader label={t('intro.loading')} progress={ready ? 1 : progress} leaving={ready} />}
       <button type="button" className="bar-skip" onClick={onSkip}>
         {t('intro.skip')}
       </button>

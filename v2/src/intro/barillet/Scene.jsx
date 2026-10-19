@@ -85,7 +85,7 @@ const spawnPoint = (out, k, count, cylPos, portrait) => {
  * and the motion effects live in the scene. The rig is read every frame;
  * nothing here is React state.
  */
-const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => {
+const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit, onReady }) => {
   const camera = useThree((state) => state.camera)
   const keyTarget = useMemo(() => new THREE.Object3D(), [])
   const kicker = useRef()
@@ -157,6 +157,9 @@ const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => {
       .catch(() => {
         // No hand: the gun is held by nobody, which the sequence survives
       })
+      .finally(() => {
+        if (alive) onReady?.()
+      })
     return () => {
       alive = false
       const w = worldRef.current
@@ -171,7 +174,7 @@ const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => {
       w.room.material.dispose()
       disposeTextures()
     }
-  }, [world, lowPerf])
+  }, [world, lowPerf, onReady])
 
   useFrame((state, delta) => {
     const w = worldRef.current
@@ -402,7 +405,7 @@ const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => {
   )
 }
 
-const Scene = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => (
+const Scene = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit, onReady }) => (
   <Canvas
     className="bar-canvas"
     aria-hidden="true"
@@ -415,7 +418,7 @@ const Scene = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => (
     <color attach="background" args={['#07090c']} />
     <fog attach="fog" args={['#07090c', 2.6, 7.5]} />
     <Environment />
-    <World rig={rig} themes={themes} lowPerf={lowPerf} portrait={portrait} coarse={coarse} pointer={pointer} emit={emit} />
+    <World rig={rig} themes={themes} lowPerf={lowPerf} portrait={portrait} coarse={coarse} pointer={pointer} emit={emit} onReady={onReady} />
     <Post rig={rig} lowPerf={lowPerf} />
   </Canvas>
 )
