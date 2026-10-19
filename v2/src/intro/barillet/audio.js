@@ -55,6 +55,7 @@ export const createAudio = () => {
   let ctx = null
   let bus = null
   let verbIn = null
+  let tailIn = null
   let master = null
   let noiseBuffer = null
   let muted = readMuted()
@@ -100,6 +101,38 @@ export const createAudio = () => {
     verbGain.connect(master)
     // A layer can ask for more of the room than the bus gives
     verbIn = verb
+    // The shot's resonance: a long hall plus a slapback that repeats and darkens
+    const long = ctx.createBuffer(2, ctx.sampleRate * 3.4, ctx.sampleRate)
+    for (let c = 0; c < 2; c++) {
+      const data = long.getChannelData(c)
+      for (let i = 0; i < data.length; i++) {
+        const t = i / ctx.sampleRate
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-t * 1.9) * (t < 0.02 ? t / 0.02 : 1) * 0.4
+      }
+    }
+    const hall = ctx.createConvolver()
+    hall.buffer = long
+    const hallGain = ctx.createGain()
+    hallGain.gain.value = 0.55
+    hall.connect(hallGain)
+    hallGain.connect(master)
+    const slap = ctx.createDelay(1)
+    slap.delayTime.value = 0.21
+    const slapTone = ctx.createBiquadFilter()
+    slapTone.type = 'lowpass'
+    slapTone.frequency.value = 1800
+    const slapGain = ctx.createGain()
+    slapGain.gain.value = 0.42
+    const feedback = ctx.createGain()
+    feedback.gain.value = 0.38
+    slap.connect(slapTone)
+    slapTone.connect(slapGain)
+    slapGain.connect(master)
+    slapGain.connect(feedback)
+    feedback.connect(slap)
+    tailIn = ctx.createGain()
+    tailIn.connect(hall)
+    tailIn.connect(slap)
     noiseBuffer = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate)
     const n = noiseBuffer.getChannelData(0)
     for (let i = 0; i < n.length; i++) n[i] = Math.random() * 2 - 1
@@ -218,7 +251,7 @@ export const createAudio = () => {
     return list[i]
   }
 
-  const sample = (slice, { at = 0, gain = 1, detune = 0, lowpass, highpass, maxDuration, verb = 0 }) => {
+  const sample = (slice, { at = 0, gain = 1, detune = 0, lowpass, highpass, maxDuration, verb = 0, tail = 0 }) => {
     const src = ctx.createBufferSource()
     src.buffer = slice.buffer
     src.detune.value = detune
@@ -250,6 +283,12 @@ export const createAudio = () => {
       send.gain.value = verb
       g.connect(send)
       send.connect(verbIn)
+    }
+    if (tail && tailIn) {
+      const send = ctx.createGain()
+      send.gain.value = tail
+      g.connect(send)
+      send.connect(tailIn)
     }
     src.start(t0, slice.offset, duration)
   }

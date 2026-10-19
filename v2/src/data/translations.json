@@ -173,7 +173,7 @@
       "mute": "Mute",
       "unmute": "Sound on",
       "chambers": "chambers",
-      "underHammer": "Under the hammer",
+      "underHammer": "Selected theme",
       "aimPrompt": "Aim at the bottle and fire",
       "touchFire": "Tap to fire",
       "miss": "Missed. {name} is next under the hammer.",
@@ -192,11 +192,11 @@
         "shot": "Fired.",
         "reveal": "The bottle breaks. Opening the {name} theme."
       },
-      "taglines": {
-        "neon": "Cyan on black, scrolling sideways",
-        "riso": "Two inks on paper",
-        "galerie": "A rotunda and its rooms",
-        "origami": "A map that unrolls"
+      "names": {
+        "neon": "Neon",
+        "riso": "Print",
+        "galerie": "3D Gallery",
+        "origami": "Adventure"
       }
     },
     "galerie": {
@@ -586,7 +586,7 @@
       "mute": "Couper le son",
       "unmute": "Remettre le son",
       "chambers": "chambres",
-      "underHammer": "Sous le chien",
+      "underHammer": "Thème sélectionné",
       "aimPrompt": "Vise la bouteille et tire",
       "touchFire": "Touche pour tirer",
       "miss": "Raté. {name} passe sous le chien.",
@@ -605,11 +605,11 @@
         "shot": "Tiré.",
         "reveal": "La bouteille éclate. Ouverture du thème {name}."
       },
-      "taglines": {
-        "neon": "Cyan sur noir, défilement horizontal",
-        "riso": "Deux encres sur papier",
-        "galerie": "Une rotonde et ses salles",
-        "origami": "Une carte qui se déroule"
+      "names": {
+        "neon": "Néon",
+        "riso": "Print",
+        "galerie": "3D Galerie",
+        "origami": "Adventure"
       }
     },
     "galerie": {

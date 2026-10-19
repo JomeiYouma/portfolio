@@ -332,7 +332,7 @@ const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => {
 
     // The bottle's lights
     bottle.spot.intensity = 4 * r.bottleLight
-    bottle.flash.intensity = 40 * r.bottleFlash
+    bottle.flash.intensity = 14 * r.bottleFlash
 
     // Where things are on screen, for the HUD and the shockwave
     carts.forEach((c, k) => projectOnScreen(c.group, camera, tmp.v, r.screen.carts[k]))

@@ -80,7 +80,6 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
   const [shots, setShots] = useState(0)
   const [fired, setFired] = useState([])
   const [fireKey, setFireKey] = useState(0)
-  const [missKey, setMissKey] = useState(0)
   const [snapshot, setSnapshot] = useState(null)
   // The radial mask is the fallback only; while the snapshot is on its way the intro stays opaque
   const [maskReveal, setMaskReveal] = useState(false)
@@ -195,7 +194,6 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
             setFired((f) => [...f, firedIndex])
             const next = nextRound(rig, count)
             setChosen(next)
-            setMissKey((k) => k + 1)
             setAimForce(rig, 0)
             seq.rearm()
             setTimeout(() => callbacks.current.onArm(themes[next].id), 120)
@@ -332,7 +330,7 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
     [onFire, onDone],
   )
 
-  const chosenName = chosen >= 0 ? t(`themes.${themes[chosen].id}`) : ''
+  const chosenName = chosen >= 0 ? t(`intro.names.${themes[chosen].id}`) : ''
   const announcement = immersive ? t(`intro.phase.${phase}`).replace('{name}', chosenName) : t('intro.pick')
   const aiming = immersive && !coarse && (phase === 'aim' || phase === 'shot')
   const rootClass = [
@@ -364,7 +362,6 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
             rootRef={rootRef}
             pointer={pointer}
             fireKey={fireKey}
-            missKey={missKey}
             shots={shots}
             fired={fired}
             onMark={mark}

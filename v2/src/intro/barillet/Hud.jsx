@@ -12,7 +12,7 @@ const GITHUB_URL = 'https://github.com/JomeiYouma'
 // rig, sixty times a second, without touching React state.
 
 const Hud = ({
-  rig, themes, cards, phase, loaded, chosen, marked, cracks, portrait, coarse, rootRef, pointer, fireKey, missKey, shots, fired, onMark, t,
+  rig, themes, cards, phase, loaded, chosen, marked, cracks, portrait, coarse, rootRef, pointer, fireKey, shots, fired, onMark, t,
 }) => {
   const cardRefs = useRef([])
   const speedRef = useRef(null)
@@ -122,8 +122,7 @@ const Hud = ({
               onClick={() => canMark && onMark(k)}
             >
               <span className="bar-card__index">{String(k + 1).padStart(2, '0')}</span>
-              <span className="bar-card__name">{t(`themes.${theme.id}`)}</span>
-              <span className="bar-card__tag">{marked === k ? t('intro.marked') : t(`intro.taglines.${theme.id}`)}</span>
+              <span className="bar-card__name">{t(`intro.names.${theme.id}`)}</span>
               <span className="bar-card__icon">
                 <ThemeIcon id={theme.id} size={16} />
               </span>
@@ -168,12 +167,7 @@ const Hud = ({
       {(phase === 'aim' || phase === 'shot') && chosenTheme && (
         <p className="bar-chosen" style={{ '--bar-accent': accent }}>
           {t('intro.underHammer')}
-          <strong>{t(`themes.${chosenTheme.id}`)}</strong>
-        </p>
-      )}
-      {missKey > 0 && phase === 'aim' && chosenTheme && (
-        <p key={missKey} className="bar-miss" style={{ '--bar-accent': accent }}>
-          {t('intro.miss').replace('{name}', t(`themes.${chosenTheme.id}`))}
+          <strong>{t(`intro.names.${chosenTheme.id}`)}</strong>
         </p>
       )}
 

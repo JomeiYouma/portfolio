@@ -142,7 +142,7 @@ export const Post = ({ rig, lowPerf }) => {
     u.uImpact.value = rig.impact
     u.uWhite.value = rig.white
     // No bloom at rest: polished brass under the key light would haze the whole frame
-    if (c.bloom) c.bloom.strength = rig.bloom * 2.6 + rig.flash * 0.8
+    if (c.bloom) c.bloom.strength = rig.bloom * 1.0 + rig.flash * 0.5
     c.composer.render(delta)
     // The screen-level shatter wants this very frame, before anything else paints
     if (rig.snapshot === 'request') takeSnapshot(rig, state.gl.domElement)

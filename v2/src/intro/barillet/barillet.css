@@ -120,9 +120,9 @@
   appearance: none;
   display: grid;
   grid-template-columns: auto 1fr auto;
+  align-items: center;
   column-gap: 12px;
-  row-gap: 2px;
-  min-width: 172px;
+  min-width: 150px;
   padding: 10px 14px 10px 12px;
   border: 1px solid var(--bar-accent);
   background: rgba(10, 12, 15, 0.74);
@@ -157,7 +157,6 @@
   border-bottom-width: 3px;
 }
 .bar-card__index {
-  grid-row: 1 / span 2;
   align-self: center;
   font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   font-size: 22px;
@@ -176,7 +175,6 @@
   color: var(--bar-muted);
 }
 .bar-card__icon {
-  grid-row: 1 / span 2;
   align-self: center;
   display: flex;
   margin-left: 4px;
@@ -477,34 +475,6 @@
   box-shadow: inset 0 0 0 2px var(--bar-muted);
 }
 
-.bar-miss {
-  position: absolute;
-  left: 50%;
-  bottom: 20vh;
-  translate: -50% 0;
-  font-size: 13px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--bar-accent);
-  white-space: nowrap;
-  animation: bar-miss 1.6s ease forwards;
-}
-@keyframes bar-miss {
-  0% {
-    opacity: 0;
-    translate: -50% 10px;
-  }
-  15% {
-    opacity: 1;
-    translate: -50% 0;
-  }
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
 
 /* The screen breaking: the last frame cut into shards that fall away */
 .bar-shatter {

@@ -138,7 +138,7 @@ export const buildTimeline = (rig, { count, emit }) => {
       emit('phase', 'closed')
       emit('sfx', 'close')
     }, snap)
-    tl.fromTo(rig, { impact: 0 }, { impact: 1, duration: 0.03 }, snap)
+    tl.fromTo(rig, { impact: 0 }, { impact: 0.5, duration: 0.03 }, snap)
     tl.to(rig, { impact: 0, duration: 0.05 }, snap + 0.03)
     tl.to(rig.off, { x: 0.004, y: -0.006, duration: 0.03 }, snap)
     tl.to(rig.off, { x: 0, y: 0, pitch: 0, duration: 0.35, ease: 'elastic.out(1, 0.4)' }, snap + 0.03)

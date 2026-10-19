@@ -35,11 +35,11 @@ export const EVENTS = {
   // A pre-mech click, one body with its own tail, a sub under it, and the room's echo
   shot: () => [
     { synth: 'click', at: 0, gain: 0.25, arg: 2900 },
-    { sample: 'shot', at: 0.02, gain: 0.95, detune: jitter(20), verb: 0.6, synth: 'shot' },
+    { sample: 'shot', at: 0.02, gain: 0.95, detune: jitter(20), verb: 0.4, tail: 0.9, synth: 'shot' },
     { synth: 'sub', at: 0.02, gain: 0.5 },
   ],
   shatter: () => [
-    { sample: 'glass', at: 0.03, gain: 0.85, detune: jitter(30), synth: 'glass' },
+    { sample: 'glass', at: 0.03, gain: 0.85, detune: jitter(30), verb: 0.5, synth: 'glass' },
     { sample: 'debris', at: 0.11, gain: 0.3, detune: jitter(60) },
     { sample: 'debris', at: 0.22, gain: 0.22, detune: jitter(60) },
   ],
