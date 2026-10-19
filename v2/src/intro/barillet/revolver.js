@@ -8,7 +8,7 @@ import { brushedNormal, walnut, wearRoughness } from './textures'
 // -Z, +Y is up, +X is the shooter's right. The cylinder's centre is the
 // origin, so the swing-out, the spin and the loading all happen around it.
 
-export const STEEL = '#0b1420'
+export const STEEL = '#59636f'
 // Where the cylinder swings: a hinge parallel to the barrel, low on the left
 export const CRANE_PIVOT = new THREE.Vector3(-0.011, -0.017, 0)
 // Rear face of the cylinder, where a cartridge's rim sits once loaded
@@ -84,13 +84,13 @@ export const buildRevolver = ({ lowPerf }) => {
   const steel = new THREE.MeshPhysicalMaterial({
     color: STEEL,
     metalness: 1,
-    roughness: 0.36,
+    roughness: 0.3,
     clearcoat: 0.3,
     clearcoatRoughness: 0.4,
     normalMap: brushedNormal(),
     normalScale: new THREE.Vector2(0.4, 0.4),
     roughnessMap: wearRoughness(),
-    envMapIntensity: 1.1,
+    envMapIntensity: 1.5,
   })
   if (!lowPerf) {
     steel.anisotropy = 0.5
@@ -99,7 +99,7 @@ export const buildRevolver = ({ lowPerf }) => {
   const steelDark = new THREE.MeshStandardMaterial({ color: '#05080c', metalness: 0.9, roughness: 0.6 })
   // Sights and the rib are matte on a real Python, and polished they would draw a white line
   const steelMatte = new THREE.MeshStandardMaterial({
-    color: '#0a1018',
+    color: '#303841',
     metalness: 0.85,
     roughness: 0.62,
     normalMap: brushedNormal(),

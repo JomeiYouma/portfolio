@@ -225,6 +225,10 @@ export const createAudio = () => {
       noise({ freq: 1700, q: 1.5, duration: 0.09, gain: 0.6 * gain, at })
       click(4200, 0.2 * gain, at + 0.012)
     },
+    ring: (gain, at) => {
+      tone({ freq: 5600, duration: 0.09, gain: 0.05 * gain, at })
+      tone({ freq: 8300, duration: 0.06, gain: 0.03 * gain, at })
+    },
     thud: (gain, at) => tone({ type: 'triangle', freq: 240, endFreq: 70, duration: 0.14, gain: 0.5 * gain, at }),
     throw: (gain, at) => noise({ type: 'highpass', freq: 2500, duration: 0.12, gain: 0.12 * gain, attack: 0.02, at }),
     sub: (gain, at) => {
