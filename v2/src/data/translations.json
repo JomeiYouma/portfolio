@@ -174,6 +174,10 @@
       "unmute": "Sound on",
       "chambers": "chambers",
       "underHammer": "Under the hammer",
+      "aimPrompt": "Aim at the bottle and fire",
+      "touchFire": "Tap to fire",
+      "miss": "Missed. {name} is next under the hammer.",
+      "lastRound": "Last round: this one does not miss",
       "pick": "Pick your round",
       "marked": "The cylinder will stop here",
       "replay": "Play the intro again",
@@ -184,22 +188,15 @@
         "load": "Loading the {name} round.",
         "closed": "The cylinder snaps shut.",
         "spin": "The cylinder spins.",
-        "aim": "The {name} round is under the hammer. Press Enter to fire.",
-        "shot": "Fired. Opening the {name} theme."
+        "aim": "The {name} round is under the hammer. Aim at the bottle with the pointer and click, or press Enter.",
+        "shot": "Fired.",
+        "reveal": "The bottle breaks. Opening the {name} theme."
       },
       "taglines": {
         "neon": "Cyan on black, scrolling sideways",
         "riso": "Two inks on paper",
         "galerie": "A rotunda and its rooms",
         "origami": "A map that unrolls"
-      },
-      "onoma": {
-        "open": "CLICK",
-        "load": "CHUNK",
-        "close": "CLACK",
-        "spin": "RRRR",
-        "cock": "CLICK",
-        "shot": "BANG"
       }
     },
     "galerie": {
@@ -336,6 +333,10 @@
           {
             "heading": "Applicable law",
             "body": "This site is governed by French law. Any dispute falls under the jurisdiction of the competent French courts."
+          },
+          {
+            "heading": "Credits",
+            "body": "The opening sequence uses CC0 recordings from freesound.org (Shark_Anthony, Nox_Sound, jhka, Dredile, dasebr, cedarstudios, qubodup), OpenGameArt (BMacZero, Till Behrend) and Kenney, and the WebXR generic hand model (© Amazon, MIT licence). The full list is in assets/sounds/LICENSES.md."
           }
         ]
       },
@@ -586,6 +587,10 @@
       "unmute": "Remettre le son",
       "chambers": "chambres",
       "underHammer": "Sous le chien",
+      "aimPrompt": "Vise la bouteille et tire",
+      "touchFire": "Touche pour tirer",
+      "miss": "Raté. {name} passe sous le chien.",
+      "lastRound": "Dernière balle : celle-là ne rate pas",
       "pick": "Choisis ta balle",
       "marked": "Le barillet s’arrêtera ici",
       "replay": "Rejouer l’intro",
@@ -596,22 +601,15 @@
         "load": "Chargement de la cartouche {name}.",
         "closed": "Le barillet claque.",
         "spin": "Le barillet tourne.",
-        "aim": "La cartouche {name} est sous le chien. Appuie sur Entrée pour tirer.",
-        "shot": "Tiré. Ouverture du thème {name}."
+        "aim": "La cartouche {name} est sous le chien. Vise la bouteille avec le pointeur et clique, ou appuie sur Entrée.",
+        "shot": "Tiré.",
+        "reveal": "La bouteille éclate. Ouverture du thème {name}."
       },
       "taglines": {
         "neon": "Cyan sur noir, défilement horizontal",
         "riso": "Deux encres sur papier",
         "galerie": "Une rotonde et ses salles",
         "origami": "Une carte qui se déroule"
-      },
-      "onoma": {
-        "open": "CLIC",
-        "load": "TCHAK",
-        "close": "CLAC",
-        "spin": "RRRR",
-        "cock": "CLIC",
-        "shot": "BANG"
       }
     },
     "galerie": {
@@ -748,6 +746,10 @@
           {
             "heading": "Droit applicable",
             "body": "Le présent site est soumis au droit français. Tout litige relève de la compétence des juridictions françaises compétentes."
+          },
+          {
+            "heading": "Crédits",
+            "body": "La séquence d’ouverture utilise des enregistrements CC0 de freesound.org (Shark_Anthony, Nox_Sound, jhka, Dredile, dasebr, cedarstudios, qubodup), d’OpenGameArt (BMacZero, Till Behrend) et de Kenney, ainsi que le modèle de main générique WebXR (© Amazon, licence MIT). La liste complète est dans assets/sounds/LICENSES.md."
           }
         ]
       },

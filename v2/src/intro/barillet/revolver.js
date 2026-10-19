@@ -84,9 +84,9 @@ export const buildRevolver = ({ lowPerf }) => {
   const steel = new THREE.MeshPhysicalMaterial({
     color: STEEL,
     metalness: 1,
-    roughness: 0.32,
-    clearcoat: 0.55,
-    clearcoatRoughness: 0.3,
+    roughness: 0.36,
+    clearcoat: 0.3,
+    clearcoatRoughness: 0.4,
     normalMap: brushedNormal(),
     normalScale: new THREE.Vector2(0.4, 0.4),
     roughnessMap: wearRoughness(),
@@ -97,6 +97,14 @@ export const buildRevolver = ({ lowPerf }) => {
     steel.anisotropyRotation = Math.PI / 2
   }
   const steelDark = new THREE.MeshStandardMaterial({ color: '#05080c', metalness: 0.9, roughness: 0.6 })
+  // Sights and the rib are matte on a real Python, and polished they would draw a white line
+  const steelMatte = new THREE.MeshStandardMaterial({
+    color: '#0a1018',
+    metalness: 0.85,
+    roughness: 0.62,
+    normalMap: brushedNormal(),
+    normalScale: new THREE.Vector2(0.3, 0.3),
+  })
   const bore = new THREE.MeshBasicMaterial({ color: '#000000', side: THREE.BackSide })
   const woodMap = walnut()
   woodMap.wrapS = woodMap.wrapT = THREE.RepeatWrapping
@@ -147,7 +155,7 @@ export const buildRevolver = ({ lowPerf }) => {
   body.add(boreMesh)
 
   // Vent rib and its slots, front and rear sights
-  const rib = mesh(new THREE.BoxGeometry(0.007, 0.004, BARREL_LENGTH - 0.004), steel, 'rib')
+  const rib = mesh(new THREE.BoxGeometry(0.007, 0.004, BARREL_LENGTH - 0.004), steelMatte, 'rib')
   rib.position.set(0, PITCH_RADIUS + 0.0092 + 0.002, -0.027 - BARREL_LENGTH / 2 + 0.002)
   body.add(rib)
   for (let i = 0; i < 6; i++) {
@@ -155,10 +163,10 @@ export const buildRevolver = ({ lowPerf }) => {
     vent.position.set(0, PITCH_RADIUS + 0.0092 - 0.0004, -0.045 - i * 0.02)
     body.add(vent)
   }
-  const frontSight = mesh(new THREE.BoxGeometry(0.0022, 0.008, 0.009), steel, 'frontSight')
+  const frontSight = mesh(new THREE.BoxGeometry(0.0022, 0.008, 0.009), steelDark, 'frontSight')
   frontSight.position.set(0, PITCH_RADIUS + 0.0092 + 0.006, MUZZLE.z + 0.007)
   body.add(frontSight)
-  const rearSight = mesh(new THREE.BoxGeometry(0.011, 0.0035, 0.008), steel, 'rearSight')
+  const rearSight = mesh(new THREE.BoxGeometry(0.011, 0.0035, 0.008), steelMatte, 'rearSight')
   rearSight.position.set(0, 0.032, 0.036)
   body.add(rearSight)
 
@@ -261,10 +269,10 @@ export const buildRevolver = ({ lowPerf }) => {
     hammer: hammerPivot,
     trigger: triggerPivot,
     latch,
-    materials: [steel, steelDark, bore, wood],
+    materials: [steel, steelDark, steelMatte, bore, wood],
     dispose: () => {
       gun.traverse((o) => o.geometry?.dispose())
-      ;[steel, steelDark, bore, wood].forEach((m) => m.dispose())
+      ;[steel, steelDark, steelMatte, bore, wood].forEach((m) => m.dispose())
     },
   }
 }

@@ -60,3 +60,10 @@ export const projectOnScreen = (object, camera, v, out) => {
   out.depth = v.z
   return out
 }
+
+/** Writes how far `corner` (another projection) sits from `out`'s centre, as the HUD's lock radius */
+export const writeExtent = (out, corner) => {
+  out.rx = Math.abs(corner.x - out.x)
+  out.ry = Math.abs(corner.y - out.y)
+  return out
+}

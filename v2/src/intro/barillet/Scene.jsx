@@ -2,22 +2,26 @@ import { useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
+import { aimAngles, aimPoint, createAimState, hitTest, stepAim, writeAim } from './aim'
+import { buildBottle, createMissFx, createShatter } from './bottle'
 import { buildCartridge } from './cartridges'
 import {
   createDust, createGapFlash, createMultiples, createMuzzleFlash, createSmear, createSmoke, createSpawnFx, createTrails,
 } from './fx'
-import { bezier, noise1, projectOnScreen, smoothstep } from './motion'
+import { loadHand } from './hand'
+import { bezier, noise1, projectOnScreen, smoothstep, writeExtent } from './motion'
 import { Post } from './post'
 import { CYL_REAR, MUZZLE, buildRevolver } from './revolver'
-import { PITCH_RADIUS, STEP } from './rig'
+import { PITCH_RADIUS, POSES, STEP } from './rig'
 import { backdrop, disposeTextures } from './textures'
+import { asset } from '../../utils/asset'
 
 const FOV = 50
 const FOV_PORTRAIT = 64
 // How far the pointer turns the head, radians
 const LOOK = 0.03
 
-/** Reflections for the steel: a lit room, without any file to fetch */
+/** Reflections for the steel and the glass: a lit room, without any file to fetch */
 const Environment = () => {
   const get = useThree((state) => state.get)
   useEffect(() => {
@@ -44,6 +48,12 @@ const scratch = () => ({
   chamber: new THREE.Vector3(),
   axis: new THREE.Vector3(),
   v: new THREE.Vector3(),
+  bottleCam: new THREE.Vector3(),
+  bottleWorld: new THREE.Vector3(),
+  aimPt: new THREE.Vector3(),
+  pivot: new THREE.Vector3(),
+  edge: new THREE.Object3D(),
+  corner: { x: 0, y: 0, depth: 0 },
   qHover: new THREE.Quaternion(),
   qTarget: new THREE.Quaternion(),
   qCam: new THREE.Quaternion(),
@@ -52,6 +62,7 @@ const scratch = () => ({
   ratchet: 0,
   prevRoll: 0,
   prevCrane: 0,
+  bottlePointer: { x: 0, y: 0 },
 })
 
 /** Where round k floats before it is picked: an arc left of the open cylinder, or above it on a phone */
@@ -67,11 +78,12 @@ const spawnPoint = (out, k, count, cylPos, portrait) => {
 }
 
 /**
- * The hand, the revolver and the rounds. The gun hangs from the camera, as a
- * first-person view model does; the room, the dust and the motion effects
- * live in the scene. The rig is read every frame; nothing here is React state.
+ * The hand, the revolver, the rounds and the bottle. The gun hangs from the
+ * camera, as a first-person view model does; the room, the bottle, the dust
+ * and the motion effects live in the scene. The rig is read every frame;
+ * nothing here is React state.
  */
-const World = ({ rig, themes, lowPerf, portrait, pointer, emit }) => {
+const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => {
   const camera = useThree((state) => state.camera)
   const keyTarget = useMemo(() => new THREE.Object3D(), [])
   const kicker = useRef()
@@ -87,52 +99,77 @@ const World = ({ rig, themes, lowPerf, portrait, pointer, emit }) => {
     muzzle.name = 'fx-muzzle'
     muzzle.position.copy(MUZZLE)
     revolver.body.add(muzzle)
-    const sweep = new THREE.PointLight('#dfe9ff', 0, 0.5, 2)
+    const sweep = new THREE.PointLight('#dfe9ff', 0, 0.35, 2)
     sweep.name = 'fx-sweep'
-    sweep.position.set(0.05, 0.06, 0.1)
+    sweep.position.set(0.05, 0.08, 0.1)
     revolver.body.add(sweep)
 
     const flash = createMuzzleFlash(muzzle, lowPerf)
     const gap = createGapFlash(revolver.body)
     const smoke = createSmoke(muzzle)
     const dust = createDust(lowPerf ? 120 : 260)
-    const cylGhosts = createMultiples(revolver.cylinder, { color: '#9fb3c8', count: 5, threshold: 5, opacity: 0.32 })
-    const gunGhosts = createMultiples(revolver.body, { color: '#9fb3c8', count: 4, threshold: 5.5, opacity: 0.22 })
+    const cylGhosts = createMultiples(revolver.cylinder, { color: '#9fb3c8', count: 4, threshold: 5, opacity: 0.12 })
+    const gunGhosts = createMultiples(revolver.body, { color: '#9fb3c8', count: 3, threshold: 5.5, opacity: 0.1 })
     const cartFx = carts.map((c) => ({
       smear: createSmear(c.group, { color: c.look.accent }),
       trails: createTrails(c.group, { color: c.look.accent }),
-      ghosts: createMultiples(c.group, { color: c.look.accent, count: 4, threshold: 14, opacity: 0.4 }),
+      ghosts: createMultiples(c.group, { color: c.look.accent, count: 4, threshold: 14, opacity: 0.25 }),
       spawn: createSpawnFx(c.group, c.look),
     }))
+    const bottle = buildBottle({ lowPerf, portrait })
+    const shatter = createShatter(bottle)
+    const missFx = createMissFx()
+    const aim = createAimState()
 
     const root = new THREE.Group()
     root.name = 'fx-root'
-    root.add(smoke.object, dust.object, cylGhosts.object, gunGhosts.object)
+    root.add(smoke.object, dust.object, cylGhosts.object, gunGhosts.object, shatter.object, missFx.object)
     cartFx.forEach((f) => root.add(f.smear.object, f.trails.object, f.ghosts.object))
     const cartRoot = new THREE.Group()
     cartRoot.name = 'cartridges'
     carts.forEach((c) => cartRoot.add(c.group))
-    const room = new THREE.Mesh(new THREE.PlaneGeometry(7, 7), new THREE.MeshBasicMaterial({ map: backdrop() }))
-    room.position.set(0, 0.3, -2.8)
+    const room = new THREE.Mesh(new THREE.PlaneGeometry(9, 9), new THREE.MeshBasicMaterial({ map: backdrop() }))
+    room.name = 'room'
+    room.position.set(0, 0.6, -3.6)
 
-    return { revolver, carts, muzzle, sweep, flash, gap, smoke, dust, cylGhosts, gunGhosts, cartFx, root, cartRoot, room }
-  }, [themes, lowPerf])
+    return {
+      revolver, carts, muzzle, sweep, flash, gap, smoke, dust, cylGhosts, gunGhosts, cartFx, root, cartRoot, room,
+      bottle, shatter, missFx, aim, hand: null,
+    }
+  }, [themes, lowPerf, portrait])
 
   useEffect(() => {
     worldRef.current = world
+    // The hand arrives when its model has loaded; the gun does not wait for it
+    let alive = true
+    loadHand(asset('assets/models/hand-right.glb'), { lowPerf })
+      .then((hand) => {
+        const w = worldRef.current
+        if (!alive || !w) {
+          hand.dispose()
+          return
+        }
+        w.hand = hand
+        w.revolver.body.add(hand.root)
+      })
+      .catch(() => {
+        // No hand: the gun is held by nobody, which the sequence survives
+      })
     return () => {
+      alive = false
       const w = worldRef.current
       worldRef.current = null
       if (!w) return
+      w.hand?.dispose()
       w.revolver.dispose()
       w.carts.forEach((c) => c.dispose())
-      ;[w.flash, w.gap, w.smoke, w.dust, w.cylGhosts, w.gunGhosts].forEach((f) => f.dispose())
+      ;[w.flash, w.gap, w.smoke, w.dust, w.cylGhosts, w.gunGhosts, w.bottle, w.shatter, w.missFx].forEach((f) => f.dispose())
       w.cartFx.forEach((f) => Object.values(f).forEach((x) => x.dispose()))
       w.room.geometry.dispose()
       w.room.material.dispose()
       disposeTextures()
     }
-  }, [world])
+  }, [world, lowPerf])
 
   useFrame((state, delta) => {
     const w = worldRef.current
@@ -144,21 +181,26 @@ const World = ({ rig, themes, lowPerf, portrait, pointer, emit }) => {
     const dt = Math.min(delta, 1 / 20)
     const real = Math.max(delta, 1e-4)
     const t = state.clock.elapsedTime
-    const { revolver, carts, cartFx } = w
+    const { revolver, carts, cartFx, bottle } = w
     const r = rig
 
-    // The head: field of view, breathing, a tremor, the pointer, the shot's kick
-    const fov = portrait ? FOV_PORTRAIT : FOV
-    if (camera.fov !== fov) {
+    // The bottle, seen from the eye: where it is, and how the camera would turn to frame it
+    bottle.proxy.getWorldPosition(tmp.bottleWorld)
+    const lookYaw = -Math.atan2(tmp.bottleWorld.x, -tmp.bottleWorld.z)
+    const lookPitch = Math.atan2(tmp.bottleWorld.y, Math.hypot(tmp.bottleWorld.x, tmp.bottleWorld.z))
+
+    // The head: field of view, breathing, a tremor, the pointer, the shot's kick, the push-ins
+    const fov = (portrait ? FOV_PORTRAIT : FOV) / r.cam.zoom
+    if (Math.abs(camera.fov - fov) > 1e-3) {
       camera.fov = fov
       camera.updateProjectionMatrix()
     }
     const breathe = Math.sin(t * Math.PI * 2 * 0.2) * r.breath
     camera.position.set(0, 0, -r.cam.dolly)
     camera.rotation.set(
-      -pointer.y * LOOK + r.kick * 0.045 + breathe * 0.003,
-      -pointer.x * LOOK,
-      r.kick * 0.022 + noise1(t * 1.3, 2) * 0.0015 * r.breath,
+      -pointer.y * LOOK * r.look + r.cam.pitch + lookPitch * r.cam.look + r.kick * 0.045 + breathe * 0.003,
+      -pointer.x * LOOK * r.look + r.cam.yaw + lookYaw * r.cam.look,
+      r.cam.roll + r.kick * 0.022 + noise1(t * 1.3, 2) * 0.0015 * r.breath,
     )
 
     // The hand: pose, offsets, breathing, tremor, recoil, and the rise into frame
@@ -171,7 +213,27 @@ const World = ({ rig, themes, lowPerf, portrait, pointer, emit }) => {
       r.gun.y * far + r.off.y - below * 0.3 + breathe * 0.0035 + noise1(t * 1.7, 3) * 0.0005 * r.breath,
       (r.gun.z + r.off.z) * far + r.recoil * 0.03,
     )
-    g.rotation.set(r.gun.pitch + r.off.pitch + r.recoil * 0.1 + below * 0.4, r.gun.yaw, r.gun.roll + r.off.roll, 'YXZ')
+
+    // Aiming from the hip: the barrel follows the pointer on a spring
+    if (r.aimBlend > 0.001) {
+      camera.updateMatrixWorld(true)
+      tmp.bottleCam.copy(tmp.bottleWorld)
+      camera.worldToLocal(tmp.bottleCam)
+      // A touch screen cannot aim: the barrel goes to the bottle by itself
+      const src = coarse ? tmp.bottlePointer : pointer
+      aimPoint(camera, src, tmp.bottleCam, coarse ? 1 : r.aimForce, tmp.aimPt)
+      tmp.pivot.set(g.position.x, g.position.y + PITCH_RADIUS, g.position.z)
+      const want = aimAngles(tmp.pivot, tmp.aimPt)
+      stepAim(w.aim, want.yaw - POSES.hip.yaw, want.pitch - POSES.hip.pitch, dt)
+      writeAim(r, w.aim.yaw.x, w.aim.pitch.x)
+      hitTest(w.aim, r, camera, src, [bottle.proxy, w.room, bottle.floor])
+    }
+    g.rotation.set(
+      r.gun.pitch + r.off.pitch + r.aim.pitch * r.aimBlend + r.recoil * 0.1 + below * 0.4,
+      r.gun.yaw + r.aim.yaw * r.aimBlend,
+      r.gun.roll + r.off.roll,
+      'YXZ',
+    )
 
     // Articulations
     revolver.crane.rotation.z = r.crane
@@ -185,13 +247,15 @@ const World = ({ rig, themes, lowPerf, portrait, pointer, emit }) => {
       tmp.ratchet += Math.abs(spin - tmp.prevSpin)
       while (tmp.ratchet >= STEP) {
         tmp.ratchet -= STEP
-        emit('sfx', 'ratchet')
+        emit('sfx', 'ratchet', Math.abs(spin - tmp.prevSpin) / real)
       }
     }
     tmp.prevSpin = spin
     // Light sweep along the frame after the cylinder snaps shut
     w.sweep.position.z = 0.1 - (r.sweep + 1) * 0.1
-    w.sweep.intensity = 3 * smoothstep(-1, -0.6, r.sweep) * (1 - smoothstep(1.5, 2, r.sweep))
+    w.sweep.intensity = 0.8 * smoothstep(-1, -0.6, r.sweep) * (1 - smoothstep(1.5, 2, r.sweep))
+    // The hand follows the gun's gestures
+    if (w.hand) w.hand.update(r, dt)
 
     // Everything below reads world matrices of this frame
     camera.updateMatrixWorld(true)
@@ -261,23 +325,36 @@ const World = ({ rig, themes, lowPerf, portrait, pointer, emit }) => {
       } else light.intensity = Math.max(0, light.intensity - dt * 6)
     }
 
+    // The bottle's lights
+    bottle.spot.intensity = 4 * r.bottleLight
+    bottle.flash.intensity = 40 * r.bottleFlash
+
     // Where things are on screen, for the HUD and the shockwave
     carts.forEach((c, k) => projectOnScreen(c.group, camera, tmp.v, r.screen.carts[k]))
     projectOnScreen(revolver.cyl, camera, tmp.v, r.screen.cyl)
     projectOnScreen(w.muzzle, camera, tmp.v, r.screen.muzzle)
+    projectOnScreen(bottle.proxy, camera, tmp.v, r.screen.bottle)
+    tmp.edge.position.copy(tmp.bottleWorld).add(tmp.v.set(0.07, 0.17, 0))
+    tmp.edge.updateMatrixWorld()
+    writeExtent(r.screen.bottle, projectOnScreen(tmp.edge, camera, tmp.v, tmp.corner))
+    tmp.edge.position.set(r.shot.point.x, r.shot.point.y, r.shot.point.z)
+    tmp.edge.updateMatrixWorld()
+    projectOnScreen(tmp.edge, camera, tmp.v, r.screen.impact)
 
     // Motion effects and the shot
     w.flash.update(r)
     w.gap.update(r)
     w.smoke.update(dt, r)
     w.dust.update(dt)
-    // The cylinder leaves multiples when it spins or swings, the gun when the wrist flicks
+    w.shatter.update(dt, r, camera)
+    w.missFx.update(dt, r)
+    // The cylinder leaves multiples when it spins or swings. A flat copy of
+    // the whole gun read as a glitch rather than a motion, so the wrist flick
+    // keeps only its smear of the cylinder.
     const craneRate = Math.abs(r.crane - tmp.prevCrane) / real
-    const rollRate = Math.abs(r.off.roll - tmp.prevRoll) / real
     tmp.prevCrane = r.crane
-    tmp.prevRoll = r.off.roll
     w.cylGhosts.update(real, t, (r.spinT > 0 && r.spinT < 0.995) || craneRate > 2.5)
-    w.gunGhosts.update(real, t, rollRate > 2.5)
+    w.gunGhosts.update(real, t, false)
     // Smears and streaks belong to the flight; once seated, a round only rides the cylinder
     cartFx.forEach((f, k) => {
       const flying = r.carts[k].flight > 0 && r.carts[k].seat < 1
@@ -297,7 +374,7 @@ const World = ({ rig, themes, lowPerf, portrait, pointer, emit }) => {
       <spotLight
         color="#ffd9a6"
         intensity={lowPerf ? 2 : 2.2}
-        position={[-0.45, 0.55, 0.15]}
+        position={[-0.6, 0.65, 0.3]}
         angle={0.75}
         penumbra={0.6}
         decay={2}
@@ -314,12 +391,13 @@ const World = ({ rig, themes, lowPerf, portrait, pointer, emit }) => {
       <directionalLight color="#9fc5ff" intensity={0.9} position={[0.7, 0.3, -0.5]} />
       <pointLight ref={kicker} intensity={0} distance={0.28} decay={2} />
       <primitive object={world.room} />
+      <primitive object={world.bottle.group} />
       <primitive object={world.root} />
     </>
   )
 }
 
-const Scene = ({ rig, themes, lowPerf, portrait, pointer, emit }) => (
+const Scene = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => (
   <Canvas
     className="bar-canvas"
     aria-hidden="true"
@@ -327,11 +405,12 @@ const Scene = ({ rig, themes, lowPerf, portrait, pointer, emit }) => (
     dpr={lowPerf ? 1 : [1, 1.5]}
     shadows={lowPerf ? false : 'soft'}
     gl={{ antialias: false, powerPreference: 'high-performance', stencil: false }}
-    camera={{ fov: FOV, near: 0.02, far: 12, position: [0, 0, 0] }}
+    camera={{ fov: FOV, near: 0.02, far: 14, position: [0, 0, 0] }}
   >
     <color attach="background" args={['#07090c']} />
+    <fog attach="fog" args={['#07090c', 2.6, 7.5]} />
     <Environment />
-    <World rig={rig} themes={themes} lowPerf={lowPerf} portrait={portrait} pointer={pointer} emit={emit} />
+    <World rig={rig} themes={themes} lowPerf={lowPerf} portrait={portrait} coarse={coarse} pointer={pointer} emit={emit} />
     <Post rig={rig} lowPerf={lowPerf} />
   </Canvas>
 )

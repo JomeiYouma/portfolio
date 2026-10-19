@@ -110,7 +110,7 @@ export const buildCartridge = (id, { lowPerf }) => {
   const materials = [shell, bullet, stampMaterial]
   if (look.band) {
     // The tracer ring: unlit, so the bloom picks it up
-    const bandMaterial = new THREE.MeshBasicMaterial({ color: look.band, toneMapped: false })
+    const bandMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(look.band).multiplyScalar(1.8), toneMapped: false })
     const bandGeo = new THREE.CylinderGeometry(0.00495, 0.00495, 0.0035, look.segments, 1, true)
     bandGeo.rotateX(Math.PI / 2)
     const band = new THREE.Mesh(bandGeo, bandMaterial)

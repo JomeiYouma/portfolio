@@ -6,6 +6,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { takeSnapshot } from './shatter'
 
 // The print look, in one pass after tone mapping: inks slightly out of
 // register, a dot screen in the shadows, grain, a vignette; and the shot's
@@ -65,7 +66,7 @@ const InkShader = {
       float a = 0.26;
       vec2 p = mat2(cos(a), -sin(a), sin(a), cos(a)) * gl_FragCoord.xy;
       vec2 cell = fract(p / 7.0) - 0.5;
-      float shade = 1.0 - smoothstep(0.02, 0.5, luma);
+      float shade = 1.0 - smoothstep(0.02, 0.25, luma);
       float dots = 1.0 - smoothstep(shade * 0.42 - 0.08, shade * 0.42, length(cell));
       col *= 1.0 - 0.32 * dots * uHalftone;
 
@@ -104,11 +105,11 @@ export const Post = ({ rig, lowPerf }) => {
     })
     const composer = new EffectComposer(gl, target)
     composer.addPass(new RenderPass(scene, camera))
-    const bloom = lowPerf ? null : new UnrealBloomPass(new THREE.Vector2(1, 1), 0.35, 0.6, 0.97)
+    const bloom = lowPerf ? null : new UnrealBloomPass(new THREE.Vector2(1, 1), 0.25, 0.55, 1.2)
     if (bloom) composer.addPass(bloom)
     composer.addPass(new OutputPass())
     const ink = new ShaderPass(InkShader)
-    ink.uniforms.uHalftone.value = lowPerf ? 0 : 0.55
+    ink.uniforms.uHalftone.value = lowPerf ? 0 : 0.35
     composer.addPass(ink)
     composerRef.current = { composer, bloom, ink, width: 0, height: 0, ratio: 0 }
     return () => {
@@ -138,8 +139,10 @@ export const Post = ({ rig, lowPerf }) => {
     u.uShockCenter.value.set(rig.screen.muzzle.x, 1 - rig.screen.muzzle.y)
     u.uImpact.value = rig.impact
     u.uWhite.value = rig.white
-    if (c.bloom) c.bloom.strength = 0.35 + rig.bloom * 2.6
+    if (c.bloom) c.bloom.strength = 0.25 + rig.bloom * 2.6
     c.composer.render(delta)
+    // The screen-level shatter wants this very frame, before anything else paints
+    if (rig.snapshot === 'request') takeSnapshot(rig, state.gl.domElement)
   }, 1)
 
   return null

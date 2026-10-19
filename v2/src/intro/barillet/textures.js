@@ -417,3 +417,86 @@ export const backdrop = () =>
     ctx.fillRect(0, 0, size, size)
     return texture(c)
   })
+
+/** The paper label on the bottle */
+export const bottleLabel = () =>
+  memo('label', () => {
+    const w = 512
+    const h = 192
+    const c = canvas(w, h)
+    const ctx = c.getContext('2d')
+    ctx.fillStyle = '#efe6d2'
+    ctx.fillRect(0, 0, w, h)
+    const r = rand(53)
+    for (let i = 0; i < 3000; i++) {
+      ctx.fillStyle = `rgba(90,70,40,${r() * 0.08})`
+      ctx.fillRect(r() * w, r() * h, 2, 1)
+    }
+    ctx.strokeStyle = '#2a2118'
+    ctx.lineWidth = 3
+    ctx.strokeRect(14, 14, w - 28, h - 28)
+    ctx.lineWidth = 1
+    ctx.strokeRect(22, 22, w - 44, h - 44)
+    ctx.fillStyle = '#2a2118'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.font = '800 54px "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif'
+    ctx.fillText('YOUMA', w / 2, 78)
+    ctx.font = '600 20px "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif'
+    ctx.fillText('PORTFOLIO · .357 · 2026', w / 2, 122)
+    ;['#24fbc5', '#e63f1a', '#ffd400', '#b8381f'].forEach((color, i) => {
+      ctx.fillStyle = color
+      ctx.beginPath()
+      ctx.arc(w / 2 - 36 + i * 24, 152, 6, 0, Math.PI * 2)
+      ctx.fill()
+    })
+    return texture(c)
+  })
+
+/** A bullet hole left in the wall by a miss */
+export const bulletHole = () =>
+  memo('hole', () => {
+    const size = 64
+    const c = canvas(size, size)
+    const ctx = c.getContext('2d')
+    const r = rand(61)
+    const g = ctx.createRadialGradient(32, 32, 2, 32, 32, 26)
+    g.addColorStop(0, 'rgba(0,0,0,1)')
+    g.addColorStop(0.45, 'rgba(10,8,6,0.9)')
+    g.addColorStop(0.7, 'rgba(60,50,40,0.5)')
+    g.addColorStop(1, 'rgba(60,50,40,0)')
+    ctx.fillStyle = g
+    ctx.fillRect(0, 0, size, size)
+    ctx.strokeStyle = 'rgba(20,16,12,0.8)'
+    ctx.lineWidth = 1.5
+    for (let i = 0; i < 7; i++) {
+      const a = r() * Math.PI * 2
+      ctx.beginPath()
+      ctx.moveTo(32 + Math.cos(a) * 8, 32 + Math.sin(a) * 8)
+      ctx.lineTo(32 + Math.cos(a) * (14 + r() * 14), 32 + Math.sin(a) * (14 + r() * 14))
+      ctx.stroke()
+    }
+    return texture(c)
+  })
+
+/** Pebbled leather, for the glove */
+export const gloveNormal = () =>
+  memo('glove', () => {
+    const size = 256
+    const c = canvas(size, size)
+    const ctx = c.getContext('2d')
+    const r = rand(71)
+    ctx.fillStyle = '#808080'
+    ctx.fillRect(0, 0, size, size)
+    for (let i = 0; i < 1400; i++) {
+      const x = r() * size
+      const y = r() * size
+      const rad = 2 + r() * 4
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rad)
+      g.addColorStop(0, `rgba(${150 + r() * 60},${150 + r() * 60},${150 + r() * 60},0.9)`)
+      g.addColorStop(1, 'rgba(128,128,128,0)')
+      ctx.fillStyle = g
+      ctx.fillRect(x - rad, y - rad, rad * 2, rad * 2)
+    }
+    return texture(heightToNormal(c, 1.2), { data: true, repeat: 6 })
+  })

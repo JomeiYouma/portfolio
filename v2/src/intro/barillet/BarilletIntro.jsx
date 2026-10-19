@@ -1,16 +1,19 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useReducedMotion } from 'motion/react'
 import '@fontsource-variable/schibsted-grotesk/wght.css'
-import '@fontsource-variable/anybody/wdth-italic.css'
 import './barillet.css'
 import { useI18n } from '../../hooks/useI18n'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { IS_LOW_PERF } from '../../utils/perf'
+import { commitShot } from './aim'
 import { createAudio } from './audio'
-import { lookOf } from './cartridges'
 import Hud from './Hud'
 import Picker from './Picker'
-import { createRig } from './rig'
+import { createRig, landShot, listenSnapshot, markRound, nextRound, recordShot, setAimForce, setPhaseOf, stepsToNext } from './rig'
+import { requestSnapshot } from './shatter'
+import ShatterLayer from './ShatterLayer'
+import { buildShot } from './shots'
 import { buildTimeline } from './timeline'
 
 // three.js only loads with the scene
@@ -24,10 +27,7 @@ const HAS_WEBGL = (() => {
   }
 })()
 
-const ONOMA_SIZE = { open: 's', load: 's', close: 'm', spin: 'm', cock: 's', shot: 'l' }
-let onomaId = 0
-
-/** Jagged lines radiating from a point, in viewBox units (0..100) */
+/** Jagged lines radiating from a point, in viewBox units (0..100), for the fallback reveal */
 const makeCracks = (cx, cy) => {
   const paths = []
   const n = 9 + Math.floor(Math.random() * 4)
@@ -35,15 +35,11 @@ const makeCracks = (cx, cy) => {
     const a = (i / n) * Math.PI * 2 + Math.random() * 0.4
     const len = 8 + Math.random() * 26
     let d = `M${cx} ${cy}`
-    let x = cx
-    let y = cy
     const steps = 3 + Math.floor(Math.random() * 3)
     for (let s = 1; s <= steps; s++) {
       const r = (len * s) / steps
       const wobble = (Math.random() - 0.5) * 0.5
-      x = cx + Math.cos(a + wobble) * r
-      y = cy + Math.sin(a + wobble) * r * 1.6
-      d += ` L${x.toFixed(1)} ${y.toFixed(1)}`
+      d += ` L${(cx + Math.cos(a + wobble) * r).toFixed(1)} ${(cy + Math.sin(a + wobble) * r * 1.6).toFixed(1)}`
     }
     paths.push(d)
   }
@@ -52,8 +48,9 @@ const makeCracks = (cx, cy) => {
 
 /**
  * The opening sequence: a revolver in the visitor's hand, one round per
- * theme, a spin, a shot that opens the chosen theme. Without WebGL or with
- * reduced motion, the same choice as a row of rounds to pick from.
+ * theme, a spin, then a bottle to shoot; the round that breaks it opens its
+ * theme through the shattered screen. Without WebGL or with reduced motion,
+ * the same choice as a row of rounds to pick from.
  */
 const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
   const { t } = useI18n()
@@ -68,17 +65,24 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
   const audio = useMemo(() => createAudio(), [])
   const pointer = useMemo(() => ({ x: 0, y: 0 }), [])
   const seqRef = useRef(null)
-  const firedRef = useRef(false)
+  const shotRef = useRef(null)
+  const pointerMoved = useRef(false)
+  const revealed = useRef(false)
 
   const [phase, setPhase] = useState('ready')
   const [cards, setCards] = useState(() => themes.map(() => null))
   const [loaded, setLoaded] = useState(0)
   const [chosen, setChosen] = useState(-1)
   const [marked, setMarked] = useState(-1)
-  const [onoma, setOnoma] = useState([])
   const [cracks, setCracks] = useState(null)
   const [muted, setMuted] = useState(() => audio.isMuted())
   const [flash, setFlash] = useState(false)
+  const [shots, setShots] = useState(0)
+  const [fired, setFired] = useState([])
+  const [fireKey, setFireKey] = useState(0)
+  const [missKey, setMissKey] = useState(0)
+  const [snapshot, setSnapshot] = useState(null)
+  const [impact, setImpact] = useState({ x: 0.5, y: 0.5 })
 
   // The timeline is built once; what it calls back into may change with
   // every render (the translator, the parent's handlers), so it goes through refs
@@ -87,7 +91,15 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
     callbacks.current = { onArm, onFire, onDone, t }
   }, [onArm, onFire, onDone, t])
 
-  // What the timeline tells us, turned into sound and HUD
+  const finish = useCallback(() => callbacks.current.onDone(), [])
+
+  /** The fallback reveal: cracks and a growing hole, when no snapshot is possible */
+  const revealByMask = useCallback(() => {
+    setCracks(makeCracks(rig.screen.impact.x * 100, rig.screen.impact.y * 100))
+    setTimeout(finish, 1300)
+  }, [rig, finish])
+
+  // What the timeline and the shots tell us, turned into sound and HUD
   const emit = useCallback(
     (type, a, b) => {
       switch (type) {
@@ -97,12 +109,7 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
         case 'phase':
           setPhase(a)
           if (a === 'spawn') themes.forEach((theme) => theme.preload?.())
-          if (a === 'aim') callbacks.current.onArm(themes[rig.chosen]?.id)
-          if (a === 'shot' && !firedRef.current) {
-            firedRef.current = true
-            callbacks.current.onFire(themes[rig.chosen]?.id)
-            setCracks(makeCracks(rig.screen.muzzle.x * 100, rig.screen.muzzle.y * 100))
-          }
+          if (a === 'aim' && rig.chosen >= 0) callbacks.current.onArm(themes[rig.chosen]?.id)
           break
         case 'card':
           setCards((c) => c.map((s, i) => (i === a ? 'in' : s)))
@@ -114,31 +121,94 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
         case 'chosen':
           setChosen(a)
           break
-        case 'onoma': {
-          const id = ++onomaId
-          const big = a === 'shot'
-          const at = big ? rig.screen.muzzle : rig.screen.cyl
-          const accent = big ? lookOf(themes[rig.chosen]?.id).accent : '#f2efe6'
-          const entry = {
-            id,
-            text: callbacks.current.t(`intro.onoma.${a}`),
-            size: ONOMA_SIZE[a] ?? 'm',
-            accent,
-            x: Math.min(0.9, Math.max(0.1, at.x + (big ? 0 : (Math.random() - 0.5) * 0.12 - 0.04))),
-            y: Math.min(0.85, Math.max(0.12, at.y - (big ? 0.12 : 0.14 + Math.random() * 0.06))),
-          }
-          setOnoma((list) => [...list, entry])
-          setTimeout(() => setOnoma((list) => list.filter((o) => o.id !== id)), 750)
+        case 'fired':
+          setFireKey((k) => k + 1)
+          break
+        case 'reveal': {
+          if (revealed.current) break
+          revealed.current = true
+          setPhaseOf(rig, 'reveal')
+          setPhase('reveal')
+          callbacks.current.onFire(themes[rig.chosen]?.id)
+          setImpact({ x: rig.screen.impact.x, y: rig.screen.impact.y })
+          if (lowPerf) revealByMask()
+          else requestSnapshot(rig)
           break
         }
         case 'done':
-          callbacks.current.onDone()
+          finish()
           break
         default:
           break
       }
     },
-    [audio, rig, themes],
+    [audio, rig, themes, lowPerf, revealByMask, finish],
+  )
+
+  // The screen-level shatter needs the frame the post pass captured
+  useEffect(() => {
+    listenSnapshot(rig, (shot) => {
+      if (shot) setSnapshot(shot)
+      else revealByMask()
+    })
+    return () => listenSnapshot(rig, null)
+  }, [rig, revealByMask])
+
+  // Sounds load from the first frame; they only play after a gesture
+  useEffect(() => {
+    audio.prefetch()
+    return () => audio.dispose()
+  }, [audio])
+
+  /** One pull of the trigger: decides the outcome, runs the shot, re-arms on a miss */
+  const fire = useCallback(
+    (force) => {
+      const seq = seqRef.current
+      if (!seq || shotRef.current || !seq.consumeFire()) return false
+      const count = themes.length
+      const last = rig.shots >= count - 1
+      // Without a pointer to aim with, or on the last round, the hand does the aiming
+      const assisted = force === 'hit' || coarse || !pointerMoved.current || last
+      const outcome = force === 'miss' ? 'miss' : assisted || rig.aim.onBottle ? 'hit' : 'miss'
+      shotRef.current = { pending: true }
+      const start = () => {
+        const steps = stepsToNext(rig, count)
+        recordShot(rig)
+        commitShot(rig, outcome)
+        setShots(rig.shots)
+        const firedIndex = rig.chosen
+        const shot = buildShot(rig, {
+          outcome,
+          steps,
+          slow: !lowPerf,
+          emit,
+          onImpact: (o) => {
+            landShot(rig, o)
+            audio.play(o === 'hit' ? 'shatter' : 'miss')
+          },
+          onSettled: (o) => {
+            shotRef.current = null
+            if (o !== 'miss') return
+            setFired((f) => [...f, firedIndex])
+            const next = nextRound(rig, count)
+            setChosen(next)
+            setMissKey((k) => k + 1)
+            setAimForce(rig, 0)
+            seq.rearm()
+            setTimeout(() => callbacks.current.onArm(themes[next].id), 120)
+          },
+        })
+        shotRef.current = shot
+        shot.play()
+      }
+      if (assisted && !coarse) {
+        // Give the barrel a beat to swing onto the bottle
+        setAimForce(rig, 1)
+        setTimeout(start, 170)
+      } else start()
+      return true
+    },
+    [rig, themes, coarse, lowPerf, emit, audio],
   )
 
   // The timeline: built once the scene can run, played up to the first gate
@@ -150,25 +220,32 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
     if (import.meta.env.DEV) {
       window.__barillet = {
         rig,
+        audio,
         seek: seq.seek,
         start: seq.start,
-        fire: seq.fire,
+        fire: (force) => fire(force),
+        hit: () => fire('hit'),
+        miss: () => fire('miss'),
+        aimAt: (x, y) => {
+          pointer.x = x * 2 - 1
+          pointer.y = y * 2 - 1
+          pointerMoved.current = true
+        },
         mark: (id) => {
           const k = themes.findIndex((theme) => theme.id === id)
-          rig.marked = k
-          rig.carts.forEach((c, i) => (c.mark = i === k ? 1 : 0))
+          markRound(rig, k)
           setMarked(k)
         },
       }
     }
     return () => {
       seq.dispose()
+      shotRef.current?.kill?.()
+      shotRef.current = null
       seqRef.current = null
       if (import.meta.env.DEV) delete window.__barillet
     }
-  }, [immersive, rig, themes, emit])
-
-  useEffect(() => () => audio.dispose(), [audio])
+  }, [immersive, rig, themes, emit, fire, audio, pointer])
 
   // Nothing moves while the tab is hidden
   useEffect(() => {
@@ -185,20 +262,19 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
   const mark = useCallback(
     (k) => {
       if (rig.phase !== 'spawn' && rig.phase !== 'open') return
-      rig.marked = k
-      rig.carts.forEach((c, i) => (c.mark = i === k ? 1 : 0))
+      markRound(rig, k)
       setMarked(k)
     },
     [rig],
   )
 
-  // The first gesture loads the gun; the next one, once aimed, fires
+  // The first gesture loads the gun; the next ones, once aimed, fire
   const gesture = useCallback(() => {
     audio.unlock()
     const seq = seqRef.current
     if (!seq) return
-    if (!seq.start()) seq.fire()
-  }, [audio])
+    if (!seq.start()) fire()
+  }, [audio, fire])
 
   useEffect(() => {
     if (!immersive) return undefined
@@ -226,6 +302,7 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
       if (coarse) return
       pointer.x = (e.clientX / window.innerWidth) * 2 - 1
       pointer.y = (e.clientY / window.innerHeight) * 2 - 1
+      pointerMoved.current = true
     }
     window.addEventListener('pointerdown', onPointerDown)
     window.addEventListener('keydown', onKeyDown)
@@ -237,12 +314,12 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
     }
   }, [immersive, gesture, onSkip, mark, marked, themes.length, coarse, pointer])
 
-  // Aimed and left alone: the gun fires by itself
+  // Aimed and left alone: the hand fires by itself, and does not miss
   useEffect(() => {
     if (phase !== 'aim') return undefined
-    const id = setTimeout(() => seqRef.current?.fire(), 3000)
+    const id = setTimeout(() => fire('hit'), 4000)
     return () => clearTimeout(id)
-  }, [phase])
+  }, [phase, missKey, fire])
 
   const toggleMute = useCallback(() => {
     const next = !audio.isMuted()
@@ -260,14 +337,22 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
   )
 
   const chosenName = chosen >= 0 ? t(`themes.${themes[chosen].id}`) : ''
-  const announcement = immersive ? t(`intro.phase.${phase === 'closed' ? 'closed' : phase}`).replace('{name}', chosenName) : t('intro.pick')
+  const announcement = immersive ? t(`intro.phase.${phase}`).replace('{name}', chosenName) : t('intro.pick')
+  const aiming = immersive && !coarse && (phase === 'aim' || phase === 'shot')
+  const rootClass = [
+    'bar-root',
+    aiming ? 'is-aiming' : '',
+    snapshot ? 'is-shattering' : '',
+    phase === 'reveal' && !snapshot ? 'is-revealing' : '',
+  ].join(' ')
 
-  return (
-    <div ref={rootRef} className={`bar-root ${phase === 'reveal' ? 'is-revealing' : ''}`}>
+  // Portaled to <body>: the themes' own portals (the Neon cursor) would otherwise paint over it
+  return createPortal(
+    <div ref={rootRef} className={rootClass}>
       {immersive ? (
         <>
           <Suspense fallback={null}>
-            <Scene rig={rig} themes={themes} lowPerf={lowPerf} portrait={portrait} pointer={pointer} emit={emit} />
+            <Scene rig={rig} themes={themes} lowPerf={lowPerf} portrait={portrait} coarse={coarse} pointer={pointer} emit={emit} />
           </Suspense>
           <Hud
             rig={rig}
@@ -277,13 +362,19 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
             loaded={loaded}
             chosen={chosen}
             marked={marked}
-            onoma={onoma}
             cracks={cracks}
             portrait={portrait}
+            coarse={coarse}
             rootRef={rootRef}
+            pointer={pointer}
+            fireKey={fireKey}
+            missKey={missKey}
+            shots={shots}
+            fired={fired}
             onMark={mark}
             t={t}
           />
+          {snapshot && <ShatterLayer shot={snapshot} impact={impact} lowPerf={lowPerf} onDone={finish} />}
           <button type="button" className="bar-mute" aria-pressed={muted} onClick={toggleMute}>
             {muted ? t('intro.unmute') : t('intro.mute')}
           </button>
@@ -300,7 +391,8 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
       <p className="bar-sr" role="status" aria-live="polite">
         {announcement}
       </p>
-    </div>
+    </div>,
+    document.body,
   )
 }
 

@@ -1,19 +1,25 @@
 import { useEffect, useRef } from 'react'
 import { lookOf } from './cartridges'
+import { spring } from './motion'
 
 // The flat layer over the scene: item cards pinned to the rounds, the chamber
-// counter, the prompts, the speed lines, the onomatopoeia, the cracks of the
-// bullet hole. Positions follow the scene through the rig, sixty times a
-// second, without touching React state.
+// counter, the prompts, the speed lines, the aim reticle, the rounds left,
+// the cracks of the fallback reveal. Positions follow the scene through the
+// rig, sixty times a second, without touching React state.
 
-const Hud = ({ rig, themes, cards, phase, loaded, chosen, marked, onoma, cracks, portrait, rootRef, onMark, t }) => {
+const Hud = ({
+  rig, themes, cards, phase, loaded, chosen, marked, cracks, portrait, coarse, rootRef, pointer, fireKey, missKey, shots, fired, onMark, t,
+}) => {
   const cardRefs = useRef([])
   const speedRef = useRef(null)
+  const reticleRef = useRef(null)
+  const reticle = useRef({ x: { x: 0, v: 0 }, y: { x: 0, v: 0 }, at: 0 })
   const total = 6
+  const aiming = (phase === 'aim' || phase === 'shot') && !coarse
 
   useEffect(() => {
     let frame
-    const tick = () => {
+    const tick = (now) => {
       const w = window.innerWidth
       const h = window.innerHeight
       rig.screen.carts.forEach((p, k) => {
@@ -37,20 +43,47 @@ const Hud = ({ rig, themes, cards, phase, loaded, chosen, marked, onoma, cracks,
         speedRef.current.style.left = `${(rig.screen.cyl.x * w).toFixed(1)}px`
         speedRef.current.style.top = `${(rig.screen.cyl.y * h).toFixed(1)}px`
       }
+      // The reticle chases the pointer on a spring and locks when it covers the bottle
+      const ret = reticleRef.current
+      if (ret) {
+        const s = reticle.current
+        const dt = s.at ? Math.min(0.05, (now - s.at) / 1000) : 1 / 60
+        s.at = now
+        const px = ((pointer.x + 1) / 2) * w
+        const py = ((pointer.y + 1) / 2) * h
+        spring(s.x, px, 320, 26, dt)
+        spring(s.y, py, 320, 26, dt)
+        ret.style.transform = `translate(${s.x.x.toFixed(1)}px, ${s.y.x.toFixed(1)}px)`
+        const b = rig.screen.bottle
+        const locked = Math.abs(s.x.x - b.x * w) < b.rx * w * 1.3 && Math.abs(s.y.x - b.y * h) < b.ry * h * 1.2
+        ret.classList.toggle('is-locked', locked)
+      }
+      // The fallback reveal: a hole growing from the impact
       const root = rootRef.current
       if (root && phase === 'reveal') {
-        root.style.setProperty('--bar-hx', `${(rig.screen.muzzle.x * 100).toFixed(2)}%`)
-        root.style.setProperty('--bar-hy', `${(rig.screen.muzzle.y * 100).toFixed(2)}%`)
+        root.style.setProperty('--bar-hx', `${(rig.screen.impact.x * 100).toFixed(2)}%`)
+        root.style.setProperty('--bar-hy', `${(rig.screen.impact.y * 100).toFixed(2)}%`)
         root.style.setProperty('--bar-hr', `${(rig.reveal * Math.hypot(w, h) * 0.8).toFixed(1)}px`)
       }
       frame = requestAnimationFrame(tick)
     }
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
-  }, [rig, cards, phase, portrait, rootRef])
+  }, [rig, cards, phase, portrait, rootRef, pointer])
+
+  // A spark on the reticle for the few frames of a shot
+  useEffect(() => {
+    const ret = reticleRef.current
+    if (!ret || !fireKey) return undefined
+    ret.classList.add('is-fire')
+    const id = setTimeout(() => ret.classList.remove('is-fire'), 180)
+    return () => clearTimeout(id)
+  }, [fireKey])
 
   const canMark = phase === 'spawn' || phase === 'open'
   const chosenTheme = chosen >= 0 ? themes[chosen] : null
+  const accent = chosenTheme ? lookOf(chosenTheme.id).accent : '#9fb3c8'
+  const lastRound = shots >= themes.length - 1
 
   return (
     <div className="bar-hud">
@@ -94,29 +127,51 @@ const Hud = ({ rig, themes, cards, phase, loaded, chosen, marked, onoma, cracks,
         </div>
       )}
 
+      {(phase === 'aim' || phase === 'shot' || phase === 'spin') && (
+        <div className="bar-rounds" aria-hidden="true">
+          {themes.map((theme, k) => (
+            <span
+              key={theme.id}
+              className={`bar-rounds__dot ${fired.includes(k) ? 'is-spent' : ''} ${chosen === k ? 'is-next' : ''}`}
+              style={{ '--bar-accent': lookOf(theme.id).accent }}
+            />
+          ))}
+        </div>
+      )}
+
       <div ref={speedRef} className={`bar-speed ${phase === 'spin' ? 'is-on' : ''}`} />
 
       {phase === 'ready' && <p className="bar-prompt">{t('intro.start')}</p>}
-      {phase === 'aim' && <p className="bar-prompt bar-prompt--fire">{t('intro.fire')}</p>}
+      {phase === 'aim' && (
+        <p className="bar-prompt bar-prompt--aim" style={{ '--bar-accent': accent }}>
+          {lastRound ? t('intro.lastRound') : coarse ? t('intro.touchFire') : t('intro.aimPrompt')}
+        </p>
+      )}
       {(phase === 'aim' || phase === 'shot') && chosenTheme && (
-        <p className="bar-chosen" style={{ '--bar-accent': lookOf(chosenTheme.id).accent }}>
+        <p className="bar-chosen" style={{ '--bar-accent': accent }}>
           {t('intro.underHammer')}
           <strong>{t(`themes.${chosenTheme.id}`)}</strong>
         </p>
       )}
+      {missKey > 0 && phase === 'aim' && chosenTheme && (
+        <p key={missKey} className="bar-miss" style={{ '--bar-accent': accent }}>
+          {t('intro.miss').replace('{name}', t(`themes.${chosenTheme.id}`))}
+        </p>
+      )}
 
-      {onoma.map((o) => (
-        <span
-          key={o.id}
-          className={`bar-onoma bar-onoma--${o.size}`}
-          style={{ left: `${o.x * 100}%`, top: `${o.y * 100}%`, '--bar-accent': o.accent }}
-        >
-          {o.text}
-        </span>
-      ))}
+      {aiming && (
+        <div ref={reticleRef} className="bar-reticle" style={{ '--bar-accent': accent }} aria-hidden="true">
+          <span className="bar-reticle__tick bar-reticle__tick--tl" />
+          <span className="bar-reticle__tick bar-reticle__tick--tr" />
+          <span className="bar-reticle__tick bar-reticle__tick--br" />
+          <span className="bar-reticle__tick bar-reticle__tick--bl" />
+          <span className="bar-reticle__dot" />
+          <span className="bar-reticle__spark" />
+        </div>
+      )}
 
       {cracks && (
-        <svg className={`bar-cracks ${phase === 'shot' || phase === 'reveal' ? 'is-on' : ''}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <svg className={`bar-cracks ${phase === 'reveal' ? 'is-on' : ''}`} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           {cracks.map((d, i) => (
             <path key={i} d={d} vectorEffect="non-scaling-stroke" />
           ))}
