@@ -187,7 +187,7 @@ export const buildTimeline = (rig, { count, emit }) => {
     const s = t
     tl.addLabel('aim', s)
     pose('hip', 0.5, 'power3.inOut', s)
-    tl.to(rig, { look: 0, breath: 0.25, duration: 0.4 }, s)
+    tl.to(rig, { look: 0.55, breath: 0.25, duration: 0.4 }, s)
     tl.to(rig, { aimBlend: 1, duration: 0.5, ease: 'power2.inOut' }, s)
     tl.to(rig.cam, { dolly: 0, duration: 0.5 }, s)
     tl.to(rig, { bottleLight: 1, duration: 0.5 }, s)

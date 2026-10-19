@@ -58,9 +58,19 @@ export const makeShardPolygons = (cx, cy, w, h, { sectors = 12, rings = 3, seed 
   for (let k = 1; k < radii.length; k++) {
     for (let i = 0; i < sectors; i++) {
       const j = (i + 1) % sectors
-      const points = k === 1
+      let points = k === 1
         ? [vertices[0][i], kinks[k][i], vertices[k][i], vertices[k][j], kinks[k][j]]
         : [vertices[k - 1][i], kinks[k][i], vertices[k][i], vertices[k][j], kinks[k][j], vertices[k - 1][j]]
+      // Grown by a pixel and a half around its centre, so no hairline of the
+      // theme shows between neighbours before they move
+      const mx = points.reduce((a, p) => a + p[0], 0) / points.length
+      const my = points.reduce((a, p) => a + p[1], 0) / points.length
+      points = points.map(([x, y]) => {
+        const dx = x - mx
+        const dy = y - my
+        const len = Math.hypot(dx, dy) || 1
+        return [x + (dx / len) * 1.5, y + (dy / len) * 1.5]
+      })
       const xs = points.map((p) => p[0])
       const ys = points.map((p) => p[1])
       const x0 = Math.max(0, Math.min(...xs))

@@ -444,7 +444,7 @@ export const bottleLabel = () =>
     ctx.fillText('YOUMA', w / 2, 78)
     ctx.font = '600 20px "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif'
     ctx.fillText('PORTFOLIO · .357 · 2026', w / 2, 122)
-    ;['#24fbc5', '#e63f1a', '#ffd400', '#b8381f'].forEach((color, i) => {
+    ;['#24fbc5', '#e63f1a', '#ffd400', '#d8bd93'].forEach((color, i) => {
       ctx.fillStyle = color
       ctx.beginPath()
       ctx.arc(w / 2 - 36 + i * 24, 152, 6, 0, Math.PI * 2)

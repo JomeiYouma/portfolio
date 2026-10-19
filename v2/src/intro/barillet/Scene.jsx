@@ -9,7 +9,7 @@ import {
   createDust, createGapFlash, createMultiples, createMuzzleFlash, createSmear, createSmoke, createSpawnFx, createTrails,
 } from './fx'
 import { loadHand } from './hand'
-import { bezier, noise1, projectOnScreen, smoothstep, writeExtent } from './motion'
+import { bezier, damp, noise1, projectOnScreen, smoothstep, writeExtent } from './motion'
 import { Post } from './post'
 import { CYL_REAR, MUZZLE, buildRevolver } from './revolver'
 import { PITCH_RADIUS, POSES, STEP } from './rig'
@@ -63,6 +63,8 @@ const scratch = () => ({
   prevRoll: 0,
   prevCrane: 0,
   bottlePointer: { x: 0, y: 0 },
+  lookX: 0,
+  lookY: 0,
 })
 
 /** Where round k floats before it is picked: an arc left of the open cylinder, or above it on a phone */
@@ -196,10 +198,13 @@ const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => {
       camera.updateProjectionMatrix()
     }
     const breathe = Math.sin(t * Math.PI * 2 * 0.2) * r.breath
+    // The head turns after the pointer, with the weight of a head
+    tmp.lookX = damp(tmp.lookX, pointer.x, 9, dt)
+    tmp.lookY = damp(tmp.lookY, pointer.y, 9, dt)
     camera.position.set(0, 0, -r.cam.dolly)
     camera.rotation.set(
-      -pointer.y * LOOK * r.look + r.cam.pitch + lookPitch * r.cam.look + r.kick * 0.045 + breathe * 0.003,
-      -pointer.x * LOOK * r.look + r.cam.yaw + lookYaw * r.cam.look,
+      -tmp.lookY * LOOK * r.look + r.cam.pitch + lookPitch * r.cam.look + r.kick * 0.045 + breathe * 0.003,
+      -tmp.lookX * LOOK * r.look + r.cam.yaw + lookYaw * r.cam.look,
       r.cam.roll + r.kick * 0.022 + noise1(t * 1.3, 2) * 0.0015 * r.breath,
     )
 

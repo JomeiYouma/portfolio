@@ -282,7 +282,7 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
   useEffect(() => {
     if (!immersive) return undefined
     const onPointerDown = (e) => {
-      if (e.target.closest('button')) return
+      if (e.target.closest('button, a')) return
       gesture()
     }
     const onKeyDown = (e) => {

@@ -69,16 +69,31 @@
   pointer-events: none;
 }
 
-.bar-title {
+.bar-avatar {
   position: absolute;
-  top: 22px;
+  top: 14px;
   left: 50%;
   translate: -50% 0;
-  font-size: 11px;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: #6d7686;
-  white-space: nowrap;
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: auto;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  transition: border-color 0.15s, scale 0.15s;
+}
+.bar-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bar-avatar:hover,
+.bar-avatar:focus-visible {
+  border-color: #fff;
+  scale: 1.08;
+  outline: none;
 }
 
 /* Item cards, one per round, pinned to the round's position on screen. The
@@ -94,7 +109,7 @@
   pointer-events: auto;
   appearance: none;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   column-gap: 12px;
   row-gap: 2px;
   min-width: 172px;
@@ -150,6 +165,13 @@
   font-size: 12px;
   color: var(--bar-muted);
 }
+.bar-card__icon {
+  grid-row: 1 / span 2;
+  align-self: center;
+  display: flex;
+  margin-left: 4px;
+  color: var(--bar-accent);
+}
 .bar-card.is-in .bar-card__box {
   animation: bar-card-in 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both;
 }
@@ -187,8 +209,8 @@
 
 .bar-count {
   position: absolute;
-  left: 24px;
-  bottom: 24px;
+  right: 24px;
+  bottom: 58px;
   display: flex;
   align-items: baseline;
   gap: 8px;
@@ -217,26 +239,15 @@
 
 .bar-prompt {
   position: absolute;
-  left: 50%;
-  bottom: 10vh;
+  left: 34%;
+  bottom: 9vh;
   translate: -50% 0;
   font-size: 13px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--bar-muted);
+  color: var(--bar-paper);
   white-space: nowrap;
   animation: bar-pulse 1.6s ease-in-out infinite;
-}
-.bar-prompt--aim {
-  left: auto;
-  right: 6vw;
-  bottom: 11vh;
-  translate: 0 0;
-  font-size: clamp(13px, 1.4vw, 18px);
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  color: var(--bar-paper);
-  animation: none;
 }
 @keyframes bar-pulse {
   50% {
@@ -421,27 +432,37 @@
   }
 }
 
-/* Rounds left, as dots the colour of their theme */
+/* The rounds, one per theme: empty until loaded, lit while live, hollow once fired */
 .bar-rounds {
   position: absolute;
   right: 24px;
-  bottom: 24px;
+  bottom: 22px;
   display: flex;
   gap: 10px;
 }
 .bar-rounds__dot {
-  width: 12px;
-  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
+  color: var(--bar-muted);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  transition: scale 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
+}
+.bar-rounds__dot.is-loaded {
+  color: var(--bar-ink);
   background: var(--bar-accent);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6);
-  transition: scale 0.2s, box-shadow 0.2s;
 }
 .bar-rounds__dot.is-next {
-  scale: 1.4;
+  scale: 1.25;
   box-shadow: 0 0 0 2px var(--bar-paper);
 }
 .bar-rounds__dot.is-spent {
+  color: var(--bar-muted);
   background: transparent;
   box-shadow: inset 0 0 0 2px var(--bar-muted);
 }
@@ -498,8 +519,8 @@
 }
 .bar-crackweb path {
   fill: none;
-  stroke: rgba(242, 239, 230, 0.85);
-  stroke-width: 1.3;
+  stroke: rgba(242, 239, 230, 0.55);
+  stroke-width: 1;
   stroke-linejoin: bevel;
 }
 
@@ -622,13 +643,18 @@
     font-size: 11px;
   }
   .bar-count {
-    left: 16px;
-    bottom: 16px;
+    right: 16px;
+    bottom: 52px;
   }
   .bar-count__n {
     font-size: 30px;
   }
-  .bar-title {
-    display: none;
+  .bar-rounds {
+    right: 16px;
+    bottom: 16px;
+  }
+  .bar-prompt {
+    left: 50%;
+    bottom: 13vh;
   }
 }

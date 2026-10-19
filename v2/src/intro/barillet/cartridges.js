@@ -31,7 +31,7 @@ export const LOOKS = {
     segments: 36,
   },
   origami: {
-    accent: '#b8381f',
+    accent: '#d8bd93',
     ink: '#2a2118',
     metal: '#d8bd93',
     primer: '#b8381f',

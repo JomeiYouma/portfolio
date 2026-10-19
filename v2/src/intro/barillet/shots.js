@@ -55,7 +55,7 @@ export const buildShot = (rig, { outcome, steps = 0, slow = true, emit, onImpact
   tl.fromTo(rig, { tracer: 0 }, { tracer: 1, duration: 0.16, ease: 'power2.out' }, F + 0.03)
   tl.fromTo(rig, { gap: 0 }, { gap: 1, duration: 0.03 }, F + 0.03)
   tl.to(rig, { gap: 0, duration: 0.06 }, F + 0.06)
-  tl.fromTo(rig, { white: 0 }, { white: 0.7, duration: 0.02 }, F + 0.03)
+  tl.fromTo(rig, { white: 0 }, { white: 0.4, duration: 0.02 }, F + 0.03)
   tl.to(rig, { white: 0, duration: 0.09 }, F + 0.05)
   tl.fromTo(rig, { impact: 0 }, { impact: 1, duration: 0.015 }, F + 0.035)
   tl.to(rig, { impact: 0, duration: 0.03 }, F + 0.05)

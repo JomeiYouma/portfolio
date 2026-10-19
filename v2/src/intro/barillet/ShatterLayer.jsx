@@ -26,7 +26,7 @@ const ShatterLayer = ({ shot, impact, lowPerf, onDone }) => {
     const pieces = Array.from(root.querySelectorAll('.bar-shard'))
     const dMax = Math.max(1, ...cells.map((c) => c.dist))
     const tl = gsap.timeline({ onComplete: onDone })
-    tl.to(root.querySelector('.bar-crackweb'), { opacity: 0, duration: 0.5, ease: 'power2.in' }, 0.35)
+    tl.to(root.querySelector('.bar-crackweb'), { opacity: 0, duration: 0.4, ease: 'power2.in' }, 0.2)
     pieces.forEach((el, i) => {
       const c = cells[i]
       const dx = c.centroid[0] - cx

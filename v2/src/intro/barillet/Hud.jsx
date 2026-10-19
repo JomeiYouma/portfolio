@@ -1,6 +1,10 @@
 import { useEffect, useRef } from 'react'
+import { asset } from '../../utils/asset'
 import { lookOf } from './cartridges'
+import { ThemeIcon } from './icons'
 import { spring } from './motion'
+
+const GITHUB_URL = 'https://github.com/JomeiYouma'
 
 // The flat layer over the scene: item cards pinned to the rounds, the chamber
 // counter, the prompts, the speed lines, the aim reticle, the rounds left,
@@ -87,7 +91,9 @@ const Hud = ({
 
   return (
     <div className="bar-hud">
-      <p className="bar-title">Raphaël Madoré · portfolio</p>
+      <a className="bar-avatar" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="Raphaël Madoré sur GitHub">
+        <img src={asset('assets/images/github-avatar.webp')} alt="" width="44" height="44" />
+      </a>
 
       {themes.map((theme, k) => {
         const state = cards[k]
@@ -114,12 +120,15 @@ const Hud = ({
               <span className="bar-card__index">{String(k + 1).padStart(2, '0')}</span>
               <span className="bar-card__name">{t(`themes.${theme.id}`)}</span>
               <span className="bar-card__tag">{marked === k ? t('intro.marked') : t(`intro.taglines.${theme.id}`)}</span>
+              <span className="bar-card__icon">
+                <ThemeIcon id={theme.id} size={16} />
+              </span>
             </button>
           </div>
         )
       })}
 
-      {(phase === 'spawn' || phase === 'closed' || phase === 'open') && (
+      {phase !== 'ready' && phase !== 'reveal' && (
         <div className="bar-count" style={{ '--bar-accent': lookOf(themes[Math.max(0, loaded - 1)]?.id).accent }}>
           <span key={loaded} className={`bar-count__n ${loaded ? 'is-bump' : ''}`}>{loaded}</span>
           <span>/ {total}</span>
@@ -127,15 +136,20 @@ const Hud = ({
         </div>
       )}
 
-      {(phase === 'aim' || phase === 'shot' || phase === 'spin') && (
+      {phase !== 'ready' && phase !== 'reveal' && (
         <div className="bar-rounds" aria-hidden="true">
-          {themes.map((theme, k) => (
-            <span
-              key={theme.id}
-              className={`bar-rounds__dot ${fired.includes(k) ? 'is-spent' : ''} ${chosen === k ? 'is-next' : ''}`}
-              style={{ '--bar-accent': lookOf(theme.id).accent }}
-            />
-          ))}
+          {themes.map((theme, k) => {
+            const state = fired.includes(k) ? 'is-spent' : cards[k] === 'seated' ? 'is-loaded' : ''
+            return (
+              <span
+                key={theme.id}
+                className={`bar-rounds__dot ${state} ${chosen === k ? 'is-next' : ''}`}
+                style={{ '--bar-accent': lookOf(theme.id).accent }}
+              >
+                <ThemeIcon id={theme.id} size={12} />
+              </span>
+            )
+          })}
         </div>
       )}
 
@@ -143,7 +157,7 @@ const Hud = ({
 
       {phase === 'ready' && <p className="bar-prompt">{t('intro.start')}</p>}
       {phase === 'aim' && (
-        <p className="bar-prompt bar-prompt--aim" style={{ '--bar-accent': accent }}>
+        <p className="bar-prompt" style={{ '--bar-accent': accent }}>
           {lastRound ? t('intro.lastRound') : coarse ? t('intro.touchFire') : t('intro.aimPrompt')}
         </p>
       )}
