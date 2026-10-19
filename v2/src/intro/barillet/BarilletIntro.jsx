@@ -82,6 +82,8 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
   const [fireKey, setFireKey] = useState(0)
   const [missKey, setMissKey] = useState(0)
   const [snapshot, setSnapshot] = useState(null)
+  // The radial mask is the fallback only; while the snapshot is on its way the intro stays opaque
+  const [maskReveal, setMaskReveal] = useState(false)
   const [impact, setImpact] = useState({ x: 0.5, y: 0.5 })
 
   // The timeline is built once; what it calls back into may change with
@@ -96,6 +98,7 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
   /** The fallback reveal: cracks and a growing hole, when no snapshot is possible */
   const revealByMask = useCallback(() => {
     setCracks(makeCracks(rig.screen.impact.x * 100, rig.screen.impact.y * 100))
+    setMaskReveal(true)
     setTimeout(finish, 1300)
   }, [rig, finish])
 
@@ -336,7 +339,7 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
     'bar-root',
     aiming ? 'is-aiming' : '',
     snapshot ? 'is-shattering' : '',
-    phase === 'reveal' && !snapshot ? 'is-revealing' : '',
+    maskReveal && !snapshot ? 'is-revealing' : '',
   ].join(' ')
 
   // Portaled to <body>: the themes' own portals (the Neon cursor) would otherwise paint over it
