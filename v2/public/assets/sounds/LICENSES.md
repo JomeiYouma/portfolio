@@ -9,7 +9,6 @@ recordings. Nothing here was modified beyond trimming at playback.
 |---|---|---|---|---|
 | shot-357.mp3 | 357 Magnum Revolver Gunshot | Shark_Anthony | https://freesound.org/people/Shark_Anthony/sounds/683186/ | CC0 1.0 |
 | shot-357-tail.mp3 | 357 Magnum Revolver Gunshot with Tail | Shark_Anthony | https://freesound.org/people/Shark_Anthony/sounds/683175/ | CC0 1.0 |
-| shot-revolver.mp3 | Weapon_Revolver_Shots_Stereo | Nox_Sound | https://freesound.org/people/Nox_Sound/sounds/541818/ | CC0 1.0 |
 | cock.mp3 | Weapon_Revolver_Hammer_Mono | Nox_Sound | https://freesound.org/people/Nox_Sound/sounds/540065/ | CC0 1.0 |
 | ratchet.mp3 | Revolver Chamber Spin (Ratchet Sound) | jhka | https://freesound.org/people/jhka/sounds/139001/ | CC0 1.0 |
 | reload.mp3 | Clean Revolver Reload | Dredile | https://freesound.org/people/Dredile/sounds/177863/ | CC0 1.0 |

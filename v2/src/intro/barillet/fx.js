@@ -497,9 +497,10 @@ export const createSpawnFx = (cartridge, look) => {
       flash.scale.setScalar(0.03 + burst * 0.05)
       flash.material.opacity = burst
     }
-    halo.visible = cart.mark > 0.01
-    halo.scale.setScalar(0.09)
-    halo.material.opacity = cart.mark * 0.55
+    // The mark only matters while the round floats; in the cylinder it would glow through the steel
+    halo.visible = cart.mark > 0.01 && cart.flight <= 0
+    halo.scale.setScalar(0.05)
+    halo.material.opacity = cart.mark * 0.35
   }
   return {
     update,

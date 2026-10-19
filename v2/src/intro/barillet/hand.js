@@ -23,15 +23,15 @@ const POSES = {
     'index-finger-phalanx-proximal': [0.55, 0.05, 0],
     'index-finger-phalanx-intermediate': [0.75, 0, 0],
     'index-finger-phalanx-distal': [0.35, 0, 0],
-    'middle-finger-phalanx-proximal': [1.15, 0, 0],
-    'middle-finger-phalanx-intermediate': [1.45, 0, 0],
-    'middle-finger-phalanx-distal': [0.75, 0, 0],
-    'ring-finger-phalanx-proximal': [1.2, -0.05, 0],
-    'ring-finger-phalanx-intermediate': [1.5, 0, 0],
-    'ring-finger-phalanx-distal': [0.8, 0, 0],
-    'pinky-finger-phalanx-proximal': [1.25, -0.1, 0],
-    'pinky-finger-phalanx-intermediate': [1.5, 0, 0],
-    'pinky-finger-phalanx-distal': [0.8, 0, 0],
+    'middle-finger-phalanx-proximal': [1.3, 0, 0],
+    'middle-finger-phalanx-intermediate': [1.6, 0, 0],
+    'middle-finger-phalanx-distal': [0.8, 0, 0],
+    'ring-finger-phalanx-proximal': [1.35, -0.05, 0],
+    'ring-finger-phalanx-intermediate': [1.6, 0, 0],
+    'ring-finger-phalanx-distal': [0.85, 0, 0],
+    'pinky-finger-phalanx-proximal': [1.4, -0.1, 0],
+    'pinky-finger-phalanx-intermediate': [1.6, 0, 0],
+    'pinky-finger-phalanx-distal': [0.85, 0, 0],
     'thumb-metacarpal': [0.3, -0.45, 0],
     'thumb-phalanx-proximal': [0.35, 0, 0],
     'thumb-phalanx-distal': [0.3, 0, 0],
@@ -58,7 +58,7 @@ const POSES = {
 
 // Where the armature sits in gun space: fingers toward the front strap, the
 // palm against the right panel, the thumb up along the left side
-const ROOT = { position: [0.0, -0.055, 0.09], rotation: [Math.PI / 2, 0, 0] }
+const ROOT = { position: [-0.013, -0.051, 0.086], rotation: [Math.PI / 2, 0, 0] }
 
 const _e = new THREE.Euler()
 const _rot = new THREE.Matrix4()

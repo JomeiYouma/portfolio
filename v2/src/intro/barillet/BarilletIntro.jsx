@@ -314,13 +314,6 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
     }
   }, [immersive, gesture, onSkip, mark, marked, themes.length, coarse, pointer])
 
-  // Aimed and left alone: the hand fires by itself, and does not miss
-  useEffect(() => {
-    if (phase !== 'aim') return undefined
-    const id = setTimeout(() => fire('hit'), 4000)
-    return () => clearTimeout(id)
-  }, [phase, missKey, fire])
-
   const toggleMute = useCallback(() => {
     const next = !audio.isMuted()
     audio.setMuted(next)

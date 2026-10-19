@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { bottleLabel, bulletHole, dotSprite, walnut } from './textures'
+import { bottleLabel, bulletHole, concrete, concreteNormal, dotSprite } from './textures'
 
 // The target: a glass bottle on a wooden post, two and a half metres out,
 // standing on a floor so the room has a depth. The same surface is cut into
@@ -71,8 +71,15 @@ export const buildBottle = ({ lowPerf, portrait }) => {
   proxy.layers.set(1)
   group.add(proxy)
 
-  const woodMaterial = new THREE.MeshStandardMaterial({ map: walnut(), roughness: 0.85, metalness: 0 })
-  const post = new THREE.Mesh(new THREE.BoxGeometry(0.11, POST_HEIGHT, 0.11), woodMaterial)
+  // A cast concrete block, nothing like the gun's walnut
+  const blockMaterial = new THREE.MeshStandardMaterial({
+    map: concrete(),
+    normalMap: concreteNormal(),
+    normalScale: new THREE.Vector2(0.5, 0.5),
+    roughness: 0.95,
+    metalness: 0,
+  })
+  const post = new THREE.Mesh(new THREE.BoxGeometry(0.2, POST_HEIGHT, 0.2), blockMaterial)
   post.name = 'post'
   post.position.y = -POST_HEIGHT / 2
   post.castShadow = post.receiveShadow = !lowPerf
@@ -132,7 +139,7 @@ export const buildBottle = ({ lowPerf, portrait }) => {
     glass,
     dispose: () => {
       group.traverse((o) => o.geometry?.dispose())
-      ;[glass, labelMaterial, woodMaterial, floorMaterial, proxy.material].forEach((m) => m.dispose())
+      ;[glass, labelMaterial, blockMaterial, floorMaterial, proxy.material].forEach((m) => m.dispose())
     },
   }
 }

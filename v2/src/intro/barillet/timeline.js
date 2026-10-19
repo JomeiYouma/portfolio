@@ -48,37 +48,39 @@ export const buildTimeline = (rig, { count, emit }) => {
     tl.addLabel('open', s)
     phase('open', s + 0.001)
     // Wind-up: the gun comes to the eye and tilts the wrong way, the thumb finds the latch
-    pose('wind', 0.7, 'power2.inOut', s)
-    tl.to(rig.cam, { zoom: 1.18, yaw: 0.04, duration: 0.7, ease: 'power2.inOut' }, s)
-    tl.to(rig, { breath: 0.2, duration: 0.5 }, s + 0.2)
-    tl.to(rig.hand, { latch: 1, duration: 0.12 }, s + 0.4)
-    tl.to(rig, { latch: 1, duration: 0.1, ease: 'power2.in' }, s + 0.46)
-    call(() => emit('sfx', 'latch'), s + 0.52)
-    // The held beat: only a shiver of the cylinder, freed by the latch
-    tl.to(rig, { crane: 0.025, duration: 0.06, ease: 'sine.out' }, s + 0.7)
-    tl.to(rig, { crane: 0.01, duration: 0.06, ease: 'sine.inOut' }, s + 0.76)
+    pose('wind', 1.0, 'power2.inOut', s)
+    tl.to(rig.cam, { zoom: 1.18, yaw: 0.04, duration: 1.0, ease: 'power2.inOut' }, s)
+    tl.to(rig, { breath: 0.2, duration: 0.6 }, s + 0.3)
+    tl.to(rig.hand, { latch: 1, duration: 0.15 }, s + 0.6)
+    tl.to(rig, { latch: 1, duration: 0.12, ease: 'power2.in' }, s + 0.68)
+    call(() => emit('sfx', 'latch'), s + 0.76)
+    // The held beat: the wrist loads a little further, only a shiver of the cylinder, freed by the latch
+    tl.to(rig.gun, { roll: POSES.wind.roll - 0.12, duration: 0.22, ease: 'sine.inOut' }, s + 1.0)
+    tl.to(rig, { crane: 0.025, duration: 0.08, ease: 'sine.out' }, s + 1.02)
+    tl.to(rig, { crane: 0.01, duration: 0.1, ease: 'sine.inOut' }, s + 1.1)
     // The flick: the whole gun snaps sideways, the cylinder follows by inertia
-    pose('present', 0.26, 'power3.out', s + 0.82, ['x', 'y', 'z', 'pitch', 'yaw'])
-    tl.to(rig.gun, { roll: POSES.present.roll + 0.3, duration: 0.09, ease: 'power4.in' }, s + 0.82)
-    tl.to(rig.gun, { roll: POSES.present.roll, duration: 0.45, ease: 'elastic.out(1, 0.35)' }, s + 0.91)
-    tl.to(rig, { crane: SWING + 0.06, duration: 0.09, ease: 'expo.out' }, s + 0.84)
-    tl.to(rig, { crane: SWING + 0.14, duration: 0.11, ease: 'sine.out' }, s + 0.93)
-    tl.to(rig, { crane: SWING, duration: 0.38, ease: 'elastic.out(1, 0.3)' }, s + 1.04)
-    call(() => emit('sfx', 'swing'), s + 0.84)
-    call(() => emit('sfx', 'knock'), s + 0.95)
-    tl.fromTo(rig, { impact: 0 }, { impact: 0.7, duration: 0.02 }, s + 0.95)
-    tl.to(rig, { impact: 0, duration: 0.04 }, s + 0.97)
-    tl.fromTo(rig, { aberr: 0 }, { aberr: 0.6, duration: 0.02 }, s + 0.95)
-    tl.to(rig, { aberr: 0, duration: 0.25 }, s + 0.97)
-    tl.to(rig.off, { y: -0.005, duration: 0.03 }, s + 0.95)
-    tl.to(rig.off, { y: 0, duration: 0.3, ease: 'elastic.out(1, 0.4)' }, s + 0.98)
-    tl.to(rig, { latch: 0, duration: 0.2 }, s + 0.95)
-    tl.to(rig.hand, { latch: 0, duration: 0.2 }, s + 0.95)
-    tl.to(rig, { breath: 1, duration: 0.4 }, s + 1.0)
+    const flick = s + 1.24
+    pose('present', 0.26, 'power3.out', flick, ['x', 'y', 'z', 'pitch', 'yaw'])
+    tl.to(rig.gun, { roll: POSES.present.roll + 0.3, duration: 0.09, ease: 'power4.in' }, flick)
+    tl.to(rig.gun, { roll: POSES.present.roll, duration: 0.45, ease: 'elastic.out(1, 0.35)' }, flick + 0.09)
+    tl.to(rig, { crane: SWING + 0.06, duration: 0.1, ease: 'expo.out' }, flick + 0.02)
+    tl.to(rig, { crane: SWING + 0.14, duration: 0.11, ease: 'sine.out' }, flick + 0.12)
+    tl.to(rig, { crane: SWING, duration: 0.38, ease: 'elastic.out(1, 0.3)' }, flick + 0.23)
+    call(() => emit('sfx', 'swing'), flick + 0.02)
+    call(() => emit('sfx', 'knock'), flick + 0.13)
+    tl.fromTo(rig, { impact: 0 }, { impact: 0.7, duration: 0.02 }, flick + 0.13)
+    tl.to(rig, { impact: 0, duration: 0.04 }, flick + 0.15)
+    tl.fromTo(rig, { aberr: 0 }, { aberr: 0.6, duration: 0.02 }, flick + 0.13)
+    tl.to(rig, { aberr: 0, duration: 0.25 }, flick + 0.15)
+    tl.to(rig.off, { y: -0.005, duration: 0.03 }, flick + 0.13)
+    tl.to(rig.off, { y: 0, duration: 0.3, ease: 'elastic.out(1, 0.4)' }, flick + 0.16)
+    tl.to(rig, { latch: 0, duration: 0.2 }, flick + 0.13)
+    tl.to(rig.hand, { latch: 0, duration: 0.2 }, flick + 0.13)
+    tl.to(rig, { breath: 1, duration: 0.4 }, flick + 0.18)
     // Rolls back so the rear of the cylinder faces the eye, ready for the rounds
-    pose('presentOpen', 0.5, 'power2.inOut', s + 1.3)
-    tl.to(rig.cam, { zoom: 1.08, yaw: 0.02, duration: 0.5, ease: 'power2.inOut' }, s + 1.3)
-    t = s + 1.8
+    pose('presentOpen', 0.5, 'power2.inOut', flick + 0.5)
+    tl.to(rig.cam, { zoom: 1.08, yaw: 0.02, duration: 0.5, ease: 'power2.inOut' }, flick + 0.5)
+    t = flick + 1.0
   }
 
   // 2. The rounds appear, left of the open cylinder
@@ -120,27 +122,31 @@ export const buildTimeline = (rig, { count, emit }) => {
   {
     const s = t
     tl.addLabel('closed', s)
-    tl.to(rig.off, { pitch: -0.08, y: 0.01, duration: 0.45, ease: 'sine.inOut' }, s)
-    tl.to(rig.gun, { roll: POSES.presentOpen.roll - 0.35, duration: 0.45, ease: 'sine.inOut' }, s)
-    tl.to(rig, { crane: SWING + 0.08, duration: 0.45, ease: 'sine.inOut' }, s)
-    tl.to(rig.cam, { zoom: 1.12, duration: 0.5, ease: 'sine.inOut' }, s)
+    tl.to(rig.off, { pitch: -0.08, y: 0.01, duration: 0.8, ease: 'sine.inOut' }, s)
+    tl.to(rig.gun, { roll: POSES.presentOpen.roll - 0.4, duration: 0.8, ease: 'sine.inOut' }, s)
+    tl.to(rig, { crane: SWING + 0.08, duration: 0.8, ease: 'sine.inOut' }, s)
+    tl.to(rig.cam, { zoom: 1.12, duration: 0.85, ease: 'sine.inOut' }, s)
+    // The held beat, then a last load of the wrist
+    tl.to(rig.gun, { roll: POSES.presentOpen.roll - 0.5, duration: 0.18, ease: 'sine.inOut' }, s + 0.85)
     // The whip: the gun rolls hard, the cylinder slams home a moment later
-    tl.to(rig.gun, { roll: 1.5, duration: 0.14, ease: 'power3.in' }, s + 0.53)
-    tl.to(rig, { crane: 0, duration: 0.12, ease: 'power4.in' }, s + 0.59)
+    const whip = s + 1.05
+    tl.to(rig.gun, { roll: 1.5, duration: 0.16, ease: 'power3.in' }, whip)
+    tl.to(rig, { crane: 0, duration: 0.13, ease: 'power4.in' }, whip + 0.07)
+    const snap = whip + 0.2
     call(() => {
       rig.phase = 'closed'
       emit('phase', 'closed')
       emit('sfx', 'close')
-    }, s + 0.71)
-    tl.fromTo(rig, { impact: 0 }, { impact: 1, duration: 0.03 }, s + 0.71)
-    tl.to(rig, { impact: 0, duration: 0.05 }, s + 0.74)
-    tl.to(rig.off, { x: 0.004, y: -0.006, duration: 0.03 }, s + 0.71)
-    tl.to(rig.off, { x: 0, y: 0, pitch: 0, duration: 0.35, ease: 'elastic.out(1, 0.4)' }, s + 0.74)
-    tl.to(rig.gun, { roll: POSES.hold.roll, duration: 0.6, ease: 'elastic.out(1, 0.35)' }, s + 0.71)
-    pose('hold', 0.45, 'power2.inOut', s + 0.71, ['x', 'y', 'z', 'pitch', 'yaw'])
-    tl.to(rig.cam, { zoom: 1, duration: 0.4, ease: 'power2.out' }, s + 0.71)
-    tl.fromTo(rig, { sweep: -1 }, { sweep: 2, duration: 0.5, ease: 'power2.inOut' }, s + 0.76)
-    t = s + 1.0
+    }, snap)
+    tl.fromTo(rig, { impact: 0 }, { impact: 1, duration: 0.03 }, snap)
+    tl.to(rig, { impact: 0, duration: 0.05 }, snap + 0.03)
+    tl.to(rig.off, { x: 0.004, y: -0.006, duration: 0.03 }, snap)
+    tl.to(rig.off, { x: 0, y: 0, pitch: 0, duration: 0.35, ease: 'elastic.out(1, 0.4)' }, snap + 0.03)
+    tl.to(rig.gun, { roll: POSES.hold.roll, duration: 0.6, ease: 'elastic.out(1, 0.35)' }, snap)
+    pose('hold', 0.45, 'power2.inOut', snap, ['x', 'y', 'z', 'pitch', 'yaw'])
+    tl.to(rig.cam, { zoom: 1, duration: 0.4, ease: 'power2.out' }, snap)
+    tl.fromTo(rig, { sweep: -1 }, { sweep: 2, duration: 0.5, ease: 'power2.inOut' }, snap + 0.05)
+    t = snap + 0.3
   }
 
   // 5. Spin, in close-up: the thumb throws the cylinder, friction brings it to the chosen chamber

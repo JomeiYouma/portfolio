@@ -110,11 +110,12 @@ export const buildCartridge = (id, { lowPerf }) => {
   const materials = [shell, bullet, stampMaterial]
   if (look.band) {
     // The tracer ring: unlit, so the bloom picks it up
-    const bandMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(look.band).multiplyScalar(1.8), toneMapped: false })
-    const bandGeo = new THREE.CylinderGeometry(0.00495, 0.00495, 0.0035, look.segments, 1, true)
+    // A thin painted ring, lit on its own but under the bloom threshold, so it reads as paint and not as a cut
+    const bandMaterial = new THREE.MeshStandardMaterial({ color: look.band, emissive: look.band, emissiveIntensity: 0.7, roughness: 0.4, metalness: 0 })
+    const bandGeo = new THREE.CylinderGeometry(0.00485, 0.00485, 0.0014, look.segments, 1, true)
     bandGeo.rotateX(Math.PI / 2)
     const band = new THREE.Mesh(bandGeo, bandMaterial)
-    band.position.z = -0.0315
+    band.position.z = -0.0312
     group.add(band)
     materials.push(bandMaterial)
   }

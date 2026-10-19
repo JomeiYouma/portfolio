@@ -500,3 +500,70 @@ export const gloveNormal = () =>
     }
     return texture(heightToNormal(c, 1.2), { data: true, repeat: 6 })
   })
+
+/** Cast concrete: cement grey, aggregate speckles, a few hairline cracks and streaks */
+export const concrete = () =>
+  memo('concrete', () => {
+    const size = 512
+    const c = canvas(size, size)
+    const ctx = c.getContext('2d')
+    const r = rand(83)
+    ctx.fillStyle = '#56544f'
+    ctx.fillRect(0, 0, size, size)
+    for (let i = 0; i < 40; i++) {
+      const x = r() * size
+      const y = r() * size
+      const rad = 40 + r() * 120
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rad)
+      const v = 90 + r() * 40
+      g.addColorStop(0, `rgba(${v},${v},${v - 4},0.35)`)
+      g.addColorStop(1, 'rgba(100,100,98,0)')
+      ctx.fillStyle = g
+      ctx.fillRect(x - rad, y - rad, rad * 2, rad * 2)
+    }
+    for (let i = 0; i < 9000; i++) {
+      const v = 70 + r() * 90
+      ctx.fillStyle = `rgba(${v},${v},${v - 3},${0.3 + r() * 0.5})`
+      ctx.fillRect(r() * size, r() * size, 1 + r() * 2, 1 + r() * 2)
+    }
+    ctx.strokeStyle = 'rgba(40,40,38,0.5)'
+    for (let i = 0; i < 5; i++) {
+      ctx.lineWidth = 0.6 + r()
+      ctx.beginPath()
+      let x = r() * size
+      let y = r() * size
+      ctx.moveTo(x, y)
+      for (let k = 0; k < 8; k++) {
+        x += (r() - 0.5) * 60
+        y += 20 + r() * 40
+        ctx.lineTo(x, y)
+      }
+      ctx.stroke()
+    }
+    for (let i = 0; i < 6; i++) {
+      const x = r() * size
+      const g = ctx.createLinearGradient(x, 0, x + 30, 0)
+      g.addColorStop(0, 'rgba(50,48,45,0)')
+      g.addColorStop(0.5, `rgba(50,48,45,${0.15 + r() * 0.2})`)
+      g.addColorStop(1, 'rgba(50,48,45,0)')
+      ctx.fillStyle = g
+      ctx.fillRect(x, 0, 30, size)
+    }
+    return texture(c, { repeat: 1 })
+  })
+
+export const concreteNormal = () =>
+  memo('concrete-n', () => {
+    const size = 256
+    const c = canvas(size, size)
+    const ctx = c.getContext('2d')
+    const r = rand(89)
+    ctx.fillStyle = '#808080'
+    ctx.fillRect(0, 0, size, size)
+    for (let i = 0; i < 3000; i++) {
+      const v = 90 + r() * 80
+      ctx.fillStyle = `rgb(${v},${v},${v})`
+      ctx.fillRect(r() * size, r() * size, 1 + r() * 3, 1 + r() * 3)
+    }
+    return texture(heightToNormal(c, 1.0), { data: true, repeat: 2 })
+  })

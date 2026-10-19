@@ -54,6 +54,7 @@ const sliceOnsets = (buffer, split) => {
 export const createAudio = () => {
   let ctx = null
   let bus = null
+  let verbIn = null
   let master = null
   let noiseBuffer = null
   let muted = readMuted()
@@ -97,6 +98,8 @@ export const createAudio = () => {
     bus.connect(verb)
     verb.connect(verbGain)
     verbGain.connect(master)
+    // A layer can ask for more of the room than the bus gives
+    verbIn = verb
     noiseBuffer = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate)
     const n = noiseBuffer.getChannelData(0)
     for (let i = 0; i < n.length; i++) n[i] = Math.random() * 2 - 1
@@ -215,7 +218,7 @@ export const createAudio = () => {
     return list[i]
   }
 
-  const sample = (slice, { at = 0, gain = 1, detune = 0, lowpass, highpass, maxDuration }) => {
+  const sample = (slice, { at = 0, gain = 1, detune = 0, lowpass, highpass, maxDuration, verb = 0 }) => {
     const src = ctx.createBufferSource()
     src.buffer = slice.buffer
     src.detune.value = detune
@@ -242,6 +245,12 @@ export const createAudio = () => {
     g.gain.linearRampToValueAtTime(0.0001, t0 + duration)
     node.connect(g)
     g.connect(bus)
+    if (verb && verbIn) {
+      const send = ctx.createGain()
+      send.gain.value = verb
+      g.connect(send)
+      send.connect(verbIn)
+    }
     src.start(t0, slice.offset, duration)
   }
 

@@ -4,8 +4,7 @@
 // at its onsets when it loads, so every slice can be picked on its own.
 
 export const FILES = {
-  shot: ['shot-357.mp3', 'shot-revolver.mp3'],
-  tail: ['shot-357-tail.mp3'],
+  shot: ['shot-357-tail.mp3', 'shot-357.mp3'],
   cock: ['cock.mp3'],
   ratchet: ['ratchet.mp3'],
   handling: ['reload.mp3'],
@@ -20,7 +19,6 @@ export const FILES = {
 // (seconds), how loud an onset must be relative to the loudest, and the
 // shortest slice worth keeping
 export const SPLIT = {
-  shot: { gap: 0.6, level: 0.5, min: 0.25 },
   ratchet: { gap: 0.06, level: 0.25, min: 0.02 },
   handling: { gap: 0.12, level: 0.3, min: 0.04 },
   cock: { gap: 0.08, level: 0.3, min: 0.03 },
@@ -34,13 +32,11 @@ const jitter = (cents) => (Math.random() * 2 - 1) * cents
  * fallback or an added synthesised layer. Offsets in seconds from the call.
  */
 export const EVENTS = {
-  // Pre-mech click, the body, a sub, the tail (never detuned), the action resetting
+  // A pre-mech click, one body with its own tail, a sub under it, and the room's echo
   shot: () => [
     { synth: 'click', at: 0, gain: 0.25, arg: 2900 },
-    { sample: 'shot', at: 0.02, gain: 0.9, detune: jitter(20), synth: 'shot' },
+    { sample: 'shot', at: 0.02, gain: 0.95, detune: jitter(20), verb: 0.6, synth: 'shot' },
     { synth: 'sub', at: 0.02, gain: 0.5 },
-    { sample: 'tail', at: 0.04, gain: 0.42, lowpass: 1800 },
-    { sample: 'cock', at: 0.14, gain: 0.22, detune: jitter(40), maxDuration: 0.12 },
   ],
   shatter: () => [
     { sample: 'glass', at: 0.03, gain: 0.85, detune: jitter(30), synth: 'glass' },

@@ -24,7 +24,7 @@ export const LOAD_ANGLE = -0.35
 // out, toward the bottom of the frame.
 export const POSES = {
   // Low ready, muzzle up and to the left, before anything happens
-  low: { x: 0.08, y: -0.1, z: -0.3, pitch: 0.12, yaw: -0.5, roll: 0.1 },
+  low: { x: 0.06, y: -0.1, z: -0.3, pitch: -0.15, yaw: 0.45, roll: -0.1 },
   // Wound up: raised to the eye and tilted the other way, the wrist loading its flick
   wind: { x: 0.035, y: -0.03, z: -0.26, pitch: -0.2, yaw: 0.75, roll: -0.5 },
   // Thrown sideways: the cylinder flies out and hangs below the frame
