@@ -33,8 +33,14 @@ export const useTheme = () => {
     })
   }, [])
 
+  // Direct pick, used by the opening sequence once a chamber is chosen
+  const setTheme = useCallback((id) => {
+    if (THEMES.some((theme) => theme.id === id)) setThemeId(id)
+  }, [])
+
   return {
     theme: THEMES.find((theme) => theme.id === themeId) ?? THEMES[0],
     cycleTheme,
+    setTheme,
   }
 }

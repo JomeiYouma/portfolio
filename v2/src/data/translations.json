@@ -165,6 +165,43 @@
       "galerie": "Gallery",
       "origami": "Origami"
     },
+    "intro": {
+      "title": "Load the portfolio",
+      "start": "Press to load",
+      "fire": "Fire",
+      "skip": "Skip the intro",
+      "mute": "Mute",
+      "unmute": "Sound on",
+      "chambers": "chambers",
+      "underHammer": "Under the hammer",
+      "pick": "Pick your round",
+      "marked": "The cylinder will stop here",
+      "replay": "Play the intro again",
+      "phase": {
+        "ready": "A revolver is in your hand. Press any key to load it.",
+        "open": "The cylinder swings open.",
+        "spawn": "Four rounds appear, one per theme.",
+        "load": "Loading the {name} round.",
+        "closed": "The cylinder snaps shut.",
+        "spin": "The cylinder spins.",
+        "aim": "The {name} round is under the hammer. Press Enter to fire.",
+        "shot": "Fired. Opening the {name} theme."
+      },
+      "taglines": {
+        "neon": "Cyan on black, scrolling sideways",
+        "riso": "Two inks on paper",
+        "galerie": "A rotunda and its rooms",
+        "origami": "A map that unrolls"
+      },
+      "onoma": {
+        "open": "CLICK",
+        "load": "CHUNK",
+        "close": "CLACK",
+        "spin": "RRRR",
+        "cock": "CLICK",
+        "shot": "BANG"
+      }
+    },
     "galerie": {
       "room": "Room",
       "permanent": "Permanent exhibition",
@@ -539,6 +576,43 @@
       "riso": "Riso",
       "galerie": "Galerie",
       "origami": "Origami"
+    },
+    "intro": {
+      "title": "Charge le portfolio",
+      "start": "Appuie pour charger",
+      "fire": "Tire",
+      "skip": "Passer l’intro",
+      "mute": "Couper le son",
+      "unmute": "Remettre le son",
+      "chambers": "chambres",
+      "underHammer": "Sous le chien",
+      "pick": "Choisis ta balle",
+      "marked": "Le barillet s’arrêtera ici",
+      "replay": "Rejouer l’intro",
+      "phase": {
+        "ready": "Un revolver est dans ta main. Appuie sur une touche pour le charger.",
+        "open": "Le barillet bascule.",
+        "spawn": "Quatre cartouches apparaissent, une par thème.",
+        "load": "Chargement de la cartouche {name}.",
+        "closed": "Le barillet claque.",
+        "spin": "Le barillet tourne.",
+        "aim": "La cartouche {name} est sous le chien. Appuie sur Entrée pour tirer.",
+        "shot": "Tiré. Ouverture du thème {name}."
+      },
+      "taglines": {
+        "neon": "Cyan sur noir, défilement horizontal",
+        "riso": "Deux encres sur papier",
+        "galerie": "Une rotonde et ses salles",
+        "origami": "Une carte qui se déroule"
+      },
+      "onoma": {
+        "open": "CLIC",
+        "load": "TCHAK",
+        "close": "CLAC",
+        "spin": "RRRR",
+        "cock": "CLIC",
+        "shot": "BANG"
+      }
     },
     "galerie": {
       "room": "Salle",

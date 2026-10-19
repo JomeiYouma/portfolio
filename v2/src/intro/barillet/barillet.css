@@ -1,0 +1,484 @@
+/* Barillet: the opening sequence. Everything is scoped on .bar-root, which
+   covers the theme until the shot opens a hole in it. */
+
+.bar-root {
+  --bar-hx: 50%;
+  --bar-hy: 45%;
+  --bar-hr: 0px;
+  --bar-ink: #07090c;
+  --bar-paper: #e8eaf0;
+  --bar-muted: #a8b0bf;
+  --bar-accent: #9fb3c8;
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  overflow: hidden;
+  background: var(--bar-ink);
+  color: var(--bar-paper);
+  font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+  cursor: crosshair;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* The bullet hole: a transparent disc in the mask, widening until nothing is left */
+.bar-root.is-revealing {
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle at var(--bar-hx) var(--bar-hy), transparent var(--bar-hr), #000 calc(var(--bar-hr) + 2px));
+  mask-image: radial-gradient(circle at var(--bar-hx) var(--bar-hy), transparent var(--bar-hr), #000 calc(var(--bar-hr) + 2px));
+}
+
+.bar-canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.bar-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ─── HUD ─────────────────────────────────────────────────────────────────── */
+
+.bar-hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bar-title {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  translate: -50% 0;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #6d7686;
+  white-space: nowrap;
+}
+
+/* Item cards, one per round, pinned to the round's position on screen. The
+   outer element only carries the position; the box inside animates. */
+.bar-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+}
+.bar-card__box {
+  position: relative;
+  pointer-events: auto;
+  appearance: none;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  row-gap: 2px;
+  min-width: 172px;
+  padding: 10px 14px 10px 12px;
+  border: 1px solid var(--bar-accent);
+  background: rgba(10, 12, 15, 0.74);
+  color: var(--bar-paper);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transform-origin: right center;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.bar-card__box:disabled {
+  cursor: default;
+}
+.bar-card__box::before,
+.bar-card__box::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 0 solid var(--bar-accent);
+}
+.bar-card__box::before {
+  left: -1px;
+  top: -1px;
+  border-left-width: 3px;
+  border-top-width: 3px;
+}
+.bar-card__box::after {
+  right: -1px;
+  bottom: -1px;
+  border-right-width: 3px;
+  border-bottom-width: 3px;
+}
+.bar-card__index {
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--bar-accent);
+}
+.bar-card__name {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.bar-card__tag {
+  font-size: 12px;
+  color: var(--bar-muted);
+}
+.bar-card.is-in .bar-card__box {
+  animation: bar-card-in 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.bar-card.is-seated .bar-card__box {
+  pointer-events: none;
+  animation: bar-card-out 0.35s steps(4, end) forwards;
+}
+.bar-card.is-marked .bar-card__box {
+  background: rgba(20, 24, 30, 0.95);
+  box-shadow: 0 0 0 2px var(--bar-accent), 0 0 30px color-mix(in srgb, var(--bar-accent) 45%, transparent);
+}
+.bar-card__box:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+@keyframes bar-card-in {
+  from {
+    opacity: 0;
+    translate: -40px 0;
+    scale: 0.8;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+@keyframes bar-card-out {
+  to {
+    opacity: 0;
+    translate: 60px 0;
+    scale: 0.15;
+  }
+}
+
+.bar-count {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bar-muted);
+}
+.bar-count__n {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--bar-paper);
+  font-variant-numeric: tabular-nums;
+}
+.bar-count__n.is-bump {
+  animation: bar-bump 0.3s steps(3, end);
+}
+@keyframes bar-bump {
+  50% {
+    scale: 1.3;
+    color: var(--bar-accent);
+  }
+}
+
+.bar-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 10vh;
+  translate: -50% 0;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bar-muted);
+  white-space: nowrap;
+  animation: bar-pulse 1.6s ease-in-out infinite;
+}
+.bar-prompt--fire {
+  left: auto;
+  right: 8vw;
+  bottom: 12vh;
+  translate: 0 0;
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: #fff;
+  animation: bar-pulse 0.6s steps(2, end) infinite;
+}
+@keyframes bar-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.bar-chosen {
+  position: absolute;
+  left: 50%;
+  top: 16vh;
+  translate: -50% 0;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bar-muted);
+  animation: bar-card-in 0.4s both;
+}
+.bar-chosen strong {
+  display: block;
+  margin-top: 6px;
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: var(--bar-accent);
+}
+
+/* Speed lines radiating from the cylinder while it spins, stepped like a drawing */
+.bar-speed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200vmax;
+  height: 200vmax;
+  translate: -50% -50%;
+  pointer-events: none;
+  opacity: 0;
+  background: repeating-conic-gradient(from 0deg, transparent 0 7deg, rgba(255, 255, 255, 0.11) 7deg 8deg);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 80px, #000 180px, transparent 520px);
+  mask-image: radial-gradient(circle at center, transparent 80px, #000 180px, transparent 520px);
+  transition: opacity 0.25s;
+}
+.bar-speed.is-on {
+  opacity: 1;
+  animation: bar-streak 0.12s steps(3, end) infinite;
+}
+@keyframes bar-streak {
+  to {
+    rotate: 24deg;
+  }
+}
+
+/* Onomatopoeia: heavy, slanted, inks out of register, held on steps */
+.bar-onoma {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  pointer-events: none;
+  font-family: 'Anybody Variable', Impact, 'Arial Black', sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  font-stretch: 125%;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: var(--bar-accent);
+  -webkit-text-stroke: 2px var(--bar-ink);
+  paint-order: stroke fill;
+  text-shadow: 5px 0 0 #ff2a6d, -5px 0 0 #2bd1ff, 0 8px 0 rgba(0, 0, 0, 0.55);
+  animation: bar-pop 0.7s steps(6, end) forwards;
+}
+.bar-onoma--s {
+  font-size: clamp(22px, 4vw, 44px);
+}
+.bar-onoma--m {
+  font-size: clamp(40px, 8vw, 96px);
+}
+.bar-onoma--l {
+  font-size: clamp(72px, 16vw, 220px);
+  text-shadow: 9px 0 0 #ff2a6d, -9px 0 0 #2bd1ff, 0 12px 0 rgba(0, 0, 0, 0.55);
+}
+@keyframes bar-pop {
+  0% {
+    opacity: 0;
+    scale: 0.4;
+    rotate: -14deg;
+  }
+  15% {
+    opacity: 1;
+    scale: 1.15;
+    rotate: -8deg;
+  }
+  30% {
+    scale: 1;
+    rotate: -9deg;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.05;
+    rotate: -9deg;
+  }
+}
+
+/* Cracks around the bullet hole */
+.bar-cracks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+}
+.bar-cracks.is-on {
+  opacity: 1;
+}
+.bar-root.is-revealing .bar-cracks {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.25s;
+}
+.bar-cracks path {
+  fill: none;
+  stroke: #f2efe6;
+  stroke-width: 1.5;
+  stroke-linejoin: bevel;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.9));
+}
+
+/* ─── Controls ───────────────────────────────────────────────────────────── */
+
+.bar-skip,
+.bar-mute {
+  position: absolute;
+  top: 16px;
+  z-index: 2;
+  appearance: none;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(10, 12, 15, 0.6);
+  color: var(--bar-paper);
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.bar-skip {
+  right: 16px;
+}
+.bar-mute {
+  left: 16px;
+}
+.bar-skip:hover,
+.bar-mute:hover {
+  border-color: #fff;
+}
+.bar-skip:focus-visible,
+.bar-mute:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ─── The flat picker, without WebGL or with reduced motion ─────────────── */
+
+.bar-picker {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 28px;
+  padding: 24px;
+  text-align: center;
+}
+.bar-picker__title {
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bar-muted);
+}
+.bar-picker__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bar-picker__item {
+  appearance: none;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: 164px;
+  padding: 18px 16px;
+  border: 1px solid var(--bar-accent);
+  background: rgba(10, 12, 15, 0.7);
+  color: var(--bar-paper);
+  font: inherit;
+  cursor: pointer;
+  transition: translate 0.15s, box-shadow 0.15s;
+}
+.bar-picker__item:hover,
+.bar-picker__item:focus-visible {
+  translate: 0 -4px;
+  box-shadow: 0 0 0 2px var(--bar-accent);
+  outline: none;
+}
+.bar-picker__round {
+  width: 40px;
+  height: 112px;
+  margin-bottom: 6px;
+}
+.bar-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #fff;
+  opacity: 0;
+}
+.bar-flash.is-on {
+  animation: bar-white 0.35s steps(3, end) forwards;
+}
+@keyframes bar-white {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .bar-card__box {
+    min-width: 132px;
+    padding: 8px 10px;
+  }
+  .bar-card__index {
+    font-size: 18px;
+  }
+  .bar-card__name {
+    font-size: 12px;
+  }
+  .bar-card__tag {
+    font-size: 11px;
+  }
+  .bar-count {
+    left: 16px;
+    bottom: 16px;
+  }
+  .bar-count__n {
+    font-size: 30px;
+  }
+  .bar-title {
+    display: none;
+  }
+}
