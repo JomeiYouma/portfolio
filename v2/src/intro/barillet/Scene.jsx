@@ -318,7 +318,7 @@ const World = ({ rig, themes, lowPerf, portrait, coarse, pointer, emit }) => {
     if (kicker.current) {
       const light = kicker.current
       if (kick) {
-        light.intensity = 0.14
+        light.intensity = 0.08
         light.color.set(kick.color)
         light.position.copy(kick.pos).add(tmp.v.set(-0.04, 0.05, 0.04))
         camera.localToWorld(light.position)

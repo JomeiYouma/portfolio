@@ -48,11 +48,13 @@ const InkShader = {
       d.x *= uAspect;
       float dist = length(d);
 
-      // Shockwave: a ring that widens and fades
+      // Shockwave: a ring that widens and fades. Only while a shot runs: at
+      // rest the ring would sit on its centre and warp the muzzle.
       float radius = uShock * 0.9;
       float band = 0.07 + uShock * 0.05;
       float wave = smoothstep(radius - band, radius, dist) * (1.0 - smoothstep(radius, radius + band, dist));
-      uv += (dist > 0.0001 ? d / dist : vec2(0.0)) * wave * 0.035 * (1.0 - uShock) * vec2(1.0 / uAspect, 1.0);
+      wave *= step(0.02, uShock) * (1.0 - uShock);
+      uv += (dist > 0.0001 ? d / dist : vec2(0.0)) * wave * 0.035 * vec2(1.0 / uAspect, 1.0);
 
       // Inks out of register: red pulled one way, blue the other, a touch diagonal
       vec2 off = vec2(uAberr, uAberr * 0.45);
@@ -105,7 +107,7 @@ export const Post = ({ rig, lowPerf }) => {
     })
     const composer = new EffectComposer(gl, target)
     composer.addPass(new RenderPass(scene, camera))
-    const bloom = lowPerf ? null : new UnrealBloomPass(new THREE.Vector2(1, 1), 0.25, 0.55, 1.2)
+    const bloom = lowPerf ? null : new UnrealBloomPass(new THREE.Vector2(1, 1), 0.0, 0.4, 1.2)
     if (bloom) composer.addPass(bloom)
     composer.addPass(new OutputPass())
     const ink = new ShaderPass(InkShader)
@@ -139,7 +141,8 @@ export const Post = ({ rig, lowPerf }) => {
     u.uShockCenter.value.set(rig.screen.muzzle.x, 1 - rig.screen.muzzle.y)
     u.uImpact.value = rig.impact
     u.uWhite.value = rig.white
-    if (c.bloom) c.bloom.strength = 0.25 + rig.bloom * 2.6
+    // No bloom at rest: polished brass under the key light would haze the whole frame
+    if (c.bloom) c.bloom.strength = rig.bloom * 2.6 + rig.flash * 0.8
     c.composer.render(delta)
     // The screen-level shatter wants this very frame, before anything else paints
     if (rig.snapshot === 'request') takeSnapshot(rig, state.gl.domElement)
