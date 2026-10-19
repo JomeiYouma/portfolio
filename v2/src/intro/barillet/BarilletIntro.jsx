@@ -81,6 +81,8 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
   const [fired, setFired] = useState([])
   const [fireKey, setFireKey] = useState(0)
   const [snapshot, setSnapshot] = useState(null)
+  const [shardsReady, setShardsReady] = useState(false)
+  const onShardsReady = useCallback(() => setShardsReady(true), [])
   // The radial mask is the fallback only; while the snapshot is on its way the intro stays opaque
   const [maskReveal, setMaskReveal] = useState(false)
   const [impact, setImpact] = useState({ x: 0.5, y: 0.5 })
@@ -336,7 +338,7 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
   const rootClass = [
     'bar-root',
     aiming ? 'is-aiming' : '',
-    snapshot ? 'is-shattering' : '',
+    snapshot && shardsReady ? 'is-shattering' : '',
     maskReveal && !snapshot ? 'is-revealing' : '',
   ].join(' ')
 
@@ -367,7 +369,7 @@ const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSk
             onMark={mark}
             t={t}
           />
-          {snapshot && <ShatterLayer shot={snapshot} impact={impact} lowPerf={lowPerf} onDone={finish} />}
+          {snapshot && <ShatterLayer shot={snapshot} impact={impact} lowPerf={lowPerf} onReady={onShardsReady} onDone={finish} />}
           <button type="button" className="bar-lang" lang={lang === 'en' ? 'fr' : 'en'} onClick={onToggleLang}>
             {lang === 'en' ? 'FR' : 'ENG'}
           </button>

@@ -114,10 +114,10 @@ export const captureCanvas = (canvas, maxWidth = 1920) =>
           return
         }
         const url = URL.createObjectURL(blob)
+        // Decoded before anyone shows it, so the first painted frame already has pixels
         const img = new Image()
-        img.onload = () => resolve({ url, w, h, vw, vh })
-        img.onerror = () => reject(new Error('snapshot: decode'))
         img.src = url
+        img.decode().then(() => resolve({ url, w, h, vw, vh })).catch(() => reject(new Error('snapshot: decode')))
       },
       'image/jpeg',
       0.9,

@@ -6,7 +6,7 @@ import { makeShardPolygons } from './shatter'
  * The last frame of the scene, cut into glass and let go. Pieces near the
  * impact leave first; the theme behind shows through the gaps.
  */
-const ShatterLayer = ({ shot, impact, lowPerf, onDone }) => {
+const ShatterLayer = ({ shot, impact, lowPerf, onReady, onDone }) => {
   const ref = useRef(null)
   const cx = impact.x * shot.vw
   const cy = impact.y * shot.vh
@@ -19,6 +19,20 @@ const ShatterLayer = ({ shot, impact, lowPerf, onDone }) => {
       }),
     [cx, cy, shot, lowPerf],
   )
+
+  // Tell the intro once the shards have really been painted, two frames on:
+  // only then may the canvas underneath be hidden
+  useEffect(() => {
+    let a
+    let b
+    a = requestAnimationFrame(() => {
+      b = requestAnimationFrame(() => onReady?.())
+    })
+    return () => {
+      cancelAnimationFrame(a)
+      cancelAnimationFrame(b)
+    }
+  }, [onReady])
 
   useEffect(() => {
     const root = ref.current
