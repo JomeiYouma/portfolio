@@ -69,11 +69,21 @@
   pointer-events: none;
 }
 
-.bar-avatar {
+.bar-identity {
   position: absolute;
   top: 14px;
   left: 50%;
   translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #8a93a3;
+  white-space: nowrap;
+}
+.bar-avatar {
   display: block;
   width: 44px;
   height: 44px;
@@ -240,7 +250,7 @@
 .bar-prompt {
   position: absolute;
   left: 34%;
-  bottom: 9vh;
+  bottom: 4vh;
   translate: -50% 0;
   font-size: 13px;
   letter-spacing: 0.3em;
@@ -527,7 +537,8 @@
 /* ─── Controls ───────────────────────────────────────────────────────────── */
 
 .bar-skip,
-.bar-mute {
+.bar-mute,
+.bar-lang {
   position: absolute;
   top: 16px;
   z-index: 2;
@@ -545,15 +556,20 @@
 .bar-skip {
   right: 16px;
 }
-.bar-mute {
+.bar-lang {
   left: 16px;
 }
+.bar-mute {
+  left: 78px;
+}
 .bar-skip:hover,
-.bar-mute:hover {
+.bar-mute:hover,
+.bar-lang:hover {
   border-color: #fff;
 }
 .bar-skip:focus-visible,
-.bar-mute:focus-visible {
+.bar-mute:focus-visible,
+.bar-lang:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
@@ -655,6 +671,12 @@
   }
   .bar-prompt {
     left: 50%;
-    bottom: 13vh;
+    bottom: 8vh;
+  }
+  .bar-identity span {
+    display: none;
+  }
+  .bar-mute {
+    display: none;
   }
 }

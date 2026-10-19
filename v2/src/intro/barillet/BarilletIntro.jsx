@@ -52,7 +52,7 @@ const makeCracks = (cx, cy) => {
  * theme through the shattered screen. Without WebGL or with reduced motion,
  * the same choice as a row of rounds to pick from.
  */
-const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
+const BarilletIntro = ({ themes, lang, onToggleLang, onArm, onFire, onDone, onSkip }) => {
   const { t } = useI18n()
   const reduceMotion = useReducedMotion()
   const portrait = useMediaQuery('(orientation: portrait)')
@@ -371,6 +371,9 @@ const BarilletIntro = ({ themes, onArm, onFire, onDone, onSkip }) => {
             t={t}
           />
           {snapshot && <ShatterLayer shot={snapshot} impact={impact} lowPerf={lowPerf} onDone={finish} />}
+          <button type="button" className="bar-lang" lang={lang === 'en' ? 'fr' : 'en'} onClick={onToggleLang}>
+            {lang === 'en' ? 'FR' : 'ENG'}
+          </button>
           <button type="button" className="bar-mute" aria-pressed={muted} onClick={toggleMute}>
             {muted ? t('intro.unmute') : t('intro.mute')}
           </button>

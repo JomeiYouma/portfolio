@@ -95,7 +95,15 @@ function App() {
       )}
       {intro !== 'done' && (
         <Suspense fallback={<div className="loading-screen" />}>
-          <BarilletIntro themes={THEMES} onArm={armIntro} onFire={fireIntro} onDone={endIntro} onSkip={endIntro} />
+          <BarilletIntro
+            themes={THEMES}
+            lang={lang}
+            onToggleLang={toggleLanguage}
+            onArm={armIntro}
+            onFire={fireIntro}
+            onDone={endIntro}
+            onSkip={endIntro}
+          />
         </Suspense>
       )}
       <QuoteFormModal

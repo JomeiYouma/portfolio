@@ -91,9 +91,13 @@ const Hud = ({
 
   return (
     <div className="bar-hud">
-      <a className="bar-avatar" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="Raphaël Madoré sur GitHub">
-        <img src={asset('assets/images/github-avatar.webp')} alt="" width="44" height="44" />
-      </a>
+      <div className="bar-identity">
+        <span>Raphaël Madoré</span>
+        <a className="bar-avatar" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="Raphaël Madoré sur GitHub">
+          <img src={asset('assets/images/github-avatar.webp')} alt="" width="44" height="44" />
+        </a>
+        <span>portfolio</span>
+      </div>
 
       {themes.map((theme, k) => {
         const state = cards[k]
