@@ -229,6 +229,10 @@ export const createAudio = () => {
       tone({ freq: 5600, duration: 0.09, gain: 0.05 * gain, at })
       tone({ freq: 8300, duration: 0.06, gain: 0.03 * gain, at })
     },
+    clunk: (gain, at) => {
+      noise({ type: 'lowpass', freq: 1100, endFreq: 350, q: 0.8, duration: 0.07, gain: 0.8 * gain, at })
+      tone({ type: 'triangle', freq: 190, endFreq: 120, duration: 0.06, gain: 0.5 * gain, at })
+    },
     thud: (gain, at) => tone({ type: 'triangle', freq: 240, endFreq: 70, duration: 0.14, gain: 0.5 * gain, at }),
     throw: (gain, at) => noise({ type: 'highpass', freq: 2500, duration: 0.12, gain: 0.12 * gain, attack: 0.02, at }),
     sub: (gain, at) => {
@@ -331,14 +335,18 @@ export const createAudio = () => {
       shots: (slices.shot || []).map((s) => [+s.offset.toFixed(2), +s.duration.toFixed(2)]),
       failed: [...failed],
     }),
+    // The intro unmounts the moment the theme appears; what was already
+    // scheduled (the shot's tail, the glass) must be left to finish, so the
+    // old context is closed late and a new one is made if anything asks again
     dispose: () => {
-      // React mounts twice in development: a disposed engine can be prefetched again
-      ctx?.close().catch(() => {})
+      const old = ctx
       ctx = null
+      bus = master = verbIn = tailIn = noiseBuffer = null
       generation += 1
       prefetched = false
       failed.length = 0
       Object.keys(slices).forEach((k) => delete slices[k])
+      if (old) setTimeout(() => old.close().catch(() => {}), 8000)
     },
   }
 }

@@ -64,11 +64,11 @@ export const EVENTS = {
   ],
   knock: () => [{ sample: 'handling', at: 0, gain: 0.6, maxDuration: 0.15, detune: -200, synth: 'click', arg: 1200 }],
   insert: () => [{ sample: 'insert', at: 0, gain: 0.6, detune: jitter(80), synth: 'insert' }],
-  // A metallic click: two steel ticks a hair apart and a bright ring, no low thud
+  // A heavy, muffled click: steel on steel through a low-pass, with a short clunk under it
   close: () => [
-    { sample: 'cock', at: 0, gain: 0.8, maxDuration: 0.12, detune: 250 + jitter(60), synth: 'click', arg: 4200 },
-    { sample: 'ratchet', at: 0.012, gain: 0.55, maxDuration: 0.08, detune: 400, synth: 'click', arg: 5200 },
-    { synth: 'ring', at: 0.004, gain: 1 },
+    { sample: 'cock', at: 0, gain: 1.3, maxDuration: 0.14, detune: -250 + jitter(40), lowpass: 2600, synth: 'click', arg: 2400 },
+    { sample: 'ratchet', at: 0.008, gain: 0.9, maxDuration: 0.1, detune: -450, lowpass: 2200 },
+    { synth: 'clunk', at: 0, gain: 1 },
   ],
   ratchet: (omega = 10) => [
     { sample: 'ratchet', at: 0, gain: 0.3 + 0.5 * Math.min(1, omega / 20), maxDuration: 0.08, detune: jitter(60), synth: 'ratchet' },
