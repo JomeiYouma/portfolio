@@ -336,7 +336,7 @@
           },
           {
             "heading": "Credits",
-            "body": "The opening sequence uses CC0 recordings from freesound.org (Shark_Anthony, Nox_Sound, jhka, Dredile, dasebr, cedarstudios, qubodup), OpenGameArt (BMacZero, Till Behrend) and Kenney, and the WebXR generic hand model (© Amazon, MIT licence). The full list is in assets/sounds/LICENSES.md."
+            "body": "The opening sequence uses CC0 recordings from freesound.org (Shark_Anthony, craigsmith, Nox_Sound, jhka, Dredile, dasebr, cedarstudios, qubodup), OpenGameArt (BMacZero, Till Behrend) and Kenney, the recording “Revolveri Smith & Wesson 38” by YleArkisto (Yle, freesound.org, CC BY 4.0), and the WebXR generic hand model (© Amazon, MIT licence). The full list is in assets/sounds/LICENSES.md."
           }
         ]
       },
@@ -749,7 +749,7 @@
           },
           {
             "heading": "Crédits",
-            "body": "La séquence d’ouverture utilise des enregistrements CC0 de freesound.org (Shark_Anthony, Nox_Sound, jhka, Dredile, dasebr, cedarstudios, qubodup), d’OpenGameArt (BMacZero, Till Behrend) et de Kenney, ainsi que le modèle de main générique WebXR (© Amazon, licence MIT). La liste complète est dans assets/sounds/LICENSES.md."
+            "body": "La séquence d’ouverture utilise des enregistrements CC0 de freesound.org (Shark_Anthony, craigsmith, Nox_Sound, jhka, Dredile, dasebr, cedarstudios, qubodup), d’OpenGameArt (BMacZero, Till Behrend) et de Kenney, l’enregistrement « Revolveri Smith & Wesson 38 » d’YleArkisto (Yle, freesound.org, CC BY 4.0), ainsi que le modèle de main générique WebXR (© Amazon, licence MIT). La liste complète est dans assets/sounds/LICENSES.md."
           }
         ]
       },

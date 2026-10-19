@@ -251,7 +251,7 @@ export const createAudio = () => {
     return list[i]
   }
 
-  const sample = (slice, { at = 0, gain = 1, detune = 0, lowpass, highpass, maxDuration, verb = 0, tail = 0 }) => {
+  const sample = (slice, { at = 0, gain = 1, detune = 0, lowpass, highpass, maxDuration, verb = 0, tail = 0, skip = 0 }) => {
     const src = ctx.createBufferSource()
     src.buffer = slice.buffer
     src.detune.value = detune
@@ -270,10 +270,12 @@ export const createAudio = () => {
       node.connect(f)
       node = f
     }
-    const duration = Math.min(slice.duration, maxDuration ?? slice.duration)
+    const start = Math.min(skip, Math.max(0, slice.duration - 0.1))
+    const duration = Math.min(slice.duration - start, maxDuration ?? slice.duration)
     const g = ctx.createGain()
     const t0 = ctx.currentTime + at
-    g.gain.setValueAtTime(gain, t0)
+    g.gain.setValueAtTime(0.0001, t0)
+    g.gain.linearRampToValueAtTime(gain, t0 + (skip ? 0.03 : 0.002))
     g.gain.setValueAtTime(gain, t0 + Math.max(0.005, duration - 0.03))
     g.gain.linearRampToValueAtTime(0.0001, t0 + duration)
     node.connect(g)
@@ -290,7 +292,7 @@ export const createAudio = () => {
       g.connect(send)
       send.connect(tailIn)
     }
-    src.start(t0, slice.offset, duration)
+    src.start(t0, slice.offset + start, duration)
   }
 
   const play = (name, arg) => {
